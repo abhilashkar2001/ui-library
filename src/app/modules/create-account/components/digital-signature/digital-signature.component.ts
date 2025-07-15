@@ -8,6 +8,7 @@ import { AccountSignaturePopupComponent } from './signature-popup/signature-popu
   styleUrls: ['./digital-signature.component.scss'],
 })
 export class AccountDigitalSignatureComponent {
+  signature: any;
   constructor(private dialog: MatDialog) {}
 
   openSignPopup() {

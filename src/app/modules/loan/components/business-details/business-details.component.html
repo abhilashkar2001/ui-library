@@ -105,6 +105,16 @@
       </div>
     </div>
 
+    <div fxFlex="24" *ngIf="category == 'Accounts'">
+      <ic-select
+        [control]="businessDetailsForm.get('segmentId') | formcontrol"
+        [options]="segmentArr"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Source of Income"
+      >
+      </ic-select>
+    </div>
     <div fxFlex="24">
       <ic-form-field
         [control]="businessDetailsForm.get('monthlyTurnover') | formcontrol"

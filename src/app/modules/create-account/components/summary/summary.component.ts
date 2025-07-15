@@ -9,17 +9,24 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
   styleUrls: ['./summary.component.scss'],
 })
 export class AccountSummaryComponent implements OnInit {
-  accountDetailsStore = SummaryStore.AccountDetailsStore;
+  accountDetailsStore: any;
   collateralHeaders = SummaryStore.collateralHeaders;
   directorData = SummaryStore.directorDetailsStore;
   summary: any;
   documentData: any;
   originationId: number | undefined;
+  basisClass!: string | null;
 
   constructor(
     private loanService: LoanService,
     private sessionStorageService: SessionStorageService,
-  ) {}
+  ) {
+    this.basisClass = this.sessionStorageService.getItem('basisClass');
+    this.accountDetailsStore =
+      this.basisClass == 'CURRENT ACCOUNT'
+        ? SummaryStore.AccountDetailsStore
+        : SummaryStore.CorporateAccountDetailsStore;
+  }
 
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();

@@ -53,6 +53,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   @Input() screenCode = '';
   selectedAccountType: string = '';
   data: any;
+  basisClass!: string | null;
 
   constructor(
     private fb: FormBuilder,
@@ -63,6 +64,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     private sessionStorageService: SessionStorageService,
     private activatedRoute: ActivatedRoute,
   ) {
+    this.basisClass = sessionStorageService.getItem('basisClass');
     this.currentDate?.setDate(this.todaysDate.getDate() + 1);
     this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
@@ -85,9 +87,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     const validValues = this.holderTypeArr.map((item) => item.value);
     const accountType = localStorage.getItem('account-type') || '';
     if (validValues.includes(accountType)) {
-      this.accountDetailsForm
-        ?.get('accountDetails.holderType')
-        ?.setValue(accountType);
+      this.accountDetailsGroup?.get('holderType')?.setValue(accountType);
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -96,8 +96,11 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  holderTypeChange(){
-    localStorage.setItem('account-type',this.accountDetailsForm?.get('accountDetails.holderType')?.value);
+  holderTypeChange() {
+    localStorage.setItem(
+      'account-type',
+      this.accountDetailsGroup?.get('holderType')?.value,
+    );
   }
 
   loadUserProfile() {
@@ -189,19 +192,21 @@ a certain amount of interest`,
       screenCode: [''],
     });
 
-    this.accountDetailsForm
-      .get('accountDetails.holderType')
+    this.accountDetailsGroup
+      .get('holderType')
       ?.valueChanges.subscribe((holderType: string) => {
         console.log(holderType);
 
         if (holderType?.toLowerCase() === 'joint') {
-          this.accountDetailsForm
-            .get('accountDetails.noOfApplicant')
-            ?.setValue(2);
+          this.accountDetailsGroup.get('noOfApplicant')?.setValue(2);
         } else {
-          this.accountDetailsForm.get('accountDetails.noOfApplicant')?.reset();
+          this.accountDetailsGroup.get('noOfApplicant')?.reset();
         }
       });
+  }
+
+  get accountDetailsGroup(): FormGroup {
+    return this.accountDetailsForm.get('accountDetails') as FormGroup;
   }
 
   // This function is used to call the EMI calculation API when the loan data changes

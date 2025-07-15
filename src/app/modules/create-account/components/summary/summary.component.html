@@ -19,19 +19,98 @@
             summary?.accountDetails[data?.headerDef!]
           }}</span>
         </ng-container>
-        <ng-container *ngIf="details?.key === 'personalDetails'">
+        <ng-container
+          *ngIf="
+            details?.key === 'personalDetails' &&
+            basisClass == 'CURRENT ACCOUNT'
+          "
+        >
           <span class="breadcrum_sm">{{ data?.headerCell }}</span>
           <span class="header_md">{{
             summary?.personalDetails[data?.headerDef!]
           }}</span>
         </ng-container>
-        <ng-container *ngIf="details?.key === 'identificationDetails'">
+        <ng-container
+          *ngIf="
+            details?.key === 'identificationDetails' &&
+            basisClass == 'CURRENT ACCOUNT'
+          "
+        >
           <span class="breadcrum_sm">{{ data?.headerCell }}</span>
           <span class="header_md">{{
             summary?.identificationDetails[data?.headerDef!]
           }}</span>
         </ng-container>
         <ng-container *ngIf="details?.key === 'documentUpload'">
+          <div class="document-panel" *ngFor="let document of documentData">
+            <mat-expansion-panel
+              *ngIf="document?.docInfoModel?.length > 0"
+              class="styled-panel fileUpload"
+              [expanded]="true"
+            >
+              <mat-expansion-panel-header class="panel-header">
+                <div class="panel-header-content">
+                  <div
+                    class="panel-title"
+                    fxLayoutGap="5"
+                    fxLayoutAlign="start center"
+                  >
+                    <img src="assets/images/tickicon.svg" alt="Tick" />
+                    <span class="header_md">{{ document?.document }}</span>
+                  </div>
+                  <span class="disabled_delete"> Delete </span>
+                </div>
+              </mat-expansion-panel-header>
+
+              <div
+                class="uploaded_list"
+                fxLayout="row wrap"
+                fxFlex="100"
+                fxLayoutAlign="space-between center"
+              >
+                <div
+                  *ngFor="
+                    let file of document?.docInfoModel;
+                    let fileIndx = index
+                  "
+                  fxFlex="49"
+                  fxLayout="row"
+                  fxLayoutGap="10"
+                  class="upload_img"
+                >
+                  <div class="img_box">
+                    <img [src]="" alt="image" />
+                  </div>
+                  <div class="img_container">
+                    <span class="header_md img_name">{{ file?.fileName }}</span>
+                  </div>
+                  <img
+                    tabindex="0"
+                    src="assets/images/trash_new.svg"
+                    alt="trash"
+                  />
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </ng-container>
+        <ng-container
+          *ngIf="
+            details?.key === 'businessDetails' &&
+            basisClass != 'CURRENT ACCOUNT'
+          "
+        >
+          <span class="breadcrum_sm">{{ data?.headerCell }}</span>
+          <span class="header_md">{{
+            summary?.personalDetails[data?.headerDef!]
+          }}</span>
+        </ng-container>
+        <ng-container
+          *ngIf="
+            details?.key === 'directordocumentUpload' &&
+            basisClass != 'CURRENT ACCOUNT'
+          "
+        >
           <div class="document-panel" *ngFor="let document of documentData">
             <mat-expansion-panel
               *ngIf="document?.docInfoModel?.length > 0"

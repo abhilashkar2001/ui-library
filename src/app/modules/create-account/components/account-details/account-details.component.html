@@ -1,4 +1,8 @@
-<div [formGroup]="accountDetailsForm" fxLayout="column">
+<div
+  *ngIf="accountDetailsForm"
+  [formGroup]="accountDetailsForm"
+  fxLayout="column"
+>
   <div class="summary_pad" fxFlex="100" fxLayout="row wrap" fxLayoutGap="10px">
     <div
       *ngFor="let item of createAccountDetailsSummaryArr"
@@ -15,16 +19,15 @@
   <!-- Editable form fields -->
   <div
     class="content_row"
-    fxLayout="row"
+    fxLayout="row wrap"
     fxLayoutAlign="start center"
     fxLayoutGap="10px"
     style="margin-top: 20px"
+    [formGroup]="accountDetailsGroup"
   >
     <div fxFlex="24">
       <ic-select
-        [control]="
-          accountDetailsForm?.get('accountDetails.accountBranch') | formcontrol
-        "
+        [control]="accountDetailsGroup.get('accountBranch') | formcontrol"
         [options]="genericValue?.REPAYMENTFREQUENCY"
         bindLabelKey="values"
         bindValueKey="id"
@@ -34,10 +37,7 @@
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="
-          accountDetailsForm?.get('accountDetails.accountCurrency')
-            | formcontrol
-        "
+        [control]="accountDetailsGroup.get('accountCurrency') | formcontrol"
         [options]="genericValue?.REPAYMENTFREQUENCY"
         bindLabelKey="values"
         bindValueKey="id"
@@ -47,10 +47,7 @@
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="
-          accountDetailsForm?.get('accountDetails.customerCategory')
-            | formcontrol
-        "
+        [control]="accountDetailsGroup.get('customerCategory') | formcontrol"
         [options]="genericValue?.REPAYMENTFREQUENCY"
         bindLabelKey="values"
         bindValueKey="id"
@@ -58,11 +55,9 @@
         [disabled]="!isEdit"
       ></ic-select>
     </div>
-    <div fxFlex="24">
+    <div fxFlex="24" *ngIf="basisClass != 'CORPORATE ACCOUNT'">
       <ic-select
-        [control]="
-          accountDetailsForm?.get('accountDetails.holderType') | formcontrol
-        "
+        [control]="accountDetailsGroup.get('holderType') | formcontrol"
         [options]="holderTypeArr"
         bindLabelKey="label"
         bindValueKey="value"
@@ -71,26 +66,14 @@
         (selectionChange)="holderTypeChange()"
       ></ic-select>
     </div>
-  </div>
-
-  <div
-    class="content_row mt-2"
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    fxLayoutGap="10"
-  >
     <div
       fxFlex="24"
       *ngIf="
-        accountDetailsForm
-          ?.get('accountDetails.holderType')
-          ?.value?.toLowerCase() === 'minor'
+        accountDetailsGroup?.get('holderType')?.value?.toLowerCase() === 'minor'
       "
     >
       <ic-form-field
-        [control]="
-          accountDetailsForm?.get('accountDetails.noOfGuardian') | formcontrol
-        "
+        [control]="accountDetailsGroup.get('noOfGuardian') | formcontrol"
         label="No. of guardian"
         [readonly]="!isEdit"
         [disabled]="!isEdit"
@@ -99,49 +82,43 @@
     <div
       fxFlex="24"
       *ngIf="
-        accountDetailsForm
-          ?.get('accountDetails.holderType')
-          ?.value?.toLowerCase() === 'joint'
+        accountDetailsGroup?.get('holderType')?.value?.toLowerCase() === 'joint'
       "
     >
       <ic-form-field
-        [control]="
-          accountDetailsForm?.get('accountDetails.noOfApplicant') | formcontrol
-        "
+        [control]="accountDetailsGroup.get('noOfApplicant') | formcontrol"
         label="No. of Applicant"
         [readonly]="!isEdit"
         [disabled]="!isEdit"
       ></ic-form-field>
     </div>
-    <div>
+    <div fxFlex="24">
       <ic-slide-toggle
-        [formControl]="
-          accountDetailsForm?.get('accountDetails.initialFunding') | formcontrol
-        "
+        [formControl]="accountDetailsGroup.get('initialFunding') | formcontrol"
         color="primary"
-        labelPosition="before"
+        labelPosition="after"
         [disabled]="!isEdit"
       >
         Initial Funding
       </ic-slide-toggle>
     </div>
     <div
+      fxFlex="24"
       *ngIf="
-        accountDetailsForm
-          ?.get('accountDetails.holderType')
-          ?.value?.toLowerCase() === 'joint' ||
-        accountDetailsForm
-          ?.get('accountDetails.holderType')
-          ?.value?.toLowerCase() === 'individual'
+        basisClass == 'CORPORATE ACCOUNT' ||
+        (basisClass != 'CORPORATE ACCOUNT' &&
+          (accountDetailsGroup?.get('holderType')?.value?.toLowerCase() ===
+            'joint' ||
+            accountDetailsGroup?.get('holderType')?.value?.toLowerCase() ===
+              'individual'))
       "
     >
       <ic-slide-toggle
         [formControl]="
-          accountDetailsForm?.get('accountDetails.overdraftRequested')
-            | formcontrol
+          accountDetailsGroup.get('overdraftRequested') | formcontrol
         "
         color="primary"
-        labelPosition="before"
+        labelPosition="after"
         [disabled]="!isEdit"
       >
         Overdraft Requested
