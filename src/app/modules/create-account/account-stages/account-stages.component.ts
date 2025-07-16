@@ -19,7 +19,7 @@ import {
   AccountComponentMap,
 } from '../../../config/component.constant';
 import { MatExpansionPanel } from '@angular/material/expansion';
-// import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-account-stages',
@@ -51,9 +51,9 @@ export class AccountStagesComponent implements OnInit {
     private renderComponentService: RenderComponentService,
     // private loanService: LoanService,
     private cdr: ChangeDetectorRef,
-    // private sessionStorageSerive: SessionStorageService,
+    private sessionStorageSerive: SessionStorageService,
   ) {
-    this.category = localStorage.getItem('Category');
+    this.category = this.sessionStorageSerive.getItem('basisClass');
   }
 
   ngOnInit() {
@@ -200,7 +200,7 @@ export class AccountStagesComponent implements OnInit {
     // this.loanService.fetchScreens(processStageId).subscribe((resp) => {
     //   if (resp?.statusCode === 200 && resp?.data?.screens) {
     const screens =
-      this.category !== 'Cooperate Account'
+      this.category !== 'CORPORATE ACCOUNT'
         ? [
             {
               screenCode: 456,

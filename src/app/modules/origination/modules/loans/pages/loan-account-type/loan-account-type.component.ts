@@ -54,7 +54,10 @@ export class LoanAccountTypeComponent implements OnInit {
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
-      if (this.category === 'Accounts') {
+      if (
+        this.category === 'Accounts' &&
+        this.basisClass == 'CURRENT ACCOUNT'
+      ) {
         this.basisClass = event.subClass;
         this.basisId = event.selectedLoan.basisId;
         const dialogRef = this.dialog.open(AccountSelectionComponent, {
@@ -68,6 +71,11 @@ export class LoanAccountTypeComponent implements OnInit {
         dialogRef.afterClosed().subscribe((res) => {
           console.log(res);
         });
+      } else if (
+        this.category == 'Accounts' &&
+        this.basisClass == 'CORPORATE ACCOUNT'
+      ) {
+        this.goToLogin();
       } else {
         this.isShowCalculator = event.isShowCalculator;
         this.calculatorInfo = {
@@ -95,11 +103,10 @@ export class LoanAccountTypeComponent implements OnInit {
     }
   }
 
-  goToLogin(event: string) {
-    if (event == 'Cooperate Account') {
-      localStorage.setItem('Category', 'Cooperate Account');
-      this.router.navigate(['loan/login']);
-    }
+  goToLogin() {
+    this.sessionStorageService.setItem('category', this.category);
+    this.sessionStorageService.setItem('basisClass', this.basisClass);
+    this.router.navigate(['loan/login']);
   }
 
   /**

@@ -36,6 +36,7 @@ export class BusinessDetailsComponent implements OnInit {
   countryArr: any[] = [];
   parentCompanyArr: any[] = [];
   originationId!: number;
+  category!: string | null;
 
   constructor(
     private fb: FormBuilder,
@@ -44,7 +45,9 @@ export class BusinessDetailsComponent implements OnInit {
     private loanService: LoanService,
     private countryService: CountryService,
     private sessionStorageService: SessionStorageService,
-  ) {}
+  ) {
+    this.category = this.sessionStorageService.getItem('category');
+  }
 
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();

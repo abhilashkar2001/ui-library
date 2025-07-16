@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
   ) {
     this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
-    this.category = localStorage.getItem('Category');
+    this.category = this.sessionStorageService.getItem('category');
   }
 
   ngOnInit(): void {
@@ -210,10 +210,7 @@ export class LoginComponent implements OnInit {
       .subscribe((response: any) => {
         console.log(this.category);
 
-        if (
-          this.category === 'Accounts' ||
-          this.category === 'Cooperate Account'
-        ) {
+        if (this.category === 'Accounts') {
           this.router.navigate(['create-account/stages']);
         } else {
           if (response.status === 401) {
