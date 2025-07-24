@@ -16,6 +16,11 @@ import { SharedService } from 'app/shared/services/shared.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { environment } from 'environments/environment';
 import { LoanService } from 'app/shared/services/loan/loan.service';
+import {
+  ContainerContextData,
+  SidenavService,
+} from 'app/shared/services/sidenav.service';
+import { DocumentDetailsComponent } from 'app/modules/loan/components/document-details/document-details.component';
 
 @Component({
   selector: 'app-custom-file-upload',
@@ -51,6 +56,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   noReqCheckListDocList: any;
   baseUrl = environment.microServiceURL;
   isChecklistDoc = false;
+  documentForm: FormGroup | undefined;
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
@@ -59,6 +65,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     private pyScanService: SharedService,
     private sessionStorageService: SessionStorageService,
     private loanService: LoanService,
+    private sidenavService: SidenavService,
   ) {}
 
   ngOnInit() {
@@ -135,6 +142,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         documentDetails: this.createDocumentForm.value,
       });
     }
+    this.buildDocumentForm();
   }
 
   calculateDoc(data: any[], i: number) {
@@ -575,5 +583,31 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     if (!alreadyExists) {
       otherDocArray.push(this.newDenom(data));
     }
+  }
+  get documentDetails() {
+    return this.documentForm?.get('documentDetails') as FormArray;
+  }
+  openSidePanel(doc: FormArray) {
+    const contextData: ContainerContextData = {
+      component: DocumentDetailsComponent,
+      data: doc,
+    };
+    this.sidenavService.open(contextData);
+  }
+
+  buildDocumentForm(data?: any) {
+    this.documentForm = this.fb.group({
+      id: [data?.id ?? ''],
+      documentDetails: this.fb.array([]),
+    });
+    this.addDocumentDetails();
+  }
+  addDocumentDetails(data?: any) {
+    const documentGroup = this.fb.group({
+      id: [data?.id ?? '10'],
+      DocumentName: [data?.DocumentName ?? 'Adhar'],
+      DocumentSzie: [data?.DocumentSzie ?? '345kb'],
+    });
+    this.documentDetails.push(documentGroup);
   }
 }

@@ -1,0 +1,45 @@
+<section
+  fxLayout="column"
+  fxLayoutAlign="space-between stretch"
+  style="height: 100vh; overflow: hidden; padding: 1rem"
+>
+  <!-- Header -->
+  <div>
+    <h2>Fetch Details</h2>
+  </div>
+
+  <!-- Form Section with scrolling -->
+  <div style="flex: 1 1 auto; overflow-y: auto">
+    <div fxLayout="row wrap" fxLayoutGap="10">
+      <div fxFlex="48.5" *ngFor="let item of flatControls">
+        <ic-form-field
+          [label]="item.key"
+          [control]="item.group.get(item.key) | formcontrol"
+          [maxLength]="100"
+          [icAlphabetOnly]="true"
+        ></ic-form-field>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Buttons -->
+  <div>
+    <div fxLayout="row" fxLayoutGap="1%">
+      <ic-button
+        [label]="'Cancel'"
+        [type]="'button'"
+        icButtonType="ghost-rounded-neutral"
+        size="medium"
+        (OnClick)="editDetails()"
+      ></ic-button>
+
+      <ic-button
+        [label]="'Save'"
+        [type]="'button'"
+        icButtonType="ghost-rounded-neutral"
+        size="medium"
+        (OnClick)="saveDetails()"
+      ></ic-button>
+    </div>
+  </div>
+</section>
