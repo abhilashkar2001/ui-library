@@ -3,6 +3,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { BankCodePanelComponent } from '../components/bank-code-panel/bank-code-panel.component';
 import { AddCollateralComponent } from '../../modules/loan/components/collateral-details/add-collateral/add-collateral.component';
 import { EmiCalculatorDrawerComponent } from 'app/modules/loan/emi-calculator/emi-calculator-drawer/emi-calculator-drawer.component';
+import { DocumentDetailsComponent } from 'app/modules/loan/components/document-details/document-details.component';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +41,7 @@ export interface ContainerContextData {
   component: Type<
     | BankCodePanelComponent
     | AddCollateralComponent
+    | DocumentDetailsComponent
     | EmiCalculatorDrawerComponent
   >;
   data: Record<string, any> | string | number | boolean | undefined | null;
