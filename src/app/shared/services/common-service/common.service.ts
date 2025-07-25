@@ -28,10 +28,14 @@ export class CommonService {
   }
 
   CallingSGIFPCapture(): Observable<any> {
-    return this.http.get(`https://localhost:8443/SGIFPCapture`).pipe(
-      tap((result) => {
-        return result;
-      }),
-    );
+    return this.http
+      .get(`https://localhost:8443/SGIFPCapture`, {
+        headers: { Anonymous: 'NOTKN' },
+      })
+      .pipe(
+        tap((result) => {
+          return result;
+        }),
+      );
   }
 }
