@@ -1,0 +1,136 @@
+
+
+<div [ngSwitch]="detailsForGeneric.accountType">
+  <ng-template [ngSwitchCase]="'individual'">
+    <app-generic-emp-fin-details (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric"></app-generic-emp-fin-details>
+  </ng-template>
+  <ng-template [ngSwitchCase]="'joint'">
+    <!-- <div class="d-flex mt-12 mb-12">
+      <img src="../../../../../assets/images/info_yellow.svg" alt="">
+      <div class="ml-12">
+        {{'Multiple Applicant details will be populated here based on the uploaded documents. You can modify the information if needed.'}}
+      </div>
+    </div> -->
+    <mat-divider></mat-divider>
+    <span *ngFor="let user of accordionItems;let i=index;">
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="user.expanded" #panel="matExpansionPanel">
+          <mat-expansion-panel-header class="panel-header">
+            <div class="panel-header-content">
+              <div class="panel-title" fxLayoutGap="5" fxLayoutAlign="start center">
+                <!-- *ngIf="getFileInfo(i)?.length > 0; else unticked" -->
+                <img src="assets/images/tickicon.svg" alt="Tick" />
+                <ng-template #unticked>
+                  <img src="assets/images/untickicon.svg" alt="Untick" />
+                </ng-template>
+                <span class="header_md"> {{user.header}}
+                </span>
+                <!-- <span class="required">*</span> -->
+              </div>
+              <!-- <span [ngClass]="
+                  accordionItems.length <= 2 
+                    ? 'disabled_delete'
+                    : 'delete_btn'
+                " (click)="deleteAccordian(i)">
+                Delete
+              </span> -->
+              <mat-icon class="arrow-icon" [class.rotate]="panel.expanded">
+                expand_more
+              </mat-icon>
+            </div>
+          </mat-expansion-panel-header>
+          <app-generic-emp-fin-details (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric"></app-generic-emp-fin-details>
+          <!-- <app-generic-account-form [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form> -->
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-divider></mat-divider>
+    </span>
+  </ng-template>
+  <ng-template [ngSwitchCase]="'minor'">
+    <!-- <div class="d-flex mt-12 mb-12">
+      <img src="../../../../../assets/images/info_yellow.svg" alt="">
+      <div class="ml-12">
+        {{'Multiple Applicant details will be populated here based on the uploaded documents. You can modify the information if needed.'}}
+      </div>
+    </div> -->
+    <mat-divider></mat-divider>
+    <span *ngFor="let user of accordionItems;let i=index;">
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="user.expanded" #panel="matExpansionPanel">
+          <mat-expansion-panel-header class="panel-header">
+            <div class="panel-header-content">
+              <div class="panel-title" fxLayoutGap="5" fxLayoutAlign="start center">
+                <!-- *ngIf="getFileInfo(i)?.length > 0; else unticked" -->
+                <img src="assets/images/tickicon.svg" alt="Tick" />
+                <ng-template #unticked>
+                  <img src="assets/images/untickicon.svg" alt="Untick" />
+                </ng-template>
+                <span class="header_md"> {{user.header}}
+                </span>
+                <!-- <span class="required">*</span> -->
+              </div>
+              <!-- <span [ngClass]="
+                  accordionItems.length <= 2 || user.header == 'Minor Details'
+                    ? 'disabled_delete'
+                    : 'delete_btn'
+                " (click)="deleteAccordian(i)">
+                Delete
+              </span> -->
+              <mat-icon class="arrow-icon" [class.rotate]="panel.expanded">
+                expand_more
+              </mat-icon>
+            </div>
+          </mat-expansion-panel-header>
+          <app-generic-emp-fin-details (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric"></app-generic-emp-fin-details>
+          <!-- <app-generic-account-form [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form> -->
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-divider></mat-divider>
+    </span>
+  </ng-template>
+  <ng-template [ngSwitchCase]="'corporate'">
+    <!-- <div class="d-flex mt-12 mb-12">
+      <img src="../../../../../assets/images/info_yellow.svg" alt="">
+      <div class="ml-12">
+        {{'Multiple director details will be populated here based on the uploaded documents. You can modify the information if needed.'}}
+      </div>
+    </div> -->
+    <mat-divider></mat-divider>
+    <span *ngFor="let user of accordionItems;let i=index;">
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="user.expanded" #panel="matExpansionPanel">
+          <mat-expansion-panel-header class="panel-header">
+            <div class="panel-header-content">
+              <div class="panel-title" fxLayoutGap="5" fxLayoutAlign="start center">
+                <!-- *ngIf="getFileInfo(i)?.length > 0; else unticked" -->
+                <img src="assets/images/tickicon.svg" alt="Tick" />
+                <ng-template #unticked>
+                  <img src="assets/images/untickicon.svg" alt="Untick" />
+                </ng-template>
+                <span class="header_md"> {{user.header}}
+                </span>
+                <!-- <span class="required">*</span> -->
+              </div>
+              <!-- <span [ngClass]="
+                  accordionItems.length <= 2 
+                    ? 'disabled_delete'
+                    : 'delete_btn'
+                " (click)="deleteAccordian(i)">
+                Delete
+              </span> -->
+              <mat-icon class="arrow-icon" [class.rotate]="panel.expanded">
+                expand_more
+              </mat-icon>
+            </div>
+          </mat-expansion-panel-header>
+          <app-generic-emp-fin-details (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric"></app-generic-emp-fin-details>
+          <!-- <app-generic-account-form [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form> -->
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-divider></mat-divider>
+    </span>
+  </ng-template>
+  <ng-template *ngSwitchDefault>
+    <p>Nothing to show</p>
+  </ng-template>
+</div>

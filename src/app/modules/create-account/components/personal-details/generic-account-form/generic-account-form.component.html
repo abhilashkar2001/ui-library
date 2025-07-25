@@ -41,14 +41,14 @@
         </div>
 
         <div fxFlex="25" *ngIf="detailsForGeneric.accountType == 'corporate'">
-            <ic-select [control]="personalDetails.get('position') | formcontrol" [options]="positions" bindLabelKey="values"
-                bindValueKey="id" label="Position"></ic-select>
+            <ic-select [control]="personalDetails.get('position') | formcontrol" [options]="positions"
+                bindLabelKey="values" bindValueKey="id" label="Position"></ic-select>
         </div>
 
         <div fxFlex="25">
-             <ic-date-picker [control]="personalDetails.get('dateOfBirth') | formcontrol" placeholder="Date of Birth"
-                    label="Date of Birth">
-                </ic-date-picker>
+            <ic-date-picker [control]="personalDetails.get('dateOfBirth') | formcontrol" placeholder="Date of Birth"
+                label="Date of Birth">
+            </ic-date-picker>
         </div>
 
         <!-- 3 -->
@@ -119,17 +119,29 @@
         </div>
 
         <div fxFlex="25">
-            <ic-mobile-field [formControl]="personalDetails.get('mobileNo') | formcontrol" [isdCode]="countriesIsdCodes"
-                [isdControl]="personalDetails.get('mobtCode') | formcontrol" [maxLength]="maxMobileLength"
-                label="Mobile No"></ic-mobile-field>
+            <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes" [customError]="
+            personalDetails.get('mobileNo')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('mobileNo') | formcontrol"
+                [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
+                [maxLength]="maxMobileLength" label="Mobile No"></ic-mobile-field>
         </div>
         <div fxFlex="25">
-            <ic-mobile-field [formControl]="personalDetails.get('alternateNo') | formcontrol"
+            <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes" [customError]="
+            personalDetails.get('alternateNo')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('alternateNo') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Alternate No"></ic-mobile-field>
         </div>
         <div fxFlex="25">
-            <ic-mobile-field [formControl]="personalDetails.get('whatsAppNo') | formcontrol"
+            <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes" [customError]="
+            personalDetails.get('whatsAppNo')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('whatsAppNo') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="WhatsApp No"></ic-mobile-field>
         </div>
@@ -139,12 +151,20 @@
         </div>
 
         <div fxFlex="25">
-            <ic-mobile-field [formControl]="personalDetails.get('telephoneHome') | formcontrol"
+            <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes" [customError]="
+            personalDetails.get('telephoneHome')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('telephoneHome') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Telephone (Home)"></ic-mobile-field>
         </div>
         <div fxFlex="25" *ngIf="detailsForGeneric.accountType !== 'minor'">
-            <ic-mobile-field [formControl]="personalDetails.get('telephoneWork') | formcontrol"
+            <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes" [customError]="
+            personalDetails.get('telephoneWork')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('telephoneWork') | formcontrol"
                 [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                 [maxLength]="maxMobileLength" label="Telephone (Work)"></ic-mobile-field>
         </div>
@@ -236,17 +256,32 @@
             </div>
 
             <div fxFlex="25">
-                <ic-mobile-field [formControl]="personalDetails.get('spouseTelephoneHome') | formcontrol"
+                <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes"
+                    [customError]="
+            personalDetails.get('spouseTelephoneHome')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('spouseTelephoneHome') | formcontrol"
                     [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                     [maxLength]="maxMobileLength" label="Spouse Telephone (Work)"></ic-mobile-field>
             </div>
             <div fxFlex="25">
-                <ic-mobile-field [formControl]="personalDetails.get('spouseTelephoneWork') | formcontrol"
+                <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes"
+                    [customError]="
+            personalDetails.get('spouseTelephoneWork')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('spouseTelephoneWork') | formcontrol"
                     [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                     [maxLength]="maxMobileLength" label="Spouse Telephone (Work)"></ic-mobile-field>
             </div>
             <div fxFlex="25">
-                <ic-mobile-field [formControl]="personalDetails.get('spouseMobileNo') | formcontrol"
+                <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes"
+                    [customError]="
+            personalDetails.get('spouseMobileNo')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('spouseMobileNo') | formcontrol"
                     [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                     [maxLength]="maxMobileLength" label="Mobile No"></ic-mobile-field>
             </div>
@@ -294,17 +329,32 @@
             </div>
 
             <div fxFlex="25">
-                <ic-mobile-field [formControl]="personalDetails.get('emeMobileNo') | formcontrol"
+                <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes"
+                    [customError]="
+            personalDetails.get('emeMobileNo')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('emeMobileNo') | formcontrol"
                     [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                     [maxLength]="maxMobileLength" label="Mobile No"></ic-mobile-field>
             </div>
             <div fxFlex="25">
-                <ic-mobile-field [formControl]="personalDetails.get('emeAlternateNo') | formcontrol"
+                <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes"
+                    [customError]="
+            personalDetails.get('emeAlternateNo')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('emeAlternateNo') | formcontrol"
                     [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                     [maxLength]="maxMobileLength" label="Alternate No"></ic-mobile-field>
             </div>
             <div fxFlex="25">
-                <ic-mobile-field [formControl]="personalDetails.get('emeWhatsAppNo') | formcontrol"
+                <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes"
+                    [customError]="
+            personalDetails.get('emeWhatsAppNo')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('emeWhatsAppNo') | formcontrol"
                     [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                     [maxLength]="maxMobileLength" label="WhatsApp No"></ic-mobile-field>
             </div>
@@ -314,12 +364,22 @@
             </div>
 
             <div fxFlex="25">
-                <ic-mobile-field [formControl]="personalDetails.get('emeTelephoneHome') | formcontrol"
+                <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes"
+                    [customError]="
+            personalDetails.get('emeTelephoneHome')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('emeTelephoneHome') | formcontrol"
                     [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                     [maxLength]="maxMobileLength" label="Telephone (Home)"></ic-mobile-field>
             </div>
             <div fxFlex="25">
-                <ic-mobile-field [formControl]="personalDetails.get('emeTelephoneWork') | formcontrol"
+                <ic-mobile-field (onSelectionChangeOutput)="setMobileLength()" [isdCode]="countriesIsdCodes"
+                    [customError]="
+            personalDetails.get('emeTelephoneWork')?.hasError('invalidLength')
+              ? 'Max mobile length is ' + maxMobileLength
+              : ''
+          " [maxLength]="maxMobileLength" [formControl]="personalDetails.get('emeTelephoneWork') | formcontrol"
                     [isdCode]="countriesIsdCodes" [isdControl]="personalDetails.get('mobtCode') | formcontrol"
                     [maxLength]="maxMobileLength" label="Telephone (Work)"></ic-mobile-field>
             </div>
