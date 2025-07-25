@@ -235,11 +235,19 @@ export class AccountStagesComponent implements OnInit {
               screenValue: 'W1TECO',
             },
             {
+              screenCode: 463,
+              screenName: 'Employment & Financial Details',
+              route: null,
+              fileUrl: null,
+              sequence: 6,
+              screenValue: 'W1TECO',
+            },
+            {
               screenCode: 497,
               screenName: 'Summary',
               route: null,
               fileUrl: null,
-              sequence: 6,
+              sequence: 7,
               screenValue: 'W1CODE',
             },
             {
@@ -247,7 +255,7 @@ export class AccountStagesComponent implements OnInit {
               screenName: 'Digital Signature',
               route: null,
               fileUrl: null,
-              sequence: 7,
+              sequence: 8,
               screenValue: 'W1BUDE',
             },
             {

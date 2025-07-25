@@ -23,6 +23,8 @@ import { PersonalIdentificationComponent } from './components/personal-identific
 import { AccountPersonalDetailsComponent } from './components/personal-details/personal-details.component';
 import { GenericAccountFormComponent } from './components/personal-details/generic-account-form/generic-account-form.component';
 import { DynamicPagesModule } from '../origination/modules/dynamic-pages/dynamic-pages.module';
+import { EmpFinDetailsComponent } from './components/emp-fin-details/emp-fin-details.component';
+import { GenericEmpFinDetailsComponent } from './components/emp-fin-details/generic-emp-fin-details/generic-emp-fin-details.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { DynamicPagesModule } from '../origination/modules/dynamic-pages/dynamic
     AccountSelectionComponent,
     PersonalIdentificationComponent,
     GenericAccountFormComponent,
+    EmpFinDetailsComponent,
+    GenericEmpFinDetailsComponent,
   ],
   imports: [
     CommonModule,

@@ -16,6 +16,7 @@ import { AccountSummaryComponent } from 'app/modules/create-account/components/s
 import { AccountDigitalSignatureComponent } from 'app/modules/create-account/components/digital-signature/digital-signature.component';
 import { PersonalIdentificationComponent } from 'app/modules/create-account/components/personal-identification/personal-identification.component';
 import { AccountPersonalDetailsComponent } from 'app/modules/create-account/components/personal-details/personal-details.component';
+import { EmpFinDetailsComponent } from 'app/modules/create-account/components/emp-fin-details/emp-fin-details.component';
 
 export interface ComponentMap {
   W1LACC: LoanDetailsComponent;
@@ -51,11 +52,12 @@ export interface AccountComponentMap {
   'Document Upload': AccountDocumentUploadComponent;
   'Personal Identification': PersonalIdentificationComponent;
   'Personal Details': AccountPersonalDetailsComponent;
-  Summary: AccountSummaryComponent;
+  'Summary': AccountSummaryComponent;
   'Digital Signature': AccountDigitalSignatureComponent;
   'Bussiness Details': BusinessDetailsComponent;
   'Director Document Upload': DocumentUploadComponent;
   'Director Details': AccountPersonalDetailsComponent;
+  'Employment & Financial Details': EmpFinDetailsComponent
 }
 
 export const AccountComponentConstant: {
@@ -65,9 +67,10 @@ export const AccountComponentConstant: {
   'Document Upload': AccountDocumentUploadComponent,
   'Personal Identification': PersonalIdentificationComponent,
   'Personal Details': AccountPersonalDetailsComponent,
-  Summary: AccountSummaryComponent,
+  'Summary': AccountSummaryComponent,
   'Digital Signature': AccountDigitalSignatureComponent,
   'Bussiness Details': BusinessDetailsComponent,
   'Director Document Upload': DocumentUploadComponent,
   'Director Details': AccountPersonalDetailsComponent,
+  'Employment & Financial Details': EmpFinDetailsComponent
 };

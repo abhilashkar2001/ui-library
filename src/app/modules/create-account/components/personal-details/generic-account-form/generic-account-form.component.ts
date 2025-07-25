@@ -12,7 +12,14 @@ import { BankCodePanelComponent } from 'app/shared/components/bank-code-panel/ba
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 //@ts-ignore
-import { catchError, map, of, tap } from 'rxjs';
+import { catchError, map, of, Subscription, tap } from 'rxjs';
+import { CountryService } from 'app/shared/services/country-service';
+import {
+  AppState,
+  LocaleData,
+  selectLocaleData,
+} from '@onerumango/utils';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-generic-account-form',
@@ -60,6 +67,9 @@ export class GenericAccountFormComponent {
 
   countriesIsdCodes: any = [];
   maxMobileLength: any;
+
+  countryTelIsdCode: any;
+  defaultIsdCodeValue: any;
 
   validationConfig = {
     individual: {
@@ -158,7 +168,7 @@ export class GenericAccountFormComponent {
       city: ([Validators.required]),
       livingAddressSince: ([Validators.required]),
     },
-    corporate:{
+    corporate: {
       prefix: ([Validators.required]),
       firstName: ([Validators.required]),
       position: ([Validators.required]),
@@ -207,6 +217,10 @@ export class GenericAccountFormComponent {
       // emeLivingAddressSince: ([Validators.required]),
     }
   }
+  subscriptions: Subscription[] = [];
+
+
+  private localeData: LocaleData | undefined;
 
 
   constructor(
@@ -219,6 +233,8 @@ export class GenericAccountFormComponent {
     private loanService: LoanService,
     //@ts-ignore
     private sessionStorageService: SessionStorageService,
+    private countryService: CountryService,
+    private store: Store<AppState>,
   ) {
     // this.currentDate?.setDate(new Date().getDate() + 1);
   }
@@ -228,11 +244,20 @@ export class GenericAccountFormComponent {
   // }
 
   ngOnInit(): void {
+    const localeData$ = this.store
+      .select(selectLocaleData)
+      .subscribe((res: any) => {
+        if (res) {
+          this.localeData = res;
+        }
+      });
+    this.subscriptions.push(localeData$);
     // this.originationId = this.sessionStorageService.getOriginationId();
     // this.buildDisbursementForm();
     // this.fetchGenericValues();
     // this.fetchDisbursementDetails();
     this.createPersonalDetailsForm();
+    this.loadCountries();
     console.log(this.user);
   }
 
@@ -244,7 +269,7 @@ export class GenericAccountFormComponent {
       firstName: ['', []],
       lastName: ['', []],
 
-      position:['',[]],
+      position: ['', []],
 
       dateOfBirth: ['', []],
       gender: ['', []],
@@ -333,6 +358,43 @@ export class GenericAccountFormComponent {
     console.log(this.personalDetails);
     if (this.personalDetails.invalid) {
       this.personalDetails.markAllAsTouched();
+    }
+  }
+
+  // Get All Countrys and Isd code Mthd
+  loadCountries() {
+    this.countryService.getCountries().subscribe((resp: any) => {
+      if (resp.data.length > 0) {
+        this.countriesIsdCodes = resp?.data;
+        this.countryTelIsdCode = resp?.data.map(
+          (i: any) => i?.countryTelIsdCode,
+        );
+        const indiaIsdCode = this.countriesIsdCodes.find(
+          (item: any) => item?.countryName == this.localeData?.country,
+        );
+
+        if (indiaIsdCode) {
+          this.defaultIsdCodeValue = indiaIsdCode?.countryTelIsdCode;
+          this.maxMobileLength = indiaIsdCode?.mobileLength;
+        } else {
+          this.defaultIsdCodeValue =
+            this.countriesIsdCodes[0].countryTelIsdCode;
+          this.maxMobileLength = this.countriesIsdCodes[0]?.mobileLength;
+        }
+
+        this.personalDetails.get('isdCode')?.setValue(this.defaultIsdCodeValue);
+      }
+    });
+  }
+
+  setMobileLength() {
+    if (this.personalDetails.get('isdCode')?.value) {
+      const countryRecord = this.countriesIsdCodes.find(
+        (item: any) =>
+          item.countryTelIsdCode == this.personalDetails.get('isdCode')?.value,
+      );
+
+      this.maxMobileLength = countryRecord?.mobileLength;
     }
   }
 
