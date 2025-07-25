@@ -57,6 +57,21 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   baseUrl = environment.microServiceURL;
   isChecklistDoc = false;
   documentForm: FormGroup | undefined;
+
+  extractedFields = [
+  { label: 'Name', key: 'extractedName', value: 'Harish' },
+  { label: 'Date of Birth', key: 'extractedDOB', value: '01-01-2000' },
+  { label: 'Gender', key: 'extractedGender', value: 'Male' },
+  { label: 'Aadhaar Number', key: 'aadhaarNumber', value: '123456789012' },
+  { label: 'Mobile Number', key: 'Mobile', value: '12525252' },
+  { label: 'Account Number', key: 'Account', value: '125252520000' },
+  { label: 'Branch', key: 'Branch', value: 'Banglore' },
+  { label: 'IFSC Code', key: 'IFSC', value: 'UBINO005120' },
+];
+
+
+
+
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
@@ -208,6 +223,36 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     }
   }
 
+addOtherDocument(data?: any): void {
+  this.applicant().push(this.createOtherDocument(data));
+}
+
+createOtherDocument(data?: any): FormGroup {
+  const docType = data?.values ?? data?.document ?? '';
+  const controls: { [key: string]: any } = {
+    documentType: [docType],
+    docRequired: [true]
+  };
+
+  // Dynamically add controls from extractedFields
+  const uniqueFields = new Map();
+  this.extractedFields.forEach(field => {
+    if (!uniqueFields.has(field.key)) {
+      uniqueFields.set(field.key, true);
+      controls[field.key] = [data?.[field.key] ?? ''];
+    }
+  });
+
+  const formGroup = this.fb.group(controls);
+  console.log('Created FormGroup with the following controls:');
+  Object.keys(formGroup.controls).forEach(key => {
+    console.log(`Key: ${key}, Value:`, formGroup.get(key)?.value);
+  });
+
+  return formGroup;
+}
+
+
   applicant(): FormArray {
     return this.createDocumentForm?.get('applicants') as FormArray;
   }
@@ -235,7 +280,22 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     });
   }
 
-  fileBrowseHandler(i: number, applicantIndex?: number): void {
+  fileBrowseHandler(docIndex: number, applicantIndex?: number): void {
+
+    const docArray = applicantIndex != null
+    ? this.getApplicantDocuments(applicantIndex)
+    : this.otherDocument();
+
+  const docGroup = docArray.at(docIndex);
+  const fileInfoCtrl = docGroup.get('fileInfo') as FormControl;
+
+  const existingFiles = fileInfoCtrl?.value || [];
+
+  // If document already exists, remove it first
+  if (existingFiles.length > 0) {
+    this.removeFile(docIndex, 0, applicantIndex); // Assuming one file at index 0
+  }
+
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
     if (!this.isChecklistDoc) inputElement.accept = 'image/*';
@@ -249,7 +309,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         }
         this.selectedImage = file;
 
-        this.uploadImage(file, i, applicantIndex);
+        this.uploadImage(file, docIndex, applicantIndex);
       }
     });
 

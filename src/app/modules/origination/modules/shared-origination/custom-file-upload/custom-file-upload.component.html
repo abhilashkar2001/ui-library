@@ -140,6 +140,18 @@
                 />
               </div>
             </div>
+
+            <!-- <div
+  class="form-group"
+  *ngIf="getFileInfo(i)?.length > 0"
+  style="margin-top: 1rem"
+>
+  <p>Fetched Details</p>
+  <ng-container *ngFor="let field of extractedFields">
+    <label>{{ field.label }}:</label>
+    <span>{{ docCtrl.get(field.key)?.value || '-' }}</span><br />
+  </ng-container>
+</div> -->
           </div>
         </mat-expansion-panel>
       </div>
@@ -157,7 +169,7 @@
         >
           <ng-container>
             <div
-              fxLayout="row"
+              fxLayout="column"
               fxLayoutAlign="end center"
               style="margin: 1rem 0"
             >
@@ -231,7 +243,7 @@
                 </mat-expansion-panel-header>
 
                 <div fxLayout="column">
-                  <div class="upload-section">
+                  <div class="upload-section" *ngIf="!getFileInfo(dIndex, aIndex)?.length">
                     <span class="medium_txt">Upload files</span>
                     <p class="breadcrum_md">
                       Max file size is 500kb. Supported file types are .jpg and
@@ -247,12 +259,7 @@
                     </ic-button>
                   </div>
 
-                  <div
-                    class="uploaded_list"
-                    fxLayout="row wrap"
-                    fxFlex="100"
-                    fxLayoutAlign="space-between center"
-                  >
+                  <div class="uploaded_list" fxLayout="column" fxFlex="100">
                     <div
                       *ngFor="
                         let file of getFileInfo(dIndex, aIndex);
@@ -291,6 +298,36 @@
                         alt="trash"
                         (click)="removeFile(dIndex, fileIndx, aIndex)"
                       />
+                    </div>
+
+                    <div
+                      class="form-group fetched-details"
+                      *ngIf="getFileInfo(dIndex, aIndex)?.length > 0"
+                      style="margin-top: 1rem"
+                    >
+                      <p class="fetched">Fetched Details</p>
+                      <div class="details-cont">
+                        <ng-container *ngFor="let field of extractedFields">
+                          <div class="fields">
+                            <label class="label">{{ field.label }}</label>
+                            <span class="value">{{ field.value }}</span>
+                          </div>
+                        </ng-container>
+                      </div>
+                      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10" style="margin: 1rem 0">
+                      <div class="custom-add-btn">
+                        <span class="btn-text"
+                        >Edit</span>
+                      </div>
+                        <ic-button
+                          [icButtonType]="'filled-rounded'"
+                          [label]="'Re-Scan'"
+                          [type]="'submit'"
+                          size="medium"
+                          (OnClick)="fileBrowseHandler(dIndex, aIndex)"
+                        >
+                        </ic-button>
+                      </div>
                     </div>
                   </div>
                 </div>
