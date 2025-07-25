@@ -29,6 +29,7 @@ import { CalculatorDialogComponent } from './dialogs/calculator-dialog/calculato
 import { AddCollateralComponent } from './components/collateral-details/add-collateral/add-collateral.component';
 import { LibPipesModule } from '@onerumango/utils';
 import { EmiCalculatorDrawerComponent } from 'app/modules/loan/emi-calculator/emi-calculator-drawer/emi-calculator-drawer.component';
+import { DocumentDetailsComponent } from './components/document-details/document-details.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { EmiCalculatorDrawerComponent } from 'app/modules/loan/emi-calculator/em
     CalculatorDialogComponent,
     AddCollateralComponent,
     EmiCalculatorDrawerComponent,
+    DocumentDetailsComponent,
   ],
   imports: [
     CommonModule,

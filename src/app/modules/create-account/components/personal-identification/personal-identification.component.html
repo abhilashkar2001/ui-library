@@ -51,66 +51,132 @@
               </span>
             </div>
           </mat-expansion-panel-header>
-
-          <div fxLayout="column">
-            <div class="upload-section">
-              <span class="medium_txt">Upload files</span>
-              <p class="breadcrum_md">
-                Max file size is 500kb. Supported file types are .jpg and .png.
-              </p>
-              <ic-button
-                (OnClick)="fileBrowseHandler()"
-                label="Choose"
-                size="medium"
-                type="button"
-                icButtonType="outlined-rounded"
-              >
-              </ic-button>
-            </div>
-
-            <div
-              class="uploaded_list"
-              fxLayout="row wrap"
-              fxFlex="100"
-              fxLayoutAlign="space-between center"
-            >
-              <div
-                *ngFor="let file of getFileInfo(); let fileIndx = index"
-                fxFlex="49"
-                fxLayoutGap="10"
-                class="upload_img"
-              >
-                <div class="img_box">
-                  <img
-                    [src]="'4a82eba7-0fa6-4776-b4ea-18da9cd653ec'"
-                    alt="image"
-                  />
-                </div>
-                <div class="img_container">
-                  <span class="header_md img_name">{{ file?.name }}</span>
-                  <div
-                    *ngIf="file.progress !== '100%'; else showSize"
-                    class="progress-cont"
+          <!--matTab-->
+          <mat-tab-group
+            class="tabGroup"
+            mat-stretch-tabs="false"
+            (selectedTabChange)="onTabChange($event)"
+            [selectedIndex]="tabIndex"
+          >
+            <!--front Side-->
+            <mat-tab label="Front Side">
+              <div fxLayout="column">
+                <div class="upload-section" *ngIf="!selectedImage[0]">
+                  <span class="medium_txt">Upload files</span>
+                  <p class="breadcrum_md">
+                    Max file size is 500kb. Supported file types are .jpg and
+                    .png.
+                  </p>
+                  <ic-button
+                    (OnClick)="fileBrowseHandler()"
+                    label="Choose"
+                    size="medium"
+                    type="button"
+                    icButtonType="outlined-rounded"
                   >
-                    <div
-                      [style.width]="file.progress ?? '0%'"
-                      class="progress"
-                    ></div>
-                  </div>
-                  <ng-template #showSize>
-                    <div class="theme_sm">{{ file.size }}</div>
-                  </ng-template>
+                  </ic-button>
                 </div>
-                <img
-                  tabindex="0"
-                  (keydown.enter)="removeFile(fileIndx)"
-                  src="assets/images/trash_new.svg"
-                  alt="trash"
-                  (click)="removeFile(fileIndx)"
-                />
+
+                <div
+                  class="uploaded_list"
+                  fxLayout="row wrap"
+                  fxFlex="100"
+                  fxLayoutAlign="space-between center"
+                >
+                  <div
+                    *ngFor="let file of getFileInfo(); let fileIndx = index"
+                    fxFlex="49"
+                    fxLayoutGap="10"
+                    class="upload_img"
+                  >
+                    <div class="img_box">
+                      <img [src]="selectedImage[0]" alt="image" />
+                    </div>
+                    <div class="img_container">
+                      <span class="header_md img_name">{{ file?.name }}</span>
+                      <div
+                        *ngIf="file.progress !== '100%'; else showSize"
+                        class="progress-cont"
+                      >
+                        <div
+                          [style.width]="file.progress ?? '0%'"
+                          class="progress"
+                        ></div>
+                      </div>
+                      <ng-template #showSize>
+                        <div class="theme_sm">{{ file.size }}</div>
+                      </ng-template>
+                    </div>
+                    <img
+                      (keydown.enter)="removeFile(fileIndx)"
+                      src="assets/images/trash_new.svg"
+                      alt="trash"
+                      (click)="removeFile(fileIndx)"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            </mat-tab>
+            <!--Back Side-->
+            <mat-tab label="Back Side">
+              <div fxLayout="column">
+                <div class="upload-section" *ngIf="!selectedImage[1]">
+                  <span class="medium_txt">Upload files</span>
+                  <p class="breadcrum_md">
+                    Max file size is 500kb. Supported file types are .jpg and
+                    .png.
+                  </p>
+                  <ic-button
+                    (OnClick)="fileBrowseHandler()"
+                    label="Choose"
+                    size="medium"
+                    type="button"
+                    icButtonType="outlined-rounded"
+                  >
+                  </ic-button>
+                </div>
+
+                <div
+                  class="uploaded_list"
+                  fxLayout="row wrap"
+                  fxFlex="100"
+                  fxLayoutAlign="space-between center"
+                >
+                  <div
+                    *ngFor="let file of getFileInfo(); let fileIndx = index"
+                    fxFlex="49"
+                    fxLayoutGap="10"
+                    class="upload_img"
+                  >
+                    <div class="img_box">
+                      <img [src]="selectedImage[1]" alt="image" />
+                    </div>
+                    <div class="img_container">
+                      <span class="header_md img_name">{{ file?.name }}</span>
+                      <div
+                        *ngIf="file.progress !== '100%'; else showSize"
+                        class="progress-cont"
+                      >
+                        <div
+                          [style.width]="file.progress ?? '0%'"
+                          class="progress"
+                        ></div>
+                      </div>
+                      <ng-template #showSize>
+                        <div class="theme_sm">{{ file.size }}</div>
+                      </ng-template>
+                    </div>
+                    <img
+                      (keydown.enter)="removeFile(fileIndx)"
+                      src="assets/images/trash_new.svg"
+                      alt="trash"
+                      (click)="removeFile(fileIndx)"
+                    />
+                  </div>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
         </mat-expansion-panel>
         <!--face Scan-->
         <mat-expansion-panel
