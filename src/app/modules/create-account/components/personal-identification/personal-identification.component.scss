@@ -71,3 +71,18 @@
   left: 9rem;
   font-size: 24px;
 }
+
+::ng-deep .tabGroup {
+  .mat-mdc-tab-label-container {
+    transform: translateX(-20px) !important;
+  }
+  .mdc-tab-indicator__content--underline {
+    width: 22%;
+  }
+
+  .mdc-tab-indicator {
+    top: -5px !important;
+    left: 20px !important;
+    justify-content: flex-start !important;
+  }
+}

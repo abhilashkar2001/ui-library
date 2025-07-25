@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DmsService } from '@onerumango/utils';
 import { FaceScanComponent } from 'app/shared/components/face-scan/face-scan.component';
 import { FingerprintScanComponent } from 'app/shared/components/fingerprint-scan/fingerprint-scan.component';
@@ -23,7 +24,7 @@ export class PersonalIdentificationComponent implements OnInit {
   @Input() docCustomerDetails: any;
   personalIdentificationForm!: FormGroup;
   isChecklistDoc: boolean = false;
-  selectedImage: Blob | any;
+  selectedImage: any[] = [];
   nationalIdGeneric: any;
   ocrPass: boolean = false;
   fileUrls: any[] = [];
@@ -39,6 +40,7 @@ export class PersonalIdentificationComponent implements OnInit {
   panelExpanded: boolean = false;
   faceExpanded: boolean = false;
   biometricExpanded: boolean = false;
+  tabIndex: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -72,14 +74,24 @@ export class PersonalIdentificationComponent implements OnInit {
     }
   }
 
+  onTabChange(eve: MatTabChangeEvent) {
+    this.tabIndex = eve?.index;
+  }
+
   //Reusable Form Group
   newDenom(data?: any): FormGroup {
     const docType = data?.values ?? (data?.document || '');
     return this.fb.group({
       documentNumber: [''],
       documentType: [docType],
-      fileInfo: new FormControl([]),
-      docIds: new FormControl([]),
+      frontSide: this.fb.group({
+        fileInfo: new FormControl([]),
+        docIds: new FormControl([]),
+      }),
+      backSide: this.fb.group({
+        fileInfo: new FormControl([]),
+        docIds: new FormControl([]),
+      }),
       docRequired: data?.docRequired ?? false,
       nationalId: [''],
       biometricIds: [''],
@@ -132,8 +144,14 @@ export class PersonalIdentificationComponent implements OnInit {
         : this.otherDocument;
 
     const docGroup = docArray;
-    const fileInfoCtrl = docGroup.get('fileInfo') as FormControl;
-    const docIdsCtrl = docGroup.get('docIds') as FormControl;
+    const fileInfoCtrl =
+      this.tabIndex == 0
+        ? (docGroup.get('frontSide')?.get('fileInfo') as FormControl)
+        : (docGroup.get('backSide')?.get('fileInfo') as FormControl);
+    const docIdsCtrl =
+      this.tabIndex == 0
+        ? (docGroup.get('frontSide')?.get('docIds') as FormControl)
+        : (docGroup.get('backSide')?.get('docIds') as FormControl);
 
     const files: any[] = fileInfoCtrl?.value || [];
     const docIds: any[] = docIdsCtrl?.value || [];
@@ -151,6 +169,7 @@ export class PersonalIdentificationComponent implements OnInit {
         ...docIds.slice(fileIndex + 1),
       ]);
     }
+    this.selectedImage[this.tabIndex] = undefined;
   }
 
   /**
@@ -177,7 +196,6 @@ export class PersonalIdentificationComponent implements OnInit {
         if (!file) {
           return;
         }
-        this.selectedImage = file;
 
         this.uploadImage(file, applicantIndex);
       }
@@ -213,7 +231,10 @@ export class PersonalIdentificationComponent implements OnInit {
         ? this.nationalIdGeneric
         : currentDoc.documentType,
       documentNumber: currentDoc.documentNumber,
-      documentSide: (currentDoc?.docIds?.length ?? 0) + 1,
+      documentSide:
+        (this.tabIndex == 0
+          ? (currentDoc?.frontSide?.docIds?.length ?? 0)
+          : (currentDoc?.backSide?.docIds?.length ?? 0)) + 1,
       fileName: file.name,
       fileType: file.type,
       verificationType: 'kyc',
@@ -227,17 +248,33 @@ export class PersonalIdentificationComponent implements OnInit {
     this.dmsService.uploadDocuments(formData).subscribe((resp) => {
       if (resp?.uuid) {
         this.displayImage(file, resp.uuid, file.size, applicantIndex);
-        const docIdsControl = docControl.get('docIds') as FormControl;
+        const docIdsControl =
+          this.tabIndex == 0
+            ? (docControl.get('frontSide')?.get('docIds') as FormControl)
+            : (docControl.get('backSide')?.get('docIds') as FormControl);
         const existingDocIds = docIdsControl?.value || [];
         docIdsControl.setValue([...existingDocIds, resp.documentId]);
 
-        const fileInfoArr = docControl.get('fileInfo')?.value || [];
+        const fileInfoArr =
+          this.tabIndex == 0
+            ? (docControl.get('frontSide')?.get('fileInfo')?.value ?? [])
+            : (docControl.get('backSide')?.get('fileInfo')?.value ?? []);
         fileInfoArr.forEach((fileInfoObj: any) => {
           if (resp.fileName.includes(fileInfoObj.name)) {
             fileInfoObj.newFileUrl = resp.fileUrl;
           }
         });
-        docControl.get('fileInfo')?.setValue([...fileInfoArr]);
+        if (this.tabIndex == 0) {
+          docControl
+            .get('frontSide')
+            ?.get('fileInfo')
+            ?.setValue([...fileInfoArr]);
+        } else {
+          docControl
+            .get('backSide')
+            ?.get('fileInfo')
+            ?.setValue([...fileInfoArr]);
+        }
 
         this.fileUrls?.push(resp?.fileUrl);
         this.documentIds.push(this.personalIdentificationForm.value);
@@ -295,12 +332,16 @@ export class PersonalIdentificationComponent implements OnInit {
     const sizeinKb = (size / 1024).toFixed(2);
     reader.onload = (event: ProgressEvent<FileReader> | any) => {
       const imageUrl = event.target.result as string;
+      this.selectedImage[this.tabIndex] = imageUrl;
       const control =
         this.customeSelected != 'individual' && applicantIndex != null
           ? this.getApplicantDocuments(applicantIndex)
           : this.otherDocument;
 
-      const fileArray = control.get('fileInfo')?.value || [];
+      const fileArray =
+        this.tabIndex == 0
+          ? control.get('frontSide')?.get('fileInfo')?.value || []
+          : control.get('backSide')?.get('fileInfo')?.value || [];
 
       fileArray.push({
         url: imageUrl,
@@ -309,7 +350,17 @@ export class PersonalIdentificationComponent implements OnInit {
         uuid: uuid,
         size: `${sizeinKb}kb`,
       });
-      control.get('fileInfo')?.setValue([...fileArray]);
+      if (this.tabIndex == 0) {
+        control
+          .get('frontSide')
+          ?.get('fileInfo')
+          ?.setValue([...fileArray]);
+      } else {
+        control
+          .get('backSide')
+          ?.get('fileInfo')
+          ?.setValue([...fileArray]);
+      }
       this.cdr.detectChanges();
     };
     reader.readAsDataURL(file);
@@ -364,11 +415,15 @@ export class PersonalIdentificationComponent implements OnInit {
     gender: string,
     applicantIndex?: number,
   ) {
-    const fileInfoControl = (
+    const infoControl =
       this.customeSelected != 'individual' && applicantIndex != null
         ? this.getApplicantDocuments(applicantIndex)
-        : this.otherDocument
-    )?.get('fileInfo');
+        : this.otherDocument;
+
+    const fileInfoControl =
+      this.tabIndex == 0
+        ? infoControl.get('frontSide')?.get('fileInfo')
+        : infoControl.get('backSide')?.get('fileInfo');
 
     if (fileInfoControl && fileInfoControl.value) {
       fileInfoControl.value[index] = {
@@ -387,11 +442,16 @@ export class PersonalIdentificationComponent implements OnInit {
    * @returns
    */
   updateDocId(applicantIndex?: number): any[] {
-    return (
+    const control =
       this.customeSelected != 'individual' && applicantIndex != null
         ? this.getApplicantDocuments(applicantIndex)
-        : this.otherDocument
-    )?.get('docIds')?.value;
+        : this.otherDocument;
+
+    const docValues =
+      this.tabIndex == 0
+        ? control.get('frontSide')?.get('docIds')?.value
+        : control.get('backSide')?.get('docIds')?.value;
+    return docValues;
   }
 
   /**
@@ -401,10 +461,16 @@ export class PersonalIdentificationComponent implements OnInit {
    */
   getFileInfo(applicantIndex?: number) {
     if (applicantIndex != null) {
-      return this.personalIdentificationForm.get('fileInfo')?.value;
+      return this.tabIndex == 0
+        ? this.personalIdentificationForm.get('frontSide')?.get('fileInfo')
+            ?.value
+        : this.personalIdentificationForm.get('backSide')?.get('fileInfo')
+            ?.value;
     }
 
-    return this.otherDocument.get('fileInfo')?.value;
+    return this.tabIndex == 0
+      ? this.otherDocument.get('frontSide')?.get('fileInfo')?.value
+      : this.otherDocument.get('backSide')?.get('fileInfo')?.value;
   }
 
   /**
