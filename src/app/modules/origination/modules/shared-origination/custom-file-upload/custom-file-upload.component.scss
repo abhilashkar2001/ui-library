@@ -74,6 +74,11 @@
     }
   }
 }
+.fetched{
+  color: #000000;
+  font-size: 18px;
+}
+
 
 .custom-add-btn {
   border: 1px solid #004c97;
@@ -120,4 +125,27 @@
   &:hover {
     background: #f5f6ff !important;
   }
+}
+.fetched-details{
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+.fields{
+  display: flex;
+  flex-direction:  column;
+}
+.details-cont {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  row-gap: 0.5rem;
+  column-gap: 1rem;
+}
+.label{
+  color: #525252;
+  font-size: 12px;
+}
+.value{
+  color: #161616;
+  font-size: 16px;
 }
