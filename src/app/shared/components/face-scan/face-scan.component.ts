@@ -115,6 +115,7 @@ export class FaceScanComponent {
         'More than one face detected. Only one person is allowed while scanning.';
       this.faceIntervalMethod();
     } else {
+      this.face_scan_error = '';
       let form = new FormData();
       form.append('file', file);
       this.biometricSvc.faceRegister(form).subscribe((res: any) => {

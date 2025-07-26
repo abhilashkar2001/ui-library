@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { SidenavService } from 'app/shared/services/sidenav.service';
 
 @Component({
   selector: 'app-document-details',
@@ -8,21 +9,20 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 })
 export class DocumentDetailsComponent {
   @Input() data: any;
-  ngOnChanges(): void {}
-  
-  get flatControls(): { group: FormGroup; key: string }[] {
-    const result: { group: FormGroup; key: string }[] = [];
-    if (this.data && this.data instanceof FormArray) {
-      this.data.controls.forEach((group: AbstractControl) => {
-        if (group instanceof FormGroup) {
-          const keys = Object.keys(group.controls);
-          keys.forEach((key) => {
-            result.push({ group, key });
-          });
-        }
+  form: any;
+  constructor(
+    private fb: FormBuilder,
+    private sidenav: SidenavService,
+  ) {}
+  ngOnInit(): void {
+    console.log('response', this.data);
+    this.form = this.fb.group({});
+
+    if (Array.isArray(this.data)) {
+      this.data.forEach((item: any) => {
+        this.form.addControl(item.key, this.fb.control(item.value));
       });
     }
-    return result;
   }
 
   editDetails() {
@@ -30,5 +30,8 @@ export class DocumentDetailsComponent {
   }
   saveDetails() {
     console.log('save');
+  }
+  close() {
+    this.sidenav.close();
   }
 }
