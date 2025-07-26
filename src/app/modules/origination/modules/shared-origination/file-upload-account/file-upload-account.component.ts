@@ -1,34 +1,22 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { DmsService } from '@onerumango/utils';
+import { DocumentDetailsComponent } from 'app/modules/loan/components/document-details/document-details.component';
 import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
-import { DmsService } from '@onerumango/utils';
-import { SharedService } from 'app/shared/services/shared.service';
-import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { environment } from 'environments/environment';
 import { LoanService } from 'app/shared/services/loan/loan.service';
-import {
-  ContainerContextData,
-  SidenavService,
-} from 'app/shared/services/sidenav.service';
-import { DocumentDetailsComponent } from 'app/modules/loan/components/document-details/document-details.component';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { SharedService } from 'app/shared/services/shared.service';
+import { ContainerContextData, SidenavService } from 'app/shared/services/sidenav.service';
+import { environment } from 'environments/environment';
 
 @Component({
-  selector: 'app-custom-file-upload',
-  templateUrl: './custom-file-upload.component.html',
-  styleUrls: ['./custom-file-upload.component.scss'],
+  selector: 'app-file-upload-account',
+  templateUrl: './file-upload-account.component.html',
+  styleUrls: ['./file-upload-account.component.scss']
 })
-export class CustomFileUploadComponent implements OnInit, OnChanges {
-  createDocumentForm!: FormGroup;
+export class FileUploadAccountComponent {
+createDocumentForm!: FormGroup;
   @Input() checkListDocList: any;
   @Input() getDocumentList: any;
   @Input() screenNameValue: string | any;
@@ -57,6 +45,21 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   baseUrl = environment.microServiceURL;
   isChecklistDoc = false;
   documentForm: FormGroup | undefined;
+
+  extractedFields = [
+  { label: 'Name', key: 'extractedName', value: 'Harish' },
+  { label: 'Date of Birth', key: 'extractedDOB', value: '01-01-2000' },
+  { label: 'Gender', key: 'extractedGender', value: 'Male' },
+  { label: 'Aadhaar Number', key: 'aadhaarNumber', value: '123456789012' },
+  { label: 'Mobile Number', key: 'Mobile', value: '12525252' },
+  { label: 'Account Number', key: 'Account', value: '125252520000' },
+  { label: 'Branch', key: 'Branch', value: 'Banglore' },
+  { label: 'IFSC Code', key: 'IFSC', value: 'UBINO005120' },
+];
+
+
+
+
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
@@ -142,7 +145,6 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         documentDetails: this.createDocumentForm.value,
       });
     }
-    this.buildDocumentForm();
   }
 
   calculateDoc(data: any[], i: number) {
@@ -207,7 +209,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
       }
     }
   }
- 
+
   applicant(): FormArray {
     return this.createDocumentForm?.get('applicants') as FormArray;
   }
@@ -235,7 +237,22 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     });
   }
 
-  fileBrowseHandler(i: number, applicantIndex?: number): void {
+  fileBrowseHandler(docIndex: number, applicantIndex?: number): void {
+
+    const docArray = applicantIndex != null
+    ? this.getApplicantDocuments(applicantIndex)
+    : this.otherDocument();
+
+  const docGroup = docArray.at(docIndex);
+  const fileInfoCtrl = docGroup.get('fileInfo') as FormControl;
+
+  const existingFiles = fileInfoCtrl?.value || [];
+
+  // If document already exists, remove it first
+  if (existingFiles.length > 0) {
+    this.removeFile(docIndex, 0, applicantIndex); // Assuming one file at index 0
+  }
+
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
     if (!this.isChecklistDoc) inputElement.accept = 'image/*';
@@ -249,7 +266,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         }
         this.selectedImage = file;
 
-        this.uploadImage(file, i, applicantIndex);
+        this.uploadImage(file, docIndex, applicantIndex);
       }
     });
 
@@ -584,30 +601,12 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
       otherDocArray.push(this.newDenom(data));
     }
   }
-  get documentDetails() {
-    return this.documentForm?.get('documentDetails') as FormArray;
-  }
-  openSidePanel(doc: FormArray) {
+  
+  openSidePanel(doc: any) {
     const contextData: ContainerContextData = {
       component: DocumentDetailsComponent,
       data: doc,
     };
     this.sidenavService.open(contextData);
-  }
-
-  buildDocumentForm(data?: any) {
-    this.documentForm = this.fb.group({
-      id: [data?.id ?? ''],
-      documentDetails: this.fb.array([]),
-    });
-    this.addDocumentDetails();
-  }
-  addDocumentDetails(data?: any) {
-    const documentGroup = this.fb.group({
-      id: [data?.id ?? '10'],
-      DocumentName: [data?.DocumentName ?? 'Adhar'],
-      DocumentSzie: [data?.DocumentSzie ?? '345kb'],
-    });
-    this.documentDetails.push(documentGroup);
   }
 }

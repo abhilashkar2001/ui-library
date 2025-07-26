@@ -37,6 +37,7 @@ import { SharedComponentsModule } from '../../../../shared/components/shared-com
 import { LibPipesModule } from '@onerumango/utils';
 import { ViewLoanDocComponent } from './view-loan-doc/view-loan-doc.component';
 import { CustomFileUploadComponent } from './custom-file-upload/custom-file-upload.component';
+import { FileUploadAccountComponent } from './file-upload-account/file-upload-account.component';
 
 const components = [
   CarouselComponent,
@@ -63,6 +64,7 @@ const components = [
   TopPerformingComponent,
   WebDocUploadComponent,
   ViewLoanDocComponent,
+  FileUploadAccountComponent
 ];
 
 @NgModule({
