@@ -24,7 +24,6 @@ export class PersonalIdentificationComponent implements OnInit {
   @Input() docCustomerDetails: any;
   personalIdentificationForm!: FormGroup;
   isChecklistDoc: boolean = false;
-  selectedImage: any[] = [];
   nationalIdGeneric: any;
   ocrPass: boolean = false;
   fileUrls: any[] = [];
@@ -41,6 +40,20 @@ export class PersonalIdentificationComponent implements OnInit {
   faceExpanded: boolean = false;
   biometricExpanded: boolean = false;
   tabIndex: number = 0;
+  ocrData: any[] = [
+    {
+      label: 'Full Name',
+      values: 'Vikas Kumar',
+    },
+    {
+      label: 'Aadhar Number',
+      values: '8884 - 6878 -2748',
+    },
+    { label: 'Date of Birth', values: '10/8/1991' },
+    { label: 'Gender', values: 'Male' },
+    { label: 'State', values: 'Bihar' },
+    { label: 'PinCode', values: '852218' },
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -85,12 +98,14 @@ export class PersonalIdentificationComponent implements OnInit {
       documentNumber: [''],
       documentType: [docType],
       frontSide: this.fb.group({
-        fileInfo: new FormControl([]),
-        docIds: new FormControl([]),
+        fileInfo: [],
+        docIds: [],
+        ocrData: [this.ocrData],
       }),
       backSide: this.fb.group({
-        fileInfo: new FormControl([]),
-        docIds: new FormControl([]),
+        fileInfo: [],
+        docIds: [],
+        ocrData: [this.ocrData],
       }),
       docRequired: data?.docRequired ?? false,
       nationalId: [''],
@@ -169,7 +184,6 @@ export class PersonalIdentificationComponent implements OnInit {
         ...docIds.slice(fileIndex + 1),
       ]);
     }
-    this.selectedImage[this.tabIndex] = undefined;
   }
 
   /**
@@ -295,10 +309,11 @@ export class PersonalIdentificationComponent implements OnInit {
           applicantIndex,
         );
 
-        const documentType = this.isChecklistDoc
-          ? this.otherDocument?.get('documentType')?.value
-          : this.getApplicantDocuments(applicantIndex)?.get('documentType')
-              ?.value;
+        const documentType =
+          this.isChecklistDoc && !isApplicantDoc
+            ? this.otherDocument?.get('documentType')?.value
+            : this.getApplicantDocuments(applicantIndex)?.get('documentType')
+                ?.value;
 
         const originationId = parseInt(
           this.sessionStorageService.getOriginationId(),
@@ -332,7 +347,6 @@ export class PersonalIdentificationComponent implements OnInit {
     const sizeinKb = (size / 1024).toFixed(2);
     reader.onload = (event: ProgressEvent<FileReader> | any) => {
       const imageUrl = event.target.result as string;
-      this.selectedImage[this.tabIndex] = imageUrl;
       const control =
         this.customeSelected != 'individual' && applicantIndex != null
           ? this.getApplicantDocuments(applicantIndex)
@@ -471,6 +485,20 @@ export class PersonalIdentificationComponent implements OnInit {
     return this.tabIndex == 0
       ? this.otherDocument.get('frontSide')?.get('fileInfo')?.value
       : this.otherDocument.get('backSide')?.get('fileInfo')?.value;
+  }
+
+  getOcrData(applicantIndex?: number) {
+    if (applicantIndex != null) {
+      return this.tabIndex == 0
+        ? this.personalIdentificationForm.get('frontSide')?.get('ocrData')
+            ?.value
+        : this.personalIdentificationForm.get('backSide')?.get('ocrData')
+            ?.value;
+    }
+
+    return this.tabIndex == 0
+      ? this.otherDocument.get('frontSide')?.get('ocrData')?.value
+      : this.otherDocument.get('backSide')?.get('ocrData')?.value;
   }
 
   /**

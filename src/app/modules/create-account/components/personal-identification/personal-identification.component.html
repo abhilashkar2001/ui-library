@@ -61,20 +61,17 @@
             <!--front Side-->
             <mat-tab label="Front Side">
               <div fxLayout="column">
-                <div class="upload-section" *ngIf="!selectedImage[0]">
+                <div class="upload-section" *ngIf="!getFileInfo()">
                   <span class="medium_txt">Upload files</span>
                   <p class="breadcrum_md">
                     Max file size is 500kb. Supported file types are .jpg and
                     .png.
                   </p>
-                  <ic-button
-                    (OnClick)="fileBrowseHandler()"
-                    label="Choose"
-                    size="medium"
-                    type="button"
-                    icButtonType="outlined-rounded"
-                  >
-                  </ic-button>
+                  <div class="drag-drop" (click)="fileBrowseHandler()">
+                    <p class="file-upload-text">
+                      Drag and drop files here or click to upload
+                    </p>
+                  </div>
                 </div>
 
                 <div
@@ -82,58 +79,61 @@
                   fxLayout="row wrap"
                   fxFlex="100"
                   fxLayoutAlign="space-between center"
+                  *ngIf="getFileInfo()?.length > 0"
                 >
-                  <div
+                  <h3 fxFlex="100">Upload Document</h3>
+                  <ng-container
                     *ngFor="let file of getFileInfo(); let fileIndx = index"
-                    fxFlex="49"
-                    fxLayoutGap="10"
-                    class="upload_img"
                   >
-                    <div class="img_box">
-                      <img [src]="selectedImage[0]" alt="image" />
+                    <div class="img_box" fxFlex="30">
+                      <img [src]="file?.url" alt="image" />
                     </div>
-                    <div class="img_container">
-                      <span class="header_md img_name">{{ file?.name }}</span>
-                      <div
-                        *ngIf="file.progress !== '100%'; else showSize"
-                        class="progress-cont"
+                    <div class="img_container" fxFlex="69" fxLayout="row wrap">
+                      <ng-container
+                        *ngFor="let data of getOcrData(); let j = index"
                       >
-                        <div
-                          [style.width]="file.progress ?? '0%'"
-                          class="progress"
-                        ></div>
-                      </div>
-                      <ng-template #showSize>
-                        <div class="theme_sm">{{ file.size }}</div>
-                      </ng-template>
+                        <div fxFlex="25" fxLayout="column" fxLayoutGap="10">
+                          <div class="theme_sm">{{ data?.label }}</div>
+                          <div class="img_name">{{ data?.values }}</div>
+                        </div>
+                      </ng-container>
                     </div>
-                    <img
-                      (keydown.enter)="removeFile(fileIndx)"
-                      src="assets/images/trash_new.svg"
-                      alt="trash"
-                      (click)="removeFile(fileIndx)"
-                    />
-                  </div>
+                    <div
+                      fxFlex="100"
+                      fxLayoutGap="10"
+                      fxLayoutAlign="end center"
+                      class="cancel-icon"
+                    >
+                      <ic-button
+                        label="Edit"
+                        size="small"
+                        customButtonClass="outlined-danger"
+                      ></ic-button>
+                      <ic-button
+                        label="Re-scan"
+                        size="small"
+                        customButtonClass="filled-danger"
+                        (OnClick)="removeFile(fileIndx)"
+                      ></ic-button>
+                    </div>
+                  </ng-container>
                 </div>
               </div>
             </mat-tab>
             <!--Back Side-->
             <mat-tab label="Back Side">
               <div fxLayout="column">
-                <div class="upload-section" *ngIf="!selectedImage[1]">
+                <div class="upload-section" *ngIf="!getFileInfo()">
                   <span class="medium_txt">Upload files</span>
                   <p class="breadcrum_md">
                     Max file size is 500kb. Supported file types are .jpg and
                     .png.
                   </p>
-                  <ic-button
-                    (OnClick)="fileBrowseHandler()"
-                    label="Choose"
-                    size="medium"
-                    type="button"
-                    icButtonType="outlined-rounded"
-                  >
-                  </ic-button>
+                  <div class="drag-drop" (click)="fileBrowseHandler()">
+                    <p class="file-upload-text">
+                      Drag and drop files here or click to upload
+                    </p>
+                  </div>
                 </div>
 
                 <div
@@ -141,38 +141,44 @@
                   fxLayout="row wrap"
                   fxFlex="100"
                   fxLayoutAlign="space-between center"
+                  *ngIf="getFileInfo()?.length > 0"
                 >
-                  <div
+                  <h3 fxFlex="100">Upload Document</h3>
+                  <ng-container
                     *ngFor="let file of getFileInfo(); let fileIndx = index"
-                    fxFlex="49"
-                    fxLayoutGap="10"
-                    class="upload_img"
                   >
-                    <div class="img_box">
-                      <img [src]="selectedImage[1]" alt="image" />
+                    <div class="img_box" fxFlex="30">
+                      <img [src]="file?.url" alt="image" />
                     </div>
-                    <div class="img_container">
-                      <span class="header_md img_name">{{ file?.name }}</span>
-                      <div
-                        *ngIf="file.progress !== '100%'; else showSize"
-                        class="progress-cont"
+                    <div class="img_container" fxFlex="69" fxLayout="row wrap">
+                      <ng-container
+                        *ngFor="let data of getOcrData(); let j = index"
                       >
-                        <div
-                          [style.width]="file.progress ?? '0%'"
-                          class="progress"
-                        ></div>
-                      </div>
-                      <ng-template #showSize>
-                        <div class="theme_sm">{{ file.size }}</div>
-                      </ng-template>
+                        <div fxFlex="25" fxLayout="column" fxLayoutGap="10">
+                          <div class="theme_sm">{{ data?.label }}</div>
+                          <div class="img_name">{{ data?.values }}</div>
+                        </div>
+                      </ng-container>
                     </div>
-                    <img
-                      (keydown.enter)="removeFile(fileIndx)"
-                      src="assets/images/trash_new.svg"
-                      alt="trash"
-                      (click)="removeFile(fileIndx)"
-                    />
-                  </div>
+                    <div
+                      fxFlex="100"
+                      fxLayoutGap="10"
+                      fxLayoutAlign="end center"
+                      class="cancel-icon"
+                    >
+                      <ic-button
+                        label="Edit"
+                        size="small"
+                        customButtonClass="outlined-danger"
+                      ></ic-button>
+                      <ic-button
+                        label="Re-scan"
+                        size="small"
+                        customButtonClass="filled-danger"
+                        (OnClick)="removeFile(fileIndx)"
+                      ></ic-button>
+                    </div>
+                  </ng-container>
                 </div>
               </div>
             </mat-tab>
@@ -414,66 +420,160 @@
                   </div>
                 </mat-expansion-panel-header>
 
-                <div fxLayout="column">
-                  <div class="upload-section">
-                    <span class="medium_txt">Upload files</span>
-                    <p class="breadcrum_md">
-                      Max file size is 500kb. Supported file types are .jpg and
-                      .png.
-                    </p>
-                    <ic-button
-                      (OnClick)="fileBrowseHandler(i)"
-                      label="Choose"
-                      size="medium"
-                      type="button"
-                      icButtonType="outlined-rounded"
-                    >
-                    </ic-button>
-                  </div>
-
-                  <div
-                    class="uploaded_list"
-                    fxLayout="row wrap"
-                    fxFlex="100"
-                    fxLayoutAlign="space-between center"
-                  >
-                    <div
-                      *ngFor="let file of getFileInfo(i); let fileIndx = index"
-                      fxFlex="49"
-                      fxLayoutGap="10"
-                      class="upload_img"
-                    >
-                      <div class="img_box">
-                        <img
-                          [src]="'4a82eba7-0fa6-4776-b4ea-18da9cd653ec'"
-                          alt="image"
-                        />
-                      </div>
-                      <div class="img_container">
-                        <span class="header_md img_name">{{ file?.name }}</span>
-                        <div
-                          *ngIf="file.progress !== '100%'; else showSize"
-                          class="progress-cont"
-                        >
-                          <div
-                            [style.width]="file.progress ?? '0%'"
-                            class="progress"
-                          ></div>
+                <!--matTab-->
+                <mat-tab-group
+                  class="tabGroup"
+                  mat-stretch-tabs="false"
+                  (selectedTabChange)="onTabChange($event)"
+                  [selectedIndex]="tabIndex"
+                >
+                  <!--front Side-->
+                  <mat-tab label="Front Side">
+                    <div fxLayout="column">
+                      <div class="upload-section" *ngIf="!getFileInfo(i)">
+                        <span class="medium_txt">Upload files</span>
+                        <p class="breadcrum_md">
+                          Max file size is 500kb. Supported file types are .jpg
+                          and .png.
+                        </p>
+                        <div class="drag-drop" (click)="fileBrowseHandler(i)">
+                          <p class="file-upload-text">
+                            Drag and drop files here or click to upload
+                          </p>
                         </div>
-                        <ng-template #showSize>
-                          <div class="theme_sm">{{ file.size }}</div>
-                        </ng-template>
                       </div>
-                      <img
-                        tabindex="0"
-                        (keydown.enter)="removeFile(fileIndx, i)"
-                        src="assets/images/trash_new.svg"
-                        alt="trash"
-                        (click)="removeFile(fileIndx, i)"
-                      />
+
+                      <div
+                        class="uploaded_list"
+                        fxLayout="row wrap"
+                        fxFlex="100"
+                        fxLayoutAlign="space-between center"
+                        *ngIf="getFileInfo(i)?.length > 0"
+                      >
+                        <h3 fxFlex="100">Upload Document</h3>
+                        <ng-container
+                          *ngFor="
+                            let file of getFileInfo(i);
+                            let fileIndx = index
+                          "
+                        >
+                          <div class="img_box" fxFlex="30">
+                            <img [src]="file?.url" alt="image" />
+                          </div>
+                          <div
+                            class="img_container"
+                            fxFlex="69"
+                            fxLayout="row wrap"
+                          >
+                            <ng-container
+                              *ngFor="let data of getOcrData(i); let j = index"
+                            >
+                              <div
+                                fxFlex="25"
+                                fxLayout="column"
+                                fxLayoutGap="10"
+                              >
+                                <div class="theme_sm">{{ data?.label }}</div>
+                                <div class="img_name">{{ data?.values }}</div>
+                              </div>
+                            </ng-container>
+                          </div>
+                          <div
+                            fxFlex="100"
+                            fxLayoutGap="10"
+                            fxLayoutAlign="end center"
+                            class="cancel-icon"
+                          >
+                            <ic-button
+                              label="Edit"
+                              size="small"
+                              customButtonClass="outlined-danger"
+                            ></ic-button>
+                            <ic-button
+                              label="Re-scan"
+                              size="small"
+                              customButtonClass="filled-danger"
+                              (OnClick)="removeFile(fileIndx, i)"
+                            ></ic-button>
+                          </div>
+                        </ng-container>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  </mat-tab>
+                  <!--Back Side-->
+                  <mat-tab label="Back Side">
+                    <div fxLayout="column">
+                      <div class="upload-section" *ngIf="!getFileInfo(i)">
+                        <span class="medium_txt">Upload files</span>
+                        <p class="breadcrum_md">
+                          Max file size is 500kb. Supported file types are .jpg
+                          and .png.
+                        </p>
+                        <div class="drag-drop" (click)="fileBrowseHandler(i)">
+                          <p class="file-upload-text">
+                            Drag and drop files here or click to upload
+                          </p>
+                        </div>
+                      </div>
+
+                      <div
+                        class="uploaded_list"
+                        fxLayout="row wrap"
+                        fxFlex="100"
+                        fxLayoutAlign="space-between center"
+                        *ngIf="getFileInfo(i)?.length > 0"
+                      >
+                        <h3 fxFlex="100">Upload Document</h3>
+                        <ng-container
+                          *ngFor="
+                            let file of getFileInfo(i);
+                            let fileIndx = index
+                          "
+                        >
+                          <div class="img_box" fxFlex="30">
+                            <img [src]="file?.url" alt="image" />
+                          </div>
+                          <div
+                            class="img_container"
+                            fxFlex="69"
+                            fxLayout="row wrap"
+                          >
+                            <ng-container
+                              *ngFor="let data of getOcrData(i); let j = index"
+                            >
+                              <div
+                                fxFlex="25"
+                                fxLayout="column"
+                                fxLayoutGap="10"
+                              >
+                                <div class="theme_sm">{{ data?.label }}</div>
+                                <div class="img_name">{{ data?.values }}</div>
+                              </div>
+                            </ng-container>
+                          </div>
+                          <div
+                            fxFlex="100"
+                            fxLayoutGap="10"
+                            fxLayoutAlign="end center"
+                            class="cancel-icon"
+                          >
+                            <ic-button
+                              label="Edit"
+                              size="small"
+                              customButtonClass="outlined-danger"
+                            ></ic-button>
+                            <ic-button
+                              label="Re-scan"
+                              size="small"
+                              customButtonClass="filled-danger"
+                              (OnClick)="removeFile(fileIndx, i)"
+                            ></ic-button>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
               </mat-expansion-panel>
               <!--face Scan-->
               <mat-expansion-panel class="styled-panel fileUpload">
