@@ -5,43 +5,20 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
+
   <div mat-dialog-content class="dialog-container">
-    <div class="item" (click)="selectAccountType('individual')">
+    <div
+      class="item"
+      *ngFor="let account of accountTypes"
+      (click)="selectAccountType(account.key)"
+    >
       <div>
-        <img src="../../../../../assets/images/create-account/individual2.svg" />
+        <img
+          src="../../../../../assets/images/create-account/{{ account.img }}"
+        />
       </div>
-      <div class="title">
-        {{ 'Individual Account' }}
-      </div>
-      <div class="sub-title">
-        {{ 'An account exclusively for one person, giving you full control.' }}
-      </div>
-    </div>
-    <div class="item" (click)="selectAccountType('joint')">
-      <div>
-        <img src="../../../../../assets/images/create-account/joint2.svg" />
-      </div>
-      <div class="title">
-        {{ 'Joint Account' }}
-      </div>
-      <div class="sub-title">
-        {{
-          'An account exclusively for one person, giving you full control to manage.'
-        }}
-      </div>
-    </div>
-    <div class="item" (click)="selectAccountType('minor')">
-      <div>
-        <img src="../../../../../assets/images/create-account/minor2.svg" />
-      </div>
-      <div class="title">
-        {{ 'Minor Account' }}
-      </div>
-      <div class="sub-title">
-        {{
-          'An account exclusively for one person, giving you full control to manage.'
-        }}
-      </div>
+      <div class="title">{{ account.title }}</div>
+      <div class="sub-title">{{ account.description }}</div>
     </div>
   </div>
 </div>

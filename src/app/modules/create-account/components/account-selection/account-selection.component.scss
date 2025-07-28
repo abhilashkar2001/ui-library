@@ -32,12 +32,13 @@
     }
 
     .title {
-      font-weight: '600';
-      font-style: 'Semi Bold';
+      font-weight: '700';
+      font-style: 'Bold';
       font-size: 16px;
       line-height: 24px;
       letter-spacing: 0%;
       text-align: center;
+      font-family: var(--ic-primary-font-family);
     }
 
     .sub-title {
