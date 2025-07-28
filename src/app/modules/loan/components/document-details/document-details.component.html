@@ -1,20 +1,28 @@
 <section
   fxLayout="column"
   fxLayoutAlign="space-between stretch"
-  style="height: 100vh; overflow: hidden; padding: 1rem"
+  (click)="$event.stopPropagation()"
+  style="min-height: 80vh; height: max-content; padding: 1rem"
 >
-  <!-- Header -->
-  <div>
-    <h2>Fetch Details</h2>
-  </div>
+  <div fxLayout="column" fxLayoutGap="20px">
+    <!-- Header with title and close button -->
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <h2>Fetch Details</h2>
+      <ic-button
+        type="icon"
+        icButtonType="ghost-basic"
+        icIcon="close"
+        customButtonClass="box-shadow-none"
+        (OnClick)="close()"
+      ></ic-button>
+    </div>
 
-  <!-- Form Section with scrolling -->
-  <div style="flex: 1 1 auto; overflow-y: auto">
-    <div fxLayout="row wrap" fxLayoutGap="10">
-      <div fxFlex="48.5" *ngFor="let item of flatControls">
+    <!-- Scrollable form section -->
+    <div class="field_container">
+      <div class="fields" *ngFor="let item of data">
         <ic-form-field
-          [label]="item.key"
-          [control]="item.group.get(item.key) | formcontrol"
+          [label]="item.label"
+          [control]="form.get(item.key) | formcontrol"
           [maxLength]="100"
           [icAlphabetOnly]="true"
         ></ic-form-field>
@@ -24,7 +32,7 @@
 
   <!-- Bottom Buttons -->
   <div>
-    <div fxLayout="row" fxLayoutGap="1%">
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1%">
       <ic-button
         [label]="'Cancel'"
         [type]="'button'"

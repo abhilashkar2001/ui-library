@@ -16,11 +16,6 @@ import { SharedService } from 'app/shared/services/shared.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { environment } from 'environments/environment';
 import { LoanService } from 'app/shared/services/loan/loan.service';
-import {
-  ContainerContextData,
-  SidenavService,
-} from 'app/shared/services/sidenav.service';
-import { DocumentDetailsComponent } from 'app/modules/loan/components/document-details/document-details.component';
 
 @Component({
   selector: 'app-custom-file-upload',
@@ -56,8 +51,6 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   noReqCheckListDocList: any;
   baseUrl = environment.microServiceURL;
   isChecklistDoc = false;
-  documentForm: FormGroup | undefined;
-
   extractedFields = [
   { label: 'Name', key: 'extractedName', value: 'Harish' },
   { label: 'Date of Birth', key: 'extractedDOB', value: '01-01-2000' },
@@ -68,10 +61,6 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
   { label: 'Branch', key: 'Branch', value: 'Banglore' },
   { label: 'IFSC Code', key: 'IFSC', value: 'UBINO005120' },
 ];
-
-
-
-
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
@@ -80,7 +69,6 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     private pyScanService: SharedService,
     private sessionStorageService: SessionStorageService,
     private loanService: LoanService,
-    private sidenavService: SidenavService,
   ) {}
 
   ngOnInit() {
@@ -157,7 +145,6 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
         documentDetails: this.createDocumentForm.value,
       });
     }
-    this.buildDocumentForm();
   }
 
   calculateDoc(data: any[], i: number) {
@@ -223,36 +210,6 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
     }
   }
 
-addOtherDocument(data?: any): void {
-  this.applicant().push(this.createOtherDocument(data));
-}
-
-createOtherDocument(data?: any): FormGroup {
-  const docType = data?.values ?? data?.document ?? '';
-  const controls: { [key: string]: any } = {
-    documentType: [docType],
-    docRequired: [true]
-  };
-
-  // Dynamically add controls from extractedFields
-  const uniqueFields = new Map();
-  this.extractedFields.forEach(field => {
-    if (!uniqueFields.has(field.key)) {
-      uniqueFields.set(field.key, true);
-      controls[field.key] = [data?.[field.key] ?? ''];
-    }
-  });
-
-  const formGroup = this.fb.group(controls);
-  console.log('Created FormGroup with the following controls:');
-  Object.keys(formGroup.controls).forEach(key => {
-    console.log(`Key: ${key}, Value:`, formGroup.get(key)?.value);
-  });
-
-  return formGroup;
-}
-
-
   applicant(): FormArray {
     return this.createDocumentForm?.get('applicants') as FormArray;
   }
@@ -280,22 +237,7 @@ createOtherDocument(data?: any): FormGroup {
     });
   }
 
-  fileBrowseHandler(docIndex: number, applicantIndex?: number): void {
-
-    const docArray = applicantIndex != null
-    ? this.getApplicantDocuments(applicantIndex)
-    : this.otherDocument();
-
-  const docGroup = docArray.at(docIndex);
-  const fileInfoCtrl = docGroup.get('fileInfo') as FormControl;
-
-  const existingFiles = fileInfoCtrl?.value || [];
-
-  // If document already exists, remove it first
-  if (existingFiles.length > 0) {
-    this.removeFile(docIndex, 0, applicantIndex); // Assuming one file at index 0
-  }
-
+  fileBrowseHandler(i: number, applicantIndex?: number): void {
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
     if (!this.isChecklistDoc) inputElement.accept = 'image/*';
@@ -309,7 +251,7 @@ createOtherDocument(data?: any): FormGroup {
         }
         this.selectedImage = file;
 
-        this.uploadImage(file, docIndex, applicantIndex);
+        this.uploadImage(file, i, applicantIndex);
       }
     });
 
@@ -643,31 +585,5 @@ createOtherDocument(data?: any): FormGroup {
     if (!alreadyExists) {
       otherDocArray.push(this.newDenom(data));
     }
-  }
-  get documentDetails() {
-    return this.documentForm?.get('documentDetails') as FormArray;
-  }
-  openSidePanel(doc: FormArray) {
-    const contextData: ContainerContextData = {
-      component: DocumentDetailsComponent,
-      data: doc,
-    };
-    this.sidenavService.open(contextData);
-  }
-
-  buildDocumentForm(data?: any) {
-    this.documentForm = this.fb.group({
-      id: [data?.id ?? ''],
-      documentDetails: this.fb.array([]),
-    });
-    this.addDocumentDetails();
-  }
-  addDocumentDetails(data?: any) {
-    const documentGroup = this.fb.group({
-      id: [data?.id ?? '10'],
-      DocumentName: [data?.DocumentName ?? 'Adhar'],
-      DocumentSzie: [data?.DocumentSzie ?? '345kb'],
-    });
-    this.documentDetails.push(documentGroup);
   }
 }
