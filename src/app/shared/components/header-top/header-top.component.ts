@@ -42,7 +42,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   openHelp = false;
   items = [
     {
-      label: 'create Account',
+      label: 'Account',
       route: '/origination/loan',
     },
     {
