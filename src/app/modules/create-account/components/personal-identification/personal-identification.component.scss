@@ -41,7 +41,8 @@
 
       .progress {
         height: 100%;
-        background-color: #004c97;
+        // background-color: #004c97;
+        background-color: var(--ic-text-theme);
         border-radius: 4px;
         transition: 0.5s all;
       }
@@ -84,6 +85,7 @@
   height: 78px;
 }
 .file-upload-text {
-  color: #004c97;
+  // color: #004c97;
+  color: var(--ic-text-theme);
   padding: 10px;
 }
