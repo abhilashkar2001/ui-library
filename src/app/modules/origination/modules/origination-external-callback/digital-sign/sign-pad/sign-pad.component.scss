@@ -41,7 +41,8 @@ mat-icon {
   align-items: flex-end;
   text-align: center;
   margin-top: 30px;
-  background-color: #f6faff;
+  // background-color: #f6faff;
+  background-color: var(--ic-card-bg-accent);
   padding: 7%;
 
   canvas {

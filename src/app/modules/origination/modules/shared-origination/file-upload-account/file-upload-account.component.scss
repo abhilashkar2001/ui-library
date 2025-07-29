@@ -2,7 +2,8 @@
   padding: 16px 8px;
   .medium_txt {
     font-weight: 600;
-    color: #1d2b4f;
+    // color: #1d2b4f;
+    color: var(--ic-text-theme);
   }
 
   .breadcrum_md {
@@ -61,7 +62,8 @@
 
         .progress {
           height: 100%;
-          background-color: #004c97;
+          // background-color: #004c97;
+          background-color: #e71b3c;
           border-radius: 4px;
           transition: 0.5s all;
         }
@@ -75,15 +77,14 @@
     }
   }
 }
-.fetched{
+.fetched {
   color: #000000;
   font-size: 18px;
 }
 
-
 .custom-add-btn {
-  border: 1px solid #004c97;
-  color: #004c97;
+  border: 1px solid #e71b3c;
+  color: var(--ic-text-theme);
   border-radius: 20px;
   width: 100px;
   padding: 6px 12px;
@@ -127,14 +128,14 @@
     background: #f5f6ff !important;
   }
 }
-.fetched-details{
-    background-color: white;
-    border-radius: 10px;
-    padding: 10px;
+.fetched-details {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
 }
-.fields{
+.fields {
   display: flex;
-  flex-direction:  column;
+  flex-direction: column;
 }
 .details-cont {
   display: grid;
@@ -142,25 +143,25 @@
   row-gap: 0.5rem;
   column-gap: 1rem;
 }
-.label{
+.label {
   color: #525252;
   font-size: 12px;
 }
-.value{
+.value {
   color: #161616;
   font-size: 16px;
 }
-.text-container{
+.text-container {
   display: flex;
   gap: 10px;
 }
-.drag-drop{
-  border: 1px dashed #8D8D8D;
+.drag-drop {
+  border: 1px dashed #8d8d8d;
   width: 632px;
   height: 78px;
 }
-.file-upload-text{
-  color: #004C97;
+.file-upload-text {
+  // color: #004c97;
+  color: var(--ic-text-theme);
   padding: 10px;
 }
-

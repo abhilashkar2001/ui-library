@@ -1,10 +1,11 @@
 .document-panel {
   .styled-panel {
     &.panel-opened {
-      border-left: 3px solid #004c97;
+      border-left: 3px solid #e71b3c;
     }
     .fileUpload {
-      background-color: #f6faff;
+      // background-color: #f6faff;
+      background-color: var(--ic-card-bg-accent);
     }
     border-bottom: 1.5px solid #c6c6c6;
     .panel-header {

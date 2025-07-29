@@ -30,8 +30,8 @@
               completedSteps.has(i)
                 ? 'assets/images/tickicon.svg'
                 : i === allowedPanelIndex
-                  ? 'assets/images/progresstick.svg'
-                  : 'assets/images/untickicon.svg'
+                  ? 'assets/images/progress-tick-dtb.svg'
+                  : 'assets/images/untick-dtb.svg'
             "
             class="step-icon"
             alt="tick"
@@ -67,8 +67,8 @@
               completedSteps.has(i)
                 ? 'assets/images/tickicon.svg'
                 : i === allowedPanelIndex
-                  ? 'assets/images/progresstick.svg'
-                  : 'assets/images/untickicon.svg'
+                  ? 'assets/images/progress-tick-dtb.svg'
+                  : 'assets/images/untick-dtb.svg'
             "
             class="step-icon"
             alt="tick"
@@ -89,7 +89,7 @@
               <ic-button
                 [label]="'Edit'"
                 [type]="'button'"
-                icButtonType="ghost-rounded-neutral"
+                icButtonType="ghost-neutral"
                 size="medium"
                 (OnClick)="editComponent(i)"
               >
@@ -99,14 +99,14 @@
               <ic-button
                 [label]="'Back'"
                 [type]="'button'"
-                icButtonType="ghost-rounded-danger"
+                icButtonType="ghost-danger"
                 size="medium"
               >
               </ic-button>
             </div>
             <div>
               <ic-button
-                [icButtonType]="'filled-rounded'"
+                [icButtonType]="'filled'"
                 [label]="'Next'"
                 [type]="'submit'"
                 size="medium"
