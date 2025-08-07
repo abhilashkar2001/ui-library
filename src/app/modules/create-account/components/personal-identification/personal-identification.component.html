@@ -61,7 +61,7 @@
             <!--front Side-->
             <mat-tab label="Front Side">
               <div fxLayout="column">
-                <div class="upload-section" *ngIf="!getFileInfo()">
+                <div class="upload-section" *ngIf="getFileInfo()?.length === 0">
                   <span class="medium_txt">Upload files</span>
                   <p class="breadcrum_md">
                     Max file size is 500kb. Supported file types are .jpg and
@@ -90,11 +90,11 @@
                     </div>
                     <div class="img_container" fxFlex="69" fxLayout="row wrap">
                       <ng-container
-                        *ngFor="let data of getOcrData(); let j = index"
+                        *ngFor="let data of getOcrData()?.value; let j = index"
                       >
                         <div fxFlex="25" fxLayout="column" fxLayoutGap="10">
                           <div class="theme_sm">{{ data?.label }}</div>
-                          <div class="img_name">{{ data?.values }}</div>
+                          <div class="img_name">{{ data?.value }}</div>
                         </div>
                       </ng-container>
                     </div>
@@ -108,6 +108,7 @@
                         label="Edit"
                         size="small"
                         customButtonClass="outlined-danger"
+                        (OnClick)="openSidePanel(getOcrData()?.value)"
                       ></ic-button>
                       <ic-button
                         label="Re-scan"
@@ -123,7 +124,7 @@
             <!--Back Side-->
             <mat-tab label="Back Side">
               <div fxLayout="column">
-                <div class="upload-section" *ngIf="!getFileInfo()">
+                <div class="upload-section" *ngIf="getFileInfo()?.length === 0">
                   <span class="medium_txt">Upload files</span>
                   <p class="breadcrum_md">
                     Max file size is 500kb. Supported file types are .jpg and
@@ -152,11 +153,11 @@
                     </div>
                     <div class="img_container" fxFlex="69" fxLayout="row wrap">
                       <ng-container
-                        *ngFor="let data of getOcrData(); let j = index"
+                        *ngFor="let data of getOcrData()?.value; let j = index"
                       >
                         <div fxFlex="25" fxLayout="column" fxLayoutGap="10">
                           <div class="theme_sm">{{ data?.label }}</div>
-                          <div class="img_name">{{ data?.values }}</div>
+                          <div class="img_name">{{ data?.value }}</div>
                         </div>
                       </ng-container>
                     </div>
@@ -170,6 +171,7 @@
                         label="Edit"
                         size="small"
                         customButtonClass="outlined-danger"
+                        (OnClick)="openSidePanel(getOcrData()?.value)"
                       ></ic-button>
                       <ic-button
                         label="Re-scan"
@@ -430,7 +432,10 @@
                   <!--front Side-->
                   <mat-tab label="Front Side">
                     <div fxLayout="column">
-                      <div class="upload-section" *ngIf="!getFileInfo(i)">
+                      <div
+                        class="upload-section"
+                        *ngIf="getFileInfo(i)?.length === 0"
+                      >
                         <span class="medium_txt">Upload files</span>
                         <p class="breadcrum_md">
                           Max file size is 500kb. Supported file types are .jpg
@@ -466,7 +471,10 @@
                             fxLayout="row wrap"
                           >
                             <ng-container
-                              *ngFor="let data of getOcrData(i); let j = index"
+                              *ngFor="
+                                let data of getOcrData(i)?.value;
+                                let j = index
+                              "
                             >
                               <div
                                 fxFlex="25"
@@ -474,7 +482,7 @@
                                 fxLayoutGap="10"
                               >
                                 <div class="theme_sm">{{ data?.label }}</div>
-                                <div class="img_name">{{ data?.values }}</div>
+                                <div class="img_name">{{ data?.value }}</div>
                               </div>
                             </ng-container>
                           </div>
@@ -488,6 +496,7 @@
                               label="Edit"
                               size="small"
                               customButtonClass="outlined-danger"
+                              (OnClick)="openSidePanel(getOcrData(i)?.value, i)"
                             ></ic-button>
                             <ic-button
                               label="Re-scan"
@@ -503,7 +512,10 @@
                   <!--Back Side-->
                   <mat-tab label="Back Side">
                     <div fxLayout="column">
-                      <div class="upload-section" *ngIf="!getFileInfo(i)">
+                      <div
+                        class="upload-section"
+                        *ngIf="getFileInfo(i)?.length === 0"
+                      >
                         <span class="medium_txt">Upload files</span>
                         <p class="breadcrum_md">
                           Max file size is 500kb. Supported file types are .jpg
@@ -539,7 +551,10 @@
                             fxLayout="row wrap"
                           >
                             <ng-container
-                              *ngFor="let data of getOcrData(i); let j = index"
+                              *ngFor="
+                                let data of getOcrData(i)?.value;
+                                let j = index
+                              "
                             >
                               <div
                                 fxFlex="25"
@@ -547,7 +562,7 @@
                                 fxLayoutGap="10"
                               >
                                 <div class="theme_sm">{{ data?.label }}</div>
-                                <div class="img_name">{{ data?.values }}</div>
+                                <div class="img_name">{{ data?.value }}</div>
                               </div>
                             </ng-container>
                           </div>
@@ -561,6 +576,7 @@
                               label="Edit"
                               size="small"
                               customButtonClass="outlined-danger"
+                              (OnClick)="openSidePanel(getOcrData(i)?.value, i)"
                             ></ic-button>
                             <ic-button
                               label="Re-scan"

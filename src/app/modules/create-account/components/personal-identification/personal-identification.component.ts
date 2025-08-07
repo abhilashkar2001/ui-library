@@ -10,10 +10,15 @@ import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DmsService } from '@onerumango/utils';
+import { DocumentDetailsComponent } from 'app/modules/loan/components/document-details/document-details.component';
 import { FaceScanComponent } from 'app/shared/components/face-scan/face-scan.component';
 import { FingerprintScanComponent } from 'app/shared/components/fingerprint-scan/fingerprint-scan.component';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { SharedService } from 'app/shared/services/shared.service';
+import {
+  ContainerContextData,
+  SidenavService,
+} from 'app/shared/services/sidenav.service';
 
 @Component({
   selector: 'app-personal-identification',
@@ -43,16 +48,16 @@ export class PersonalIdentificationComponent implements OnInit {
   ocrData: any[] = [
     {
       label: 'Full Name',
-      values: 'Vikas Kumar',
+      value: 'Vikas Kumar',
     },
     {
       label: 'Aadhar Number',
-      values: '8884 - 6878 -2748',
+      value: '8884 - 6878 -2748',
     },
-    { label: 'Date of Birth', values: '10/8/1991' },
-    { label: 'Gender', values: 'Male' },
-    { label: 'State', values: 'Bihar' },
-    { label: 'PinCode', values: '852218' },
+    { label: 'Date of Birth', value: '10/8/1991' },
+    { label: 'Gender', value: 'Male' },
+    { label: 'State', value: 'Bihar' },
+    { label: 'PinCode', value: '852218' },
   ];
 
   constructor(
@@ -62,6 +67,7 @@ export class PersonalIdentificationComponent implements OnInit {
     private pyScanService: SharedService,
     private sessionStorageService: SessionStorageService,
     private dialog: MatDialog,
+    private sidenavService: SidenavService,
   ) {
     const type = localStorage.getItem('account-type');
     this.customeSelected = type ?? null;
@@ -158,15 +164,15 @@ export class PersonalIdentificationComponent implements OnInit {
         ? this.getApplicantDocuments(applicantIndex)
         : this.otherDocument;
 
-    const docGroup = docArray;
-    const fileInfoCtrl =
+    let fileInfoCtrl =
       this.tabIndex == 0
-        ? (docGroup.get('frontSide')?.get('fileInfo') as FormControl)
-        : (docGroup.get('backSide')?.get('fileInfo') as FormControl);
-    const docIdsCtrl =
+        ? (docArray.get('frontSide')?.get('fileInfo') as FormControl)
+        : (docArray.get('backSide')?.get('fileInfo') as FormControl);
+
+    let docIdsCtrl =
       this.tabIndex == 0
-        ? (docGroup.get('frontSide')?.get('docIds') as FormControl)
-        : (docGroup.get('backSide')?.get('docIds') as FormControl);
+        ? (docArray.get('frontSide')?.get('docIds') as FormControl)
+        : (docArray.get('backSide')?.get('docIds') as FormControl);
 
     const files: any[] = fileInfoCtrl?.value || [];
     const docIds: any[] = docIdsCtrl?.value || [];
@@ -251,7 +257,7 @@ export class PersonalIdentificationComponent implements OnInit {
           : (currentDoc?.backSide?.docIds?.length ?? 0)) + 1,
       fileName: file.name,
       fileType: file.type,
-      verificationType: 'kyc',
+      verificationType: 'WEB',
     };
 
     formData.append('data', JSON.stringify(data));
@@ -476,29 +482,81 @@ export class PersonalIdentificationComponent implements OnInit {
   getFileInfo(applicantIndex?: number) {
     if (applicantIndex != null) {
       return this.tabIndex == 0
-        ? this.personalIdentificationForm.get('frontSide')?.get('fileInfo')
-            ?.value
-        : this.personalIdentificationForm.get('backSide')?.get('fileInfo')
-            ?.value;
+        ? (this.personalIdentificationForm.get('frontSide')?.get('fileInfo')
+            ?.value ?? [])
+        : (this.personalIdentificationForm.get('backSide')?.get('fileInfo')
+            ?.value ?? []);
     }
 
     return this.tabIndex == 0
-      ? this.otherDocument.get('frontSide')?.get('fileInfo')?.value
-      : this.otherDocument.get('backSide')?.get('fileInfo')?.value;
+      ? (this.otherDocument.get('frontSide')?.get('fileInfo')?.value ?? [])
+      : (this.otherDocument.get('backSide')?.get('fileInfo')?.value ?? []);
   }
 
+  /**
+   * To get the OCR data
+   * @param applicantIndex
+   * @returns
+   */
   getOcrData(applicantIndex?: number) {
     if (applicantIndex != null) {
       return this.tabIndex == 0
         ? this.personalIdentificationForm.get('frontSide')?.get('ocrData')
-            ?.value
-        : this.personalIdentificationForm.get('backSide')?.get('ocrData')
-            ?.value;
+        : this.personalIdentificationForm.get('backSide')?.get('ocrData');
     }
 
     return this.tabIndex == 0
-      ? this.otherDocument.get('frontSide')?.get('ocrData')?.value
-      : this.otherDocument.get('backSide')?.get('ocrData')?.value;
+      ? this.otherDocument.get('frontSide')?.get('ocrData')
+      : this.otherDocument.get('backSide')?.get('ocrData');
+  }
+
+  /**
+   * To open the side panel for document details editing
+   * @param doc
+   * @param idx
+   */
+  openSidePanel(doc: any, idx?: number) {
+    const contextData: ContainerContextData = {
+      component: DocumentDetailsComponent,
+      data: doc,
+    };
+    const { componentRef } = this.sidenavService.openCustom(contextData);
+
+    if (componentRef) {
+      (
+        componentRef.instance as DocumentDetailsComponent
+      ).documentSubmit.subscribe((data: any) => {
+        const orc = this.ocrData.reduce((acc, item) => {
+          const key = this.convertLabel(item.label);
+          const value = data[key];
+          if (value) {
+            acc.push({
+              label: item.label,
+              value: value,
+            });
+          }
+          return acc;
+        }, []);
+        this.ocrData = [...orc];
+        if (idx !== null) {
+          this.getOcrData(idx)?.setValue(orc);
+        } else {
+          this.getOcrData()?.setValue(orc);
+        }
+        this.cdr.detectChanges();
+      });
+    }
+  }
+
+  /**
+   * To convert label to a suitable format
+   * @param label
+   * @returns
+   */
+  convertLabel(label: string): string {
+    return label?.includes(' ')
+      ? label?.toLowerCase().replace(/\s+/g, '')
+      : label?.toLowerCase();
   }
 
   /**

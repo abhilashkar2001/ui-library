@@ -27,6 +27,19 @@ export class SidenavService {
     return this.panel?.open();
   }
 
+  openCustom(containerData: ContainerContextData) {
+    this.vcr?.clear();
+    const componentRef = this.vcr?.createComponent(containerData?.component);
+    if (componentRef && containerData.data !== undefined) {
+      componentRef.setInput('data', containerData.data);
+    }
+
+    return {
+      componentRef,
+      panelPromise: this.panel?.open(),
+    };
+  }
+
   close() {
     this.vcr?.clear();
     return this.panel?.close();
