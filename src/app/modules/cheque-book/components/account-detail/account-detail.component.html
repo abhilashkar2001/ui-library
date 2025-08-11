@@ -1,0 +1,20 @@
+<div *ngIf="customerId">
+  <app-custom-account-details></app-custom-account-details>
+</div>
+<div class="select-account">
+  <div class="account-txt">
+    Click “Select Account” to choose your registered email or mobile number for
+    receiving a secure verification link. This link is essential to complete the
+    next steps, including a real-time face liveliness check and submitting your
+    digital signature. Ensure the selected account is accessible and up to date
+    to prevent delays. If no valid contact is available, please get in touch
+    with support for assistance.
+  </div>
+  <ic-button
+    [icButtonType]="'filled-rounded'"
+    label="Select Account"
+    size="medium"
+    type="submit"
+    (OnClick)="openAccountType()"
+  ></ic-button>
+</div>

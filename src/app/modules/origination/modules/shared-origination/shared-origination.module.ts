@@ -64,7 +64,8 @@ const components = [
   TopPerformingComponent,
   WebDocUploadComponent,
   ViewLoanDocComponent,
-  FileUploadAccountComponent
+  FileUploadAccountComponent,
+  CustomFileUploadComponent,
 ];
 
 @NgModule({

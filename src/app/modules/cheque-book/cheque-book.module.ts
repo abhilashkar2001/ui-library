@@ -17,6 +17,9 @@ import { SharedModule } from 'app/shared/shared.module';
 import { DynamicPagesModule } from '../origination/modules/dynamic-pages/dynamic-pages.module';
 import { OriginationExternalCallbackModule } from '../origination/modules/origination-external-callback/origination-external-callback.module';
 import { SharedOriginationModule } from '../origination/modules/shared-origination/shared-origination.module';
+import { AccountDetailComponent } from './components/account-detail/account-detail.component';
+import { AccountTypeComponent } from './components/account-type/account-type.component';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +28,8 @@ import { SharedOriginationModule } from '../origination/modules/shared-originati
     AccountServiceComponent,
     ChequeBookDetailsComponent,
     PaymentDetailsComponent,
+    AccountDetailComponent,
+    AccountTypeComponent
   ],
   imports: [
     CommonModule,

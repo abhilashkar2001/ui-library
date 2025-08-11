@@ -25,6 +25,7 @@ import { GenericAccountFormComponent } from './components/personal-details/gener
 import { DynamicPagesModule } from '../origination/modules/dynamic-pages/dynamic-pages.module';
 import { EmpFinDetailsComponent } from './components/emp-fin-details/emp-fin-details.component';
 import { GenericEmpFinDetailsComponent } from './components/emp-fin-details/generic-emp-fin-details/generic-emp-fin-details.component';
+import { CustomAccountDetailsComponent } from '../origination/modules/shared-origination/custom-account-details/custom-account-details.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { GenericEmpFinDetailsComponent } from './components/emp-fin-details/gene
     GenericAccountFormComponent,
     EmpFinDetailsComponent,
     GenericEmpFinDetailsComponent,
+    CustomAccountDetailsComponent
   ],
   imports: [
     CommonModule,
