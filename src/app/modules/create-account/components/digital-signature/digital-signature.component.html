@@ -1,4 +1,31 @@
 <section fxFlex="100" fxLayout="column" fxLayoutGap="2%">
+  <div class="sendLink-cont">
+    <div>
+      <p>
+        As the next step in the Business Loan process, each Director of the
+        company will receive a secure verification link sent to their registered
+        email address or mobile number. Once you click 
+        <span
+          style="
+            color: var(--ic-text-theme, #0033a1);
+            text-decoration: underline;
+          "
+          > ‘Send Link’ </span
+        >
+        button below, a secure verification link will be sent to each Director’s
+        registered email ID or mobile number. Each Director will be required to
+        complete <span style="font-weight:bold">a face liveliness check</span> using a real-time selfie
+        and <span style="font-weight:bold">provide their signature</span> by either uploading it or signing digitally
+        in the provided field.
+      </p>
+    </div>
+    <ic-button
+      type="submit"
+      icButtonType="filled-rounded"
+      label="Send Link"
+      customButtonClass="box-shadow-none"
+    ></ic-button>
+  </div>
   <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
     <div fxFlex="49" fxLayout="row" fxLayoutAlign="space-between center">
       <div fxLayout="column">
@@ -29,7 +56,7 @@
         (click)="download()"
         (keydown.enter)="openSignPopup()"
         tabindex="0"
-        ><u>download</u></span
+        ><u>Download</u></span
       >
     </div>
   </div>
