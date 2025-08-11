@@ -5,6 +5,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 // import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.compone/nt';
 
 export const rootRouterConfig: Routes = [
+ 
   {
     path: '',
     redirectTo: 'home',
@@ -57,6 +58,19 @@ export const rootRouterConfig: Routes = [
         loadChildren: () =>
           import('./modules/create-account/create-account.module').then(
             (m) => m.CreateAccountModule,
+          ),
+      },
+    ],
+  },
+  {
+    path: 'cheque-book',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/cheque-book/cheque-book.module').then(
+            (m) => m.ChequeBookModule,
           ),
       },
     ],
