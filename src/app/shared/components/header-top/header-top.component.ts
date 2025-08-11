@@ -19,6 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { TokenStorageService } from '@onerumango/utils';
 import { HelpCenterService } from 'app/shared/services/helpCenter.service';
+import { ThemeConfigService } from '@onerumango/icust-element-library';
 
 @Component({
   selector: 'app-header-top',
@@ -42,6 +43,10 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
   openHelp = false;
   items = [
     {
+      label: 'Cheque',
+      route: '/origination/loan',
+    },
+    {
       label: 'Account',
       route: '/origination/loan',
     },
@@ -50,6 +55,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
       route: '/origination/loan',
     },
   ];
+  brandToggler: string;
 
   constructor(
     private layout: LayoutService,
@@ -62,6 +68,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     private domSanitizer: DomSanitizer,
     private tokenStorageService: TokenStorageService,
     private helpCenterService: HelpCenterService,
+    private themeConfiguration: ThemeConfigService,
   ) {
     this.matIconRegistry.addSvgIcon(
       `menu-icon`,
@@ -69,6 +76,7 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
         'assets/images/menu_web.svg',
       ),
     );
+    this.brandToggler = this.themeConfiguration.theme;
   }
 
   ngOnInit() {
@@ -138,9 +146,13 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
     let type = '';
     if (item.label.toLowerCase().includes('loan')) {
       type = 'Lending';
-    } else if (item.label.toLowerCase().includes('create account')) {
+    } else if (item.label.toLowerCase().includes('account')) {
       type = 'Account';
+    } else if (item.label.toLowerCase().includes('cheque')) {
+      type = 'Cheque';
     }
+    console.log(type);
+
     this.router.navigate([item.route], {
       queryParams: { type: type },
     });

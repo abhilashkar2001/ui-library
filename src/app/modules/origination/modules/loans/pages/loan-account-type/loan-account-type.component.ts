@@ -12,6 +12,7 @@ import { ProductState } from '../../../../../../shared/models/router-state.model
   styleUrls: ['./loan-account-type.component.scss'],
 })
 export class LoanAccountTypeComponent implements OnInit {
+  // @Input() type: string | any;
   basisClass: string | any;
   subLoanList: any = [];
   isShowCalculator = false;
@@ -51,11 +52,13 @@ export class LoanAccountTypeComponent implements OnInit {
   }
 
   async customApply(event: any) {
+    console.log(this.category);
+
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
       if (
-        this.category === 'Accounts' &&
+        (this.category === 'Accounts' || this.category === 'Cheque') &&
         this.basisClass == 'CURRENT ACCOUNT'
       ) {
         this.basisClass = event.subClass;
@@ -66,10 +69,20 @@ export class LoanAccountTypeComponent implements OnInit {
           backdropClass: 'confirmDialogComponent',
           hasBackdrop: true,
           disableClose: true,
-          data: { category: this.category, basisClass: this.basisClass },
+          data: {
+            category: this.category,
+            basisClass: this.basisClass,
+          },
         });
         dialogRef.afterClosed().subscribe((res) => {
           console.log(res);
+          if (this.category === 'Cheque') {
+            this.sessionStorageService.setItem('category', this.category);
+            this.sessionStorageService.setItem('basisClass', this.basisClass);
+            this.router.navigate(['/cheque-book/stages']);
+          } else {
+            this.goToLogin();
+          }
         });
       } else if (
         this.category == 'Accounts' &&
