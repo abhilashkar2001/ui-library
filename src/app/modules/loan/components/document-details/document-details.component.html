@@ -22,9 +22,9 @@
       <div class="fields" *ngFor="let item of data">
         <ic-form-field
           [label]="item.label"
-          [control]="form.get(item.key) | formcontrol"
+          [control]="form.get(convertLabel(item.label)) | formcontrol"
           [maxLength]="100"
-          [icAlphabetOnly]="true"
+          [icAlphaNumericWithSpace]="true"
         ></ic-form-field>
       </div>
     </div>
@@ -38,7 +38,7 @@
         [type]="'button'"
         icButtonType="ghost-rounded-neutral"
         size="medium"
-        (OnClick)="editDetails()"
+        (OnClick)="close()"
       ></ic-button>
 
       <ic-button
