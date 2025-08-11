@@ -9,7 +9,11 @@
       >
         <img
           alt="logo"
-          src="assets/images/stanbic_horizontal_white.svg"
+          [src]="
+            brandToggler === 'ruby'
+              ? 'assets/images/dtblogo_name.svg'
+              : 'assets/images/stanbic_horizontal_white.svg'
+          "
           style="width: 100%"
         />
       </div>

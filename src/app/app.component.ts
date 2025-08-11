@@ -8,6 +8,7 @@ import {
 } from './shared/services/theme-change.service';
 import { RoutingState } from './shared/helpers/routingState';
 import { LoadingService, RoutePartsService } from '@onerumango/utils';
+import { ThemeConfigService } from '@onerumango/icust-element-library';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,9 @@ export class AppComponent implements OnInit {
     private themeChangeService: ThemeChangeService,
     private routingState: RoutingState,
     private _loaderService: LoadingService,
+    private themeConfiguration: ThemeConfigService,
   ) {
+    this.themeConfiguration.setTheme('ruby');
     this.listOfThemeColors = this.themeChangeService.themeColors;
 
     this.themeChangeService.setCurrentTheme(

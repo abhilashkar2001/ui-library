@@ -29,12 +29,14 @@ export class LoansLandingComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.type = params['type'] || 'Account';
+      console.log(this.type);
+
       this.updateLandingContent();
     });
   }
 
   updateLandingContent(): void {
-    if (this.type === 'Account') {
+    if (this.type === 'Account' || this.type === 'Cheque') {
       this.imageUrl = 'assets/images/account_landing.svg';
       this.profileHeader =
         'Savings Made Simple: Open Your Account in 3 Easy Steps';
@@ -70,7 +72,10 @@ export class LoansLandingComponent implements OnInit {
 
   customApplyLoan(e: any) {
     this.router.navigate(['/origination/loan/loan-type'], {
-      queryParams: { subClass: e, category: this.category },
+      queryParams: {
+        subClass: e,
+        category: this.type === 'Cheque' ? this.type : this.category,
+      },
     });
   }
 

@@ -1,1 +1,120 @@
-<p>cheque-book-stages works!</p>
+<div class="stepper-card">
+  <div class="stepper-header">
+    <h3 class="theme_lg">
+      {{ category == 'CURRENT ACCOUNT' ? 'Cheque Book' : 'Corporate Account' }}
+    </h3>
+    <span class="header_md"
+      >"Get your
+      {{
+        category == 'CURRENT ACCOUNT' ? 'Savings account' : 'Corporate account'
+      }}
+      in just {{ componentMapping.size }} steps"</span
+    >
+  </div>
+
+  <div class="progress-wrapper">
+    <div class="progress-line">
+      <div
+        class="progress-fill"
+        [style.width.%]="(completedSteps.size / componentMapping.size) * 100"
+      ></div>
+    </div>
+
+    <div class="step-icon-wrapper">
+      <ng-container *ngFor="let step of componentMapping | map; let i = index">
+        <div class="step-icon-container" fxLayoutGap="10" fxLayout="row">
+          <img
+            [src]="
+              completedSteps.has(i)
+                ? 'assets/images/tickicon.svg'
+                : i === allowedPanelIndex
+                  ? 'assets/images/progress-tick-dtb.svg'
+                  : 'assets/images/untick-dtb.svg'
+            "
+            class="step-icon"
+            alt="tick"
+          />
+          <div>
+            <div class="step-label">{{ step.screenName }}</div>
+            <div class="step-sub-label">Stage {{ i + 1 }}</div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<mat-accordion>
+  <ng-container *ngIf="componentMapping">
+    <div class="document-panel container">
+      <mat-expansion-panel
+        class="styled-panel"
+        [ngClass]="{ 'panel-opened': activePanels().has(i) }"
+        *ngFor="let panel of componentMapping | map; let i = index"
+        (closed)="onPanelClosed(i)"
+        (opened)="onPanelOpened(i, panel.screenName, panel.screenCode)"
+      >
+        <mat-expansion-panel-header
+          class="panel-header"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          fxLayoutGap="10px"
+        >
+          <img
+            [src]="
+              completedSteps.has(i)
+                ? 'assets/images/tickicon.svg'
+                : i === allowedPanelIndex
+                  ? 'assets/images/progress-tick-dtb.svg'
+                  : 'assets/images/untick-dtb.svg'
+            "
+            class="step-icon"
+            alt="tick"
+          />
+          <span class="spacing-panel">{{ panel.screenName }}</span>
+        </mat-expansion-panel-header>
+        <div fxLayout="column">
+          <ng-template #container></ng-template>
+
+          <div
+            fxFlex="100"
+            fxLayout="row"
+            fxLayoutAlign="end center"
+            fxLayoutGap="1%"
+            style="margin-top: 50px"
+          >
+            <div *ngIf="panel.screenName === 'Account Details'">
+              <ic-button
+                [label]="'Edit'"
+                [type]="'button'"
+                icButtonType="ghost-neutral"
+                size="medium"
+                (OnClick)="editComponent(i)"
+              >
+              </ic-button>
+            </div>
+            <div>
+              <ic-button
+                [label]="'Back'"
+                [type]="'button'"
+                icButtonType="ghost-danger"
+                size="medium"
+              >
+              </ic-button>
+            </div>
+            <div>
+              <ic-button
+                [icButtonType]="'filled'"
+                [label]="'Next'"
+                [type]="'submit'"
+                size="medium"
+                (click)="saveComponent(i)"
+              >
+              </ic-button>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+  </ng-container>
+</mat-accordion>
