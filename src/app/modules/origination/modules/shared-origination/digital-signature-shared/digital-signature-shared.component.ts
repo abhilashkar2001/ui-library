@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { SignatureSharedPopupComponent } from './signature-popup-shared/signature-popup.component';
+import { SignatureSharedPopupComponent } from './signature-popup-shared/signature-popup-shared.component';
 // import { AccountSignaturePopupComponent } from './signature-popup/signature-popup.component';
 
 @Component({

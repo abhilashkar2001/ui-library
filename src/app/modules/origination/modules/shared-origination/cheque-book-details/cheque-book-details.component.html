@@ -47,7 +47,8 @@
       <div
         class="service-cont"
         [ngClass]="
-          chequeBookForm?.get('deliveryAddress')?.value === 'Communication Address'
+          chequeBookForm?.get('deliveryAddress')?.value ===
+          'Communication Address'
             ? 'active'
             : ''
         "
@@ -62,7 +63,8 @@
       <div
         class="service-cont"
         [ngClass]="
-          chequeBookForm?.get('deliveryAddress')?.value != 'Communication Address'
+          chequeBookForm?.get('deliveryAddress')?.value !=
+          'Communication Address'
             ? 'active'
             : ''
         "

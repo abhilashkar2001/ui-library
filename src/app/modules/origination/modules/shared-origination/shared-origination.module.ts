@@ -40,7 +40,7 @@ import { CustomFileUploadComponent } from './custom-file-upload/custom-file-uplo
 import { FileUploadAccountComponent } from './file-upload-account/file-upload-account.component';
 import { ChequeBookDetailsComponent } from './cheque-book-details/cheque-book-details.component';
 import { DigitalSignatureSharedComponent } from './digital-signature-shared/digital-signature-shared.component';
-import { SignatureSharedPopupComponent } from './digital-signature-shared/signature-popup-shared/signature-popup.component';
+import { SignatureSharedPopupComponent } from './digital-signature-shared/signature-popup-shared/signature-popup-shared.component';
 import { SignPadComponent } from '../origination-external-callback/digital-sign/sign-pad/sign-pad.component';
 
 const components = [
