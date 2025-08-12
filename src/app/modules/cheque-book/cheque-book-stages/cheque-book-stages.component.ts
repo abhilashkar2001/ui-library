@@ -284,6 +284,14 @@ export class ChequeBookStagesComponent implements OnInit {
               sequence: 9,
               screenValue: 'W1BUDE',
             },
+            {
+              screenCode: 498,
+              screenName: 'Bussiness Details',
+              route: null,
+              fileUrl: null,
+              sequence: 10,
+              screenValue: 'W1BUDE',
+            },
           ]
         : [
             {

@@ -1,13 +1,56 @@
-<div class="layout-wrapper">
-  <app-header-top></app-header-top>
-  <mat-sidenav-container>
-    <div class="layout-content">
-      <router-outlet></router-outlet>
-    </div>
-
+<div>
+  <app-header-top> </app-header-top>
+  <mat-sidenav-container
+    [hasBackdrop]="true"
+    class="app-admin-container fixed-topbar"
+  >
     <app-footer (scrollToTop)="scrollToTop()"></app-footer>
-    <mat-sidenav position="end" #sidenavPanel>
-      <ng-template #sidenavContainer></ng-template>
+    <!-- BEIGN:LEFT DRAWER -->
+    <mat-sidenav
+      class="sidenav"
+      fixedInViewport="true"
+      #mainPanel
+      mode="over"
+      class=""
+      id="panelOne"
+    >
+      <div class="nofication-panel" fxLayout="column">
+        <!-- <app-notifications [mainMenuPanel]="mainPanel"></app-notifications> -->
+      </div>
     </mat-sidenav>
+    <!-- END:LEFT DRAWER -->
+
+    <mat-sidenav-content>
+      <!-- BEGIN:HEADER -->
+      <!-- <ic-header-top
+        [mainMenuPanel]="mainPanel"
+        [notificPanel]="notifyPanel"
+      ></ic-header-top> -->
+      <!-- END:HEADER -->
+      <!-- BEGIN:ROUTER -->
+      <div class="layout-content">
+        <router-outlet></router-outlet>
+      </div>
+      <!-- END:ROUTER -->
+    </mat-sidenav-content>
+
+    <!-- BEIGN:RIGHT DRAWER -->
+    <mat-sidenav
+      #notifyPanel
+      mode="over"
+      position="end"
+      class="right_sidenav m-0"
+      [autoFocus]="false"
+      style="
+        background-color: #fff;
+        border-radius: 12px 0 0 12px;
+        padding: 64px 1rem 1rem;
+      "
+      [ngStyle]="{width: sidenavWidth,backgroundColor: sidenavBgColor}"
+    >
+      <!-- <app-notifications [notificPanel]="notifyPanel"></app-notifications> -->
+      <ng-container #dynamicContent></ng-container>
+    </mat-sidenav>
+    <!-- BEIGN:RIGHT DRAWER -->
   </mat-sidenav-container>
 </div>
