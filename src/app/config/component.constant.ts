@@ -55,7 +55,7 @@ export interface AccountComponentMap {
   'Document Upload': AccountDocumentUploadComponent;
   'Personal Identification': PersonalIdentificationComponent;
   'Personal Details': AccountPersonalDetailsComponent;
-  Summary: AccountSummaryComponent;
+  'Summary': AccountSummaryComponent;
   'Digital Signature': AccountDigitalSignatureComponent;
   'Bussiness Details': BusinessDetailsComponent;
   'Director Document Upload': DocumentUploadComponent;
@@ -73,7 +73,7 @@ export const AccountComponentConstant: {
   'Document Upload': AccountDocumentUploadComponent,
   'Personal Identification': PersonalIdentificationComponent,
   'Personal Details': AccountPersonalDetailsComponent,
-  Summary: AccountSummaryComponent,
+  'Summary': AccountSummaryComponent,
   'Digital Signature': AccountDigitalSignatureComponent,
   'Bussiness Details': BusinessDetailsComponent,
   'Director Document Upload': DocumentUploadComponent,

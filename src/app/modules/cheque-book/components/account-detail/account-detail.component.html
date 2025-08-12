@@ -1,7 +1,7 @@
 <div *ngIf="customerId">
   <app-custom-account-details></app-custom-account-details>
 </div>
-<div class="select-account">
+<div class="select-account"  *ngIf="!accounts || accounts.length === 0">
   <div class="account-txt">
     Click “Select Account” to choose your registered email or mobile number for
     receiving a secure verification link. This link is essential to complete the
@@ -18,3 +18,66 @@
     (OnClick)="openAccountType()"
   ></ic-button>
 </div>
+
+<mat-expansion-panel *ngFor="let account of accounts; let i = index">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ account.title }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="account-details" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+    <div fxFlex="24">
+      <ic-select
+        [control]="accountDetailsForm.get('accountBranch') | formcontrol"
+        [options]="branches"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Account Branch"
+      ></ic-select>
+    </div>
+    <div fxFlex="24">
+      <ic-select
+        [control]="accountDetailsForm.get('accountCurrency') | formcontrol"
+        [options]="branches"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Account Currency"
+      ></ic-select>
+    </div>
+    <div fxFlex="24">
+      <ic-select
+        [control]="accountDetailsForm.get('holderType') | formcontrol"
+        [options]="branches"
+        bindLabelKey="label"
+        bindValueKey="value"
+        label="Holder Type"
+      ></ic-select>
+    </div>
+    <div fxFlex="24">
+      <ic-slide-toggle
+        [formControl]="accountDetailsForm.get('initialFunding') | formcontrol"
+        color="primary"
+        labelPosition="after"
+        [disabled]="!isEdit"
+      >
+        Initial Funding
+      </ic-slide-toggle>
+    </div>
+  </div>
+  <div class="button-group">
+    <ic-button
+      [icButtonType]="'outlined-rounded'"
+      label="Back"
+      size="medium"
+      type="button"
+      (OnClick)="cancel()"
+    ></ic-button>
+    <ic-button
+      [icButtonType]="'filled-rounded'"
+      label="Next"
+      size="medium"
+      type="submit"
+      (OnClick)="onSubmit()"
+    ></ic-button>
+  </div>
+</mat-expansion-panel>
