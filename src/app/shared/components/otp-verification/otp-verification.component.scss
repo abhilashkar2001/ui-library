@@ -1,0 +1,24 @@
+.otp-verification{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+        margin-bottom: 16px;
+}
+::ng-deep h3{
+    margin: 0px !important;
+}
+::ng-deep p{
+    margin: 0px !important;
+}
+.resend-otp{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-block: 7px;
+}
+.otp-instruction{
+    margin-block: 10px;
+}
+.btn-cont{
+    padding-block: 10px;
+}

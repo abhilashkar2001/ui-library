@@ -226,12 +226,20 @@ export class AccountStagesComponent implements OnInit {
               sequence: 4,
               screenValue: 'W1SUM',
             },
+             {
+              screenCode: 462,
+              screenName: 'Account Services',
+              route: null,
+              fileUrl: null,
+              sequence: 5,
+              screenValue: 'W1SUM',
+            },
             {
               screenCode: 463,
               screenName: 'Document Upload',
               route: null,
               fileUrl: null,
-              sequence: 5,
+              sequence: 6,
               screenValue: 'W1TECO',
             },
             {
@@ -239,7 +247,7 @@ export class AccountStagesComponent implements OnInit {
               screenName: 'Employment & Financial Details',
               route: null,
               fileUrl: null,
-              sequence: 6,
+              sequence: 7,
               screenValue: 'W1TECO',
             },
             {
@@ -247,7 +255,7 @@ export class AccountStagesComponent implements OnInit {
               screenName: 'Summary',
               route: null,
               fileUrl: null,
-              sequence: 7,
+              sequence: 8,
               screenValue: 'W1CODE',
             },
             {
@@ -255,7 +263,7 @@ export class AccountStagesComponent implements OnInit {
               screenName: 'Digital Signature',
               route: null,
               fileUrl: null,
-              sequence: 8,
+              sequence: 9,
               screenValue: 'W1BUDE',
             },
             {
