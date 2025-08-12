@@ -5,7 +5,6 @@ import { AuthGuard } from './shared/guards/auth.guard';
 // import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.compone/nt';
 
 export const rootRouterConfig: Routes = [
- 
   {
     path: '',
     redirectTo: 'home',

@@ -1,0 +1,20 @@
+.delivery-cont {
+  margin-top: 10px;
+}
+.service-cont {
+  border-radius: 8px;
+  width: 24%;
+  border: 1px solid #cac4da;
+  padding: 10px;
+  background-color: #f6faff;
+  p {
+    color: light gray !important;
+    width: 90%;
+    font-size: 12px !important;
+    float: right;
+  }
+}
+.active {
+  border: 1px solid red !important;
+  background-color: white !important;
+}

@@ -38,6 +38,7 @@ import { LibPipesModule } from '@onerumango/utils';
 import { ViewLoanDocComponent } from './view-loan-doc/view-loan-doc.component';
 import { CustomFileUploadComponent } from './custom-file-upload/custom-file-upload.component';
 import { FileUploadAccountComponent } from './file-upload-account/file-upload-account.component';
+import { ChequeBookDetailsComponent } from './cheque-book-details/cheque-book-details.component';
 
 const components = [
   CarouselComponent,
@@ -65,6 +66,7 @@ const components = [
   WebDocUploadComponent,
   ViewLoanDocComponent,
   FileUploadAccountComponent,
+  ChequeBookDetailsComponent,
   CustomFileUploadComponent,
 ];
 
@@ -86,7 +88,7 @@ const components = [
     InputMaskModule,
     IcustLibraryModule,
     LibPipesModule,
-  ],
+],
   exports: components,
 })
 export class SharedOriginationModule {}
