@@ -17,7 +17,7 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 // import moment from 'moment';
 import { catchError, map, Observable, of, Subscription, tap } from 'rxjs';
 // import { AccountSelectionComponent } from '../account-selection/account-selection.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-details',
@@ -54,12 +54,14 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   selectedAccountType: string = '';
   data: any;
   basisClass!: string | null;
+  customerId: any;
 
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
     private store: Store,
     private loanService: LoanService,
+    private router: Router,
     // private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
     private activatedRoute: ActivatedRoute,
@@ -141,6 +143,10 @@ a certain amount of interest`,
       },
     ];
   }
+
+  openAccountType() {
+    this.router.navigate(['/account'])
+  } 
 
   // fetch loan details function
   fetchLoanDetails() {

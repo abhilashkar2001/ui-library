@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ChequeBookComponent } from './cheque-book.component';
 // import { ChequeBookLoginComponent } from './cheque-book-login/cheque-book-login.component';
 import { ChequeBookStagesComponent } from './cheque-book-stages/cheque-book-stages.component';
+import { AccountTypeComponent } from './components/account-type/account-type.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
         path: 'stages',
         component: ChequeBookStagesComponent,
       },
+      {
+        path: 'account-type',
+        component: AccountTypeComponent
+      }
     ],
   },
 ];

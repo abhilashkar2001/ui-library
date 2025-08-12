@@ -4,6 +4,7 @@ import { BankCodePanelComponent } from '../components/bank-code-panel/bank-code-
 import { AddCollateralComponent } from '../../modules/loan/components/collateral-details/add-collateral/add-collateral.component';
 import { EmiCalculatorDrawerComponent } from 'app/modules/loan/emi-calculator/emi-calculator-drawer/emi-calculator-drawer.component';
 import { DocumentDetailsComponent } from 'app/modules/loan/components/document-details/document-details.component';
+import { OtpVerificationComponent } from '../components/otp-verification/otp-verification.component';
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +57,7 @@ export interface ContainerContextData {
     | AddCollateralComponent
     | DocumentDetailsComponent
     | EmiCalculatorDrawerComponent
+    | OtpVerificationComponent
   >;
   data: Record<string, any> | string | number | boolean | undefined | null;
 }

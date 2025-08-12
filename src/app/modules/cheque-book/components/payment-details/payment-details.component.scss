@@ -1,0 +1,38 @@
+.border-btm {
+  border-bottom: 1px solid #e0e0e0;
+}
+.amount-colour {
+  color: #004c97;
+  font-weight: 600;
+  font-size: 14px;
+}
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.card-item {
+  border: 1px solid #004c97;
+  display: flex;
+  padding: 10px;
+  border-radius: 4px;
+  gap: 10px;
+  background-color: #F6FAFF;
+}
+.card-item.selected-card {
+  background-color: white;
+  border-color: red;
+}
+.card-item.selected-card .service-name{
+    color: #004C97;
+}
+.para-text {
+    color: #A0A0A0;
+}
+.service-text{
+    color: #7D7C93;
+    font-size: 12px;
+}
+.cont{
+    padding-block: 20px;
+}
