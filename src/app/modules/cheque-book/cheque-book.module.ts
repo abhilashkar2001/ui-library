@@ -19,6 +19,7 @@ import { OriginationExternalCallbackModule } from '../origination/modules/origin
 import { SharedOriginationModule } from '../origination/modules/shared-origination/shared-origination.module';
 import { AccountDetailComponent } from './components/account-detail/account-detail.component';
 import { AccountTypeComponent } from './components/account-type/account-type.component';
+import { DebitCardDetailsComponent } from './components/debit-card-details/debit-card-details.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { AccountTypeComponent } from './components/account-type/account-type.com
     ChequeBookDetailComponent,
     PaymentDetailsComponent,
     AccountDetailComponent,
-    AccountTypeComponent
+    AccountTypeComponent,
+    DebitCardDetailsComponent
   ],
   imports: [
     CommonModule,
