@@ -1,0 +1,50 @@
+<div fxFlex fxLayout="column" class="parent_container">
+  <h3>Find Current Comapany</h3>
+  <ic-form-field
+    [control]="parentControl | formcontrol"
+    [maxLength]="250"
+    label="Parent Company"
+  ></ic-form-field>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="end end"
+    fxFlex="none"
+    class="p-4"
+    style="gap: 12px"
+  >
+    <ic-button
+      label="Back"
+      type="button"
+      icButtonType="outline"
+      size="medium"
+    ></ic-button>
+    <ic-button
+      label="Fetch"
+      type="submit"
+      icButtonType="filled"
+      (click)="fetch()"
+    ></ic-button>
+  </div>
+  <div *ngIf="showResults">
+    <h4>Search Results</h4>
+    <mat-card
+      class="Parent_record p-4 m-0"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      fxLayoutGap="10px"
+      *ngFor="let parent of parentResults"
+    >
+      <img [src]="parent.icon" style="width: 35px" />
+      <p class="m-0">{{ parent.name }}</p>
+      <span class="flex-spacer"></span>
+      <button
+        mat-button
+        color="primary"
+        style="color: #004c97"
+        (click)="onCompanySelect(parent)"
+      >
+        Select
+      </button>
+    </mat-card>
+  </div>
+</div>

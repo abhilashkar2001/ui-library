@@ -2,7 +2,7 @@
   <div fxLayout="row wrap" fxLayoutGap="10">
     <div fxFlex="48.5">
       <ic-form-field
-        [control]="businessDetailsForm.get('businessName') | formcontrol"
+        [control]="businessDetailsForm?.get('businessName') | formcontrol"
         [icAlphabetOnly]="true"
         [maxLength]="100"
         label="Registered/Company Name"
@@ -10,7 +10,7 @@
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="businessDetailsForm.get('companyTypeId') | formcontrol"
+        [control]="businessDetailsForm?.get('companyTypeId') | formcontrol"
         [options]="companyTypeArr"
         bindLabelKey="values"
         bindValueKey="id"
@@ -20,7 +20,7 @@
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="businessDetailsForm.get('natureOfBusinessId') | formcontrol"
+        [control]="businessDetailsForm?.get('natureOfBusinessId') | formcontrol"
         [options]="natureOfBusinessArr"
         bindLabelKey="values"
         bindValueKey="id"
@@ -30,7 +30,7 @@
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="businessDetailsForm.get('segmentId') | formcontrol"
+        [control]="businessDetailsForm?.get('segmentId') | formcontrol"
         [options]="segmentArr"
         bindLabelKey="values"
         bindValueKey="id"
@@ -40,7 +40,7 @@
     </div>
     <div fxFlex="24">
       <ic-form-field
-        [control]="businessDetailsForm.get('noOfDirectors') | formcontrol"
+        [control]="businessDetailsForm?.get('noOfDirectors') | formcontrol"
         [icAlphanumeric]="true"
         [maxLength]="250"
         label="Number of Directors"
@@ -49,7 +49,7 @@
     <div fxFlex="24">
       <ic-select
         [control]="
-          businessDetailsForm.get('countryOfIncorporationName') | formcontrol
+          businessDetailsForm?.get('countryOfIncorporationName') | formcontrol
         "
         [options]="countryArr"
         bindLabelKey="countryName"
@@ -60,7 +60,9 @@
     </div>
     <div fxFlex="24">
       <ic-date-picker
-        [control]="businessDetailsForm.get('dateOfIncorporation') | formcontrol"
+        [control]="
+          businessDetailsForm?.get('dateOfIncorporation') | formcontrol
+        "
         [placeholder]="dateFormat"
         label="Date of Incorporation"
       >
@@ -68,7 +70,7 @@
     </div>
     <div fxFlex="24">
       <ic-form-field
-        [control]="businessDetailsForm.get('registrationNumber') | formcontrol"
+        [control]="businessDetailsForm?.get('registrationNumber') | formcontrol"
         [icAlphanumeric]="true"
         [maxLength]="250"
         label="Registration Number"
@@ -76,7 +78,7 @@
     </div>
     <div fxFlex="24">
       <ic-form-field
-        [control]="businessDetailsForm.get('tinNumber') | formcontrol"
+        [control]="businessDetailsForm?.get('tinNumber') | formcontrol"
         [icAlphanumeric]="true"
         [maxLength]="250"
         label="TIN Number"
@@ -84,7 +86,7 @@
     </div>
     <div fxFlex="24">
       <ic-form-field
-        [control]="businessDetailsForm.get('yearsOfOperation') | formcontrol"
+        [control]="businessDetailsForm?.get('yearsOfOperation') | formcontrol"
         [icAlphanumeric]="true"
         [maxLength]="250"
         label="No of years in Operation"
@@ -98,7 +100,9 @@
       <div fxLayout="row" fxLayoutGap="50px">
         <ic-radio-button
           *ngFor="let status of businessIntensityArr"
-          [control]="businessDetailsForm.get('businessIntencity') | formcontrol"
+          [control]="
+            businessDetailsForm?.get('businessIntencity') | formcontrol
+          "
           [label]="status.label"
           [value]="status.value"
         ></ic-radio-button>
@@ -107,7 +111,7 @@
 
     <div fxFlex="24" *ngIf="category == 'Accounts'">
       <ic-select
-        [control]="businessDetailsForm.get('segmentId') | formcontrol"
+        [control]="businessDetailsForm?.get('segmentId') | formcontrol"
         [options]="segmentArr"
         bindLabelKey="values"
         bindValueKey="id"
@@ -117,7 +121,7 @@
     </div>
     <div fxFlex="24">
       <ic-form-field
-        [control]="businessDetailsForm.get('monthlyTurnover') | formcontrol"
+        [control]="businessDetailsForm?.get('monthlyTurnover') | formcontrol"
         [icAlphanumeric]="true"
         [maxLength]="250"
         label="Monthly Turnover"
@@ -125,7 +129,7 @@
     </div>
     <div fxFlex="24">
       <ic-form-field
-        [control]="businessDetailsForm.get('aveStockLevel') | formcontrol"
+        [control]="businessDetailsForm?.get('aveStockLevel') | formcontrol"
         [icAlphanumeric]="true"
         [maxLength]="250"
         label="AVE stock Level"
@@ -133,7 +137,7 @@
     </div>
     <div fxFlex="24">
       <ic-form-field
-        [control]="contact.get('telephone') | formcontrol"
+        [control]="contact?.get('telephone') | formcontrol"
         [icAlphanumeric]="true"
         [maxLength]="250"
         label="Telephone"
@@ -142,7 +146,9 @@
 
     <div fxFlex="49">
       <ic-textarea
-        [control]="businessDetailsForm.get('customerDescription') | formcontrol"
+        [control]="
+          businessDetailsForm?.get('customerDescription') | formcontrol
+        "
         [rows]="8"
         fxFlex="100"
         label="Customer Description"
@@ -152,7 +158,7 @@
     <div fxFlex="49">
       <ic-textarea
         [control]="
-          businessDetailsForm.get('descriptionOfBusiness') | formcontrol
+          businessDetailsForm?.get('descriptionOfBusiness') | formcontrol
         "
         [rows]="8"
         fxFlex="100"
@@ -163,13 +169,14 @@
 
     <div fxFlex="49">
       <ic-select
-        [control]="businessDetailsForm.get('parentCompanyId') | formcontrol"
+        [control]="businessDetailsForm?.get('parentCompanyId') | formcontrol"
         [options]="parentCompanyArr"
         bindLabelKey="companyName"
         bindValueKey="corporateId"
         label="Parent Company"
       >
       </ic-select>
+      <mat-icon (click)="parentSearch()">search</mat-icon>
     </div>
   </div>
 </div>

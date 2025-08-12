@@ -1,0 +1,88 @@
+.account-types-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+::ng-deep .mat-mdc-card-content {
+    padding: 0px !important;
+}
+.view-more-container{
+    display: flex;
+    justify-content: space-between;
+}
+.selected-accounts{
+    background-color: var(--ic-card-bg-accent, #f6faff);
+    display: flex;
+    flex-direction: row;
+    padding: 12px;
+    border-radius: 8px;
+    width: 32%;
+    justify-content: space-between;
+}
+.account-card {
+  display: flex;
+  flex-direction: row;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}
+.card-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.account-card h3 {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+.selected-list{
+    padding: 14px;
+}
+.account-card p {
+  font-size: 14px;
+  color: #555;
+}
+
+.account-card a {
+  color: #E71B3C;
+  font-weight: bold;
+  text-decoration: none;
+}
+.button-container{
+    display: flex;
+    justify-content: flex-end;
+}
+.highlight{
+     color: #E71B3C;
+}
+
+::ng-deep .mat-mdc-tab-group.active_tab_group>.mat-mdc-tab-header .mat-mdc-tab-labels {
+    max-width: max-content;
+    min-width: max-content;
+    padding: 0;
+    margin-right: 24px;
+    flex-grow: unset;
+    flex-basis: unset;
+}
+::ng-deep .mdc-tab-indicator {
+    width: 44% !important;
+}
+// ::ng-deep .mdc-tab-indicator.active {
+//     background-color: var(--ic-primary, #E71B3C);
+// }
+::ng-deep .mat-expansion-panel {
+    padding: 10px !important;
+    margin: 10px !important;
+}
+
+::ng-deep .mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs
+  > .mat-mdc-tab-header .mat-mdc-tab.mdc-tab--active {
+  color: #E71B3C !important;
+}
+// ::ng-deep .mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs
+//   > .mat-mdc-tab-header .mat-mdc-tab:focus {
+//   color: #E71B3C !important;
+// }

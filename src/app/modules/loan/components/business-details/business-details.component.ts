@@ -11,6 +11,8 @@ import { LoanService } from 'app/shared/services/loan/loan.service';
 import { IcHttpResponseModel } from '@onerumango/utils';
 import { tap, map, catchError, of } from 'rxjs';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { AdminLayoutComponent } from 'app/layouts/admin-layout/admin-layout.component';
+import { ParentCompanyComponent } from '../parent-company/parent-company.component';
 
 @Component({
   selector: 'app-business-details',
@@ -37,6 +39,7 @@ export class BusinessDetailsComponent implements OnInit {
   parentCompanyArr: any[] = [];
   originationId!: number;
   category!: string | null;
+  // adminLayout: any;
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +48,7 @@ export class BusinessDetailsComponent implements OnInit {
     private loanService: LoanService,
     private countryService: CountryService,
     private sessionStorageService: SessionStorageService,
+    private adminLayout: AdminLayoutComponent,
   ) {
     this.category = this.sessionStorageService.getItem('category');
   }
@@ -131,7 +135,7 @@ export class BusinessDetailsComponent implements OnInit {
   }
 
   get contact() {
-    return this.businessDetailsForm.get('contact') as FormGroup;
+    return this.businessDetailsForm?.get('contact') as FormGroup;
   }
 
   get address(): FormArray {
@@ -161,6 +165,22 @@ export class BusinessDetailsComponent implements OnInit {
         console.error(_err);
         return of('failure' as const);
       }),
+    );
+  }
+
+  // parentSearch() {}
+  parentSearch() {
+    this.adminLayout.openSidenavComponent(
+      ParentCompanyComponent,
+      { width: '40%' },
+      false,
+      (selectedCompany) => {
+        if (selectedCompany) {
+          this.businessDetailsForm
+            .get('parentCompanyId')
+            ?.setValue(selectedCompany.name);
+        }
+      },
     );
   }
 

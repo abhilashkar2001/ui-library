@@ -1,1 +1,58 @@
-<p>account-type works!</p>
+<mat-tab-group class="strech-tabs mat-elevation-z4 active_tab_group">
+  <mat-tab *ngFor="let type of accountTypes" [label]="type">
+    <div class="accounts-wrapper" fxFlex="100" fxLayout="row wrap">
+      <mat-card
+        class="account-card"
+        *ngFor="let account of accounts; let i = index"
+        fxFlex="23"
+      >
+        <!-- <mat-checkbox
+              class="account-checkbox"
+              [(ngModel)]="account.selected"
+              (change)="toggleSelection(i)"
+            ></mat-checkbox> -->
+        <ic-checkbox
+          class="account-checkbox"
+          (checkboxChange)="toggleSelection(i, type)"
+          [checked]="isSelected(account, type)"
+        ></ic-checkbox>
+
+        <mat-card-content>
+          <h3>
+            <span class="highlight">
+              {{ account.title.replace('Savings Account','').trim() }}
+            </span>
+            {{ ' ' + type }}
+          </h3>
+
+          <p>{{ account.description }}</p>
+          <div class="view-more-container">
+            <a class="view-more" href="#"> View More </a>
+            <mat-icon>arrow_forward</mat-icon>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<div class="selected-list" *ngIf="selectedAccounts.length > 0">
+  <h3 style="color: #e71b3c">Selected Accounts</h3>
+  <div class="card-container">
+    <div class="selected-accounts" *ngFor="let account of selectedAccounts">
+      <div>
+        <h3>{{ account.title }}</h3>
+        <p>Smart savings with exclusive perks for women</p>
+      </div>
+      <mat-icon class="close-icon" (click)="removeAccount(account)">close</mat-icon>
+    </div>
+  </div>
+</div>
+<div *ngIf="selectedAccounts.length > 0" class="button-container">
+  <ic-button
+    (OnClick)="onClickAction()"
+    [label]="'Proceed'"
+    [type]="'button'"
+    icButtonType="filled-rounded"
+    size="medium"
+  ></ic-button>
+</div>

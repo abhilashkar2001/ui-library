@@ -18,6 +18,9 @@ import { PersonalIdentificationComponent } from 'app/modules/create-account/comp
 import { AccountPersonalDetailsComponent } from 'app/modules/create-account/components/personal-details/personal-details.component';
 import { EmpFinDetailsComponent } from 'app/modules/create-account/components/emp-fin-details/emp-fin-details.component';
 import { TermsConditionsComponent } from 'app/modules/origination/modules/shared-origination/terms-conditions/terms-conditions.component';
+import { AccountServiceComponent } from 'app/modules/cheque-book/components/account-service/account-service.component';
+import { PaymentDetailsComponent } from 'app/modules/cheque-book/components/payment-details/payment-details.component';
+import { ChequeBookDetailComponent } from 'app/modules/cheque-book/components/cheque-book-detail/cheque-book-detail.component';
 
 export interface ComponentMap {
   W1LACC: LoanDetailsComponent;
@@ -60,7 +63,9 @@ export interface ComponentStagesMap {
   'Director Details': AccountPersonalDetailsComponent;
   'Employment & Financial Details': EmpFinDetailsComponent;
   'Terms & Conditions': TermsConditionsComponent
-
+  'Account Services': AccountServiceComponent;
+  'Payment Details': PaymentDetailsComponent;
+  'Cheque Book Details': ChequeBookDetailComponent;
 }
 
 export const ComponentStagesConstant: {
@@ -77,4 +82,7 @@ export const ComponentStagesConstant: {
   'Director Details': AccountPersonalDetailsComponent,
   'Employment & Financial Details': EmpFinDetailsComponent,
   'Terms & Conditions': TermsConditionsComponent
+  'Account Services': AccountServiceComponent,
+  'Payment Details': PaymentDetailsComponent,
+  'Cheque Book Details': ChequeBookDetailComponent,
 };

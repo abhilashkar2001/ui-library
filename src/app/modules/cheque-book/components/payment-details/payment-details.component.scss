@@ -2,7 +2,7 @@
   border-bottom: 1px solid #e0e0e0;
 }
 .amount-colour {
-  color: #004c97;
+  color:  var(--ic-text-red) !important;
   font-weight: 600;
   font-size: 14px;
 }
@@ -12,19 +12,20 @@
   gap: 16px;
 }
 .card-item {
-  border: 1px solid #004c97;
+  border: 1px solid #cac4da;
   display: flex;
   padding: 10px;
   border-radius: 4px;
   gap: 10px;
-  background-color: #F6FAFF;
+  background-color: var(--ic-card-bg-accent, #f6faff);
 }
 .card-item.selected-card {
   background-color: white;
-  border-color: red;
+  border: 1px solid var(--ic-clr-primary-a0) !important;
+
 }
 .card-item.selected-card .service-name{
-    color: #004C97;
+    color:  var(--ic-text-red) !important;
 }
 .para-text {
     color: #A0A0A0;

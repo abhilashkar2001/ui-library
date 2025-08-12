@@ -39,6 +39,9 @@ import { ViewLoanDocComponent } from './view-loan-doc/view-loan-doc.component';
 import { CustomFileUploadComponent } from './custom-file-upload/custom-file-upload.component';
 import { FileUploadAccountComponent } from './file-upload-account/file-upload-account.component';
 import { ChequeBookDetailsComponent } from './cheque-book-details/cheque-book-details.component';
+import { DigitalSignatureSharedComponent } from './digital-signature-shared/digital-signature-shared.component';
+import { SignatureSharedPopupComponent } from './digital-signature-shared/signature-popup-shared/signature-popup.component';
+import { SignPadComponent } from '../origination-external-callback/digital-sign/sign-pad/sign-pad.component';
 
 const components = [
   CarouselComponent,
@@ -68,6 +71,9 @@ const components = [
   FileUploadAccountComponent,
   ChequeBookDetailsComponent,
   CustomFileUploadComponent,
+  DigitalSignatureSharedComponent,
+  SignatureSharedPopupComponent,
+  SignPadComponent,
 ];
 
 @NgModule({
@@ -88,7 +94,7 @@ const components = [
     InputMaskModule,
     IcustLibraryModule,
     LibPipesModule,
-],
+  ],
   exports: components,
 })
 export class SharedOriginationModule {}
