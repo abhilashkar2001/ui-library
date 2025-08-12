@@ -11,7 +11,7 @@ import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { SignLaterComponent } from './digital-sign/sign-later/sign-later.component';
 import { SignNowPopupComponent } from './digital-sign/sign-now-popup/sign-now-popup.component';
-import { SignPadComponent } from './digital-sign/sign-pad/sign-pad.component';
+// import { SignPadComponent } from './digital-sign/sign-pad/sign-pad.component';
 import { SuccessModalComponent } from './digital-sign/success-modal/success-modal.component';
 import { RemarkComponent } from './offer-letter/remark/remark.component';
 import { ChecklistDocumentComponent } from './checklist-document/checklist-document.component';
@@ -32,7 +32,7 @@ const components = [
   ProcessOfferLetterComponent,
   SignLaterComponent,
   SignNowPopupComponent,
-  SignPadComponent,
+  // SignPadComponent,
   SuccessModalComponent,
   RemarkComponent,
   ChecklistDocumentComponent,
