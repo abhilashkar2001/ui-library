@@ -46,6 +46,7 @@ export class AccountPersonalDetailsComponent implements OnInit {
   }
   noOfapplicantguardian: any = 3;
   accordionItems: any = [];
+  personalDetailsForm!: FormGroup;
 
   constructor(
     //@ts-ignore
@@ -211,28 +212,32 @@ createAccordian(): void {
   //   });
   // }
 
-  // handleSubmit() {
-  //   const payload = { ...this.disbursementForm?.value };
-  //   payload.originationId = this.originationId;
-  //   payload.screenCode = this.screenCode;
-  //   delete payload.disbursementAccount.confirmAccountNo;
-  //   return this.loanService.saveDisbursementDetails(payload).pipe(
-  //     tap((res) => {
-  //       console.log(res);
-  //     }),
-  //     map((res: any) =>
-  //       res?.statusCode == 200 || res?.statusCode == 201
-  //         ? ('success' as const)
-  //         : ('failure' as const),
-  //     ),
-  //     catchError((_err) => {
-  //       console.error(_err);
-  //       return of('failure' as const);
-  //     }),
-  //   );
-  // }
+  handleSubmit() {
+    const payload = { ...this.personalDetailsForm.value };
+    
+    // payload.originationId = this.originationId;
+    // payload.screenCode = this.screenCode;
+    // delete payload.disbursementAccount.confirmAccountNo;
+    return this.loanService.saveDisbursementDetails(payload).pipe(
+      tap((res) => {
+        console.log(res);
+      }),
+      map((res: any) =>
+        res?.statusCode == 200 || res?.statusCode == 201
+          ? ('success' as const)
+          : ('failure' as const),
+      ),
+      catchError((_err) => {
+        console.error(_err);
+        return of('failure' as const);
+      }),
+    );
+  }
 
-  // submitForm() {
-  //   return this.handleSubmit().toPromise();
-  // }
+  submitForm() {
+    return this.handleSubmit().toPromise();
+  }
+  getForm(form:any){
+    this.personalDetailsForm = form;
+  }
 }

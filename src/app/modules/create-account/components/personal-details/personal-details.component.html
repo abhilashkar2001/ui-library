@@ -1,12 +1,6 @@
-<!-- <div fxLayout="row wrap" fxLayoutGap="16px grid">
-  <div fxFlex="calc(25%)">Section 1</div>
-  <div fxFlex="calc(25%)">Section 2</div>
-  <div fxFlex="calc(25%)">Section 3</div>
-  <div fxFlex="calc(25%)">Section 3</div>
-</div> -->
 <div [ngSwitch]="detailsForGeneric.accountType">
   <ng-template [ngSwitchCase]="'individual'">
-    <app-generic-account-form [detailsForGeneric]="detailsForGeneric"></app-generic-account-form>
+    <app-generic-account-form (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric"></app-generic-account-form>
   </ng-template>
   <ng-template [ngSwitchCase]="'joint'">
     <div class="d-flex mt-12 mb-12">
@@ -43,7 +37,7 @@
               </mat-icon>
             </div>
           </mat-expansion-panel-header>
-          <app-generic-account-form [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form>
+          <app-generic-account-form (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form>
         </mat-expansion-panel>
       </mat-accordion>
       <mat-divider></mat-divider>
@@ -84,7 +78,7 @@
               </mat-icon>
             </div>
           </mat-expansion-panel-header>
-          <app-generic-account-form [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form>
+          <app-generic-account-form (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form>
         </mat-expansion-panel>
       </mat-accordion>
       <mat-divider></mat-divider>
@@ -125,7 +119,7 @@
               </mat-icon>
             </div>
           </mat-expansion-panel-header>
-          <app-generic-account-form [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form>
+          <app-generic-account-form (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form>
         </mat-expansion-panel>
       </mat-accordion>
       <mat-divider></mat-divider>

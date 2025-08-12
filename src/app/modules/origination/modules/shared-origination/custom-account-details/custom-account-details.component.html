@@ -23,21 +23,20 @@
     fxLayoutAlign="start center"
     fxLayoutGap="10px"
     style="margin-top: 20px"
-    [formGroup]="accountDetailsGroup"
   >
     <div fxFlex="24">
       <ic-select
-        [control]="accountDetailsGroup.get('accountBranch') | formcontrol"
+        [control]="accountDetailsForm.get('accountBranch') | formcontrol"
         [options]="genericValue?.REPAYMENTFREQUENCY"
         bindLabelKey="values"
         bindValueKey="id"
-        label="Account Branch"
+        label="Account Branch 1"
         [disabled]="!isEdit"
       ></ic-select>
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="accountDetailsGroup.get('accountCurrency') | formcontrol"
+        [control]="accountCurrency.get('currencyCode') | formcontrol"
         [options]="genericValue?.REPAYMENTFREQUENCY"
         bindLabelKey="values"
         bindValueKey="id"
@@ -47,7 +46,7 @@
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="accountDetailsGroup.get('customerCategory') | formcontrol"
+        [control]="accountDetailsForm.get('customerCategory') | formcontrol"
         [options]="genericValue?.REPAYMENTFREQUENCY"
         bindLabelKey="values"
         bindValueKey="id"
@@ -57,7 +56,7 @@
     </div>
     <div fxFlex="24" *ngIf="basisClass != 'CORPORATE ACCOUNT'">
       <ic-select
-        [control]="accountDetailsGroup.get('holderType') | formcontrol"
+        [control]="accountDetailsForm.get('holderType') | formcontrol"
         [options]="holderTypeArr"
         bindLabelKey="label"
         bindValueKey="value"
@@ -69,11 +68,11 @@
     <div
       fxFlex="24"
       *ngIf="
-        accountDetailsGroup?.get('holderType')?.value?.toLowerCase() === 'minor'
+        accountDetailsForm?.get('holderType')?.value?.toLowerCase() === 'minor'
       "
     >
       <ic-form-field
-        [control]="accountDetailsGroup.get('noOfGuardian') | formcontrol"
+        [control]="accountDetailsForm.get('noOfGuardian') | formcontrol"
         label="No. of guardian"
         [readonly]="!isEdit"
         [disabled]="!isEdit"
@@ -82,11 +81,11 @@
     <div
       fxFlex="24"
       *ngIf="
-        accountDetailsGroup?.get('holderType')?.value?.toLowerCase() === 'joint'
+        accountDetailsForm?.get('holderType')?.value?.toLowerCase() === 'joint'
       "
     >
       <ic-form-field
-        [control]="accountDetailsGroup.get('noOfApplicant') | formcontrol"
+        [control]="accountDetailsForm.get('noOfApplicant') | formcontrol"
         label="No. of Applicant"
         [readonly]="!isEdit"
         [disabled]="!isEdit"
@@ -94,7 +93,7 @@
     </div>
     <div fxFlex="24">
       <ic-slide-toggle
-        [formControl]="accountDetailsGroup.get('initialFunding') | formcontrol"
+        [formControl]="accountDetailsForm.get('initialFunding') | formcontrol"
         color="primary"
         labelPosition="after"
         [disabled]="!isEdit"
@@ -107,15 +106,15 @@
       *ngIf="
         basisClass == 'CORPORATE ACCOUNT' ||
         (basisClass != 'CORPORATE ACCOUNT' &&
-          (accountDetailsGroup?.get('holderType')?.value?.toLowerCase() ===
+          (accountDetailsForm?.get('holderType')?.value?.toLowerCase() ===
             'joint' ||
-            accountDetailsGroup?.get('holderType')?.value?.toLowerCase() ===
+            accountDetailsForm?.get('holderType')?.value?.toLowerCase() ===
               'individual'))
       "
     >
       <ic-slide-toggle
         [formControl]="
-          accountDetailsGroup.get('overdraftRequested') | formcontrol
+          accountDetailsForm.get('overdraftRequested') | formcontrol
         "
         color="primary"
         labelPosition="after"

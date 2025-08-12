@@ -19,7 +19,7 @@
     <span class="content-header">Loan Amount</span>
     <span class="header_gt_md_bold_black">
       <span class="currencySymbol">{{ otherUserInfo?.currency }} </span>&nbsp;{{
-        loamAmount | customCurrency: otherUserInfo.currency : '1.2-2'
+        loamAmount | customCurrency: otherUserInfo?.currency : '1.2-2'
       }}</span
     >
   </div>

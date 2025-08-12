@@ -17,6 +17,7 @@ import { AccountDigitalSignatureComponent } from 'app/modules/create-account/com
 import { PersonalIdentificationComponent } from 'app/modules/create-account/components/personal-identification/personal-identification.component';
 import { AccountPersonalDetailsComponent } from 'app/modules/create-account/components/personal-details/personal-details.component';
 import { EmpFinDetailsComponent } from 'app/modules/create-account/components/emp-fin-details/emp-fin-details.component';
+import { TermsConditionsComponent } from 'app/modules/origination/modules/shared-origination/terms-conditions/terms-conditions.component';
 import { AccountServiceComponent } from 'app/modules/cheque-book/components/account-service/account-service.component';
 import { PaymentDetailsComponent } from 'app/modules/cheque-book/components/payment-details/payment-details.component';
 import { ChequeBookDetailComponent } from 'app/modules/cheque-book/components/cheque-book-detail/cheque-book-detail.component';
@@ -50,7 +51,7 @@ export const ComponentConstant: {
   W1SUM: SummaryComponent,
   W1SIGN: DigitalSignatureComponent,
 };
-export interface AccountComponentMap {
+export interface ComponentStagesMap {
   'Account Details': AccountDetailsComponent;
   'Document Upload': AccountDocumentUploadComponent;
   'Personal Identification': PersonalIdentificationComponent;
@@ -61,13 +62,14 @@ export interface AccountComponentMap {
   'Director Document Upload': DocumentUploadComponent;
   'Director Details': AccountPersonalDetailsComponent;
   'Employment & Financial Details': EmpFinDetailsComponent;
+  'Terms & Conditions': TermsConditionsComponent
   'Account Services': AccountServiceComponent;
   'Payment Details': PaymentDetailsComponent;
   'Cheque Book Details': ChequeBookDetailComponent;
 }
 
-export const AccountComponentConstant: {
-  [K in keyof AccountComponentMap]: Type<AccountComponentMap[K]>;
+export const ComponentStagesConstant: {
+  [K in keyof ComponentStagesMap]: Type<ComponentStagesMap[K]>;
 } = {
   'Account Details': AccountDetailsComponent,
   'Document Upload': AccountDocumentUploadComponent,
@@ -79,6 +81,7 @@ export const AccountComponentConstant: {
   'Director Document Upload': DocumentUploadComponent,
   'Director Details': AccountPersonalDetailsComponent,
   'Employment & Financial Details': EmpFinDetailsComponent,
+  'Terms & Conditions': TermsConditionsComponent
   'Account Services': AccountServiceComponent,
   'Payment Details': PaymentDetailsComponent,
   'Cheque Book Details': ChequeBookDetailComponent,
