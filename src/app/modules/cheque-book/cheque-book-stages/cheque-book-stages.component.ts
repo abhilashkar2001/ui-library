@@ -10,10 +10,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import {
-  AccountComponentMap,
-  AccountComponentConstant,
-} from 'app/config/component.constant';
+import { ComponentStagesConstant, ComponentStagesMap } from 'app/config/component.constant';
 import { ComponentLRUCache } from 'app/modules/loan/stages/component-lru-cache';
 import { RenderComponentService } from 'app/shared/services/render-component.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
@@ -71,7 +68,7 @@ export class ChequeBookStagesComponent implements OnInit {
    * @param index
    * @param screenCode
    */
-  onPanelOpened<K extends keyof AccountComponentMap>(
+  onPanelOpened<K extends keyof ComponentStagesMap>(
     index: number,
     screenName: K,
     screenCodeNum?: number,
@@ -82,11 +79,10 @@ export class ChequeBookStagesComponent implements OnInit {
       this.activePanels.set(currentSet);
       const container = this.container.get(index);
       if (container && !this.componentCache.get(index)) {
-        const component = AccountComponentConstant[screenName];
+        const component = ComponentStagesConstant[screenName];
         const componentRef = this.renderComponentService.loadComponent<
-          AccountComponentMap[K]
+          ComponentStagesMap[K]
         >(container, component);
-
         if ('screenCode' in componentRef.instance) {
           (componentRef.instance as any).screenCode = screenCodeNum;
         }
@@ -97,7 +93,6 @@ export class ChequeBookStagesComponent implements OnInit {
 
         this.componentCache.set(index, componentRef);
         this.componentRefs.set(index, componentRef);
-        console.log(this.componentRefs, 'componentrefs');
       }
     }
   }
@@ -245,13 +240,12 @@ export class ChequeBookStagesComponent implements OnInit {
             },
             {
               screenCode: 497,
-              screenName: 'Terms and Condition',
+              screenName: 'Terms & Conditions',
               route: null,
               fileUrl: null,
-              sequence: 7,
+              sequence: 9,
               screenValue: 'W1CODE',
             },
-
             {
               screenCode: 464,
               screenName: 'Document Upload',

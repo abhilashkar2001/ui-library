@@ -15,8 +15,8 @@ import { RenderComponentService } from '../../../shared/services/render-componen
 import { ComponentLRUCache } from './component-lru-cache';
 // import { IProduct } from '@onerumango/utils';
 import {
-  AccountComponentConstant,
-  AccountComponentMap,
+  ComponentStagesConstant,
+  ComponentStagesMap,
 } from '../../../config/component.constant';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
@@ -70,7 +70,7 @@ export class AccountStagesComponent implements OnInit {
    * @param index
    * @param screenCode
    */
-  onPanelOpened<K extends keyof AccountComponentMap>(
+  onPanelOpened<K extends keyof ComponentStagesMap>(
     index: number,
     screenName: K,
     screenCodeNum?: number,
@@ -81,9 +81,9 @@ export class AccountStagesComponent implements OnInit {
       this.activePanels.set(currentSet);
       const container = this.container.get(index);
       if (container && !this.componentCache.get(index)) {
-        const component = AccountComponentConstant[screenName];
+        const component = ComponentStagesConstant[screenName];
         const componentRef = this.renderComponentService.loadComponent<
-          AccountComponentMap[K]
+          ComponentStagesMap[K]
         >(container, component);
 
         if ('screenCode' in componentRef.instance) {
@@ -202,20 +202,20 @@ export class AccountStagesComponent implements OnInit {
     const screens =
       this.category !== 'CORPORATE ACCOUNT'
         ? [
-            {
-              screenCode: 456,
-              screenName: 'Account Details',
+              {
+              screenCode: 464,
+              screenName: 'Verify Mobile Number',
               route: null,
               fileUrl: null,
-              sequence: 2,
-              screenValue: 'W1DOCU',
+              sequence: 1,
+              screenValue: 'W1VEMN',
             },
             {
               screenCode: 461,
               screenName: 'Personal Identification',
               route: null,
               fileUrl: null,
-              sequence: 3,
+              sequence: 2,
               screenValue: 'W1SIGN',
             },
             {
@@ -223,8 +223,16 @@ export class AccountStagesComponent implements OnInit {
               screenName: 'Personal Details',
               route: null,
               fileUrl: null,
-              sequence: 4,
+              sequence: 3,
               screenValue: 'W1SUM',
+            },
+            {
+              screenCode: 456,
+              screenName: 'Account Details',
+              route: null,
+              fileUrl: null,
+              sequence: 4,
+              screenValue: 'W1DOCU',
             },
             {
               screenCode: 463,
@@ -258,6 +266,8 @@ export class AccountStagesComponent implements OnInit {
               sequence: 8,
               screenValue: 'W1BUDE',
             },
+          ]
+        : [
             {
               screenCode: 464,
               screenName: 'Verify Mobile Number',
@@ -266,8 +276,6 @@ export class AccountStagesComponent implements OnInit {
               sequence: 1,
               screenValue: 'W1VEMN',
             },
-          ]
-        : [
             {
               screenCode: 456,
               screenName: 'Account Details',
@@ -318,14 +326,6 @@ export class AccountStagesComponent implements OnInit {
             },
             {
               screenCode: 464,
-              screenName: 'Verify Mobile Number',
-              route: null,
-              fileUrl: null,
-              sequence: 1,
-              screenValue: 'W1VEMN',
-            },
-            {
-              screenCode: 464,
               screenName: 'Director Details',
               route: null,
               fileUrl: null,
@@ -333,13 +333,13 @@ export class AccountStagesComponent implements OnInit {
               screenValue: 'W1VEMN',
             },
           ];
-    const i = screens.findIndex((s) => s.sequence === 1);
+    const i = screens.findIndex((s) => s.sequence === 1);    
     if (i > -1) screens.splice(i, 1);
     screens
       .sort((a, b) => a.sequence - b.sequence)
-      .forEach((screen) => {
+      .forEach((screen) => {        
         this.componentMapping.set(screen.screenName, screen);
-      });
+      });      
     this.cdr.markForCheck();
 
     setTimeout(() => {
