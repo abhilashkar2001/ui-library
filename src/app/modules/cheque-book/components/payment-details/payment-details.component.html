@@ -1,1 +1,118 @@
-<p>payment-details works!</p>
+<mat-expansion-panel>
+  <mat-expansion-panel-header> payment Details </mat-expansion-panel-header>
+  <div fxLayout="column" fxLayoutGap="20px" class="cont">
+    <h3>Service Fees</h3>
+    <div fxFlex="100" fxLayout="row" fxLayoutGap="20px">
+      <div
+        fxFlex="50"
+        fxLayout="row"
+        fxLayoutGap="100px"
+        class="border-btm"
+        fxLayoutAlign="space-between center"
+      >
+        <div>
+          <h3>Cheque Book Fee *</h3>
+          <p class="para-text">Standard cheque book with 25 leaves</p>
+        </div>
+        <div class="amount-colour">$500</div>
+      </div>
+      <div
+        fxFlex="50"
+        fxLayout="row"
+        fxLayoutGap="100px"
+        class="border-btm"
+        fxLayoutAlign="space-between center"
+      >
+        <div>
+          <h3>Debit Card Fee *</h3>
+          <p class="para-text">Visa card with contactless payment</p>
+        </div>
+        <div class="amount-colour">$500</div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="column" fxLayoutGap="20px">
+    <h3>Select the Services</h3>
+    <div class="cards-container" fxFlex="100" fxLayout="row">
+      <ng-container *ngFor="let card of cardsList">
+        <div
+          class="card-item"
+          fxFlex="25"
+          fxLayout="row"
+          [ngClass]="{
+            'selected-card':
+              paymentDetailsForm.get('paymentMethod')?.value === card.name,
+          }"
+        >
+          <ic-radio-button
+            [control]="paymentDetailsForm.get('paymentMethod') | formcontrol"
+            [value]="card.name"
+          ></ic-radio-button>
+          <div>
+            <div class="service-name">{{ card.name }}</div>
+            <div class="service-text">{{ card.text }}</div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <h3>{{ paymentDetailsForm.get('paymentMethod')?.value }}</h3>
+    <div class="details-container" fxFlex="100" fxLayout="row" fxLayoutGap="20px">
+      <div fxFlex="25">
+        <div
+          *ngIf="paymentDetailsForm.get('paymentMethod')?.value === 'M-pesa'"
+        >
+          <ic-mobile-field
+            [isdCode]="countriesIsdCodes"
+            [isdControl]="paymentDetailsForm.get('isdCode') | formcontrol"
+            [formControl]="paymentDetailsForm.get('phone') | formcontrol"
+            label="Mobile Number"
+          ></ic-mobile-field>
+        </div>
+        <div *ngIf="paymentDetailsForm.get('paymentMethod')?.value === 'Cash'">
+          <p>You have selected Cash as your payment method.</p>
+        </div>
+        <div
+          *ngIf="
+            paymentDetailsForm.get('paymentMethod')?.value === 'Account Debit'
+          "
+        >
+        <ic-select
+          [control]="paymentDetailsForm.get('accountNumber') | formcontrol"
+          [options]="accountNumbers"
+          label="Select Account Number"
+        ></ic-select>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          paymentDetailsForm.get('paymentMethod')?.value === 'M-pesa' ||
+          paymentDetailsForm.get('paymentMethod')?.value === 'Account Debit'
+        "
+        fxFlex="25"
+      >
+        <ic-form-field
+          [control]="paymentDetailsForm.get('amount') | formcontrol"
+          label="Amount"
+          placeholder="Enter the amount"
+          [disabled]="true"
+        ></ic-form-field>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="end center">
+    <ic-button
+      [label]="'Back'"
+      [type]="'button'"
+      icButtonType="outlined"
+      size="medium"
+      (click)="cancelPaymentDetails()"
+    ></ic-button>
+    <ic-button
+      [label]="'Submit'"
+      [type]="'submit'"
+      icButtonType="filled"
+      size="medium"
+      (OnClick)="submitPaymentDetails()"
+    ></ic-button>
+  </div>
+</mat-expansion-panel>

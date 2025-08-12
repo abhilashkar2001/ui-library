@@ -33,6 +33,7 @@ import { TermsConditionPopupComponent } from './terms-condition-popup/terms-cond
 import { WebcamModule } from 'ngx-webcam';
 import { FingerprintScanComponent } from './fingerprint-scan/fingerprint-scan.component';
 import { FaceScanComponent } from './face-scan/face-scan.component';
+import { OtpVerificationComponent } from './otp-verification/otp-verification.component';
 
 const components = [
   HeaderTopComponent,
@@ -54,6 +55,7 @@ const components = [
   TermsConditionPopupComponent,
   FingerprintScanComponent,
   FaceScanComponent,
+  OtpVerificationComponent
 ];
 
 @NgModule({

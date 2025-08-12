@@ -67,6 +67,7 @@ const components = [
   ViewLoanDocComponent,
   FileUploadAccountComponent,
   ChequeBookDetailsComponent,
+  CustomFileUploadComponent,
 ];
 
 @NgModule({
