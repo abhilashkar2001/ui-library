@@ -237,7 +237,7 @@ export class ChequeBookStagesComponent implements OnInit {
             },
             {
               screenCode: 463,
-              screenName: 'Account Services',
+              screenName: 'Cheque Book Details',
               route: null,
               fileUrl: null,
               sequence: 3,
@@ -274,6 +274,14 @@ export class ChequeBookStagesComponent implements OnInit {
               route: null,
               fileUrl: null,
               sequence: 8,
+              screenValue: 'W1BUDE',
+            },
+            {
+              screenCode: 498,
+              screenName: 'Payment Details',
+              route: null,
+              fileUrl: null,
+              sequence: 9,
               screenValue: 'W1BUDE',
             },
           ]
@@ -341,6 +349,14 @@ export class ChequeBookStagesComponent implements OnInit {
               fileUrl: null,
               sequence: 1,
               screenValue: 'W1VEMN',
+            },
+            {
+              screenCode: 498,
+              screenName: 'Payment Details',
+              route: null,
+              fileUrl: null,
+              sequence: 9,
+              screenValue: 'W1BUDE',
             },
           ];
     const i = screens.findIndex((s) => s.sequence === 1);
