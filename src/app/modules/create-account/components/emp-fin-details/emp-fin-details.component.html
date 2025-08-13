@@ -1,8 +1,9 @@
-
-
 <div [ngSwitch]="detailsForGeneric.accountType">
   <ng-template [ngSwitchCase]="'individual'">
-    <app-generic-emp-fin-details (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric"></app-generic-emp-fin-details>
+    <app-generic-emp-fin-details
+      (genericForm)="getForm($event)"
+      [detailsForGeneric]="detailsForGeneric"
+    ></app-generic-emp-fin-details>
   </ng-template>
   <ng-template [ngSwitchCase]="'joint'">
     <!-- <div class="d-flex mt-12 mb-12">
@@ -12,19 +13,25 @@
       </div>
     </div> -->
     <mat-divider></mat-divider>
-    <span *ngFor="let user of accordionItems;let i=index;">
+    <span *ngFor="let user of accordionItems; let i = index">
       <mat-accordion>
-        <mat-expansion-panel [expanded]="user.expanded" #panel="matExpansionPanel">
+        <mat-expansion-panel
+          [expanded]="user.expanded"
+          #panel="matExpansionPanel"
+        >
           <mat-expansion-panel-header class="panel-header">
             <div class="panel-header-content">
-              <div class="panel-title" fxLayoutGap="5" fxLayoutAlign="start center">
+              <div
+                class="panel-title"
+                fxLayoutGap="5"
+                fxLayoutAlign="start center"
+              >
                 <!-- *ngIf="getFileInfo(i)?.length > 0; else unticked" -->
                 <img src="assets/images/tickicon.svg" alt="Tick" />
                 <ng-template #unticked>
                   <img src="assets/images/untickicon.svg" alt="Untick" />
                 </ng-template>
-                <span class="header_md"> {{user.header}}
-                </span>
+                <span class="header_md"> {{ user.header }} </span>
                 <!-- <span class="required">*</span> -->
               </div>
               <!-- <span [ngClass]="
@@ -39,7 +46,10 @@
               </mat-icon>
             </div>
           </mat-expansion-panel-header>
-          <app-generic-emp-fin-details (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric"></app-generic-emp-fin-details>
+          <app-generic-emp-fin-details
+            (genericForm)="getForm($event)"
+            [detailsForGeneric]="detailsForGeneric"
+          ></app-generic-emp-fin-details>
           <!-- <app-generic-account-form [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form> -->
         </mat-expansion-panel>
       </mat-accordion>
@@ -54,19 +64,25 @@
       </div>
     </div> -->
     <mat-divider></mat-divider>
-    <span *ngFor="let user of accordionItems;let i=index;">
+    <span *ngFor="let user of accordionItems; let i = index">
       <mat-accordion>
-        <mat-expansion-panel [expanded]="user.expanded" #panel="matExpansionPanel">
+        <mat-expansion-panel
+          [expanded]="user.expanded"
+          #panel="matExpansionPanel"
+        >
           <mat-expansion-panel-header class="panel-header">
             <div class="panel-header-content">
-              <div class="panel-title" fxLayoutGap="5" fxLayoutAlign="start center">
+              <div
+                class="panel-title"
+                fxLayoutGap="5"
+                fxLayoutAlign="start center"
+              >
                 <!-- *ngIf="getFileInfo(i)?.length > 0; else unticked" -->
                 <img src="assets/images/tickicon.svg" alt="Tick" />
                 <ng-template #unticked>
                   <img src="assets/images/untickicon.svg" alt="Untick" />
                 </ng-template>
-                <span class="header_md"> {{user.header}}
-                </span>
+                <span class="header_md"> {{ user.header }} </span>
                 <!-- <span class="required">*</span> -->
               </div>
               <!-- <span [ngClass]="
@@ -81,7 +97,10 @@
               </mat-icon>
             </div>
           </mat-expansion-panel-header>
-          <app-generic-emp-fin-details (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric"></app-generic-emp-fin-details>
+          <app-generic-emp-fin-details
+            (genericForm)="getForm($event)"
+            [detailsForGeneric]="detailsForGeneric"
+          ></app-generic-emp-fin-details>
           <!-- <app-generic-account-form [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form> -->
         </mat-expansion-panel>
       </mat-accordion>
@@ -96,19 +115,25 @@
       </div>
     </div> -->
     <mat-divider></mat-divider>
-    <span *ngFor="let user of accordionItems;let i=index;">
+    <span *ngFor="let user of accordionItems; let i = index">
       <mat-accordion>
-        <mat-expansion-panel [expanded]="user.expanded" #panel="matExpansionPanel">
+        <mat-expansion-panel
+          [expanded]="user.expanded"
+          #panel="matExpansionPanel"
+        >
           <mat-expansion-panel-header class="panel-header">
             <div class="panel-header-content">
-              <div class="panel-title" fxLayoutGap="5" fxLayoutAlign="start center">
+              <div
+                class="panel-title"
+                fxLayoutGap="5"
+                fxLayoutAlign="start center"
+              >
                 <!-- *ngIf="getFileInfo(i)?.length > 0; else unticked" -->
                 <img src="assets/images/tickicon.svg" alt="Tick" />
                 <ng-template #unticked>
                   <img src="assets/images/untickicon.svg" alt="Untick" />
                 </ng-template>
-                <span class="header_md"> {{user.header}}
-                </span>
+                <span class="header_md"> {{ user.header }} </span>
                 <!-- <span class="required">*</span> -->
               </div>
               <!-- <span [ngClass]="
@@ -123,7 +148,10 @@
               </mat-icon>
             </div>
           </mat-expansion-panel-header>
-          <app-generic-emp-fin-details (genericForm)="getForm($event)" [detailsForGeneric]="detailsForGeneric"></app-generic-emp-fin-details>
+          <app-generic-emp-fin-details
+            (genericForm)="getForm($event)"
+            [detailsForGeneric]="detailsForGeneric"
+          ></app-generic-emp-fin-details>
           <!-- <app-generic-account-form [detailsForGeneric]="detailsForGeneric" [user]="user"></app-generic-account-form> -->
         </mat-expansion-panel>
       </mat-accordion>

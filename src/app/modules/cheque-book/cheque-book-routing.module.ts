@@ -30,12 +30,12 @@ const routes: Routes = [
       },
       {
         path: 'account-type',
-        component: AccountTypeComponent
+        component: AccountTypeComponent,
       },
       {
         path: 'account-detail',
-        component: AccountDetailComponent
-      }
+        component: AccountDetailComponent,
+      },
     ],
   },
 ];

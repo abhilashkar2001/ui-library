@@ -173,9 +173,8 @@ accountDetailsForm!: FormGroup;
             rmId: [item.rmId || null],
             initialFunding: [item.initialFunding ?? false],
             overdraftRequested: [item.overdraftRequested ?? false],
-            holderTypeId: [item.holderType || null],
+            holderType: [item.holderType || null],
             noOfApplicant: [item.noOfApplicant || null],
-            noOfGuardian: [item.noOfGuardian || null],
             customerCategoty:[item.customerCategory || null],
             customerAccountInitialFunding: this.fb.group({
               amount: [item.customerAccountInitialFunding?.amount || null],

@@ -8,7 +8,7 @@ describe('ChequeBookDetailsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ChequeBookDetailsComponent]
+      declarations: [ChequeBookDetailsComponent],
     });
     fixture = TestBed.createComponent(ChequeBookDetailsComponent);
     component = fixture.componentInstance;

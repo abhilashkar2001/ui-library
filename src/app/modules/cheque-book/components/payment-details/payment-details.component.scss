@@ -2,7 +2,7 @@
   border-bottom: 1px solid #e0e0e0;
 }
 .amount-colour {
-  color:  var(--ic-text-red) !important;
+  color: var(--ic-text-red) !important;
   font-weight: 600;
   font-size: 14px;
 }
@@ -22,18 +22,17 @@
 .card-item.selected-card {
   background-color: white;
   border: 1px solid var(--ic-clr-primary-a0) !important;
-
 }
-.card-item.selected-card .service-name{
-    color:  var(--ic-text-red) !important;
+.card-item.selected-card .service-name {
+  color: var(--ic-text-red) !important;
 }
 .para-text {
-    color: #A0A0A0;
+  color: #a0a0a0;
 }
-.service-text{
-    color: #7D7C93;
-    font-size: 12px;
+.service-text {
+  color: #7d7c93;
+  font-size: 12px;
 }
-.cont{
-    padding-block: 20px;
+.cont {
+  padding-block: 20px;
 }

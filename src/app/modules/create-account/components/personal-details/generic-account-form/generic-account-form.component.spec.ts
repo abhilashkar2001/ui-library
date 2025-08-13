@@ -8,7 +8,7 @@ describe('GenericAccountFormComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GenericAccountFormComponent]
+      declarations: [GenericAccountFormComponent],
     });
     fixture = TestBed.createComponent(GenericAccountFormComponent);
     component = fixture.componentInstance;

@@ -8,44 +8,50 @@
     the same to continue & transaction password
   </h4>
   <ic-form-field
-          [control]="otpVerificationForm.get('verificationCode') | formcontrol"
-          label="Amount"
-          placeholder="Enter the amount"
-          [disabled]="true"
+    [control]="otpVerificationForm.get('verificationCode') | formcontrol"
+    label="Amount"
+    placeholder="Enter the amount"
+    [disabled]="true"
   ></ic-form-field>
   <div class="resend-otp">
     <p>Didn’t receive the OTP?</p>
-    <span *ngIf="!resendLink && displaySecond"
-          >({{ displaySecond }} sec)</span>
-          <a
-          ><u
-            (click)="getOtp()"
-            (keydown.enter)="getOtp()"
-            [ngClass]="[!resendLink ? 'disableResend' : '']"
-            class="theme_md"
-            tabindex="3"
-          >
-            Resend OTP</u></a>
-    </div>
-    <ic-form-field
-        [control]="otpVerificationForm.get('transactionPassword') | formcontrol"
-        label="Transaction Password"
-        placeholder="Enter Transaction Password"
-      ></ic-form-field>
-</div>
-<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="end center" class="btn-cont">
-    <ic-button
-      [label]="'Back'"
-      [type]="'button'"
-      icButtonType="outlined-rounded"
-      size="medium"
-      (OnClick)="cancelOtp()"
-    ></ic-button>
-    <ic-button
-      [label]="'Submit'"
-      [type]="'submit'"
-      icButtonType="filled-rounded"
-      size="medium"
-      (OnClick)="submitOtp()"
-    ></ic-button>
+    <span *ngIf="!resendLink && displaySecond">({{ displaySecond }} sec)</span>
+    <a
+      ><u
+        (click)="getOtp()"
+        (keydown.enter)="getOtp()"
+        [ngClass]="[!resendLink ? 'disableResend' : '']"
+        class="theme_md"
+        tabindex="3"
+      >
+        Resend OTP</u
+      ></a
+    >
   </div>
+  <ic-form-field
+    [control]="otpVerificationForm.get('transactionPassword') | formcontrol"
+    label="Transaction Password"
+    placeholder="Enter Transaction Password"
+  ></ic-form-field>
+</div>
+<div
+  fxLayout="row"
+  fxLayoutGap="20px"
+  fxLayoutAlign="end center"
+  class="btn-cont"
+>
+  <ic-button
+    [label]="'Back'"
+    [type]="'button'"
+    icButtonType="outlined-rounded"
+    size="medium"
+    (OnClick)="cancelOtp()"
+  ></ic-button>
+  <ic-button
+    [label]="'Submit'"
+    [type]="'submit'"
+    icButtonType="filled-rounded"
+    size="medium"
+    (OnClick)="submitOtp()"
+  ></ic-button>
+</div>

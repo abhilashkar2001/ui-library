@@ -202,7 +202,7 @@ export class AccountStagesComponent implements OnInit {
     const screens =
       this.category !== 'CORPORATE ACCOUNT'
         ? [
-              {
+            {
               screenCode: 464,
               screenName: 'Verify Mobile Number',
               route: null,
@@ -226,7 +226,7 @@ export class AccountStagesComponent implements OnInit {
               sequence: 3,
               screenValue: 'W1SUM',
             },
-             {
+            {
               screenCode: 462,
               screenName: 'Account Services',
               route: null,
@@ -341,13 +341,13 @@ export class AccountStagesComponent implements OnInit {
               screenValue: 'W1VEMN',
             },
           ];
-    const i = screens.findIndex((s) => s.sequence === 1);    
+    const i = screens.findIndex((s) => s.sequence === 1);
     if (i > -1) screens.splice(i, 1);
     screens
       .sort((a, b) => a.sequence - b.sequence)
-      .forEach((screen) => {        
+      .forEach((screen) => {
         this.componentMapping.set(screen.screenName, screen);
-      });      
+      });
     this.cdr.markForCheck();
 
     setTimeout(() => {

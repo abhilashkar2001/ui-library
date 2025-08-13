@@ -8,7 +8,7 @@ describe('AccountSelectionComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [AccountSelectionComponent]
+      declarations: [AccountSelectionComponent],
     });
     fixture = TestBed.createComponent(AccountSelectionComponent);
     component = fixture.componentInstance;

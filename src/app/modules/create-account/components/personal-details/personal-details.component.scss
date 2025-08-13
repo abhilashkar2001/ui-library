@@ -106,8 +106,8 @@
   }
 }
 
-.header_md{
-    font-weight: 500;
+.header_md {
+  font-weight: 500;
 }
 
 // Mat Menu Overrides
@@ -130,8 +130,8 @@
   }
 }
 
-.mat-expansion-panel:not([class*=mat-elevation-z]){
-    box-shadow: none!important;
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: none !important;
 }
 
 .arrow-icon {
@@ -141,4 +141,3 @@
 .arrow-icon.rotate {
   transform: rotate(180deg);
 }
-

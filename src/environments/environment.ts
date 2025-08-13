@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  microServiceURL: `https://192.168.131.195:8765`,
+  microServiceURL: `https://192.168.131.247:8765`,
   parentAppUrl: `https://${window.location.host}:4200`,
   build: 33,
   SECRET_KEY:

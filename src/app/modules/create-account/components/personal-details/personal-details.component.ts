@@ -1,4 +1,3 @@
-
 //@ts-ignore
 import { Component, Input, OnInit } from '@angular/core';
 //@ts-ignore
@@ -42,8 +41,8 @@ export class AccountPersonalDetailsComponent implements OnInit {
   // originationId: number | undefined;
 
   detailsForGeneric: any = {
-    accountType: ''
-  }
+    accountType: '',
+  };
   noOfapplicantguardian: any = 3;
   accordionItems: any = [];
   personalDetailsForm!: FormGroup;
@@ -57,7 +56,7 @@ export class AccountPersonalDetailsComponent implements OnInit {
     //@ts-ignore
     private loanService: LoanService,
     //@ts-ignore
-    private sessionStorageService: SessionStorageService
+    private sessionStorageService: SessionStorageService,
   ) {
     // this.currentDate?.setDate(new Date().getDate() + 1);
   }
@@ -91,44 +90,48 @@ export class AccountPersonalDetailsComponent implements OnInit {
   //   }
   // }
 
-createAccordian(): void {
-  const { accountType } = this.detailsForGeneric;
-  // Reset accordion items
-  this.accordionItems = [];
-  // Titles for corporate applicants
-  const corporateTitles = ['Managing Director', 'Vice President', 'CEO', 'CFO', 'CTO'];
-  // Add Minor Details section if account type is 'minor'
-  if (accountType === 'minor') {
-    this.accordionItems.push({
-      header: 'Minor Details',
-      expanded: true,
-      showIsPrimary: false,
-      accountType
-    });
-  }
-  // Generate header label based on account type and index
-  const getHeaderLabel = (index: number): string => {
-    if (accountType === 'corporate') {
-      return corporateTitles[index] || `Corporate Member ${index + 1}`;
+  createAccordian(): void {
+    const { accountType } = this.detailsForGeneric;
+    // Reset accordion items
+    this.accordionItems = [];
+    // Titles for corporate applicants
+    const corporateTitles = [
+      'Managing Director',
+      'Vice President',
+      'CEO',
+      'CFO',
+      'CTO',
+    ];
+    // Add Minor Details section if account type is 'minor'
+    if (accountType === 'minor') {
+      this.accordionItems.push({
+        header: 'Minor Details',
+        expanded: true,
+        showIsPrimary: false,
+        accountType,
+      });
     }
-    const labels:any = {
-      joint: 'Applicant',
-      minor: 'Guardians'
+    // Generate header label based on account type and index
+    const getHeaderLabel = (index: number): string => {
+      if (accountType === 'corporate') {
+        return corporateTitles[index] || `Corporate Member ${index + 1}`;
+      }
+      const labels: any = {
+        joint: 'Applicant',
+        minor: 'Guardians',
+      };
+      return `${labels[accountType] || 'Applicant'} ${index + 1}`;
     };
-    return `${labels[accountType] || 'Applicant'} ${index + 1}`;
-  };
-  // Create accordion items
-  for (let i = 0; i < this.noOfapplicantguardian; i++) {
-    this.accordionItems.push({
-      header: getHeaderLabel(i),
-      expanded: false,
-      showIsPrimary: true,
-      accountType
-    });
+    // Create accordion items
+    for (let i = 0; i < this.noOfapplicantguardian; i++) {
+      this.accordionItems.push({
+        header: getHeaderLabel(i),
+        expanded: false,
+        showIsPrimary: true,
+        accountType,
+      });
+    }
   }
-}
-
-
 
   deleteAccordian(index: any) {
     if (this.accordionItems.length > 1) {
@@ -214,7 +217,7 @@ createAccordian(): void {
 
   handleSubmit() {
     const payload = { ...this.personalDetailsForm.value };
-    
+
     // payload.originationId = this.originationId;
     // payload.screenCode = this.screenCode;
     // delete payload.disbursementAccount.confirmAccountNo;
@@ -237,7 +240,7 @@ createAccordian(): void {
   submitForm() {
     return this.handleSubmit().toPromise();
   }
-  getForm(form:any){
+  getForm(form: any) {
     this.personalDetailsForm = form;
   }
 }

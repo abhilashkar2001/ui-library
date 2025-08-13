@@ -1,62 +1,94 @@
 <form [formGroup]="empFinDetails" class="emp-fin-generic">
-    <div fxLayout="row wrap" fxLayoutGap="16px grid">
-        <!-- 1 -->
-        <div fxFlex="25">
-            <ic-select [control]="empFinDetails.get('empStatus') | formcontrol" [options]="empStatus"
-                bindLabelKey="values" bindValueKey="id" label="Employment Status"></ic-select>
-        </div>
-        <div fxFlex="25">
-            <ic-form-field [control]="empFinDetails.get('occupation') | formcontrol" [maxLength]="20"
-                label="Occupation"></ic-form-field>
-        </div>
-        <div fxFlex="25">
-            <ic-select [control]="empFinDetails.get('industrySector') | formcontrol" [options]="indSector"
-                bindLabelKey="values" bindValueKey="id" label="Industry Sector"></ic-select>
-        </div>
-        <div fxFlex="25">
-            <ic-form-field [control]="empFinDetails.get('employerName') | formcontrol" [maxLength]="20"
-                label="Employer Name"></ic-form-field>
-        </div>
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <!-- 1 -->
+    <div fxFlex="25">
+      <ic-select
+        [control]="empFinDetails.get('empStatus') | formcontrol"
+        [options]="empStatus"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Employment Status"
+      ></ic-select>
     </div>
-    <div fxLayout="row wrap" fxLayoutGap="16px grid">
-        <!-- 1 -->
-        <div fxFlex="25">
-            <ic-form-field [control]="empFinDetails.get('empActivity') | formcontrol" [maxLength]="20"
-                label="Employment Activity"></ic-form-field>
-        </div>
-        <div fxFlex="25">
-            <ic-form-field [control]="empFinDetails.get('farmingActivity') | formcontrol" [maxLength]="20"
-                label="Farming Activity"></ic-form-field>
-        </div>
-        <div fxFlex="25">
-            <ic-select [control]="empFinDetails.get('estMonthlyIncome') | formcontrol" [options]="monthlyIncome"
-                bindLabelKey="values" bindValueKey="id" label="Estimated Monthly Income"></ic-select>
-        </div>
-        <div fxFlex="25">
-            <ic-select [control]="empFinDetails.get('srcOfFunds') | formcontrol" [options]="srcFunds"
-                bindLabelKey="values" bindValueKey="id" label="Source of Funds"></ic-select>
-        </div>
+    <div fxFlex="25">
+      <ic-form-field
+        [control]="empFinDetails.get('occupation') | formcontrol"
+        [maxLength]="20"
+        label="Occupation"
+      ></ic-form-field>
     </div>
+    <div fxFlex="25">
+      <ic-select
+        [control]="empFinDetails.get('industrySector') | formcontrol"
+        [options]="indSector"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Industry Sector"
+      ></ic-select>
+    </div>
+    <div fxFlex="25">
+      <ic-form-field
+        [control]="empFinDetails.get('employerName') | formcontrol"
+        [maxLength]="20"
+        label="Employer Name"
+      ></ic-form-field>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <!-- 1 -->
+    <div fxFlex="25">
+      <ic-form-field
+        [control]="empFinDetails.get('empActivity') | formcontrol"
+        [maxLength]="20"
+        label="Employment Activity"
+      ></ic-form-field>
+    </div>
+    <div fxFlex="25">
+      <ic-form-field
+        [control]="empFinDetails.get('farmingActivity') | formcontrol"
+        [maxLength]="20"
+        label="Farming Activity"
+      ></ic-form-field>
+    </div>
+    <div fxFlex="25">
+      <ic-select
+        [control]="empFinDetails.get('estMonthlyIncome') | formcontrol"
+        [options]="monthlyIncome"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Estimated Monthly Income"
+      ></ic-select>
+    </div>
+    <div fxFlex="25">
+      <ic-select
+        [control]="empFinDetails.get('srcOfFunds') | formcontrol"
+        [options]="srcFunds"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Source of Funds"
+      ></ic-select>
+    </div>
+  </div>
 
-    <div fxLayout="row wrap" fxLayoutGap="16px grid">
-        <!-- 1 -->
-        <div fxFlex="50">
-            <ic-textarea [control]="empFinDetails.get('incSrcDesp') | formcontrol" [rows]="8"
-                label="Income Source Detail Description">
-            </ic-textarea>
-        </div>
-        <div fxFlex="50"></div>
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <!-- 1 -->
+    <div fxFlex="50">
+      <ic-textarea
+        [control]="empFinDetails.get('incSrcDesp') | formcontrol"
+        [rows]="8"
+        label="Income Source Detail Description"
+      >
+      </ic-textarea>
     </div>
-    <div fxLayout="row wrap" fxLayoutGap="16px grid">
-        <div fxFlex="25">
-        </div>
-        <div fxFlex="25">
-        </div>
-        <div fxFlex="25">
-        </div>
-        <div fxFlex="25" fxLayoutAlign="end center" (click)="onSave()">
-            <!-- <ic-button [icButtonType]="'ghost-rounded'" [label]="'Save'" [type]="'submit'" size="medium">
+    <div fxFlex="50"></div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div fxFlex="25"></div>
+    <div fxFlex="25"></div>
+    <div fxFlex="25"></div>
+    <div fxFlex="25" fxLayoutAlign="end center" (click)="onSave()">
+      <!-- <ic-button [icButtonType]="'ghost-rounded'" [label]="'Save'" [type]="'submit'" size="medium">
             </ic-button> -->
-        </div>
     </div>
+  </div>
 </form>
