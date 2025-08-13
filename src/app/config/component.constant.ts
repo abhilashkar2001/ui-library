@@ -21,6 +21,7 @@ import { TermsConditionsComponent } from 'app/modules/origination/modules/shared
 import { AccountServiceComponent } from 'app/modules/cheque-book/components/account-service/account-service.component';
 import { PaymentDetailsComponent } from 'app/modules/cheque-book/components/payment-details/payment-details.component';
 import { ChequeBookDetailComponent } from 'app/modules/cheque-book/components/cheque-book-detail/cheque-book-detail.component';
+import { AccountDetailComponent } from 'app/modules/cheque-book/components/account-detail/account-detail.component';
 
 export interface ComponentMap {
   W1LACC: LoanDetailsComponent;
@@ -66,6 +67,7 @@ export interface ComponentStagesMap {
   'Account Services': AccountServiceComponent;
   'Payment Details': PaymentDetailsComponent;
   'Cheque Book Details': ChequeBookDetailComponent;
+  'Account Detail': AccountDetailComponent;
 }
 
 export const ComponentStagesConstant: {
@@ -85,4 +87,5 @@ export const ComponentStagesConstant: {
   'Account Services': AccountServiceComponent,
   'Payment Details': PaymentDetailsComponent,
   'Cheque Book Details': ChequeBookDetailComponent,
+  'Account Detail': AccountDetailComponent,
 };

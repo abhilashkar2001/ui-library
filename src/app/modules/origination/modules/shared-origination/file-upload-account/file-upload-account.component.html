@@ -102,8 +102,9 @@
                 fxFlex="49"
                 fxLayoutGap="10"
                 class="upload_img"
+             
               >
-                <div class="img_box">
+                <div class="img_box" (click)="openPdfViewer(file, docCtrl?.value?.documentType)">
                   <img
                     *ngIf="file.uuid | safe: 'url' | async as filePreview"
                     [src]="filePreview"
@@ -277,6 +278,7 @@
                       fxFlex="49"
                       fxLayoutGap="10"
                       class="upload_img"
+                       (click)="openPdfViewer(file, docCtrl?.value?.documentType)"
                     >
                       <div class="img_box">
                         <img

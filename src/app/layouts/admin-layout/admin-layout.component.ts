@@ -91,9 +91,16 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.layout.adjustLayout(event);
-  }
+  // onResize(event: any) {
+  //   this.layout.adjustLayout(event);
+  //     this.sidenavPanel.openedStart.subscribe(() => {
+  //     document.body.classList.add('no-scroll');
+  //   });
+ 
+  //   this.sidenavPanel.closedStart.subscribe(() => {
+  //     document.body.classList.remove('no-scroll');
+  //   });
+  // }
 
   ngAfterViewInit() {}
 

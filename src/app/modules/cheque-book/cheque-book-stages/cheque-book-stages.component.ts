@@ -224,7 +224,7 @@ export class ChequeBookStagesComponent implements OnInit {
             },
             {
               screenCode: 462,
-              screenName: 'Account Details',
+              screenName: 'Account Detail',
               route: null,
               fileUrl: null,
               sequence: 5,

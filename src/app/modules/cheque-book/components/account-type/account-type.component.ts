@@ -102,7 +102,7 @@ removeAccount(account: any) {
   console.log("Selected Accounts being sent:", this.selectedAccounts);
 
   this.router.navigate(
-    ['/cheque-book/account-detail'],
+    ['/cheque-book/stages'],
     { state: { accounts: this.selectedAccounts } }
   );
 }

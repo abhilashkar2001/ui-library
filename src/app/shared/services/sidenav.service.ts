@@ -5,6 +5,8 @@ import { AddCollateralComponent } from '../../modules/loan/components/collateral
 import { EmiCalculatorDrawerComponent } from 'app/modules/loan/emi-calculator/emi-calculator-drawer/emi-calculator-drawer.component';
 import { DocumentDetailsComponent } from 'app/modules/loan/components/document-details/document-details.component';
 import { OtpVerificationComponent } from '../components/otp-verification/otp-verification.component';
+import { PdfViewerComponent } from '../components/pdf-viewer/pdf-viewer.component';
+import { ViewDocSidePanelComponent } from '../components/view-doc-side-panel/view-doc-side-panel.component';
 
 @Injectable({
   providedIn: 'root',
@@ -58,6 +60,8 @@ export interface ContainerContextData {
     | DocumentDetailsComponent
     | EmiCalculatorDrawerComponent
     | OtpVerificationComponent
+    | PdfViewerComponent
+    | ViewDocSidePanelComponent
   >;
   data: Record<string, any> | string | number | boolean | undefined | null;
 }

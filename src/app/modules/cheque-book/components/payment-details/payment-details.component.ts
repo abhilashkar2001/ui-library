@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AdminLayoutComponent } from 'app/layouts/admin-layout/admin-layout.component';
 import { OtpVerificationComponent } from 'app/shared/components/otp-verification/otp-verification.component';
-import { ContainerContextData, SidenavService } from 'app/shared/services/sidenav.service';
+// import { OtpVerificationComponent } from 'app/shared/components/otp-verification/otp-verification.component';
 
 @Component({
   selector: 'app-payment-details',
@@ -31,7 +32,7 @@ accountNumbers: any = [];
 
 constructor(
   private fb: FormBuilder,
-  private sidenavService: SidenavService,
+  private adminLayout: AdminLayoutComponent,
 ) {}
 
 ngOnInit(): void {
@@ -49,12 +50,18 @@ buildForm() {
 
 submitPaymentDetails() {
   
-  const contextData :ContainerContextData = { 
-    component: OtpVerificationComponent,
-    data: 3
-  }
-  console.log('ffff', contextData);
-   this.sidenavService.open(contextData);
+  // const contextData :ContainerContextData = { 
+  //   component: PdfViewerComponent,
+  //   data: {
+  //     fileName: 'payment-details.pdf',
+  //     fileurl: 'payment-details.pdf'
+  //   }
+  // }
+  // console.log('ffff', contextData);
+  //  this.sidenavService.open(contextData);
+
+  this.adminLayout.openSidenavComponent(OtpVerificationComponent, {
+  });
 }
 
 cancelPaymentDetails(){}
