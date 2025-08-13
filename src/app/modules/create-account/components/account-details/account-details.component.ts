@@ -86,7 +86,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     const validValues = this.holderTypeArr.map((item) => item.value);
     const accountType = localStorage.getItem('account-type') || '';
     if (validValues.includes(accountType)) {
-      this.accountDetailsForm?.get('holderType')?.setValue(accountType);
+      this.accountDetailsForm?.get('holderTypeId')?.setValue(accountType);
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -98,7 +98,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   holderTypeChange() {
     localStorage.setItem(
       'account-type',
-      this.accountDetailsForm?.get('holderType')?.value,
+      this.accountDetailsForm?.get('holderTypeId')?.value,
     );
   }
 
@@ -168,7 +168,7 @@ a certain amount of interest`,
   }
 
   get holderType() {
-    return this.accountDetailsForm?.get('holderType')?.value;
+    return this.accountDetailsForm?.get('holderTypeId')?.value;
   }
 
   // Build Form
@@ -196,7 +196,7 @@ a certain amount of interest`,
   //   });
 
   //   this.accountDetailsGroup
-  //     .get('holderType')
+  //     .get('holderTypeId')
   //     ?.valueChanges.subscribe((holderType: string) => {
   //       console.log(holderType);
 
@@ -226,8 +226,9 @@ buildLoanDetailsForm(item: any) {
     rmId: [item.rmId || null],
     initialFunding: [item.initialFunding ?? false],
     overdraftRequested: [item.overdraftRequested ?? false],
-    holderType: [item.holderType || null],
+    holderTypeId: [item.holderType || null],
     noOfApplicant: [item.noOfApplicant || null],
+    noOfGuardian: [item.noOfGuardian || null],
     customerCategoty:[item.customerCategory || null],
     customerAccountInitialFunding: this.fb.group({
       amount: [item.customerAccountInitialFunding?.amount || null],
@@ -259,7 +260,7 @@ buildLoanDetailsForm(item: any) {
 
   // Holder type change logic
   this.accountDetailsForm
-    .get('holderType')
+    .get('holderTypeId')
     ?.valueChanges.subscribe((holderType: string) => {
       if (holderType?.toLowerCase() === 'joint') {
         this.accountDetailsForm.get('noOfApplicant')?.setValue(2);
