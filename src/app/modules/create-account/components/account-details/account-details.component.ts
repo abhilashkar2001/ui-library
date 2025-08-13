@@ -18,7 +18,7 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { catchError, map, Observable, of, Subscription, tap } from 'rxjs';
 // import { AccountSelectionComponent } from '../account-selection/account-selection.component';
 import { ActivatedRoute, Router } from '@angular/router';
- 
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 @Component({
   selector: 'app-account-details',
   templateUrl: './account-details.component.html',
@@ -61,6 +61,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     private genericValueService: GenericValueService,
     private store: Store,
     private loanService: LoanService,
+    private accountService:OpenAccountService,
     private router: Router,
     // private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
@@ -283,13 +284,17 @@ buildLoanDetailsForm(item: any) {
   }
  
   handleSubmit() {
+    console.log(this.accountDetailsForm);
+    
     const payload = {
       ...this.accountDetailsForm?.value,
     };
     payload.originationModel.originationId = this.originationId;
     delete payload.loanDetails.totalPrincipalAmount;
-    payload.screenCode = 444;
-    return this.loanService.saveLoanDetails(payload).pipe(
+    // payload.screenCode = 444;
+    console.log(payload);
+    
+    return this.accountService.saveAccountDetails(payload).pipe(
       tap((res) => {
         console.log(res);
       }),
