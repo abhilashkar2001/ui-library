@@ -18,7 +18,7 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { catchError, map, Observable, of, Subscription, tap } from 'rxjs';
 // import { AccountSelectionComponent } from '../account-selection/account-selection.component';
 import { ActivatedRoute, Router } from '@angular/router';
-
+ 
 @Component({
   selector: 'app-account-details',
   templateUrl: './account-details.component.html',
@@ -55,7 +55,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   data: any;
   basisClass!: string | null;
   customerId: any;
-
+ 
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
@@ -73,7 +73,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     this.data = this.activatedRoute.snapshot['queryParams']['type'];
     // this.loadLocaleData();
   }
-
+ 
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();
     this.fetchGenericValues();
@@ -82,11 +82,11 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
       this.fetchLoanDetails();
     }
     this.buildLoanDetailsForm("");
-
+ 
     const validValues = this.holderTypeArr.map((item) => item.value);
     const accountType = localStorage.getItem('account-type') || '';
     if (validValues.includes(accountType)) {
-      this.accountDetailsForm?.get('holderTypeId')?.setValue(accountType);
+      this.accountDetailsForm?.get('holderType')?.setValue(accountType);
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -94,14 +94,14 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
       console.log('Edit mode ON');
     }
   }
-
+ 
   holderTypeChange() {
     localStorage.setItem(
       'account-type',
-      this.accountDetailsForm?.get('holderTypeId')?.value,
+      this.accountDetailsForm?.get('holderType')?.value,
     );
   }
-
+ 
   loadUserProfile() {
     const loadUserProfileSub = this.userProfile$.subscribe((result) => {
       if (result) {
@@ -110,7 +110,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     });
     this.subscriptions.push(loadUserProfileSub);
   }
-
+ 
   initializeCreateAccountDetailsArray(_data?: any) {
     this.createAccountDetailsSummaryArr = [
       {
@@ -140,11 +140,11 @@ a certain amount of interest`,
       },
     ];
   }
-
+ 
   openAccountType() {
     this.router.navigate(['/account'])
-  } 
-
+  }
+ 
   // fetch loan details function
   fetchLoanDetails() {
     if (this.originationId)
@@ -155,7 +155,7 @@ a certain amount of interest`,
         }
       });
   }
-
+ 
   // fetch Generic Method
   fetchGenericValues() {
     this.genericValueService
@@ -166,11 +166,11 @@ a certain amount of interest`,
         }
       });
   }
-
+ 
   get holderType() {
-    return this.accountDetailsForm?.get('holderTypeId')?.value;
+    return this.accountDetailsForm?.get('holderType')?.value;
   }
-
+ 
   // Build Form
   // buildLoanDetailsForm() {
   //   this.accountDetailsForm = this.fb.group({
@@ -191,15 +191,15 @@ a certain amount of interest`,
   //       initialFunding: [''],
   //       overdraftRequested: [''],
   //     }),
-
+ 
   //     screenCode: [''],
   //   });
-
+ 
   //   this.accountDetailsGroup
-  //     .get('holderTypeId')
+  //     .get('holderType')
   //     ?.valueChanges.subscribe((holderType: string) => {
   //       console.log(holderType);
-
+ 
   //       if (holderType?.toLowerCase() === 'joint') {
   //         this.accountDetailsGroup.get('noOfApplicant')?.setValue(2);
   //       } else {
@@ -207,7 +207,7 @@ a certain amount of interest`,
   //       }
   //     });
   // }
-
+ 
   // get accountDetailsGroup(): FormGroup {
   //   return this.accountDetailsForm.get('accountDetails') as FormGroup;
   // }
@@ -226,9 +226,8 @@ buildLoanDetailsForm(item: any) {
     rmId: [item.rmId || null],
     initialFunding: [item.initialFunding ?? false],
     overdraftRequested: [item.overdraftRequested ?? false],
-    holderTypeId: [item.holderType || null],
+    holderType: [item.holderType || null],
     noOfApplicant: [item.noOfApplicant || null],
-    noOfGuardian: [item.noOfGuardian || null],
     customerCategoty:[item.customerCategory || null],
     customerAccountInitialFunding: this.fb.group({
       amount: [item.customerAccountInitialFunding?.amount || null],
@@ -237,7 +236,7 @@ buildLoanDetailsForm(item: any) {
       chequeNumber: [item.customerAccountInitialFunding?.chequeNumber || null],
       tellertransactionRefNo: [item.customerAccountInitialFunding?.tellertransactionRefNo || null]
     }),
-
+ 
     originationDetail: this.fb.group({
       originationId: [item.originationDetail?.originationId || null],
       applicationDate: [item.originationDetail?.applicationDate || null],
@@ -257,10 +256,10 @@ buildLoanDetailsForm(item: any) {
       })
     })
   });
-
+ 
   // Holder type change logic
   this.accountDetailsForm
-    .get('holderTypeId')
+    .get('holderType')
     ?.valueChanges.subscribe((holderType: string) => {
       if (holderType?.toLowerCase() === 'joint') {
         this.accountDetailsForm.get('noOfApplicant')?.setValue(2);
@@ -282,7 +281,7 @@ buildLoanDetailsForm(item: any) {
       }
     });
   }
-
+ 
   handleSubmit() {
     const payload = {
       ...this.accountDetailsForm?.value,
@@ -305,7 +304,7 @@ buildLoanDetailsForm(item: any) {
       }),
     );
   }
-
+ 
   submitForm() {
     return this.handleSubmit().toPromise();
   }

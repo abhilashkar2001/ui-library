@@ -32,9 +32,9 @@ const routes: Routes = [
   {
     path: 'account-type',
     loadChildren: () =>
-      import(
-        './modules/shared-origination/shared-origination.module'
-      ).then((m) => m.SharedOriginationModule),
+      import('./modules/shared-origination/shared-origination.module').then(
+        (m) => m.SharedOriginationModule,
+      ),
     data: { preload: false, title: 'Home', breadcrumb: 'Home' },
   },
 ];

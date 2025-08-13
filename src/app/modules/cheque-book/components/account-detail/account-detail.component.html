@@ -1,7 +1,7 @@
 <div *ngIf="customerId">
   <app-custom-account-details></app-custom-account-details>
 </div>
-<div class="select-account"  *ngIf="!accounts || accounts.length === 0">
+<div class="select-account" *ngIf="!accounts || accounts.length === 0">
   <div class="account-txt">
     Click “Select Account” to choose your registered email or mobile number for
     receiving a secure verification link. This link is essential to complete the
@@ -25,7 +25,12 @@
       {{ account.title }}
     </mat-panel-title>
   </mat-expansion-panel-header>
-  <div class="account-details" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+  <div
+    class="account-details"
+    fxLayout="row"
+    fxLayoutGap="20px"
+    fxLayoutAlign="start center"
+  >
     <div fxFlex="24">
       <ic-select
         [control]="accountDetailsForm.get('accountBranch') | formcontrol"

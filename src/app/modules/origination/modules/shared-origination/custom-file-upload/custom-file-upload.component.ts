@@ -200,7 +200,7 @@ export class CustomFileUploadComponent implements OnInit, OnChanges {
       }
     }
   }
- 
+
   applicant(): FormArray {
     return this.createDocumentForm?.get('applicants') as FormArray;
   }

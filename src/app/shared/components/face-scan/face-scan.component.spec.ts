@@ -8,7 +8,7 @@ describe('FaceScanComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FaceScanComponent]
+      declarations: [FaceScanComponent],
     });
     fixture = TestBed.createComponent(FaceScanComponent);
     component = fixture.componentInstance;

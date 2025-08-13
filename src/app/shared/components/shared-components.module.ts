@@ -57,7 +57,7 @@ const components = [
   FingerprintScanComponent,
   FaceScanComponent,
   OtpVerificationComponent,
-  SelectAccountComponent
+  SelectAccountComponent,
 ];
 
 @NgModule({

@@ -20,7 +20,7 @@
         <mat-card-content>
           <h3>
             <span class="highlight">
-              {{ account.title.replace('Savings Account','').trim() }}
+              {{ account.title.replace('Savings Account', '').trim() }}
             </span>
             {{ ' ' + type }}
           </h3>
@@ -43,7 +43,9 @@
         <h3>{{ account.title }}</h3>
         <p>Smart savings with exclusive perks for women</p>
       </div>
-      <mat-icon class="close-icon" (click)="removeAccount(account)">close</mat-icon>
+      <mat-icon class="close-icon" (click)="removeAccount(account)"
+        >close</mat-icon
+      >
     </div>
   </div>
 </div>
