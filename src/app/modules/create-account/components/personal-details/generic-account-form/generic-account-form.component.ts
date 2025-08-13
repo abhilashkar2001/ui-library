@@ -2,7 +2,7 @@
 //@ts-ignore
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from '@angular/core';
 //@ts-ignore
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Form, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 //@ts-ignore
 import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
@@ -270,64 +270,152 @@ export class GenericAccountFormComponent {
   }
   createPersonalDetailsForm() {
   this.personalDetailsForm = this.fb.group({
-  id: [null],
-  originationDetail: this.fb.group({
-    originationId: [null]
-  }),
-  customerInfo: this.fb.group({
-    userRefnumber: [''],
-    icustRefNo: [''],
-    cifNumber: [''],
-    autoVerificationType: [false],
-    corporateOnboardingStatus: [''],
-    contact: this.fb.group({
-      telephone: [''],
-      mobile: [''],
-      isphoneNumVerified: [false],
-      email: [''],
-      workTelephone: [''],
-      emailVerified: [false],
-      fax: [null],
-      whatsappNo: [''],
-      alternativeNumber: [''],
-      residencePhone: [''],
-      communicationPhone: [null],
-      statementVia: [null],
-      address: this.fb.array([
-        this.fb.group({
-          address1: [''],
-          address2: [''],
-          addressTypeId: [null],
-          residenceTypeId: [null],
-          livingAddressSince: ['']
-        })
-      ])
+    id: [null],
+    originationDetail: this.fb.group({
+      originationId: [null]
     }),
-    pepStatus: [''],
-    residentOfIndia: [false],
-    customerFatcaAndCrsInfoList: this.fb.array([
-      this.fb.group({
-        fatcaId: [null],
-        countryId: [null],
-        tinNumber: [''],
-        selectTinReason: [''],
-        tinUnableReason: ['']
-      })
-    ]),
-    kycInfo: this.fb.group({
+
+    customerInfo: this.fb.group({
       userRefnumber: [''],
-      prefixId: [null],
-      firstName: [''],
-      middleName: [''],
-      lastName: [''],
-      dateOfBirth: [''],
-      maritalStatusId: [null],
-      genderId: [null],
-      nationality: [''],
-      branchId: [null]
-    })
-  })
-});
+      icustRefNo: [''],
+      cifNumber: [''],
+      autoVerificationType: [false],
+      corporateOnboardingStatus: [''],
+
+      // PEP & Resident status
+      pepStatus: [''],
+      isResidentOfIndia: [false],
+
+      // FATCA/CRS Info
+      customerFatcaAndCrsInfoList: this.fb.array([
+        this.fb.group({
+          fatcaId: [null],
+          countryId: [null],
+          tinNumber: [''],
+          selectTinReason: [''],
+          tinUnableReason: ['']
+        })
+      ]),
+
+      // KYC Info
+      kycInfo: this.fb.group({
+        userRefnumber: [''],
+        prefixId: [null],
+        firstName: [''],
+        middleName: [''],
+        lastName: [''],
+        dateOfBirth: [''],
+        maritalStatusId: [null],
+        genderId: [null],
+        nationality: [''],
+        branchId: [null],
+
+        // Emergency Contact
+        emergencyContactDto: this.fb.group({
+          prefix: [''],
+          firstName: [''],
+          middleName: [''],
+          lastName: [''],
+          relationshipId: [null],
+          relationshipValue: [''],
+          contact: this.fb.group({
+            telephone: [''],
+            mobile: [''],
+            isphoneNumVerified: [false],
+            email: [''],
+            workTelephone: [''],
+            isEmailVerified: [false],
+            fax: [null],
+            whatsappNo: [''],
+            alternativeNumber: [''],
+            residencePhone: [''],
+            communicationPhone: [null],
+            statementVia: [null],
+            address: this.fb.array([
+              this.fb.group({
+                address1: [''],
+                address2: [''],
+                addressTypeId: [null],
+                residenceTypeId: [null],
+                livingAddressSince: ['']
+              })
+            ])
+          })
+        })
+      }),
+
+      // Identification Details
+      identificationDetails: this.fb.group({
+        identificationNumber: [''],
+        countryOfIssue: [null],
+        dateIssued: [''],
+        expiryDate: ['']
+      }),
+
+      // Main Contact
+      contact: this.fb.group({
+        telephone: [''],
+        mobile: [''],
+        isphoneNumVerified: [false],
+        email: [''],
+        workTelephone: [''],
+        isEmailVerified: [false],
+        fax: [null],
+        whatsappNo: [''],
+        alternativeNumber: [''],
+        residencePhone: [''],
+        communicationPhone: [null],
+        statementVia: [null],
+        address: this.fb.array([
+          this.fb.group({
+            address1: [''],
+            address2: [''],
+            addressTypeId: [null],
+            residenceTypeId: [null],
+            livingAddressSince: [''],
+            suburb: [''],
+            city: [''],
+            postalCode: ['']
+          })
+        ])
+      }),
+
+      // Spouse Contact
+      spouceContact: this.fb.group({
+        prefix: [''],
+        firstName: [''],
+        lastName: [''],
+        dateOfBirth: [''],
+        employeeStatus: [''],
+        netIncome: [null],
+        contact: this.fb.group({
+          telephone: [''],
+          mobile: [''],
+          email: [''],
+          workTelephone: [''],
+          residencePhone: ['']
+        })
+      })
+    }),
+
+    // Loan/Account Details (from JSON bottom part)
+    accountDescription: [''],
+    accountBranch: [''],
+    businessProductName: [''],
+    productDescription: [''],
+    accountType: [''],
+    accountCurrency: [''],
+    applicationDate: [''],
+    userRefNumber: [''],
+    cbsRefNumber: [''],
+    swiftCode: [''],
+    agentCode: [''],
+    rmId: [''],
+    initialFunding: [false],
+    overdraftRequested: [false],
+    holderTypeId: [null],
+    holderType: ['']
+  });
 
     this.addUpdateValidators();
   }
@@ -339,12 +427,36 @@ get kycInfo(): FormGroup {
   return this.customerInfo.get('kycInfo') as FormGroup;
 }
 
+get emergencyInfo(): FormGroup {
+  return this.kycInfo.get('emergencyContactDto') as FormGroup;
+}
+
+get emergencyContact(): FormGroup {
+  return this.emergencyInfo.get('contact') as FormGroup;
+}
+
+get emergencyContactAdress(): FormGroup {
+  return this.emergencyContact.get('address') as FormGroup;
+}
+
 get contact(): FormGroup {
   return this.customerInfo.get('contact') as FormGroup;
 }
 
+get identificationDetails(): FormGroup {
+  return this.customerInfo.get('identificationDetails') as FormGroup;
+}
+
 get addressArray(): FormArray {
   return this.contact.get('address') as FormArray;
+}
+
+get spouce(): FormGroup {
+  return this.customerInfo.get('spouceContact') as FormGroup;
+}
+
+get spouceContact(): FormGroup {
+  return this.spouce.get('contact') as FormGroup;
 }
 
 get customerFatcaAndCrsInfoList(): FormArray {

@@ -81,7 +81,7 @@ export const ComponentStagesConstant: {
   'Director Document Upload': DocumentUploadComponent,
   'Director Details': AccountPersonalDetailsComponent,
   'Employment & Financial Details': EmpFinDetailsComponent,
-  'Terms & Conditions': TermsConditionsComponent
+  'Terms & Conditions': TermsConditionsComponent,
   'Account Services': AccountServiceComponent,
   'Payment Details': PaymentDetailsComponent,
   'Cheque Book Details': ChequeBookDetailComponent,
