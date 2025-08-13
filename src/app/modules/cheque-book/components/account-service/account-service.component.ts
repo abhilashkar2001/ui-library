@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DocumentDetailsComponent } from 'app/modules/loan/components/document-details/document-details.component';
-import { ContainerContextData, SidenavService } from 'app/shared/services/sidenav.service';
+import {
+  ContainerContextData,
+  SidenavService,
+} from 'app/shared/services/sidenav.service';
 
 @Component({
   selector: 'app-account-service',
@@ -61,6 +64,6 @@ export class AccountServiceComponent {
       data: '',
     };
     const { componentRef } = this.sidenavService.openCustom(contextData);
-    console.log(componentRef)
+    console.log(componentRef);
   }
 }

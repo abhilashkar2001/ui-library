@@ -1,7 +1,7 @@
 import { ComponentRef } from '@angular/core';
 
 export class ComponentLRUCache {
-  private maxSize: number = 10;
+  private maxSize = 10;
   private map: Map<number, ComponentRef<any>>;
 
   constructor(maxSize: number) {
@@ -23,10 +23,12 @@ export class ComponentLRUCache {
       this.map.delete(index);
     } else if (this.map.size >= this.maxSize) {
       const oldestKey = this.map.keys().next().value;
-      const oldestValue = this.map.get(oldestKey);
-      if (oldestValue instanceof ComponentRef) {
-        oldestValue.destroy();
-        this.map.delete(index);
+      if (typeof oldestKey === 'number') {
+        const oldestValue = this.map.get(oldestKey);
+        if (oldestValue instanceof ComponentRef) {
+          oldestValue.destroy();
+        }
+        this.map.delete(oldestKey);
       }
 
       this.map.set(index, item);

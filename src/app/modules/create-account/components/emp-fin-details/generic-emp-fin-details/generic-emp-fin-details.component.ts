@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-generic-emp-fin-details',
   templateUrl: './generic-emp-fin-details.component.html',
-  styleUrls: ['./generic-emp-fin-details.component.scss']
+  styleUrls: ['./generic-emp-fin-details.component.scss'],
 })
 export class GenericEmpFinDetailsComponent {
   @Input() detailsForGeneric: any;
@@ -18,34 +18,32 @@ export class GenericEmpFinDetailsComponent {
   empFinDetails: FormGroup | any;
   validationConfig = {
     individual: {
-      empStatus: ([Validators.required]),
-      industrySector: ([Validators.required]),
-      estMonthlyIncome: ([Validators.required]),
-      srcOfFunds: ([Validators.required]),
+      empStatus: [Validators.required],
+      industrySector: [Validators.required],
+      estMonthlyIncome: [Validators.required],
+      srcOfFunds: [Validators.required],
     },
     joint: {
-      empStatus: ([Validators.required]),
-      industrySector: ([Validators.required]),
-      estMonthlyIncome: ([Validators.required]),
-      srcOfFunds: ([Validators.required]),
+      empStatus: [Validators.required],
+      industrySector: [Validators.required],
+      estMonthlyIncome: [Validators.required],
+      srcOfFunds: [Validators.required],
     },
     minor: {
-      empStatus: ([Validators.required]),
-      industrySector: ([Validators.required]),
-      estMonthlyIncome: ([Validators.required]),
-      srcOfFunds: ([Validators.required]),
+      empStatus: [Validators.required],
+      industrySector: [Validators.required],
+      estMonthlyIncome: [Validators.required],
+      srcOfFunds: [Validators.required],
     },
     corporate: {
-      empStatus: ([Validators.required]),
-      industrySector: ([Validators.required]),
-      estMonthlyIncome: ([Validators.required]),
-      srcOfFunds: ([Validators.required]),
-    }
-  }
+      empStatus: [Validators.required],
+      industrySector: [Validators.required],
+      estMonthlyIncome: [Validators.required],
+      srcOfFunds: [Validators.required],
+    },
+  };
 
-  constructor(
-    private fb: FormBuilder,
-  ) { }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     this.createEmpFinDetailsForm();
@@ -74,14 +72,14 @@ export class GenericEmpFinDetailsComponent {
   }
 
   addUpdateValidators() {
-    const accountType = this.detailsForGeneric.accountType as keyof typeof this.validationConfig;
+    const accountType = this.detailsForGeneric
+      .accountType as keyof typeof this.validationConfig;
     const configForType = this.validationConfig[accountType] || {};
     this.applyValidators(configForType);
   }
 
-
   applyValidators(config: any) {
-    Object.keys(this.empFinDetails.controls).forEach(field => {
+    Object.keys(this.empFinDetails.controls).forEach((field) => {
       const control = this.empFinDetails.get(field);
       if (control) {
         const validators = config[field] || [];
@@ -97,5 +95,4 @@ export class GenericEmpFinDetailsComponent {
       this.empFinDetails.markAllAsTouched();
     }
   }
-
 }

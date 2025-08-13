@@ -27,7 +27,6 @@ import { GenericEmpFinDetailsComponent } from './components/emp-fin-details/gene
 import { CustomAccountDetailsComponent } from '../origination/modules/shared-origination/custom-account-details/custom-account-details.component';
 import { AccountServicesComponent } from './components/account-services/account-services.component';
 
-
 @NgModule({
   declarations: [
     AccountLoginComponent,

@@ -8,7 +8,7 @@ describe('CustomAccountDetailsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CustomAccountDetailsComponent]
+      declarations: [CustomAccountDetailsComponent],
     });
     fixture = TestBed.createComponent(CustomAccountDetailsComponent);
     component = fixture.componentInstance;

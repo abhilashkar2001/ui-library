@@ -54,6 +54,10 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
       label: 'Loan',
       route: '/origination/loan',
     },
+    {
+      label: 'Card',
+      route: '/origination/loan',
+    },
   ];
   brandToggler: string;
 
@@ -150,8 +154,9 @@ export class HeaderTopComponent implements OnInit, OnDestroy {
       type = 'Account';
     } else if (item.label.toLowerCase().includes('cheque')) {
       type = 'Cheque';
+    } else if (item.label.toLowerCase().includes('card')) {
+      type = 'Card';
     }
-    console.log(type);
 
     this.router.navigate([item.route], {
       queryParams: { type: type },

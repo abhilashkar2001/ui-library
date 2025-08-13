@@ -46,6 +46,16 @@ export class LoansLandingComponent implements OnInit {
       this.category = 'Accounts';
       this.businessSuiteName = 'Account Opening Services';
       this.getLoanServices();
+    } else if (this.type === 'Card') {
+      this.imageUrl = 'assets/images/account_landing.svg';
+      this.profileHeader =
+        'Savings Made Simple: Open Your Account in 3 Easy Steps';
+      this.profileHint =
+        'Supercharge your savings for a wealthier you. Say hello to financial freedom! Join now and watch your money flourish.';
+      this.routeUrl = 'loan/loan-type';
+      this.category = 'Card';
+      this.businessSuiteName = 'Account Opening Services';
+      this.getLoanServices();
     } else {
       this.imageUrl = 'assets/images/Loan_Gold_img.png';
       this.profileHeader = 'Achieve Your Dreams with Our Loan Service.';

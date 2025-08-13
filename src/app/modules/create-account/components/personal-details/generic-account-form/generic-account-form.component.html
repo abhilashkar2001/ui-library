@@ -474,7 +474,9 @@
               : ''
           "
           [maxLength]="maxMobileLength"
-          [formControl]="personalDetailsForm.get('spouseMobileNo') | formcontrol"
+          [formControl]="
+            personalDetailsForm.get('spouseMobileNo') | formcontrol
+          "
           [isdCode]="countriesIsdCodes"
           [isdControl]="personalDetailsForm.get('mobtCode') | formcontrol"
           [maxLength]="maxMobileLength"
@@ -491,7 +493,9 @@
 
       <div fxFlex="25">
         <ic-select
-          [control]="personalDetailsForm.get('spouseEmployeeStatus') | formcontrol"
+          [control]="
+            personalDetailsForm.get('spouseEmployeeStatus') | formcontrol
+          "
           [options]="prefix"
           bindLabelKey="values"
           bindValueKey="id"
@@ -571,12 +575,16 @@
           (onSelectionChangeOutput)="setMobileLength()"
           [isdCode]="countriesIsdCodes"
           [customError]="
-            personalDetailsForm.get('emealternativeNumber')?.hasError('invalidLength')
+            personalDetailsForm
+              .get('emealternativeNumber')
+              ?.hasError('invalidLength')
               ? 'Max mobile length is ' + maxMobileLength
               : ''
           "
           [maxLength]="maxMobileLength"
-          [formControl]="personalDetailsForm.get('emealternativeNumber') | formcontrol"
+          [formControl]="
+            personalDetailsForm.get('emealternativeNumber') | formcontrol
+          "
           [isdCode]="countriesIsdCodes"
           [isdControl]="personalDetailsForm.get('mobtCode') | formcontrol"
           [maxLength]="maxMobileLength"
@@ -613,12 +621,16 @@
           (onSelectionChangeOutput)="setMobileLength()"
           [isdCode]="countriesIsdCodes"
           [customError]="
-            personalDetailsForm.get('emeTelephoneHome')?.hasError('invalidLength')
+            personalDetailsForm
+              .get('emeTelephoneHome')
+              ?.hasError('invalidLength')
               ? 'Max mobile length is ' + maxMobileLength
               : ''
           "
           [maxLength]="maxMobileLength"
-          [formControl]="personalDetailsForm.get('emeTelephoneHome') | formcontrol"
+          [formControl]="
+            personalDetailsForm.get('emeTelephoneHome') | formcontrol
+          "
           [isdCode]="countriesIsdCodes"
           [isdControl]="personalDetailsForm.get('mobtCode') | formcontrol"
           [maxLength]="maxMobileLength"
@@ -630,12 +642,16 @@
           (onSelectionChangeOutput)="setMobileLength()"
           [isdCode]="countriesIsdCodes"
           [customError]="
-            personalDetailsForm.get('emeTelephoneWork')?.hasError('invalidLength')
+            personalDetailsForm
+              .get('emeTelephoneWork')
+              ?.hasError('invalidLength')
               ? 'Max mobile length is ' + maxMobileLength
               : ''
           "
           [maxLength]="maxMobileLength"
-          [formControl]="personalDetailsForm.get('emeTelephoneWork') | formcontrol"
+          [formControl]="
+            personalDetailsForm.get('emeTelephoneWork') | formcontrol
+          "
           [isdCode]="countriesIsdCodes"
           [isdControl]="personalDetailsForm.get('mobtCode') | formcontrol"
           [maxLength]="maxMobileLength"
@@ -705,7 +721,7 @@
     <div fxFlex="25"></div>
     <div fxFlex="25"></div>
     <div fxFlex="25" fxLayoutAlign="end center" *ngIf="user">
-     <ic-button
+      <ic-button
         [icButtonType]="'filled-rounded'"
         [label]="'Save'"
         [type]="'submit'"
