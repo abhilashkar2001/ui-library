@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AdminLayoutComponent } from 'app/layouts/admin-layout/admin-layout.component';
 
 @Component({
   selector: 'app-select-account',
@@ -8,5 +9,9 @@ import { Component, Input } from '@angular/core';
 export class SelectAccountComponent {
   @Input() data: any;
 
+  constructor(private adminLayout: AdminLayoutComponent) {}
   ngOnInit(): void {}
+  close() {
+    this.adminLayout.closeSidenav();
+  }
 }
