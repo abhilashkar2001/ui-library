@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DocumentDetailsComponent } from 'app/modules/loan/components/document-details/document-details.component';
-import { ContainerContextData, SidenavService } from 'app/shared/services/sidenav.service';
+import { BankCodePanelComponent } from 'app/shared/components/bank-code-panel/bank-code-panel.component';
+import {
+  ContainerContextData,
+  SidenavService,
+} from 'app/shared/services/sidenav.service';
 
 @Component({
   selector: 'app-cheque-book-details',
@@ -30,7 +33,7 @@ export class ChequeBookDetailsComponent {
   }
   branchCodeFinder() {
     const contextData: ContainerContextData = {
-      component: DocumentDetailsComponent,
+      component: BankCodePanelComponent,
       data: '',
     };
     const { componentRef } = this.sidenavService.openCustom(contextData);

@@ -17,7 +17,6 @@ import { AccountDetailsComponent } from './components/account-details/account-de
 import { AccountDocumentUploadComponent } from './components/document-upload/document-upload.component';
 import { AccountDigitalSignatureComponent } from './components/digital-signature/digital-signature.component';
 import { AccountSummaryComponent } from './components/summary/summary.component';
-import { AccountSignaturePopupComponent } from './components/digital-signature/signature-popup/signature-popup.component';
 import { AccountSelectionComponent } from './components/account-selection/account-selection.component';
 import { PersonalIdentificationComponent } from './components/personal-identification/personal-identification.component';
 import { AccountPersonalDetailsComponent } from './components/personal-details/personal-details.component';
@@ -38,7 +37,6 @@ import { AccountServicesComponent } from './components/account-services/account-
     AccountPersonalDetailsComponent,
     AccountDigitalSignatureComponent,
     AccountSummaryComponent,
-    AccountSignaturePopupComponent,
     AccountSelectionComponent,
     PersonalIdentificationComponent,
     GenericAccountFormComponent,

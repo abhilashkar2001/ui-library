@@ -1,0 +1,68 @@
+<div fxLayout="column" fxLayoutAlign="start">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h3 class="header_lg">Select Account</h3>
+    <mat-icon mat-dialog-close>close</mat-icon>
+  </div>
+  <div>
+    <div>
+      <h4 class="header_md">We have found following Customer ID</h4>
+      <p>using this number (+91) 81234 67436</p>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="acc-cont">
+      <div fxLayout="row" fxLayoutGap="50" fxLayoutAlign="start center">
+        <img src="/assets/images/axis_bank_logo.svg" />
+        <div>
+          <h5>Customer ID</h5>
+          <p>G. Srihari</p>
+        </div>
+      </div>
+      <img src="/assets/images/done_icon.svg" />
+    </div>
+    <div
+      fxLayout="column"
+      fxLayoutAlign="start start"
+      fxLayoutGap="3"
+      class="info-cont"
+    >
+      <h4>We Require your consent for fetching your information</h4>
+      <div>
+        <ul fxLayoutGap="20px" fxLayout="column">
+          <li>
+            We’ll fetch your account details linked to your mobile number.
+          </li>
+          <li>
+            Details may include account number, name, bank, and account type.
+          </li>
+          <li>Your data is fetched securely from authorized sources.</li>
+          <li>We need your consent before accessing any information.</li>
+          <li>
+            Your privacy is protected — data won’t be shared without permission.
+          </li>
+        </ul>
+      </div>
+      <a>View more</a>
+    </div>
+  </div>
+  <div
+    fxFlex="100"
+    fxLayout="row"
+    fxLayoutAlign="end center"
+    fxLayoutGap="10"
+    class="btn-cont"
+  >
+    <ic-button
+      [label]="'Cancel'"
+      [type]="'button'"
+      icButtonType="outlined-rounded"
+      size="medium"
+    >
+    </ic-button>
+    <ic-button
+      [label]="'Confirm'"
+      [type]="'button'"
+      icButtonType="filled-rounded"
+      size="medium"
+    >
+    </ic-button>
+  </div>
+</div>

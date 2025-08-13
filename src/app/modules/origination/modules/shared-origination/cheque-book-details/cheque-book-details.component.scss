@@ -6,7 +6,7 @@
   width: 24%;
   border: 1px solid #cac4da;
   padding: 10px;
-  background-color: #f6faff;
+  background-color: var(--ic-card-bg-accent,#F6FAFF);
   p {
     color: light gray !important;
     width: 90%;
@@ -15,6 +15,6 @@
   }
 }
 .active {
-  border: 1px solid red !important;
+  border: 1px solid var(--ic-clr-primary-a10) !important;
   background-color: white !important;
 }
