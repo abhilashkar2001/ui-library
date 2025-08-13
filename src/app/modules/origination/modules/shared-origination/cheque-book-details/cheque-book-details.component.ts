@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AdminLayoutComponent } from 'app/layouts/admin-layout/admin-layout.component';
 import { BankCodePanelComponent } from 'app/shared/components/bank-code-panel/bank-code-panel.component';
-import {
-  ContainerContextData,
-  SidenavService,
-} from 'app/shared/services/sidenav.service';
 
 @Component({
   selector: 'app-cheque-book-details',
@@ -15,7 +12,7 @@ export class ChequeBookDetailsComponent {
   chequeBookForm: FormGroup | undefined;
   constructor(
     private fb: FormBuilder,
-    private sidenavService: SidenavService,
+    private adminLayout: AdminLayoutComponent,
   ) {}
   ngOnInit() {
     this.buildBasicForm();
@@ -32,11 +29,18 @@ export class ChequeBookDetailsComponent {
     });
   }
   branchCodeFinder() {
-    const contextData: ContainerContextData = {
-      component: BankCodePanelComponent,
-      data: '',
-    };
-    const { componentRef } = this.sidenavService.openCustom(contextData);
-    console.log(componentRef);
+    this.adminLayout.openSidenavComponent(
+      BankCodePanelComponent,
+      { width: '40%' },
+      false,
+      // (selectedCompany) => {
+      //   if (selectedCompany) {
+      //     this.businessDetailsForm
+      //       .get('parentCompanyId')
+      //       ?.setValue(selectedCompany.name);
+      //   }
+      // },
+    );
   }
+  parentSearch() {}
 }

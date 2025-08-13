@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AdminLayoutComponent } from 'app/layouts/admin-layout/admin-layout.component';
 import { BranchService } from 'app/shared/services/branch.service';
 
 @Component({
@@ -29,6 +30,7 @@ export class BankCodePanelComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private branchService: BranchService,
+    private adminLayout:AdminLayoutComponent,
   ) {}
 
   ngOnInit(): void {
@@ -51,5 +53,9 @@ export class BankCodePanelComponent implements OnInit {
         this.branchList = res.data;
       }
     });
+  }
+  close()
+  {
+    this.adminLayout.closeSidenav()
   }
 }

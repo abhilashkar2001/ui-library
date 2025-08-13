@@ -56,7 +56,7 @@
     </div>
     <div fxFlex="24" *ngIf="basisClass != 'CORPORATE ACCOUNT'">
       <ic-select
-        [control]="accountDetailsForm.get('holderType') | formcontrol"
+        [control]="accountDetailsForm.get('holderTypeId') | formcontrol"
         [options]="holderTypeArr"
         bindLabelKey="label"
         bindValueKey="value"
@@ -68,7 +68,7 @@
     <div
       fxFlex="24"
       *ngIf="
-        accountDetailsForm?.get('holderType')?.value?.toLowerCase() === 'minor'
+        accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() === 'minor'
       "
     >
       <ic-form-field
@@ -81,7 +81,7 @@
     <div
       fxFlex="24"
       *ngIf="
-        accountDetailsForm?.get('holderType')?.value?.toLowerCase() === 'joint'
+        accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() === 'joint'
       "
     >
       <ic-form-field
@@ -106,9 +106,9 @@
       *ngIf="
         basisClass == 'CORPORATE ACCOUNT' ||
         (basisClass != 'CORPORATE ACCOUNT' &&
-          (accountDetailsForm?.get('holderType')?.value?.toLowerCase() ===
+          (accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() ===
             'joint' ||
-            accountDetailsForm?.get('holderType')?.value?.toLowerCase() ===
+            accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() ===
               'individual'))
       "
     >

@@ -1,7 +1,7 @@
 <form *ngIf="bankForm" [formGroup]="bankForm" fxLayout="column">
   <div fxLayout="row" fxLayoutAlign="space-between center">
     <h3 class="header_lg">Find Bank Code</h3>
-    <mat-icon mat-dialog-close>close</mat-icon>
+    <mat-icon mat-dialog-close (click)="close()">close</mat-icon>
   </div>
   <div fxLayout="row wrap" fxLayoutGap="1%">
     <div fxFlex="48">
