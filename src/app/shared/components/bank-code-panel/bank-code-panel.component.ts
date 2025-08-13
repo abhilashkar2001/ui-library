@@ -30,7 +30,7 @@ export class BankCodePanelComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private branchService: BranchService,
-    private adminLayout:AdminLayoutComponent,
+    private adminLayout: AdminLayoutComponent,
   ) {}
 
   ngOnInit(): void {
@@ -54,8 +54,7 @@ export class BankCodePanelComponent implements OnInit {
       }
     });
   }
-  close()
-  {
-    this.adminLayout.closeSidenav()
+  close() {
+    this.adminLayout.closeSidenav();
   }
 }

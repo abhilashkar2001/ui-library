@@ -55,7 +55,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   data: any;
   basisClass!: string | null;
   customerId: any;
- 
+
   constructor(
     private fb: FormBuilder,
     private genericValueService: GenericValueService,
@@ -69,12 +69,12 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   ) {
     this.basisClass = sessionStorageService.getItem('basisClass');
     this.currentDate?.setDate(this.todaysDate.getDate() + 1);
-    this.userProfile$ = this.store.select(selectUser);    
+    this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
     this.data = this.activatedRoute.snapshot['queryParams']['type'];
     // this.loadLocaleData();
   }
- 
+
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();
     this.fetchGenericValues();
@@ -82,8 +82,8 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     if (this.originationId) {
       this.fetchLoanDetails();
     }
-    this.buildLoanDetailsForm("");
- 
+    this.buildLoanDetailsForm('');
+
     const validValues = this.holderTypeArr.map((item) => item.value);
     const accountType = localStorage.getItem('account-type') || '';
     if (validValues.includes(accountType)) {
@@ -95,23 +95,23 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
       console.log('Edit mode ON');
     }
   }
- 
+
   holderTypeChange() {
     localStorage.setItem(
       'account-type',
       this.accountDetailsForm?.get('holderType')?.value,
     );
   }
- 
+
   loadUserProfile() {
     const loadUserProfileSub = this.userProfile$.subscribe((result) => {
       if (result) {
-        this.profileInfo = result;        
+        this.profileInfo = result;
       }
     });
     this.subscriptions.push(loadUserProfileSub);
   }
- 
+
   initializeCreateAccountDetailsArray(_data?: any) {
     this.createAccountDetailsSummaryArr = [
       {
@@ -141,11 +141,11 @@ a certain amount of interest`,
       },
     ];
   }
- 
+
   openAccountType() {
-    this.router.navigate(['/account'])
+    this.router.navigate(['/account']);
   }
- 
+
   // fetch loan details function
   fetchLoanDetails() {
     if (this.originationId)
@@ -156,7 +156,7 @@ a certain amount of interest`,
         }
       });
   }
- 
+
   // fetch Generic Method
   fetchGenericValues() {
     this.genericValueService
@@ -167,11 +167,11 @@ a certain amount of interest`,
         }
       });
   }
- 
+
   get holderType() {
     return this.accountDetailsForm?.get('holderType')?.value;
   }
- 
+
   // Build Form
   // buildLoanDetailsForm() {
   //   this.accountDetailsForm = this.fb.group({
@@ -192,15 +192,15 @@ a certain amount of interest`,
   //       initialFunding: [''],
   //       overdraftRequested: [''],
   //     }),
- 
+
   //     screenCode: [''],
   //   });
- 
+
   //   this.accountDetailsGroup
   //     .get('holderType')
   //     ?.valueChanges.subscribe((holderType: string) => {
   //       console.log(holderType);
- 
+
   //       if (holderType?.toLowerCase() === 'joint') {
   //         this.accountDetailsGroup.get('noOfApplicant')?.setValue(2);
   //       } else {
@@ -208,67 +208,75 @@ a certain amount of interest`,
   //       }
   //     });
   // }
- 
+
   // get accountDetailsGroup(): FormGroup {
   //   return this.accountDetailsForm.get('accountDetails') as FormGroup;
   // }
-buildLoanDetailsForm(item: any) {
-  this.accountDetailsForm = this.fb.group({
-    accountType: [item.accountType || null],
-    accountDescription: [item.accountDescription || null],
-    accountBranch: [item.accountBranch || null],
-    businessProductName: [item.businessProductName || null],
-    productDescription: [item.productDescription || null],
-    applicationDate: [item.applicationDate || null],
-    userRefNumber: [item.userRefNumber || null],
-    cbsRefNumber: [item.cbsRefNumber || null],
-    swiftCode: [item.swiftCode || null],
-    agentCode: [item.agentCode || null],
-    rmId: [item.rmId || null],
-    initialFunding: [item.initialFunding ?? false],
-    overdraftRequested: [item.overdraftRequested ?? false],
-    holderType: [item.holderType || null],
-    noOfApplicant: [item.noOfApplicant || null],
-    customerCategoty:[item.customerCategory || null],
-    customerAccountInitialFunding: this.fb.group({
-      amount: [item.customerAccountInitialFunding?.amount || null],
-      fundByAccount: [item.customerAccountInitialFunding?.fundByAccount || null],
-      branchCode: [item.customerAccountInitialFunding?.branchCode || null],
-      chequeNumber: [item.customerAccountInitialFunding?.chequeNumber || null],
-      tellertransactionRefNo: [item.customerAccountInitialFunding?.tellertransactionRefNo || null]
-    }),
- 
-    originationDetail: this.fb.group({
-      originationId: [item.originationDetail?.originationId || null],
-      applicationDate: [item.originationDetail?.applicationDate || null],
-      icustRefNo: [item.originationDetail?.icustRefNo || null],
-      source: [item.originationDetail?.source || null],
-      status: [item.originationDetail?.status || null],
-      subStatus: [item.originationDetail?.subStatus || null],
-      branch: this.fb.group({
-        id: [item.originationDetail?.branch?.id || null]
+  buildLoanDetailsForm(item: any) {
+    this.accountDetailsForm = this.fb.group({
+      accountType: [item.accountType || null],
+      accountDescription: [item.accountDescription || null],
+      accountBranch: [item.accountBranch || null],
+      businessProductName: [item.businessProductName || null],
+      productDescription: [item.productDescription || null],
+      applicationDate: [item.applicationDate || null],
+      userRefNumber: [item.userRefNumber || null],
+      cbsRefNumber: [item.cbsRefNumber || null],
+      swiftCode: [item.swiftCode || null],
+      agentCode: [item.agentCode || null],
+      rmId: [item.rmId || null],
+      initialFunding: [item.initialFunding ?? false],
+      overdraftRequested: [item.overdraftRequested ?? false],
+      holderType: [item.holderType || null],
+      noOfApplicant: [item.noOfApplicant || null],
+      customerCategoty: [item.customerCategory || null],
+      customerAccountInitialFunding: this.fb.group({
+        amount: [item.customerAccountInitialFunding?.amount || null],
+        fundByAccount: [
+          item.customerAccountInitialFunding?.fundByAccount || null,
+        ],
+        branchCode: [item.customerAccountInitialFunding?.branchCode || null],
+        chequeNumber: [
+          item.customerAccountInitialFunding?.chequeNumber || null,
+        ],
+        tellertransactionRefNo: [
+          item.customerAccountInitialFunding?.tellertransactionRefNo || null,
+        ],
       }),
-      accountCurrency: this.fb.group({
-        id: [item.originationDetail?.accountCurrency?.id || null],
-        currencyCode: [item.originationDetail?.accountCurrency?.currencyCode || null]
+
+      originationDetail: this.fb.group({
+        originationId: [item.originationDetail?.originationId || null],
+        applicationDate: [item.originationDetail?.applicationDate || null],
+        icustRefNo: [item.originationDetail?.icustRefNo || null],
+        source: [item.originationDetail?.source || null],
+        status: [item.originationDetail?.status || null],
+        subStatus: [item.originationDetail?.subStatus || null],
+        branch: this.fb.group({
+          id: [item.originationDetail?.branch?.id || null],
+        }),
+        accountCurrency: this.fb.group({
+          id: [item.originationDetail?.accountCurrency?.id || null],
+          currencyCode: [
+            item.originationDetail?.accountCurrency?.currencyCode || null,
+          ],
+        }),
+        productDetails: this.fb.group({
+          id: [item.originationDetail?.productDetails?.id || null],
+        }),
       }),
-      productDetails: this.fb.group({
-        id: [item.originationDetail?.productDetails?.id || null]
-      })
-    })
-  });
- 
-  // Holder type change logic
-  this.accountDetailsForm
-    .get('holderType')
-    ?.valueChanges.subscribe((holderType: string) => {
-      if (holderType?.toLowerCase() === 'joint') {
-        this.accountDetailsForm.get('noOfApplicant')?.setValue(2);
-      } else {
-        this.accountDetailsForm.get('noOfApplicant')?.reset();
-      }
     });
-}
+
+    // Holder type change logic
+    this.accountDetailsForm
+      .get('holderType')
+      ?.valueChanges.subscribe((holderType: string) => {
+        if (holderType?.toLowerCase() === 'joint') {
+          this.accountDetailsForm.get('noOfApplicant')?.setValue(2);
+        } else {
+          this.accountDetailsForm.get('noOfApplicant')?.reset();
+        }
+      });
+  }
   // This function is used to call the EMI calculation API when the loan data changes
   callEmiCalculationAPI(payload: any) {
     this.loanService.getEmiCalculation(payload).subscribe((res: any) => {
@@ -282,7 +290,7 @@ buildLoanDetailsForm(item: any) {
       }
     });
   }
- 
+
   handleSubmit() {
     console.log(this.accountDetailsForm);
     
@@ -309,7 +317,7 @@ buildLoanDetailsForm(item: any) {
       }),
     );
   }
- 
+
   submitForm() {
     return this.handleSubmit().toPromise();
   }
