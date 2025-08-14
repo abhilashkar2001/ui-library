@@ -29,7 +29,7 @@
     backdrop-filter: brightness(0.5) blur(1px);
 
     .sidenav-content {
-      width: 40%;
+      // width: 40%;
       background: #f5f6ff;
       border-radius: 12px 0 0 12px;
       padding: 0 12px;
@@ -172,4 +172,10 @@
       }
     }
   }
+}
+.document_details{
+  display: flex;
+  background-color: #FFFFFF;
+  justify-content: space-between;
+  border-radius: 5px;
 }

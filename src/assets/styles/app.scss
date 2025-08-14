@@ -207,3 +207,19 @@ ic-select > .gray-select {
     }
   }
 }
+.mat-drawer-inner-container::-webkit-scrollbar {
+  display: none;
+}
+.no-scroll {
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
+}
+.sidenav-scroll {
+  max-height: 100vh;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+ 

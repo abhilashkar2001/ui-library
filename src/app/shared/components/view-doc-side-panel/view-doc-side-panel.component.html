@@ -1,4 +1,4 @@
-<div [class.sidenav-open]="isSideNavOpen" class="sidenav">
+<!-- <div [class.sidenav-open]="isSideNavOpen" class="sidenav">
   <div
     class="sidenav-content"
     fxLayout="column"
@@ -59,6 +59,129 @@
         No documents available.
       </div>
     </div>
+    <div *ngIf="documents.length > 1" class="navigator">
+      <div
+        (click)="previousDocument()"
+        (keydown.enter)="previousDocument()"
+        [class.disabled]="currentDocumentIndex === 0"
+        class="navigator_button"
+        tabindex="1"
+      >
+        <img alt="" src="assets/images/arrow-front.svg" />
+      </div>
+      <div
+        (click)="nextDocument()"
+        (keydown.enter)="nextDocument()"
+        [class.disabled]="currentDocumentIndex === documents.length - 1"
+        class="navigator_button"
+        tabindex="2"
+      >
+        <img alt="" src="assets/images/arrow-back.svg" />
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div [class.sidenav-open]="isSideNavOpen">
+  <div
+    class="sidenav-content"
+    fxLayout="column"
+    fxLayoutAlign="flex-start flex-start"
+  >
+    <div
+      class="sidenav-title w-100"
+      fxLayout="row"
+      fxLayoutAlign="space-between start"
+    >
+      <div class="header_lg_bold_black">{{ data?.documentType }}</div>
+      <div
+        (click)="closeSideNav()"
+        (keydown.enter)="closeSideNav()"
+        class="close_btn"
+        tabindex="0"
+      >
+        <mat-icon>close</mat-icon>
+      </div>
+    </div>
+    <div class="document_block w-100" fxLayout="column" fxLayoutGap="10px">
+      <div
+        *ngIf="documents.length"
+        class="document_item"
+        fxLayout="row"
+        fxLayoutAlign="space-between flex=-start"
+      >
+        <ng-container>
+          <div class="document_details" fxLayout="column">
+            <div class="document_name">
+              {{ documents[currentDocumentIndex]?.name }}
+            </div>
+            <div class="document_size">
+              Size {{ documents[currentDocumentIndex]?.size }}
+            </div>
+          </div>
+          <button
+            (click)="deleteDocument(documents[currentDocumentIndex]!)"
+            mat-icon-button
+          >
+            <img alt="" src="assets/images/trash_can.svg" />
+          </button>
+        </ng-container>
+      </div>
+      <div *ngIf="data" class="document_item">
+        <ng-container>
+          <div class="document_details" fxLayout="column">
+            <div class="document_info">
+              <div class="document_name">{{ data.documentType }}</div>
+              <div class="document_size">{{ data?.file?.[0]?.size }}</div>
+            </div>
+
+            <button (click)="deleteDocument(data.file[0]!)" mat-icon-button>
+              <img alt="" src="assets/images/trash_can.svg" />
+            </button>
+          </div>
+        </ng-container>
+      </div>
+      <ng-container
+        *ngIf="
+          documents[currentDocumentIndex]?.name?.includes('jpg') ||
+            documents[currentDocumentIndex]?.name?.includes('png');
+          else showPdf
+        "
+      >
+        <div *ngIf="documents.length" class="document_viewer">
+          <img
+            (error)="imageLoadError = true"
+            *ngIf="documents[currentDocumentIndex]?.uuid | async as imageUrl"
+            [alt]="documents[currentDocumentIndex]?.name"
+            [src]="imageUrl ?? 'assets/images/default_fallback_img.svg'"
+            class="document-image"
+          />
+          <div *ngIf="imageLoadError" class="skeleton-loader"></div>
+        </div>
+      </ng-container>
+
+      <ng-template #showPdf>
+        <!-- <object
+          *ngIf="currentPdfUrl as pdfUrl"
+          [data]="pdfUrl"
+          type="application/pdf"
+          width="100%"
+          height="600px"
+        >
+          Your browser does not support PDF viewing.
+        </object> -->
+
+        <iframe
+          *ngIf="currentPdfUrl"
+          [src]="currentPdfUrl"
+          width="100%"
+          height="600px"
+          style="border: none"
+        ></iframe>
+      </ng-template>
+      <div *ngIf="!showPdf" class="no-documents">No documents available.</div>
+    </div>
+
     <div *ngIf="documents.length > 1" class="navigator">
       <div
         (click)="previousDocument()"

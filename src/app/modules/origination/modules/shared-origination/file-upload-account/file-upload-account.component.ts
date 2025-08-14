@@ -8,7 +8,9 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DmsService } from '@onerumango/utils';
+import { AdminLayoutComponent } from 'app/layouts/admin-layout/admin-layout.component';
 import { DocumentDetailsComponent } from 'app/modules/loan/components/document-details/document-details.component';
+import { ViewDocSidePanelComponent } from 'app/shared/components/view-doc-side-panel/view-doc-side-panel.component';
 import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
@@ -76,6 +78,7 @@ export class FileUploadAccountComponent {
     private sessionStorageService: SessionStorageService,
     private loanService: LoanService,
     private sidenavService: SidenavService,
+    private adminLayout: AdminLayoutComponent,
   ) {}
 
   ngOnInit() {
@@ -510,6 +513,28 @@ export class FileUploadAccountComponent {
     }
 
     return this.otherDocument().at(index)?.get('fileInfo')?.value;
+  }
+
+  openPdfViewer(file: any, documentType: any) {
+    console.log(file,"file")
+    // const contextData: ContainerContextData = {
+    //   component: ViewDocSidePanelComponent,
+    //   data: {
+    //     file: [file],
+    //   },
+    // };
+    // this.sidenavService.open(contextData);
+     this.adminLayout.openSidenavComponent(
+  ViewDocSidePanelComponent,
+  {
+    data: {
+      file: [file],
+      documentType: documentType
+    }
+  },
+  false
+);
+
   }
 
   // Detele the file method and remove the docids and fileinfo from fromgroup

@@ -103,8 +103,11 @@ export class AccountTypeComponent {
   onClickAction() {
     console.log('Selected Accounts being sent:', this.selectedAccounts);
 
-    this.router.navigate(['/cheque-book/account-detail'], {
-      state: { accounts: this.selectedAccounts },
-    });
-  }
+  this.router.navigate(
+    ['/cheque-book/stages'],
+    { state: { accounts: this.selectedAccounts } }
+  );
+}
+
+
 }
