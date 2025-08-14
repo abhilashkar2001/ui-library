@@ -8,7 +8,7 @@ describe('FingerprintScanComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FingerprintScanComponent]
+      declarations: [FingerprintScanComponent],
     });
     fixture = TestBed.createComponent(FingerprintScanComponent);
     component = fixture.componentInstance;

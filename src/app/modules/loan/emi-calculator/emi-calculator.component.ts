@@ -16,7 +16,6 @@ import {
   InterestRateResponse,
 } from 'app/modules/loan/emi-calculator/emi-calculator-model';
 
-
 @Component({
   selector: 'app-emi-calculator',
   templateUrl: './emi-calculator.component.html',

@@ -1,0 +1,135 @@
+<div class="stepper-card">
+  <div class="stepper-header">
+    <h3 class="theme_lg">Business Loan</h3>
+    <span class="header_md">"Get your Loan account in just 11 steps"</span>
+  </div>
+
+  <div class="progress-wrapper" *ngIf="progressMapping.size">
+    <div class="progress-line" [style.width.px]="progressMapping.size * 200">
+      <div
+        class="progress-fill"
+        [style.width.px]="
+          ((progressMapping.size * 200) / progressMapping.size) *
+          (completedSteps().size +
+            (allowedPanelIndex === completedSteps().size ? 1 : 0))
+        "
+      ></div>
+    </div>
+
+    <div
+      class="step-icon-wrapper"
+      [style.width.px]="progressMapping.size * 200"
+    >
+      <ng-container *ngFor="let step of progressMapping | map; let i = index">
+        <div
+          class="step-icon-container"
+          fxLayout="column"
+          fxLayoutAlign="center start"
+          [style.width.px]="(progressMapping.size * 200) / progressMapping.size"
+        >
+          <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="4px">
+            <img
+              [src]="
+                completedSteps().has(i)
+                  ? 'assets/images/tickicon.svg'
+                  : i === allowedPanelIndex
+                    ? 'assets/images/progresstick.svg'
+                    : 'assets/images/untickicon.svg'
+              "
+              class="step-icon"
+              alt="tick"
+            />
+            <div fxLayout="column">
+              <div class="step-label">{{ step.screenName }}</div>
+              <div class="step-sub-label">Stage {{ i + 1 }}</div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<mat-accordion>
+  <ng-container *ngIf="componentMapping">
+    <div class="document-panel container">
+      <mat-expansion-panel
+        class="styled-panel hide"
+        [ngClass]="{ 'panel-opened': activePanels().has(i) }"
+        *ngFor="let panel of componentMapping | map; let i = index"
+        (closed)="onPanelClosed(i)"
+        (opened)="
+          onPanelOpened(
+            i,
+            panel.screenValue,
+            panel.screenName,
+            panel.screenCode
+          )
+        "
+      >
+        <mat-expansion-panel-header
+          class="panel-header no-pointer"
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          fxLayoutGap="10px"
+        >
+          <img
+            [src]="
+              completedSteps().has(i)
+                ? 'assets/images/tickicon.svg'
+                : i === allowedPanelIndex
+                  ? 'assets/images/progresstick.svg'
+                  : 'assets/images/untickicon.svg'
+            "
+            class="step-icon"
+            alt="tick"
+          />
+          <span class="spacing-panel">{{ panel.screenName }}</span>
+        </mat-expansion-panel-header>
+        <div fxLayout="column">
+          <ng-template #container></ng-template>
+
+          <div
+            fxFlex="100"
+            fxLayout="row"
+            fxLayoutAlign="end center"
+            fxLayoutGap="1%"
+            style="margin-top: 24px"
+          >
+            <span
+              *ngIf="panel.screenName === 'Create Loan' && !isEditing(i)"
+              class="edit-text"
+              (click)="editComponent(i)"
+              tabindex="0"
+              (keydown.enter)="editComponent(i)"
+            >
+              Edit
+            </span>
+            <ng-container *ngIf="panel.screenValue !== 'W1CRBU'">
+              <div>
+                <ic-button
+                  [label]="'Back'"
+                  [type]="'button'"
+                  icButtonType="ghost-rounded-danger"
+                  size="medium"
+                  (OnClick)="goBack(i)"
+                >
+                </ic-button>
+              </div>
+              <div>
+                <ic-button
+                  [icButtonType]="'filled-rounded'"
+                  [label]="'Next'"
+                  [type]="'submit'"
+                  size="medium"
+                  (click)="saveComponent(i)"
+                >
+                </ic-button>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
+  </ng-container>
+</mat-accordion>

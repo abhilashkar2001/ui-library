@@ -21,7 +21,6 @@ import { AccountDetailComponent } from './components/account-detail/account-deta
 import { AccountTypeComponent } from './components/account-type/account-type.component';
 import { DebitCardDetailsComponent } from './components/debit-card-details/debit-card-details.component';
 
-
 @NgModule({
   declarations: [
     // ChequeBookLoginComponent,
@@ -31,7 +30,7 @@ import { DebitCardDetailsComponent } from './components/debit-card-details/debit
     PaymentDetailsComponent,
     AccountDetailComponent,
     AccountTypeComponent,
-    DebitCardDetailsComponent
+    DebitCardDetailsComponent,
   ],
   imports: [
     CommonModule,

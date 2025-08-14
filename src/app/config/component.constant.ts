@@ -57,13 +57,13 @@ export interface ComponentStagesMap {
   'Document Upload': AccountDocumentUploadComponent;
   'Personal Identification': PersonalIdentificationComponent;
   'Personal Details': AccountPersonalDetailsComponent;
-  'Summary': AccountSummaryComponent;
+  Summary: AccountSummaryComponent;
   'Digital Signature': AccountDigitalSignatureComponent;
   'Bussiness Details': BusinessDetailsComponent;
   'Director Document Upload': DocumentUploadComponent;
   'Director Details': AccountPersonalDetailsComponent;
   'Employment & Financial Details': EmpFinDetailsComponent;
-  'Terms & Conditions': TermsConditionsComponent
+  'Terms & Conditions': TermsConditionsComponent;
   'Account Services': AccountServiceComponent;
   'Payment Details': PaymentDetailsComponent;
   'Cheque Book Details': ChequeBookDetailComponent;
@@ -77,7 +77,7 @@ export const ComponentStagesConstant: {
   'Document Upload': AccountDocumentUploadComponent,
   'Personal Identification': PersonalIdentificationComponent,
   'Personal Details': AccountPersonalDetailsComponent,
-  'Summary': AccountSummaryComponent,
+  Summary: AccountSummaryComponent,
   'Digital Signature': AccountDigitalSignatureComponent,
   'Bussiness Details': BusinessDetailsComponent,
   'Director Document Upload': DocumentUploadComponent,
@@ -88,4 +88,35 @@ export const ComponentStagesConstant: {
   'Payment Details': PaymentDetailsComponent,
   'Cheque Book Details': ChequeBookDetailComponent,
   'Account Detail': AccountDetailComponent,
+};
+
+// Card Component constant
+export interface ComponentMap {
+  W1LACC: LoanDetailsComponent;
+  W1DOCU: DocumentUploadComponent;
+  W1BUDE: BusinessDetailsComponent;
+  W1DDUD: DocumentUploadComponent;
+  W1PERD: DirectorDetailsComponent;
+  W1DISD: DisbursementDetailsComponent;
+  W1CRBU: CreditBureauComponent;
+  W1CODE: CollateralDetailsComponent;
+  W1TECO: TermsConditionComponent;
+  W1SUM: SummaryComponent;
+  W1SIGN: DigitalSignatureComponent;
+}
+
+export const ComponentCardConstant: {
+  [K in keyof ComponentMap]: Type<ComponentMap[K]>;
+} = {
+  W1LACC: LoanDetailsComponent,
+  W1DOCU: DocumentUploadComponent,
+  W1BUDE: BusinessDetailsComponent,
+  W1DDUD: DocumentUploadComponent,
+  W1PERD: DirectorDetailsComponent,
+  W1DISD: DisbursementDetailsComponent,
+  W1CRBU: CreditBureauComponent,
+  W1CODE: CollateralDetailsComponent,
+  W1TECO: TermsConditionComponent,
+  W1SUM: SummaryComponent,
+  W1SIGN: DigitalSignatureComponent,
 };

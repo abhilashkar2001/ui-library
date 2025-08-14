@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { DmsService } from '@onerumango/utils';
 import { AdminLayoutComponent } from 'app/layouts/admin-layout/admin-layout.component';
@@ -9,16 +16,19 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { SharedService } from 'app/shared/services/shared.service';
-import { ContainerContextData, SidenavService } from 'app/shared/services/sidenav.service';
+import {
+  ContainerContextData,
+  SidenavService,
+} from 'app/shared/services/sidenav.service';
 import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-file-upload-account',
   templateUrl: './file-upload-account.component.html',
-  styleUrls: ['./file-upload-account.component.scss']
+  styleUrls: ['./file-upload-account.component.scss'],
 })
 export class FileUploadAccountComponent {
-createDocumentForm!: FormGroup;
+  createDocumentForm!: FormGroup;
   @Input() checkListDocList: any;
   @Input() getDocumentList: any;
   @Input() screenNameValue: string | any;
@@ -49,18 +59,15 @@ createDocumentForm!: FormGroup;
   documentForm: FormGroup | undefined;
 
   extractedFields = [
-  { label: 'Name', key: 'extractedName', value: 'Harish' },
-  { label: 'Date of Birth', key: 'extractedDOB', value: '01-01-2000' },
-  { label: 'Gender', key: 'extractedGender', value: 'Male' },
-  { label: 'Aadhaar Number', key: 'aadhaarNumber', value: '123456789012' },
-  { label: 'Mobile Number', key: 'Mobile', value: '12525252' },
-  { label: 'Account Number', key: 'Account', value: '125252520000' },
-  { label: 'Branch', key: 'Branch', value: 'Banglore' },
-  { label: 'IFSC Code', key: 'IFSC', value: 'UBINO005120' },
-];
-
-
-
+    { label: 'Name', key: 'extractedName', value: 'Harish' },
+    { label: 'Date of Birth', key: 'extractedDOB', value: '01-01-2000' },
+    { label: 'Gender', key: 'extractedGender', value: 'Male' },
+    { label: 'Aadhaar Number', key: 'aadhaarNumber', value: '123456789012' },
+    { label: 'Mobile Number', key: 'Mobile', value: '12525252' },
+    { label: 'Account Number', key: 'Account', value: '125252520000' },
+    { label: 'Branch', key: 'Branch', value: 'Banglore' },
+    { label: 'IFSC Code', key: 'IFSC', value: 'UBINO005120' },
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -241,20 +248,20 @@ createDocumentForm!: FormGroup;
   }
 
   fileBrowseHandler(docIndex: number, applicantIndex?: number): void {
+    const docArray =
+      applicantIndex != null
+        ? this.getApplicantDocuments(applicantIndex)
+        : this.otherDocument();
 
-    const docArray = applicantIndex != null
-    ? this.getApplicantDocuments(applicantIndex)
-    : this.otherDocument();
+    const docGroup = docArray.at(docIndex);
+    const fileInfoCtrl = docGroup.get('fileInfo') as FormControl;
 
-  const docGroup = docArray.at(docIndex);
-  const fileInfoCtrl = docGroup.get('fileInfo') as FormControl;
+    const existingFiles = fileInfoCtrl?.value || [];
 
-  const existingFiles = fileInfoCtrl?.value || [];
-
-  // If document already exists, remove it first
-  if (existingFiles.length > 0) {
-    this.removeFile(docIndex, 0, applicantIndex); // Assuming one file at index 0
-  }
+    // If document already exists, remove it first
+    if (existingFiles.length > 0) {
+      this.removeFile(docIndex, 0, applicantIndex); // Assuming one file at index 0
+    }
 
     const inputElement = document.createElement('input');
     inputElement.type = 'file';
@@ -626,7 +633,7 @@ createDocumentForm!: FormGroup;
       otherDocArray.push(this.newDenom(data));
     }
   }
-  
+
   openSidePanel(doc: any) {
     const contextData: ContainerContextData = {
       component: DocumentDetailsComponent,

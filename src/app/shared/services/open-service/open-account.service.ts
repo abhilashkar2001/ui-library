@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CustomerAccount } from 'app/shared/models/account/accountDetails.model';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -92,5 +93,9 @@ export class OpenAccountService {
 
   faceMatch(payload: any) {
     return this.http.post<any>(`${baseUrl}/api/face-match-from-doc`, payload);
+  }
+
+  saveAccountDetails(payload:CustomerAccount){
+    return this.http.post<any>(`${baseUrl}/account`, payload)
   }
 }

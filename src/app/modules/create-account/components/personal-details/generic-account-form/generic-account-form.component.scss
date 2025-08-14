@@ -1,18 +1,18 @@
 .generic {
-    margin-top: 2em;
+  margin-top: 2em;
 }
 
 ::ng-deep.mdc-switch__track {
-    background-color: lightgray !important;
+  background-color: lightgray !important;
 }
 
 ::ng-deep.mdc-switch__handle {
-    background: #ffffff !important;
+  background: #ffffff !important;
 }
 
 .toggle {
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 12px;
-    letter-spacing: 0.16px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 12px;
+  letter-spacing: 0.16px;
 }

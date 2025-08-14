@@ -68,7 +68,8 @@
     <div
       fxFlex="24"
       *ngIf="
-        accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() === 'minor'
+        accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() ===
+        'minor'
       "
     >
       <ic-form-field
@@ -81,7 +82,8 @@
     <div
       fxFlex="24"
       *ngIf="
-        accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() === 'joint'
+        accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() ===
+        'joint'
       "
     >
       <ic-form-field
@@ -125,4 +127,3 @@
     </div>
   </div>
 </div>
-

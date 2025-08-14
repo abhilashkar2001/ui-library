@@ -48,11 +48,12 @@
 
 <mat-accordion>
   <ng-container *ngIf="componentMapping">
-    <div class="document-panel container" 
-     *ngFor="let panel of componentMapping | map; let i = index"
->
+    <div
+      class="document-panel container"
+      *ngFor="let panel of componentMapping | map; let i = index"
+    >
       <mat-expansion-panel
-      *ngIf="panel.screenName != 'Verify Mobile Number'"
+        *ngIf="panel.screenName != 'Verify Mobile Number'"
         class="styled-panel"
         [ngClass]="{ 'panel-opened': activePanels().has(i) }"
         (closed)="onPanelClosed(i)"
@@ -87,7 +88,12 @@
             fxLayoutGap="1%"
             style="margin-top: 50px"
           >
-            <div *ngIf="panel.screenName === 'Account Details' || panel.screenName === 'Personal Details'">
+            <div
+              *ngIf="
+                panel.screenName === 'Account Details' ||
+                panel.screenName === 'Personal Details'
+              "
+            >
               <ic-button
                 [label]="'Edit'"
                 [type]="'button'"

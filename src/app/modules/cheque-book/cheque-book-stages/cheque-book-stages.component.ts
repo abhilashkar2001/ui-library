@@ -10,7 +10,10 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
-import { ComponentStagesConstant, ComponentStagesMap } from 'app/config/component.constant';
+import {
+  ComponentStagesConstant,
+  ComponentStagesMap,
+} from 'app/config/component.constant';
 import { ComponentLRUCache } from 'app/modules/loan/stages/component-lru-cache';
 import { RenderComponentService } from 'app/shared/services/render-component.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
