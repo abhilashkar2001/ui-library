@@ -1,1 +1,121 @@
-<p>card-details works!</p>
+<div *ngIf="cardForm" fxFlex="100" fxLayout="column">
+  <div fxFlex="100" fxLayout="row" fxLayoutGap="10">
+    <div fxFlex="100" fxLayout="row" fxLayoutGap="5">
+      <div fxFlex="24">
+        <ic-select
+          label="Card Name"
+          [control]="cardForm?.get('cardName') | formcontrol"
+        >
+        </ic-select>
+      </div>
+      <div fxFlex="24">
+        <ic-form-field
+          label="Account Number"
+          [control]="cardForm?.get('accountNo') | formcontrol"
+          [readonly]="true"
+          [disabled]="true"
+        ></ic-form-field>
+      </div>
+      <div fxFlex="24">
+        <ic-select
+          label="Card Type"
+          [control]="cardForm?.get('cardType') | formcontrol"
+        >
+        </ic-select>
+      </div>
+      <div fxFlex="24">
+        <ic-select
+          label="Card Network"
+          [control]="cardForm?.get('cardNetwork') | formcontrol"
+        >
+        </ic-select>
+      </div>
+      <div fxFlex="24">
+        <ic-select
+          label="Preferred Billing Date"
+          [control]="cardForm?.get('preferredBillingDate') | formcontrol"
+        >
+        </ic-select>
+      </div>
+      <div fxFlex="24">
+        <ic-select
+          label="Credit Limit"
+          [control]="cardForm?.get('creditLimit') | formcontrol"
+        >
+        </ic-select>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div
+      class="enabled-mat-form-field p-8"
+      fxFlex="24"
+      fxLayout="row wrap"
+      fxLayoutAlign="start center"
+    >
+      <mat-label class="header_lg_bold_black" fxFlex="100"
+        >Delivery Location</mat-label
+      >
+      <ic-radio-button
+        *ngFor="let account of address"
+        [control]="cardForm.get('location') | formcontrol"
+        [label]="account.label"
+        [value]="account.value"
+      >
+      </ic-radio-button>
+    </div>
+  </div>
+  <div fxFlex="100" fxLayout="column" fxLayoutGap="5">
+    <h3>selected Branch</h3>
+    <div fxLayout="row" fxLayoutGap="10">
+      <div fxFlex="24">
+        <ic-form-field
+          label="Branch Name"
+          [control]="cardForm.get('branchName') | formcontrol"
+        ></ic-form-field>
+      </div>
+      <div fxFlex="24">
+        <ic-form-field
+          label="Bank Code"
+          [control]="cardForm.get('bankCode') | formcontrol"
+        ></ic-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h3>Card Preview</h3>
+    <p>
+      Express yourself with a card that reflects your personality. Our design
+      gallery offers a variety of stylish themes and layouts to choose from. .
+    </p>
+    <div FxLayout="row" fxLayoutGap="10px">
+      <div fxFlex="30">
+        <img
+          src="assets/images/debit-card.svg"
+          class="pl-4"
+          style="max-width: 100%"
+          alt="card"
+        />
+      </div>
+
+      <div
+        fxLayout="row wrap"
+        class="document-info"
+        fxFlex="60"
+        fxLayoutGap="15px"
+      >
+        <div
+          class="w-full info-block"
+          fxFlex="31"
+          *ngFor="let info of extractedFields"
+        >
+          <div class="label">{{ info.label }}</div>
+          <div class="value" class="highlight">
+            {{ info.value }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
