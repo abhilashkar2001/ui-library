@@ -1,7 +1,9 @@
 <div class="stepper-card">
   <div class="stepper-header">
-    <h3 class="theme_lg">Business Loan</h3>
-    <span class="header_md">"Get your Loan account in just 11 steps"</span>
+    <h3 class="theme_lg">
+      {{ this.productDetails?.subClass ?? 'Credit Card' }}
+    </h3>
+    <span class="header_md">"Get your Debit card in just 12 steps"</span>
   </div>
 
   <div class="progress-wrapper" *ngIf="progressMapping.size">

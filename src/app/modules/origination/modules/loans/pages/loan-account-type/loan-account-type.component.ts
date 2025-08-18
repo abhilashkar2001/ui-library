@@ -85,6 +85,7 @@ export class LoanAccountTypeComponent implements OnInit {
       } else if (this.category.toLowerCase().includes('card')) {
         this.basisClass = event.subClass;
         this.basisId = event.selectedLoan.basisId;
+
         const dialogRef = this.dialog.open(AccountSelectionComponent, {
           width: '100%',
           height: '90%',
@@ -94,10 +95,14 @@ export class LoanAccountTypeComponent implements OnInit {
           data: {
             category: this.category,
             basisClass: this.basisClass,
+            basisId: this.basisId,
           },
         });
         dialogRef.afterClosed().subscribe((res) => {
-          console.log(res);
+          console.log(res, 'response');
+          this.sessionStorageService.setItem('category', this.category);
+          this.sessionStorageService.setItem('basisClass', this.basisClass);
+          this.sessionStorageService.setItem('basisId', this.basisId);
         });
       } else if (
         this.category == 'Accounts' &&

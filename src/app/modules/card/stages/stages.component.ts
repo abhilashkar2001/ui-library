@@ -7,6 +7,7 @@ import {
   OnInit,
   QueryList,
   signal,
+  Type,
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
@@ -43,12 +44,11 @@ export class StagesComponent implements OnInit {
   >();
   private readonly componentCache = new ComponentLRUCache(10);
   private processCycleCode: string | undefined;
-  private basisId = 402;
-  private productDetails: IProduct | undefined;
+  private basisId: number | undefined;
+  public productDetails: IProduct | undefined;
   currentStepIndex = 1;
   private componentRefs = new Map<number, ComponentRef<any>>();
   allowedPanelIndex = 0;
-  // completedSteps = new Set<number>();
   completedSteps = signal<Set<number>>(new Set<number>());
   customHeader = LoanFlowConstants.CUSTOM_HEADER;
   processDetails: any;
@@ -63,12 +63,10 @@ export class StagesComponent implements OnInit {
     private tokenStorageService: TokenStorageService,
     private dialog: MatDialog,
     private router: Router,
-    // private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit() {
-    // const selectedProInfo: any =
-    //   this.sessionStorageService.getSelectedProductInfo();
+    this.basisId = this.sessionStorageSerive.getItem('basisId');
     setTimeout(() => {
       this.panels.get(0)?.open();
     });
@@ -88,18 +86,15 @@ export class StagesComponent implements OnInit {
     screenName?: string,
     screenCodeNum?: number,
   ) {
-    console.log(index, screenCode, screenName, screenCodeNum);
-
     const currentSet = new Set(this.activePanels());
     if (!currentSet.has(index)) {
       currentSet.add(index);
       this.activePanels.set(currentSet);
       const container = this.container.get(index);
       if (container && !this.componentCache.get(index)) {
-        const component =
-          ComponentCardConstant[
-            screenCode as keyof typeof ComponentCardConstant
-          ];
+        const component = ComponentCardConstant[
+          screenCode as keyof typeof ComponentCardConstant
+        ] as Type<any>;
         const componentRef = this.renderComponentService.loadComponent(
           container,
           component,
@@ -215,6 +210,7 @@ export class StagesComponent implements OnInit {
       if (resp?.statusCode === 200 && resp?.data?.length > 0) {
         this.productDetails = resp?.data[0];
         if (!this.productDetails) return;
+
         this.basisId = this.productDetails['id'];
         this.processCycleCode = this.productDetails['processCycleCode'];
         this.fetchProcessStages();
