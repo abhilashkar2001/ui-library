@@ -24,6 +24,7 @@ import { ChequeBookDetailComponent } from 'app/modules/cheque-book/components/ch
 import { AccountDetailComponent } from 'app/modules/cheque-book/components/account-detail/account-detail.component';
 import { CardDetailsComponent } from 'app/modules/card/components/card-details/card-details.component';
 import { EmploymentFinancialDetailsComponent } from 'app/modules/card/components/employment-financial-details/employment-financial-details.component';
+import { CommonPersonalDetailsComponent } from 'app/modules/card/components/common-personal-details/common-personal-details.component';
 
 export interface ComponentMap {
   W1LACC: LoanDetailsComponent;
@@ -95,7 +96,7 @@ export const ComponentStagesConstant: {
 // Card Component constant
 export interface ComponentCardMap {
   W1PEID: PersonalIdentificationComponent;
-  W1PERD: AccountPersonalDetailsComponent;
+  W1PERD: CommonPersonalDetailsComponent;
   W1ACDE: AccountDetailComponent;
   W1CADE: CardDetailsComponent;
   W1DOCU: DocumentUploadComponent;
@@ -109,7 +110,7 @@ export const ComponentCardConstant: {
   [K in keyof ComponentCardMap]: Type<ComponentCardMap[K]>;
 } = {
   W1PEID: PersonalIdentificationComponent,
-  W1PERD: AccountPersonalDetailsComponent,
+  W1PERD: CommonPersonalDetailsComponent,
   W1ACDE: AccountDetailComponent,
   W1CADE: CardDetailsComponent,
   W1DOCU: DocumentUploadComponent,
