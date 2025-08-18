@@ -52,8 +52,6 @@ export class LoanAccountTypeComponent implements OnInit {
   }
 
   async customApply(event: any) {
-    console.log(this.category);
-
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
@@ -83,6 +81,23 @@ export class LoanAccountTypeComponent implements OnInit {
           } else {
             this.goToLogin();
           }
+        });
+      } else if (this.category.toLowerCase().includes('card')) {
+        this.basisClass = event.subClass;
+        this.basisId = event.selectedLoan.basisId;
+        const dialogRef = this.dialog.open(AccountSelectionComponent, {
+          width: '100%',
+          height: '90%',
+          backdropClass: 'confirmDialogComponent',
+          hasBackdrop: true,
+          disableClose: true,
+          data: {
+            category: this.category,
+            basisClass: this.basisClass,
+          },
+        });
+        dialogRef.afterClosed().subscribe((res) => {
+          console.log(res);
         });
       } else if (
         this.category == 'Accounts' &&

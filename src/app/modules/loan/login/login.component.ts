@@ -208,10 +208,10 @@ export class LoginComponent implements OnInit {
         otp: this.otpForm.value?.otpValue,
       })
       .subscribe((response: any) => {
-        console.log(this.category);
-
         if (this.category === 'Accounts') {
           this.router.navigate(['create-account/stages']);
+        } else if (this.category === 'Card') {
+          this.router.navigate(['apply-card/stages']);
         } else {
           if (response.status === 401) {
             this.invalidOtp = true;
