@@ -139,7 +139,10 @@ export class CustomAccountDetailsComponent {
 
   fetchBranch() {
     this.accountService.fetchBranch().subscribe((resp: any) => {
-      this.accountBranchArr = resp.data;
+      this.accountBranchArr = Array.isArray(resp.data)
+        ? resp.data
+        : Object.values(resp.data);
+
       console.log(this.accountBranchArr);
     });
   }
@@ -155,11 +158,9 @@ export class CustomAccountDetailsComponent {
     });
   }
   fetchBasicDetails() {
-    this.accountService
-      .fetchBasicDetails(this.originationId)
-      .subscribe((resp: any) => {
-        this.createAccountDetailsSummaryArr = resp.data;
-      });
+    this.accountService.fetchBasicDetails('2504').subscribe((resp: any) => {
+      this.createAccountDetailsSummaryArr = resp.data;
+    });
   }
 
   get holderType() {

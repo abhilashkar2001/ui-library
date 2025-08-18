@@ -230,7 +230,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     this.createAccountDetailsSummaryArr.forEach((item: any) => {
       payload[item?.formControlName] = item?.value;
     });
-    payload.originationDetail.originationId = this.originationId;
+    payload.originationDetail.originationId = '2504';
     // delete payload.loanDetails.totalPrincipalAmount;
     // payload.screenCode = 444;
     console.log(payload);

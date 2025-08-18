@@ -54,6 +54,7 @@
         [disabled]="!isEdit"
       ></ic-select>
     </div>
+
     <div fxFlex="24" *ngIf="basisClass != 'CORPORATE ACCOUNT'">
       <ic-select
         [control]="accountDetailsForm.get('holderTypeId') | formcontrol"
@@ -68,7 +69,7 @@
     <div
       fxFlex="24"
       *ngIf="
-        accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() ===
+        accountDetailsForm?.get('holderType')?.value?.value?.toLowerCase() ===
         'minor'
       "
     >
@@ -82,8 +83,7 @@
     <div
       fxFlex="24"
       *ngIf="
-        accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() ===
-        'joint'
+        accountDetailsForm?.get('holderType')?.value?.toLowerCase() === 'joint'
       "
     >
       <ic-form-field
@@ -111,7 +111,7 @@
           (accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() ===
             'joint' ||
             accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() ===
-              'individual'))
+              'self'))
       "
     >
       <ic-slide-toggle
