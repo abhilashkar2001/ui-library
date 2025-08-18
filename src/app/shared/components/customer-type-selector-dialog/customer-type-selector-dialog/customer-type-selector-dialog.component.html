@@ -1,0 +1,88 @@
+<div class="customer_type_dialog">
+    <div class="header">
+        <h2>Choose Customer Type</h2>
+        <button mat-icon-button mat-dialog-close class="close-button">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <div mat-dialog-content class="dialog-container" fxLayout="column" fxLayoutGap="20px">
+        <div class="account-type" fxLayout="row" fxLayoutGap="20px">
+            <ng-container *ngFor="let account of accountTypes">
+                <div class="item" fxFlex="50" fxLayoutGap="10px" (click)="selectAccountType(account.key)"
+                    [class.selected]="form.get('accountType')?.value === account.key">
+                    <div>
+                        <img src="../../../../../assets/images/create-account/{{ account.img }}" />
+                    </div>
+                    <div class="title">{{ account.title }}</div>
+                    <div class="sub-title">{{ account.description }}</div>
+                </div>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="typeToggler">
+            <div class="account-subtype-header header_lg">
+                Select Account Subtype
+            </div>
+            <form [formGroup]="form">
+                <div class="account-subtype" fxLayout="column">
+                    <div class="subtype-item" fxFlex="100" fxLayout="row" fxLayoutGap="10px"
+                        fxLayoutAlign="space-between center" (click)="selectAccountSubtype('individual')"
+                        [class.selected]="form.get('accountSubtype')?.value === 'individual'">
+                        <div class="subtype-item-icon">
+                            <img src="../../../../../assets/images/phone_menu.svg" />
+                        </div>
+                        <div fxFlex="80">
+                            <div class="subtype-item-title header_md">Individual Account</div>
+                            <div class="subtype-item-description breadcrum_md">
+                                Single person account with full control over all
+                                transactions and decisions
+                            </div>
+                        </div>
+
+                        <ic-radio-button [value]="'individual'" [control]="form.get('accountSubtype') | formcontrol"
+                            (click)="selectAccountSubtype('individual')">
+                        </ic-radio-button>
+
+                    </div>
+                    <div class="subtype-item" fxFlex="100" fxLayout="row" fxLayoutGap="10px"
+                        fxLayoutAlign="space-between center" (click)="selectAccountSubtype('joint')"
+                        [class.selected]="form.get('accountSubtype')?.value === 'joint'">
+                        <div class="subtype-item-icon">
+                            <img src="../../../../../assets/images/phone_menu.svg" />
+                        </div>
+                        <div fxFlex="80">
+                            <div class="subtype-item-title header_md">Joint Account</div>
+                            <div class="subtype-item-description breadcrum_md">
+                                Shared account for multiple account holders with equal access and responsibility
+                            </div>
+                        </div>
+                        <ic-radio-button [value]="'joint'" [control]="form.get('accountSubtype') | formcontrol"
+                            (click)="selectAccountSubtype('joint')">
+                        </ic-radio-button>
+                    </div>
+                    <div class="subtype-item" fxFlex="100" fxLayout="row" fxLayoutGap="10px"
+                        fxLayoutAlign="space-between center" (click)="selectAccountSubtype('minor')"
+                        [class.selected]="form.get('accountSubtype')?.value === 'minor'">
+                        <div class="subtype-item-icon">
+                            <img src="../../../../../assets/images/phone_menu.svg" />
+                        </div>
+                        <div fxFlex="80">
+                            <div class="subtype-item-title header_md">Minor Account</div>
+                            <div class="subtype-item-description breadcrum_md">
+                                Special account for customers under 18 years old with parental oversight
+                            </div>
+                        </div>
+                        <ic-radio-button [value]="'minor'" [control]="form.get('accountSubtype') | formcontrol"
+                            (click)="selectAccountSubtype('minor')">
+                        </ic-radio-button>
+                    </div>
+                </div>
+            </form>
+        </ng-container>
+        <div class="account-type-footer" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+            <ic-button label="Cancle" icButtonType="outlined-rounded" mat-dialog-close></ic-button>
+            <ic-button label="Submit" icButtonType="filled-rounded" [disabled]="!this.form.valid"
+                (click)="closeDialog()"></ic-button>
+        </div>
+    </div>
+</div>
