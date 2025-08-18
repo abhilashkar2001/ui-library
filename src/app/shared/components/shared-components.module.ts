@@ -35,6 +35,7 @@ import { FingerprintScanComponent } from './fingerprint-scan/fingerprint-scan.co
 import { FaceScanComponent } from './face-scan/face-scan.component';
 import { OtpVerificationComponent } from './otp-verification/otp-verification.component';
 import { SelectAccountComponent } from './select-account/select-account.component';
+import { CustomerTypeSelectorDialogComponent } from './customer-type-selector-dialog/customer-type-selector-dialog/customer-type-selector-dialog.component';
 
 const components = [
   HeaderTopComponent,
@@ -58,6 +59,7 @@ const components = [
   FaceScanComponent,
   OtpVerificationComponent,
   SelectAccountComponent,
+  CustomerTypeSelectorDialogComponent
 ];
 
 @NgModule({

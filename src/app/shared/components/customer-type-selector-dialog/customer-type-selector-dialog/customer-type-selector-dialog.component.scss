@@ -1,0 +1,93 @@
+.customer_type_dialog {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 24px 0px;
+    align-items: center;
+  }
+
+  .dialog-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .account-type {
+      .item {
+        color: black;
+        border-radius: 7%;
+        text-align: center;
+        padding: 1em;
+        background-color: var(--ic-card-bg-accent);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        cursor: pointer;
+
+        .sub-title {
+          color: #a8a6ac;
+        }
+
+        &:hover,
+        &.selected {
+          background: var(--ic-clr-tonal-a30);
+          color: #fff;
+
+          .sub-title {
+            color: #fff;
+          }
+        }
+
+        .title {
+          font-weight: '700';
+          font-style: 'Bold';
+          font-size: 16px;
+          line-height: 24px;
+          letter-spacing: 0%;
+          text-align: center;
+          font-family: var(--ic-primary-font-family);
+        }
+
+        .sub-title {
+          font-weight: '400';
+          font-style: 'Regular';
+          font-size: 14px;
+          line-height: 24px;
+          letter-spacing: 0%;
+          text-align: center;
+          font-family: var(--ic-primary-font-family);
+        }
+      }
+    }
+
+    .account-subtype-header {
+      width: 100%;
+      text-align: left;
+    }
+
+    .account-subtype {
+      gap: 10px;
+      width: 100%;
+
+      .subtype-item {
+        width: 100%;
+        padding: 1em;
+        border: #C6C6C6 solid 1px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        cursor: pointer;
+        color: black;
+
+        &:hover,
+        &.selected {
+          border: 1px solid var(--ic-clr-tonal-a30) !important;
+        }
+      }
+    }
+
+    .account-type-footer {
+      width: 100%;
+    }
+  }
+}
