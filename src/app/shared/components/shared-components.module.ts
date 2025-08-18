@@ -59,7 +59,7 @@ const components = [
   FaceScanComponent,
   OtpVerificationComponent,
   SelectAccountComponent,
-  CustomerTypeSelectorDialogComponent
+  CustomerTypeSelectorDialogComponent,
 ];
 
 @NgModule({

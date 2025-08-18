@@ -126,7 +126,9 @@
 
     <div fxFlex="25">
       <ic-form-field
-        [control]="identificationDetails.get('identificationNumber') | formcontrol"
+        [control]="
+          identificationDetails.get('identificationNumber') | formcontrol
+        "
         [maxLength]="20"
         label="Identification Number"
       ></ic-form-field>
@@ -427,16 +429,12 @@
           (onSelectionChangeOutput)="setMobileLength()"
           [isdCode]="countriesIsdCodes"
           [customError]="
-            spouceContact
-              .get('telephone')
-              ?.hasError('invalidLength')
+            spouceContact.get('telephone')?.hasError('invalidLength')
               ? 'Max mobile length is ' + maxMobileLength
               : ''
           "
           [maxLength]="maxMobileLength"
-          [formControl]="
-            spouceContact.get('telephone') | formcontrol
-          "
+          [formControl]="spouceContact.get('telephone') | formcontrol"
           [isdCode]="countriesIsdCodes"
           [isdControl]="spouceContact.get('mobtCode') | formcontrol"
           [maxLength]="maxMobileLength"
@@ -448,16 +446,12 @@
           (onSelectionChangeOutput)="setMobileLength()"
           [isdCode]="countriesIsdCodes"
           [customError]="
-            spouceContact
-              .get('workTelephone')
-              ?.hasError('invalidLength')
+            spouceContact.get('workTelephone')?.hasError('invalidLength')
               ? 'Max mobile length is ' + maxMobileLength
               : ''
           "
           [maxLength]="maxMobileLength"
-          [formControl]="
-            spouceContact.get('workTelephone') | formcontrol
-          "
+          [formControl]="spouceContact.get('workTelephone') | formcontrol"
           [isdCode]="countriesIsdCodes"
           [isdControl]="spouceContact.get('mobtCode') | formcontrol"
           [maxLength]="maxMobileLength"
@@ -576,7 +570,9 @@
               : ''
           "
           [maxLength]="maxMobileLength"
-          [formControl]="emergencyContact.get('alternativeNumber') | formcontrol"
+          [formControl]="
+            emergencyContact.get('alternativeNumber') | formcontrol
+          "
           [isdCode]="countriesIsdCodes"
           [isdControl]="emergencyContact.get('mobtCode') | formcontrol"
           [maxLength]="maxMobileLength"
@@ -668,7 +664,9 @@
 
       <div fxFlex="25">
         <ic-select
-          [control]="emergencyContactAdress.get('residenceTypeId') | formcontrol"
+          [control]="
+            emergencyContactAdress.get('residenceTypeId') | formcontrol
+          "
           [options]="residentStatus"
           bindLabelKey="values"
           bindValueKey="id"
@@ -705,7 +703,7 @@
     <div fxFlex="25"></div>
     <div fxFlex="25"></div>
     <div fxFlex="25" fxLayoutAlign="end center" *ngIf="user">
-     <ic-button
+      <ic-button
         [icButtonType]="'filled-rounded'"
         [label]="'Save'"
         [type]="'submit'"

@@ -516,7 +516,7 @@ export class FileUploadAccountComponent {
   }
 
   openPdfViewer(file: any, documentType: any) {
-    console.log(file,"file")
+    console.log(file, 'file');
     // const contextData: ContainerContextData = {
     //   component: ViewDocSidePanelComponent,
     //   data: {
@@ -524,17 +524,16 @@ export class FileUploadAccountComponent {
     //   },
     // };
     // this.sidenavService.open(contextData);
-     this.adminLayout.openSidenavComponent(
-  ViewDocSidePanelComponent,
-  {
-    data: {
-      file: [file],
-      documentType: documentType
-    }
-  },
-  false
-);
-
+    this.adminLayout.openSidenavComponent(
+      ViewDocSidePanelComponent,
+      {
+        data: {
+          file: [file],
+          documentType: documentType,
+        },
+      },
+      false,
+    );
   }
 
   // Detele the file method and remove the docids and fileinfo from fromgroup

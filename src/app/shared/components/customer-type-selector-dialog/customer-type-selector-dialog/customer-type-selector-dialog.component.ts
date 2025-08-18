@@ -5,20 +5,22 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-customer-type-selector-dialog',
   templateUrl: './customer-type-selector-dialog.component.html',
-  styleUrls: ['./customer-type-selector-dialog.component.scss']
+  styleUrls: ['./customer-type-selector-dialog.component.scss'],
 })
 export class CustomerTypeSelectorDialogComponent {
   accountTypes = [
     {
       key: 'retail',
       title: 'Retail Account',
-      description: 'An account for individual customers with full personal control.',
+      description:
+        'An account for individual customers with full personal control.',
       img: 'individual2.svg',
     },
     {
       key: 'corporate',
       title: 'Corporate Account',
-      description: 'An account for businesses with shared management and controls.',
+      description:
+        'An account for businesses with shared management and controls.',
       img: 'joint2.svg',
     },
   ];
@@ -29,7 +31,7 @@ export class CustomerTypeSelectorDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<CustomerTypeSelectorDialogComponent>
+    private dialogRef: MatDialogRef<CustomerTypeSelectorDialogComponent>,
   ) {
     this.form = this.fb.group({
       accountType: ['', Validators.required],

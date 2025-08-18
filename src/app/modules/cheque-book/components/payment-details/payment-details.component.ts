@@ -28,12 +28,10 @@ export class PaymentDetailsComponent {
   countriesIsdCodes: any[] = [];
   accountNumbers: any = [];
 
-
-
-constructor(
-  private fb: FormBuilder,
-  private adminLayout: AdminLayoutComponent,
-) {}
+  constructor(
+    private fb: FormBuilder,
+    private adminLayout: AdminLayoutComponent,
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -48,21 +46,19 @@ constructor(
     });
   }
 
-submitPaymentDetails() {
-  
-  // const contextData :ContainerContextData = { 
-  //   component: PdfViewerComponent,
-  //   data: {
-  //     fileName: 'payment-details.pdf',
-  //     fileurl: 'payment-details.pdf'
-  //   }
-  // }
-  // console.log('ffff', contextData);
-  //  this.sidenavService.open(contextData);
+  submitPaymentDetails() {
+    // const contextData :ContainerContextData = {
+    //   component: PdfViewerComponent,
+    //   data: {
+    //     fileName: 'payment-details.pdf',
+    //     fileurl: 'payment-details.pdf'
+    //   }
+    // }
+    // console.log('ffff', contextData);
+    //  this.sidenavService.open(contextData);
 
-  this.adminLayout.openSidenavComponent(OtpVerificationComponent, {
-  });
-}
+    this.adminLayout.openSidenavComponent(OtpVerificationComponent, {});
+  }
 
   cancelPaymentDetails() {}
 }
