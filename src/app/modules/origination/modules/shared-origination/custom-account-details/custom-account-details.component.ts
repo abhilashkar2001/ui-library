@@ -1,10 +1,11 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LocaleData, selectUser, User } from '@onerumango/utils';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { catchError, map, Observable, of, Subscription, tap } from 'rxjs';
 
@@ -14,13 +15,16 @@ import { catchError, map, Observable, of, Subscription, tap } from 'rxjs';
   styleUrls: ['./custom-account-details.component.scss'],
 })
 export class CustomAccountDetailsComponent {
-  accountDetailsForm!: FormGroup;
+  @Input() accountDetailsForm!: FormGroup;
   createAccountDetailsSummaryArr: any[] = [];
   genericValue: any | undefined;
   todaysDate = new Date();
   staticData = {
-    REPAYMENTFREQUENCY: [],
+    HOLDERTYPE: [],
   };
+  currencyArr: any[] = [];
+  accountBranchArr: any[] = [];
+  customerCategoryArr: any[] = [];
   holderTypeArr = [
     { label: 'Individual', value: 'individual' },
     { label: 'Minor', value: 'minor' },
@@ -45,11 +49,13 @@ export class CustomAccountDetailsComponent {
   basisClass!: string | null;
 
   constructor(
-    private fb: FormBuilder,
+    // private fb: FormBuilder,
     private genericValueService: GenericValueService,
     private store: Store,
     private loanService: LoanService,
     // private dialog: MatDialog,
+
+    private accountService: OpenAccountService,
     private sessionStorageService: SessionStorageService,
     private activatedRoute: ActivatedRoute,
   ) {
@@ -71,7 +77,11 @@ export class CustomAccountDetailsComponent {
     if (this.originationId) {
       this.fetchLoanDetails();
     }
-    this.buildLoanDetailsForm('');
+    this.fetchBasicDetails();
+    this.fetchBranch();
+    this.fetchCurrency();
+    this.fetchCustomerCategory();
+    // this.buildLoanDetailsForm('');
 
     const validValues = this.holderTypeArr.map((item) => item.value);
     const accountType = localStorage.getItem('account-type') || '';
@@ -101,33 +111,7 @@ export class CustomAccountDetailsComponent {
   }
 
   initializeCreateAccountDetailsArray(_data?: any) {
-    this.createAccountDetailsSummaryArr = [
-      {
-        header: 'Account Type',
-        value: `Current`,
-        formControlName: 'accountType',
-        currency: true,
-      },
-      {
-        header: 'Account Description',
-        value: `Allows you to deposit your Money,
-      Safe with the bank`,
-        formControlName: 'accountDescription',
-      },
-      {
-        header: 'Business Product Name',
-        value: `Resident Account`,
-        formControlName: 'businessProductName',
-        currency: true,
-      },
-      {
-        header: 'Product Description',
-        value: `Safegaurd your money and Pays
-      a certain amount of interest`,
-        formControlName: 'productDescription',
-        currency: true,
-      },
-    ];
+    this.createAccountDetailsSummaryArr = [];
   }
 
   // fetch loan details function
@@ -148,7 +132,33 @@ export class CustomAccountDetailsComponent {
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.genericValue = resp?.data;
+          console.log(this.genericValue);
         }
+      });
+  }
+
+  fetchBranch() {
+    this.accountService.fetchBranch().subscribe((resp: any) => {
+      this.accountBranchArr = resp.data;
+      console.log(this.accountBranchArr);
+    });
+  }
+
+  fetchCurrency() {
+    this.accountService.fetchCurrency().subscribe((resp: any) => {
+      this.currencyArr = resp.data;
+    });
+  }
+  fetchCustomerCategory() {
+    this.accountService.fetchCustomerCategory().subscribe((resp: any) => {
+      this.customerCategoryArr = resp.data;
+    });
+  }
+  fetchBasicDetails() {
+    this.accountService
+      .fetchBasicDetails(this.originationId)
+      .subscribe((resp: any) => {
+        this.createAccountDetailsSummaryArr = resp.data;
       });
   }
 
@@ -157,71 +167,71 @@ export class CustomAccountDetailsComponent {
   }
 
   // Build Form
-  buildLoanDetailsForm(item: any) {
-    this.accountDetailsForm = this.fb.group({
-      accountType: [item.accountType || null],
-      accountDescription: [item.accountDescription || null],
-      accountBranch: [item.accountBranch || null],
-      businessProductName: [item.businessProductName || null],
-      productDescription: [item.productDescription || null],
-      applicationDate: [item.applicationDate || null],
-      userRefNumber: [item.userRefNumber || null],
-      cbsRefNumber: [item.cbsRefNumber || null],
-      swiftCode: [item.swiftCode || null],
-      agentCode: [item.agentCode || null],
-      rmId: [item.rmId || null],
-      initialFunding: [item.initialFunding ?? false],
-      overdraftRequested: [item.overdraftRequested ?? false],
-      holderType: [item.holderType || null],
-      noOfApplicant: [item.noOfApplicant || null],
-      customerCategoty: [item.customerCategory || null],
-      customerAccountInitialFunding: this.fb.group({
-        amount: [item.customerAccountInitialFunding?.amount || null],
-        fundByAccount: [
-          item.customerAccountInitialFunding?.fundByAccount || null,
-        ],
-        branchCode: [item.customerAccountInitialFunding?.branchCode || null],
-        chequeNumber: [
-          item.customerAccountInitialFunding?.chequeNumber || null,
-        ],
-        tellertransactionRefNo: [
-          item.customerAccountInitialFunding?.tellertransactionRefNo || null,
-        ],
-      }),
+  // buildLoanDetailsForm(item: any) {
+  //   this.accountDetailsForm = this.fb.group({
+  //     accountType: [item.accountType || null],
+  //     accountDescription: [item.accountDescription || null],
+  //     accountBranch: [item.accountBranch || null],
+  //     businessProductName: [item.businessProductName || null],
+  //     productDescription: [item.productDescription || null],
+  //     applicationDate: [item.applicationDate || null],
+  //     userRefNumber: [item.userRefNumber || null],
+  //     cbsRefNumber: [item.cbsRefNumber || null],
+  //     swiftCode: [item.swiftCode || null],
+  //     agentCode: [item.agentCode || null],
+  //     rmId: [item.rmId || null],
+  //     initialFunding: [item.initialFunding ?? false],
+  //     overdraftRequested: [item.overdraftRequested ?? false],
+  //     holderType: [item.holderType || null],
+  //     noOfApplicant: [item.noOfApplicant || null],
+  //     customerCategory: [item.customerCategory || null],
+  //     customerAccountInitialFunding: this.fb.group({
+  //       amount: [item.customerAccountInitialFunding?.amount || null],
+  //       fundByAccount: [
+  //         item.customerAccountInitialFunding?.fundByAccount || null,
+  //       ],
+  //       branchCode: [item.customerAccountInitialFunding?.branchCode || null],
+  //       chequeNumber: [
+  //         item.customerAccountInitialFunding?.chequeNumber || null,
+  //       ],
+  //       tellertransactionRefNo: [
+  //         item.customerAccountInitialFunding?.tellertransactionRefNo || null,
+  //       ],
+  //     }),
 
-      originationDetail: this.fb.group({
-        originationId: [item.originationDetail?.originationId || null],
-        applicationDate: [item.originationDetail?.applicationDate || null],
-        icustRefNo: [item.originationDetail?.icustRefNo || null],
-        source: [item.originationDetail?.source || null],
-        status: [item.originationDetail?.status || null],
-        subStatus: [item.originationDetail?.subStatus || null],
-        branch: this.fb.group({
-          id: [item.originationDetail?.branch?.id || null],
-        }),
-        accountCurrency: this.fb.group({
-          id: [item.originationDetail?.accountCurrency?.id || null],
-          currencyCode: [
-            item.originationDetail?.accountCurrency?.currencyCode || null,
-          ],
-        }),
-        productDetails: this.fb.group({
-          id: [item.originationDetail?.productDetails?.id || null],
-        }),
-      }),
-    });
+  //     originationDetail: this.fb.group({
+  //       originationId: [item.originationDetail?.originationId || null],
+  //       applicationDate: [item.originationDetail?.applicationDate || null],
+  //       icustRefNo: [item.originationDetail?.icustRefNo || null],
+  //       source: [item.originationDetail?.source || null],
+  //       status: [item.originationDetail?.status || null],
+  //       subStatus: [item.originationDetail?.subStatus || null],
+  //       branch: this.fb.group({
+  //         id: [item.originationDetail?.branch?.id || null],
+  //       }),
+  //       accountCurrency: this.fb.group({
+  //         id: [item.originationDetail?.accountCurrency?.id || null],
+  //         currencyCode: [
+  //           item.originationDetail?.accountCurrency?.currencyCode || null,
+  //         ],
+  //       }),
+  //       productDetails: this.fb.group({
+  //         id: [item.originationDetail?.productDetails?.id || null],
+  //       }),
+  //     }),
+  //   });
 
-    // Holder type change logic
-    this.accountDetailsForm
-      .get('holderType')
-      ?.valueChanges.subscribe((holderType: string) => {
-        if (holderType?.toLowerCase() === 'joint') {
-          this.accountDetailsForm.get('noOfApplicant')?.setValue(2);
-        } else {
-          this.accountDetailsForm.get('noOfApplicant')?.reset();
-        }
-      });
-  }
+  //   // Holder type change logic
+  //   this.accountDetailsForm
+  //     .get('holderType')
+  //     ?.valueChanges.subscribe((holderType: string) => {
+  //       if (holderType?.toLowerCase() === 'joint') {
+  //         this.accountDetailsForm.get('noOfApplicant')?.setValue(2);
+  //       } else {
+  //         this.accountDetailsForm.get('noOfApplicant')?.reset();
+  //       }
+  //     });
+  // }
 
   // get accountDetailsGroup(): FormGroup {
   //   return this.accountDetailsForm.get('accountDetails') as FormGroup;

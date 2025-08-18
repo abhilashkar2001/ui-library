@@ -95,7 +95,32 @@ export class OpenAccountService {
     return this.http.post<any>(`${baseUrl}/api/face-match-from-doc`, payload);
   }
 
-  saveAccountDetails(payload:CustomerAccount){
-    return this.http.post<any>(`${baseUrl}/account`, payload)
+  saveAccountDetails(payload: CustomerAccount) {
+    console.log('PAYLOAD: ', payload);
+
+    return this.http.post<any>(`${baseUrl}/account`, payload);
+  }
+
+  fetchBranch() {
+    return this.http.get<any>(
+      `${baseUrl}/branch?oneTimeAuth=Y&recordStatus=OPEN`,
+    );
+  }
+  fetchCurrency() {
+    return this.http.get<any>(
+      `${baseUrl}/icCurrency?oneTimeAuth=Y&recordStatus=OPEN`,
+    );
+  }
+
+  fetchCustomerCategory() {
+    return this.http.get<any>(
+      `${baseUrl}/customerCategory?oneTimeAuth=Y&recordStatus=OPEN`,
+    );
+  }
+
+  fetchBasicDetails(basisDetailsId: any) {
+    return this.http.get<any>(
+      `${baseUrl}/details/fetchAllDetails?basisDetailsId=${basisDetailsId}`,
+    );
   }
 }

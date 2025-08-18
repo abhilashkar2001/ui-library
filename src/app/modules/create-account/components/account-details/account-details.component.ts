@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 // import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { LocaleData, selectUser, User } from '@onerumango/utils';
-import { GenericValueService } from 'app/shared/services/generic-value.service';
+// import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 // import moment from 'moment';
@@ -30,7 +30,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   genericValue: any | undefined;
   todaysDate = new Date();
   staticData = {
-    REPAYMENTFREQUENCY: [],
+    HOLDERTYPE: [],
   };
   holderTypeArr = [
     { label: 'Individual', value: 'individual' },
@@ -58,10 +58,10 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private fb: FormBuilder,
-    private genericValueService: GenericValueService,
+    // private genericValueService: GenericValueService,
     private store: Store,
     private loanService: LoanService,
-    private accountService:OpenAccountService,
+    private accountService: OpenAccountService,
     private router: Router,
     // private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
@@ -77,7 +77,6 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();
-    this.fetchGenericValues();
     this.initializeCreateAccountDetailsArray();
     if (this.originationId) {
       this.fetchLoanDetails();
@@ -113,33 +112,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   initializeCreateAccountDetailsArray(_data?: any) {
-    this.createAccountDetailsSummaryArr = [
-      {
-        header: 'Account Type',
-        value: `Current`,
-        formControlName: 'accountType',
-        currency: true,
-      },
-      {
-        header: 'Account Description',
-        value: `Allows you to deposit your Money,
-Safe with the bank`,
-        formControlName: 'accountDescription',
-      },
-      {
-        header: 'Business Product Name',
-        value: `Resident Account`,
-        formControlName: 'businessProductName',
-        currency: true,
-      },
-      {
-        header: 'Product Description',
-        value: `Safegaurd your money and Pays
-a certain amount of interest`,
-        formControlName: 'productDescription',
-        currency: true,
-      },
-    ];
+    this.createAccountDetailsSummaryArr = [];
   }
 
   openAccountType() {
@@ -157,61 +130,18 @@ a certain amount of interest`,
       });
   }
 
-  // fetch Generic Method
-  fetchGenericValues() {
-    this.genericValueService
-      .loadGenericValue(Object.keys(this.staticData))
-      .subscribe((resp: any) => {
-        if (resp?.statusCode === 200) {
-          this.genericValue = resp?.data;
-        }
-      });
-  }
+  // fetchBasicDetails() {
+  //   this.accountService
+  //     .fetchBasicDetails(this.originationId)
+  //     .subscribe((resp: any) => {
+  //       this.createAccountDetailsSummaryArr = resp.data;
+  //     });
+  // }
 
   get holderType() {
     return this.accountDetailsForm?.get('holderType')?.value;
   }
 
-  // Build Form
-  // buildLoanDetailsForm() {
-  //   this.accountDetailsForm = this.fb.group({
-  //     originationModel: this.fb.group({
-  //       originationId: [''],
-  //     }),
-  //     accountDetails: this.fb.group({
-  //       accountType: [''],
-  //       businessProductName: [''],
-  //       accountDescription: [''],
-  //       productDescription: [''],
-  //       accountBranch: [''],
-  //       accountCurrency: [''],
-  //       noOfApplicant: [''],
-  //       noOfGuardian: [''],
-  //       customerCategory: [''],
-  //       holderType: [''],
-  //       initialFunding: [''],
-  //       overdraftRequested: [''],
-  //     }),
-
-  //     screenCode: [''],
-  //   });
-
-  //   this.accountDetailsGroup
-  //     .get('holderType')
-  //     ?.valueChanges.subscribe((holderType: string) => {
-  //       console.log(holderType);
-
-  //       if (holderType?.toLowerCase() === 'joint') {
-  //         this.accountDetailsGroup.get('noOfApplicant')?.setValue(2);
-  //       } else {
-  //         this.accountDetailsGroup.get('noOfApplicant')?.reset();
-  //       }
-  //     });
-  // }
-
-  // get accountDetailsGroup(): FormGroup {
-  //   return this.accountDetailsForm.get('accountDetails') as FormGroup;
-  // }
   buildLoanDetailsForm(item: any) {
     this.accountDetailsForm = this.fb.group({
       accountType: [item.accountType || null],
@@ -229,7 +159,7 @@ a certain amount of interest`,
       overdraftRequested: [item.overdraftRequested ?? false],
       holderType: [item.holderType || null],
       noOfApplicant: [item.noOfApplicant || null],
-      customerCategoty: [item.customerCategory || null],
+      customerCategory: [item.customerCategory || null],
       customerAccountInitialFunding: this.fb.group({
         amount: [item.customerAccountInitialFunding?.amount || null],
         fundByAccount: [
@@ -291,35 +221,39 @@ a certain amount of interest`,
     });
   }
 
-  handleSubmit() {
-    console.log(this.accountDetailsForm);
-    
-    const payload = {
+  submitForm() {
+    console.log(this.accountDetailsForm, 'jhgfds');
+
+    const payload: any = {
       ...this.accountDetailsForm?.value,
     };
-    payload.originationModel.originationId = this.originationId;
-    delete payload.loanDetails.totalPrincipalAmount;
+    this.createAccountDetailsSummaryArr.forEach((item: any) => {
+      payload[item?.formControlName] = item?.value;
+    });
+    payload.originationDetail.originationId = this.originationId;
+    // delete payload.loanDetails.totalPrincipalAmount;
     // payload.screenCode = 444;
     console.log(payload);
-    
-    return this.accountService.saveAccountDetails(payload).pipe(
-      tap((res) => {
-        console.log(res);
-      }),
-      map((res) =>
-        res?.statusCode == 200 || res?.statusCode == 201
-          ? ('success' as const)
-          : ('failure' as const),
-      ),
-      catchError((_err) => {
-        console.error(_err);
-        return of('failure' as const);
-      }),
-    );
-  }
 
-  submitForm() {
-    return this.handleSubmit().toPromise();
+    this.accountService
+      .saveAccountDetails(payload)
+      .pipe(
+        tap((res) => {
+          console.log(res);
+        }),
+        map((res) =>
+          res?.statusCode == 200 || res?.statusCode == 201
+            ? ('success' as const)
+            : ('failure' as const),
+        ),
+        catchError((_err) => {
+          console.error(_err);
+          return of('failure' as const);
+        }),
+      )
+      .subscribe((resp: any) => {
+        console.log('RESP: ', resp);
+      });
   }
   ngOnDestroy() {
     this.valueChangesSubscription?.unsubscribe();

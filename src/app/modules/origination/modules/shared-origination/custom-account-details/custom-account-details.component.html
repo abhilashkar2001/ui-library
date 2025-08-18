@@ -27,9 +27,9 @@
     <div fxFlex="24">
       <ic-select
         [control]="accountDetailsForm.get('accountBranch') | formcontrol"
-        [options]="genericValue?.REPAYMENTFREQUENCY"
-        bindLabelKey="values"
-        bindValueKey="id"
+        [options]="accountBranchArr"
+        bindLabelKey="branchName"
+        bindValueKey="branchCode"
         label="Account Branch 1"
         [disabled]="!isEdit"
       ></ic-select>
@@ -37,7 +37,7 @@
     <div fxFlex="24">
       <ic-select
         [control]="accountCurrency.get('currencyCode') | formcontrol"
-        [options]="genericValue?.REPAYMENTFREQUENCY"
+        [options]="currencyArr"
         bindLabelKey="values"
         bindValueKey="id"
         label="Account Currency"
@@ -47,7 +47,7 @@
     <div fxFlex="24">
       <ic-select
         [control]="accountDetailsForm.get('customerCategory') | formcontrol"
-        [options]="genericValue?.REPAYMENTFREQUENCY"
+        [options]="customerCategoryArr"
         bindLabelKey="values"
         bindValueKey="id"
         label="Customer Category"
@@ -57,9 +57,9 @@
     <div fxFlex="24" *ngIf="basisClass != 'CORPORATE ACCOUNT'">
       <ic-select
         [control]="accountDetailsForm.get('holderTypeId') | formcontrol"
-        [options]="holderTypeArr"
-        bindLabelKey="label"
-        bindValueKey="value"
+        [options]="genericValue?.HOLDERTYPE"
+        bindLabelKey="values"
+        bindValueKey="id"
         label="Holder Type"
         [disabled]="!isEdit"
         (selectionChange)="holderTypeChange()"

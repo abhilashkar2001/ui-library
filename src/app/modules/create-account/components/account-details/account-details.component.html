@@ -1,5 +1,7 @@
 <div *ngIf="!customerId">
-  <app-custom-account-details></app-custom-account-details>
+  <app-custom-account-details
+    [accountDetailsForm]="accountDetailsForm"
+  ></app-custom-account-details>
 </div>
 <div class="select-account">
   <div class="account-txt">
