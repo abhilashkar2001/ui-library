@@ -14,7 +14,7 @@ import { RenderComponentService } from '../../../shared/services/render-componen
 import { LoanService } from '../../../shared/services/loan/loan.service';
 import { IProduct, TokenStorageService } from '@onerumango/utils';
 import {
-  ComponentConstant,
+  ComponentCardConstant,
   ComponentMap,
 } from '../../../config/component.constant';
 import { MatExpansionPanel } from '@angular/material/expansion';
@@ -43,7 +43,7 @@ export class StagesComponent implements OnInit {
   >();
   private readonly componentCache = new ComponentLRUCache(10);
   private processCycleCode: string | undefined;
-  private basisId: number | undefined;
+  private basisId = 402;
   private productDetails: IProduct | undefined;
   currentStepIndex = 1;
   private componentRefs = new Map<number, ComponentRef<any>>();
@@ -88,16 +88,22 @@ export class StagesComponent implements OnInit {
     screenName?: string,
     screenCodeNum?: number,
   ) {
+    console.log(index, screenCode, screenName, screenCodeNum);
+
     const currentSet = new Set(this.activePanels());
     if (!currentSet.has(index)) {
       currentSet.add(index);
       this.activePanels.set(currentSet);
       const container = this.container.get(index);
       if (container && !this.componentCache.get(index)) {
-        const component = ComponentConstant[screenCode];
-        const componentRef = this.renderComponentService.loadComponent<
-          ComponentMap[K]
-        >(container, component);
+        const component =
+          ComponentCardConstant[
+            screenCode as keyof typeof ComponentCardConstant
+          ];
+        const componentRef = this.renderComponentService.loadComponent(
+          container,
+          component,
+        );
 
         if ('screenCode' in componentRef.instance) {
           (componentRef.instance as any).screenCode = screenCodeNum;
@@ -105,20 +111,6 @@ export class StagesComponent implements OnInit {
 
         if (screenName && 'screenName' in componentRef.instance) {
           (componentRef.instance as any).screenName = screenName;
-        }
-
-        if (screenCode === 'W1CRBU') {
-          (componentRef.instance as any).goNext = () => {
-            this.openNextPanel(index);
-            // this.completedSteps.add(index);
-            this.completedSteps.update((set) => {
-              const newSet = new Set(set);
-              newSet.add(index);
-              return newSet;
-            });
-            this.cdr.markForCheck();
-          };
-          (componentRef.instance as any).goBack = () => this.goBack(index);
         }
 
         this.componentCache.set(index, componentRef);
@@ -134,7 +126,6 @@ export class StagesComponent implements OnInit {
     if (instance.submitForm) {
       const result = await instance.submitForm();
       if (result === 'success') {
-        // this.completedSteps.add(index);
         this.completedSteps.update((set) => {
           const newSet = new Set(set);
           newSet.add(index);

@@ -38,7 +38,6 @@ export class CommonProductComponent implements OnChanges, OnInit {
   }
 
   goForCalculator(product: any) {
-    console.log(product);
     if (product?.productDetails === null) {
       this.snackBar.open('No Products Available', 'Ok', {
         duration: 3000,

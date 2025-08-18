@@ -22,6 +22,8 @@ import { AccountServiceComponent } from 'app/modules/cheque-book/components/acco
 import { PaymentDetailsComponent } from 'app/modules/cheque-book/components/payment-details/payment-details.component';
 import { ChequeBookDetailComponent } from 'app/modules/cheque-book/components/cheque-book-detail/cheque-book-detail.component';
 import { AccountDetailComponent } from 'app/modules/cheque-book/components/account-detail/account-detail.component';
+import { CardDetailsComponent } from 'app/modules/card/components/card-details/card-details.component';
+import { EmploymentFinancialDetailsComponent } from 'app/modules/card/components/employment-financial-details/employment-financial-details.component';
 
 export interface ComponentMap {
   W1LACC: LoanDetailsComponent;
@@ -91,31 +93,27 @@ export const ComponentStagesConstant: {
 };
 
 // Card Component constant
-export interface ComponentMap {
-  W1LACC: LoanDetailsComponent;
+export interface ComponentCardMap {
+  W1PEID: PersonalIdentificationComponent;
+  W1PERD: AccountPersonalDetailsComponent;
+  W1ACDE: AccountDetailComponent;
+  W1CADE: CardDetailsComponent;
   W1DOCU: DocumentUploadComponent;
-  W1BUDE: BusinessDetailsComponent;
-  W1DDUD: DocumentUploadComponent;
-  W1PERD: DirectorDetailsComponent;
-  W1DISD: DisbursementDetailsComponent;
-  W1CRBU: CreditBureauComponent;
-  W1CODE: CollateralDetailsComponent;
+  W1EMFD: EmploymentFinancialDetailsComponent;
   W1TECO: TermsConditionComponent;
   W1SUM: SummaryComponent;
   W1SIGN: DigitalSignatureComponent;
 }
 
 export const ComponentCardConstant: {
-  [K in keyof ComponentMap]: Type<ComponentMap[K]>;
+  [K in keyof ComponentCardMap]: Type<ComponentCardMap[K]>;
 } = {
-  W1LACC: LoanDetailsComponent,
+  W1PEID: PersonalIdentificationComponent,
+  W1PERD: AccountPersonalDetailsComponent,
+  W1ACDE: AccountDetailComponent,
+  W1CADE: CardDetailsComponent,
   W1DOCU: DocumentUploadComponent,
-  W1BUDE: BusinessDetailsComponent,
-  W1DDUD: DocumentUploadComponent,
-  W1PERD: DirectorDetailsComponent,
-  W1DISD: DisbursementDetailsComponent,
-  W1CRBU: CreditBureauComponent,
-  W1CODE: CollateralDetailsComponent,
+  W1EMFD: EmploymentFinancialDetailsComponent,
   W1TECO: TermsConditionComponent,
   W1SUM: SummaryComponent,
   W1SIGN: DigitalSignatureComponent,

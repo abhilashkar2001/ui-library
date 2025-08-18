@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   templateUrl: './card-details.component.html',
   styleUrls: ['./card-details.component.scss'],
 })
-export class CardDetailsComponent {
+export class CardDetailsComponent implements OnInit {
   cardForm!: FormGroup;
   address = [
     { label: 'My Address', value: true },
@@ -40,7 +40,8 @@ export class CardDetailsComponent {
 
   constructor(private fb: FormBuilder) {}
 
-  ngOnInIt(): void {
+  ngOnInit(): void {
+    console.log('calling');
     this.buildForm();
   }
 

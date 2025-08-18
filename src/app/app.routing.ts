@@ -75,6 +75,17 @@ export const rootRouterConfig: Routes = [
     ],
   },
   {
+    path: 'apply-card',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/card/card.module').then((m) => m.CardModule),
+      },
+    ],
+  },
+  {
     path: '**',
     redirectTo: 'home/404',
   },
