@@ -1,0 +1,12 @@
+<div *ngFor="let section of sectionsToDisplay" class="section-container">
+  <h3>{{ section.title }}</h3>
+
+  <div fxLayout="row wrap" fxLayoutGap="20px grid">
+    <div *ngFor="let field of section.data" fxFlex="25" fxLayout="column">
+      <span class="breadcrum_sm">{{ field.headerCell }}</span>
+      <span class="header_md">
+        {{ section.values[field.headerDef] ?? '-' }}
+      </span>
+    </div>
+  </div>
+</div>

@@ -24,6 +24,7 @@ import { ChequeBookDetailComponent } from 'app/modules/cheque-book/components/ch
 import { AccountDetailComponent } from 'app/modules/cheque-book/components/account-detail/account-detail.component';
 import { CardDetailsComponent } from 'app/modules/card/components/card-details/card-details.component';
 import { EmploymentFinancialDetailsComponent } from 'app/modules/card/components/employment-financial-details/employment-financial-details.component';
+import { CardSummaryComponent } from 'app/modules/card/components/summary/card-summary.component';
 
 export interface ComponentMap {
   W1LACC: LoanDetailsComponent;
@@ -101,7 +102,7 @@ export interface ComponentCardMap {
   W1DOCU: DocumentUploadComponent;
   W1EMFD: EmploymentFinancialDetailsComponent;
   W1TECO: TermsConditionComponent;
-  W1SUM: SummaryComponent;
+  W1SUM: CardSummaryComponent;
   W1SIGN: DigitalSignatureComponent;
 }
 
@@ -115,6 +116,6 @@ export const ComponentCardConstant: {
   W1DOCU: DocumentUploadComponent,
   W1EMFD: EmploymentFinancialDetailsComponent,
   W1TECO: TermsConditionComponent,
-  W1SUM: SummaryComponent,
+  W1SUM: CardSummaryComponent,
   W1SIGN: DigitalSignatureComponent,
 };

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CardRoutingModule } from './card-routing.module';
 import { StagesComponent } from './stages/stages.component';
 import { EmploymentFinancialDetailsComponent } from './components/employment-financial-details/employment-financial-details.component';
-import { SummaryComponent } from './components/summary/summary.component';
+import { CardSummaryComponent } from './components/summary/card-summary.component';
 import { CardDetailsComponent } from './components/card-details/card-details.component';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,7 +22,7 @@ import { SharedOriginationModule } from '../origination/modules/shared-originati
   declarations: [
     StagesComponent,
     EmploymentFinancialDetailsComponent,
-    SummaryComponent,
+    CardSummaryComponent,
     CardDetailsComponent,
   ],
   imports: [

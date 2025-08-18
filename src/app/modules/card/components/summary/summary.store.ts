@@ -1,15 +1,20 @@
 export enum FlowType {
-  DebitCard = 'debitCard',
-  CreditCard = 'creditCard',
+  DebitCardExisting = 'debitCardExisting',
+  DebitCardNew = 'debitCardNew',
+  CreditCardExisting = 'creditCardExisting',
+  CreditCardNew = 'creditCardNew',
+  PrepaidCardExisting = 'prepaidCardExisting',
+  PrepaidCardNew = 'prepaidCardNew',
 }
 
-export class SummaryStore {
-  static readonly sections = {
+export class SummaryCardStore {
+  static readonly sections: { [key: string]: any } = {
     personalDetails: {
       title: 'Personal Details',
       key: 'personalDetails',
       data: [
         { headerCell: 'CIF Number', headerDef: 'cifNumber' },
+        { headerCell: 'Prefix', headerDef: 'prefix' },
         { headerCell: 'First Name', headerDef: 'firstName' },
         { headerCell: 'Last Name', headerDef: 'lastName' },
         { headerCell: 'Date of Birth', headerDef: 'dateOfBirth' },
@@ -155,13 +160,20 @@ export class SummaryStore {
     },
   };
 
-  static readonly flowSections = {
-    [FlowType.DebitCard]: [
+  static readonly flowSections: any = {
+    [FlowType.DebitCardNew]: [
       'personalDetails',
       'identificationDetails',
+      'documentUpload', //need to add.
       'contactDetails',
+      'address',
+      'spouseDetails',
+      'emergencyContactDetails',
+      'accountDetails',
+      'cardServices',
+      'paymentDetails',
     ],
-    [FlowType.CreditCard]: [
+    [FlowType.CreditCardNew]: [
       'personalDetails',
       'contactDetails',
       'accountDetails',
