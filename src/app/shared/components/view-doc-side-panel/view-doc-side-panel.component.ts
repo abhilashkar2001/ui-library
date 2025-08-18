@@ -37,8 +37,8 @@ export class ViewDocSidePanelComponent implements OnChanges {
   ) {}
 
   ngOnInit() {
-   console.log('ViewDocSidePanelComponent initialized with data:', this.data);
-   this.prefetchCurrentBlob();
+    console.log('ViewDocSidePanelComponent initialized with data:', this.data);
+    this.prefetchCurrentBlob();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -49,7 +49,10 @@ export class ViewDocSidePanelComponent implements OnChanges {
         : [this.data.file];
       this.prefetchCurrentBlob();
     }
-    console.log('Changes detected in ViewDocSidePanelComponent:', this.documents);
+    console.log(
+      'Changes detected in ViewDocSidePanelComponent:',
+      this.documents,
+    );
     console.log(changes);
   }
 
@@ -58,16 +61,18 @@ export class ViewDocSidePanelComponent implements OnChanges {
     console.log('Prefetching blob for document:', currentDoc);
 
     // const uuid = currentDoc?.uuid;
- 
+
     // this.downloadService.dmsDownload(uuid).subscribe((response: Blob) => {
     //   const file = new Blob([response], { type: 'application/pdf' });
     //   const fileURL = URL.createObjectURL(file);
     //   this.currentPdfUrl =
     //     this.sanitizer.bypassSecurityTrustResourceUrl(fileURL); // Safe for <iframe>
     // });
-    this.currentPdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(currentDoc?.url);
+    this.currentPdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+      currentDoc?.url,
+    );
   }
-  
+
   nextDocument() {
     if (this.currentDocumentIndex < this.documents.length - 1) {
       this.currentDocumentIndex++;

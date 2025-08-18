@@ -96,12 +96,11 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   //     this.sidenavPanel.openedStart.subscribe(() => {
   //     document.body.classList.add('no-scroll');
   //   });
- 
+
   //   this.sidenavPanel.closedStart.subscribe(() => {
   //     document.body.classList.remove('no-scroll');
   //   });
   // }
-
   ngAfterViewInit() {}
 
   ngOnDestroy() {

@@ -8,7 +8,7 @@ describe('CustomerTypeSelectorDialogComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CustomerTypeSelectorDialogComponent]
+      declarations: [CustomerTypeSelectorDialogComponent],
     });
     fixture = TestBed.createComponent(CustomerTypeSelectorDialogComponent);
     component = fixture.componentInstance;

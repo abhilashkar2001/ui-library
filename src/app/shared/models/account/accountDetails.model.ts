@@ -28,7 +28,7 @@ export interface CustomerAccount {
   customerAccountQuantativeScoreInfo: any | null;
   customerAccountDigitalSignatureInfo: any | null;
 }
- 
+
 export interface CustomerAccountInitialFunding {
   id: number;
   accountFundBy: string | null;
@@ -38,7 +38,7 @@ export interface CustomerAccountInitialFunding {
   chequeNumber: string | null;
   tellertransactionRefNo: string;
 }
- 
+
 export interface OriginationDetail {
   originationId: number;
   applicationDate: string;
@@ -50,7 +50,7 @@ export interface OriginationDetail {
   accountCurrency: AccountCurrency;
   productDetails: ProductDetails;
 }
- 
+
 export interface Branch {
   id: number;
   branchCode: string | null;
@@ -67,7 +67,7 @@ export interface Branch {
   lattitude: string | null;
   longitude: string | null;
 }
- 
+
 export interface AccountCurrency {
   id: number;
   currencyCode: string;
@@ -81,7 +81,7 @@ export interface AccountCurrency {
   clearingCutOffTimingMins: string | null;
   euro: boolean;
 }
- 
+
 export interface ProductDetails {
   id: number;
   basisCode: string | null;
