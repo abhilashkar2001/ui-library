@@ -13,27 +13,23 @@ export class CardDetailsComponent {
     { label: 'Branch Near Me', value: false },
   ];
   extractedFields = [
-    { label: 'card Type', value: 'Aadhar Card' },
+    { label: 'Card Type', value: 'Aadhar Card' },
     {
       label: 'Daily Limit',
-
       value: '75000',
     },
     {
       label: 'Domestic Limit',
-
       value: '34000',
     },
     { label: 'International Limit', value: '10000' },
-    { label: 'Atm Limit', value: '10' },
+    { label: 'ATM Limit', value: '10' },
     {
       label: 'POS Limit',
-
       value: '50000',
     },
     {
       label: 'Internet Limit',
-
       value: '50000',
     },
   ];
