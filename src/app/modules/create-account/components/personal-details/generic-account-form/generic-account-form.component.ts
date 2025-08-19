@@ -43,9 +43,7 @@ export class GenericAccountFormComponent implements OnInit {
     RESIDENTSTATUS: [],
     RELATIONSHIP: [],
     STATEMENTVIA: [],
-    COUNTRYOFISSUE: [],
-    NATIONALITY: [],
-    COUNTRYOFRESIDENCE: [],
+
     MARITALSTATUS: [],
   };
   // accountValue = [
