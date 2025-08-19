@@ -25,6 +25,7 @@ import { AccountDetailComponent } from 'app/modules/cheque-book/components/accou
 import { CardDetailsComponent } from 'app/modules/card/components/card-details/card-details.component';
 import { EmploymentFinancialDetailsComponent } from 'app/modules/card/components/employment-financial-details/employment-financial-details.component';
 import { CardSummaryComponent } from 'app/modules/card/components/summary/card-summary.component';
+import { CommonPersonalDetailsComponent } from 'app/modules/card/components/common-personal-details/common-personal-details.component';
 
 export interface ComponentMap {
   W1LACC: LoanDetailsComponent;
@@ -38,6 +39,7 @@ export interface ComponentMap {
   W1TECO: TermsConditionComponent;
   W1SUM: SummaryComponent;
   W1SIGN: DigitalSignatureComponent;
+  W1EMFD: EmpFinDetailsComponent;
 }
 
 export const ComponentConstant: {
@@ -54,18 +56,19 @@ export const ComponentConstant: {
   W1TECO: TermsConditionComponent,
   W1SUM: SummaryComponent,
   W1SIGN: DigitalSignatureComponent,
+  W1EMFD: EmpFinDetailsComponent,
 };
 export interface ComponentStagesMap {
   'Account Details': AccountDetailsComponent;
-  'Document Upload': AccountDocumentUploadComponent;
+  'Loan Document': AccountDocumentUploadComponent;
   'Personal Identification': PersonalIdentificationComponent;
   'Personal Details': AccountPersonalDetailsComponent;
   Summary: AccountSummaryComponent;
-  'Digital Signature': AccountDigitalSignatureComponent;
+  Signature: AccountDigitalSignatureComponent;
   'Bussiness Details': BusinessDetailsComponent;
   'Director Document Upload': DocumentUploadComponent;
   'Director Details': AccountPersonalDetailsComponent;
-  'Employment & Financial Details': EmpFinDetailsComponent;
+  'Employement Financial Details': EmpFinDetailsComponent;
   'Terms & Conditions': TermsConditionsComponent;
   'Account Services': AccountServiceComponent;
   'Payment Details': PaymentDetailsComponent;
@@ -77,15 +80,15 @@ export const ComponentStagesConstant: {
   [K in keyof ComponentStagesMap]: Type<ComponentStagesMap[K]>;
 } = {
   'Account Details': AccountDetailsComponent,
-  'Document Upload': AccountDocumentUploadComponent,
+  'Loan Document': AccountDocumentUploadComponent,
   'Personal Identification': PersonalIdentificationComponent,
   'Personal Details': AccountPersonalDetailsComponent,
   Summary: AccountSummaryComponent,
-  'Digital Signature': AccountDigitalSignatureComponent,
+  Signature: AccountDigitalSignatureComponent,
   'Bussiness Details': BusinessDetailsComponent,
   'Director Document Upload': DocumentUploadComponent,
   'Director Details': AccountPersonalDetailsComponent,
-  'Employment & Financial Details': EmpFinDetailsComponent,
+  'Employement Financial Details': EmpFinDetailsComponent,
   'Terms & Conditions': TermsConditionsComponent,
   'Account Services': AccountServiceComponent,
   'Payment Details': PaymentDetailsComponent,
@@ -96,7 +99,7 @@ export const ComponentStagesConstant: {
 // Card Component constant
 export interface ComponentCardMap {
   W1PEID: PersonalIdentificationComponent;
-  W1PERD: AccountPersonalDetailsComponent;
+  W1PERD: CommonPersonalDetailsComponent;
   W1ACDE: AccountDetailComponent;
   W1CADE: CardDetailsComponent;
   W1DOCU: DocumentUploadComponent;
@@ -110,7 +113,7 @@ export const ComponentCardConstant: {
   [K in keyof ComponentCardMap]: Type<ComponentCardMap[K]>;
 } = {
   W1PEID: PersonalIdentificationComponent,
-  W1PERD: AccountPersonalDetailsComponent,
+  W1PERD: CommonPersonalDetailsComponent,
   W1ACDE: AccountDetailComponent,
   W1CADE: CardDetailsComponent,
   W1DOCU: DocumentUploadComponent,

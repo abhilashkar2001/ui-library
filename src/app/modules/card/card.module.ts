@@ -17,6 +17,7 @@ import { SharedPipesModule } from 'app/shared/pipes/shared-pipes.module';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { OriginationExternalCallbackModule } from '../origination/modules/origination-external-callback/origination-external-callback.module';
 import { SharedOriginationModule } from '../origination/modules/shared-origination/shared-origination.module';
+import { CommonPersonalDetailsComponent } from './components/common-personal-details/common-personal-details.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { SharedOriginationModule } from '../origination/modules/shared-originati
     EmploymentFinancialDetailsComponent,
     CardSummaryComponent,
     CardDetailsComponent,
+    CommonPersonalDetailsComponent,
   ],
   imports: [
     CommonModule,

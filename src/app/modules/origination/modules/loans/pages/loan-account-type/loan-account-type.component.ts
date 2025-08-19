@@ -5,6 +5,7 @@ import { AccountSelectionComponent } from 'app/modules/create-account/components
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { ProductState } from '../../../../../../shared/models/router-state.model';
+import { CustomerTypeSelectorDialogComponent } from 'app/shared/components/customer-type-selector-dialog/customer-type-selector-dialog/customer-type-selector-dialog.component';
 
 @Component({
   selector: 'app-loan-account-type',
@@ -70,10 +71,14 @@ export class LoanAccountTypeComponent implements OnInit {
           data: {
             category: this.category,
             basisClass: this.basisClass,
+            basisId: this.basisId,
           },
         });
         dialogRef.afterClosed().subscribe((res) => {
           console.log(res);
+          this.sessionStorageService.setItem('category', this.category);
+          this.sessionStorageService.setItem('basisId', this.basisId);
+          console.log(this.basisId);
           if (this.category === 'Cheque') {
             this.sessionStorageService.setItem('category', this.category);
             this.sessionStorageService.setItem('basisClass', this.basisClass);
@@ -86,28 +91,37 @@ export class LoanAccountTypeComponent implements OnInit {
         this.basisClass = event.subClass;
         this.basisId = event.selectedLoan.basisId;
 
-        const dialogRef = this.dialog.open(AccountSelectionComponent, {
-          width: '100%',
-          height: '90%',
-          backdropClass: 'confirmDialogComponent',
-          hasBackdrop: true,
-          disableClose: true,
-          data: {
-            category: this.category,
-            basisClass: this.basisClass,
-            basisId: this.basisId,
+        const dialogRef = this.dialog.open(
+          CustomerTypeSelectorDialogComponent,
+          {
+            width: '50%',
+            height: 'auto',
+            backdropClass: 'confirmDialogComponent',
+            hasBackdrop: true,
+            disableClose: true,
+            data: {
+              category: this.category,
+              basisClass: this.basisClass,
+              basisId: this.basisId,
+            },
           },
-        });
+        );
         dialogRef.afterClosed().subscribe((res) => {
-          console.log(res, 'response');
+          console.log(res);
           this.sessionStorageService.setItem('category', this.category);
           this.sessionStorageService.setItem('basisClass', this.basisClass);
           this.sessionStorageService.setItem('basisId', this.basisId);
+          this.goToLogin();
         });
       } else if (
         this.category == 'Accounts' &&
         this.basisClass == 'CORPORATE ACCOUNT'
       ) {
+          this.basisId = event.selectedLoan.basisId
+          console.log(this.basisId,"1")
+        this.sessionStorageService.setItem('basisId', this.basisId);
+        console.log(this.basisId,"2")
+        this.sessionStorageService.setItem('category', this.category);
         this.goToLogin();
       } else {
         this.isShowCalculator = event.isShowCalculator;
