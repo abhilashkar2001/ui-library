@@ -1391,4 +1391,26 @@ export class SessionStorageService {
   public removeEmiData(): void {
     this.session.removeItem(SessionStorageEnum.EMI_DATA);
   }
+
+  /**  FETCH: 'flow type' from session storage whose key is stored in TYPE_OF_FLOW in session storage enum
+   * @returns
+   */
+  public getTypeOfFlow(): any {
+    const typeOfFlow = this.getItem(SessionStorageEnum.TYPE_OF_FLOW);
+    return typeOfFlow;
+  }
+
+  /**
+   * This method will set the TYPE_OF_FLOW in the session storage
+   */
+  public setTypeOfFlow(type: string): void {
+    this.setItem(SessionStorageEnum.TYPE_OF_FLOW, type);
+  }
+
+  /**
+   * This method will remove the TYPE_OF_FLOW in session storage
+   */
+  public removeTypeOfFlow(): void {
+    this.session.removeItem(SessionStorageEnum.TYPE_OF_FLOW);
+  }
 }

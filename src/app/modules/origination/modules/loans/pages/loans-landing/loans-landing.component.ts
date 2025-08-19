@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { CommonService } from 'app/shared/services/common-service/common.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-loans-landing',
@@ -24,13 +25,16 @@ export class LoansLandingComponent implements OnInit {
     private loanService: LoanService,
     private el: ElementRef,
     private activatedRoute: ActivatedRoute,
+    private sessionStorage: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.type = params['type'] || 'Account';
       console.log(this.type);
-
+      if (this.type) {
+        this.sessionStorage.setTypeOfFlow(this.type);
+      }
       this.updateLandingContent();
     });
   }

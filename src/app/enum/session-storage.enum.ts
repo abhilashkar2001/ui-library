@@ -63,4 +63,5 @@ export enum SessionStorageEnum {
   REF_NO = 'referenceNo',
   PRIMARY_EMAIL = 'primaryEmail',
   EMI_DATA = 'emiData',
+  TYPE_OF_FLOW = 'typeOfFlow',
 }

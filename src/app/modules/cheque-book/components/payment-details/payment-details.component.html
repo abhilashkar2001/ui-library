@@ -2,6 +2,7 @@
   <h3>Service Fees</h3>
   <div fxFlex="100" fxLayout="row" fxLayoutGap="20px">
     <div
+      *ngIf="type.toLowerCase() !== 'card'"
       fxFlex="50"
       fxLayout="row"
       fxLayoutGap="100px"
@@ -94,20 +95,4 @@
       ></ic-form-field>
     </div>
   </div>
-</div>
-<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="end center">
-  <ic-button
-    [label]="'Back'"
-    [type]="'button'"
-    icButtonType="outlined"
-    size="medium"
-    (click)="cancelPaymentDetails()"
-  ></ic-button>
-  <ic-button
-    [label]="'Submit'"
-    [type]="'submit'"
-    icButtonType="filled"
-    size="medium"
-    (OnClick)="submitPaymentDetails()"
-  ></ic-button>
 </div>
