@@ -55,6 +55,8 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   data: any;
   basisClass!: string | null;
   customerId: any;
+  accountSummaryData: any;
+  category: any;
 
   constructor(
     private fb: FormBuilder,
@@ -68,6 +70,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     private activatedRoute: ActivatedRoute,
   ) {
     this.basisClass = sessionStorageService.getItem('basisClass');
+    this.category = this.sessionStorageService.getItem('category');
     this.currentDate?.setDate(this.todaysDate.getDate() + 1);
     this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
@@ -77,6 +80,9 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();
+    this.category = this.sessionStorageService.getItem('category');
+    console.log(this.category, this.originationId);
+
     this.initializeCreateAccountDetailsArray();
     if (this.originationId) {
       this.fetchLoanDetails();
@@ -144,10 +150,10 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
 
   buildLoanDetailsForm(item: any) {
     this.accountDetailsForm = this.fb.group({
-      accountType: [item.accountType || null],
-      accountDescription: [item.accountDescription || null],
-      accountBranch: [item.accountBranch || null],
-      businessProductName: [item.businessProductName || null],
+      // accountType: [item.accountType || null],
+      // accountDescription: [item.accountDescription || null],
+      // accountBranch: [item.accountBranch || null],
+      // businessProductName: [item.businessProductName || null],
       productDescription: [item.productDescription || null],
       applicationDate: [item.applicationDate || null],
       userRefNumber: [item.userRefNumber || null],
@@ -158,6 +164,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
       initialFunding: [item.initialFunding ?? false],
       overdraftRequested: [item.overdraftRequested ?? false],
       holderType: [item.holderType || null],
+      holderTypeId: [item.holderTypeId || null],
       noOfApplicant: [item.noOfApplicant || null],
       customerCategory: [item.customerCategory || null],
       customerAccountInitialFunding: this.fb.group({
@@ -207,6 +214,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
         }
       });
   }
+
   // This function is used to call the EMI calculation API when the loan data changes
   callEmiCalculationAPI(payload: any) {
     this.loanService.getEmiCalculation(payload).subscribe((res: any) => {
@@ -221,16 +229,25 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     });
   }
 
+  accountSummaryEmit(event: any) {
+    console.log(event);
+    this.accountSummaryData = event;
+  }
+
   submitForm() {
     console.log(this.accountDetailsForm, 'jhgfds');
 
     const payload: any = {
       ...this.accountDetailsForm?.value,
+      accountType: this.accountSummaryData?.basisClass,
+      accountDescription: this.accountSummaryData?.basisClassDesc,
+      accountBranch: this.accountSummaryData?.basisName,
+      businessProductName: this.accountSummaryData?.basisDetailStory,
     };
-    this.createAccountDetailsSummaryArr.forEach((item: any) => {
-      payload[item?.formControlName] = item?.value;
-    });
-    payload.originationDetail.originationId = this.originationId;
+    // this.createAccountDetailsSummaryArr.forEach((item: any) => {
+    //   payload[item?.formControlName] = item?.value;
+    // });
+    payload.originationDetail.originationId = '2504';
     // delete payload.loanDetails.totalPrincipalAmount;
     // payload.screenCode = 444;
     console.log(payload);
