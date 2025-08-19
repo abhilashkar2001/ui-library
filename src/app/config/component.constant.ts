@@ -38,7 +38,7 @@ export interface ComponentMap {
   W1TECO: TermsConditionComponent;
   W1SUM: SummaryComponent;
   W1SIGN: DigitalSignatureComponent;
-  W1EMFD: EmpFinDetailsComponent
+  W1EMFD: EmpFinDetailsComponent;
 }
 
 export const ComponentConstant: {
@@ -55,7 +55,7 @@ export const ComponentConstant: {
   W1TECO: TermsConditionComponent,
   W1SUM: SummaryComponent,
   W1SIGN: DigitalSignatureComponent,
-  W1EMFD: EmpFinDetailsComponent
+  W1EMFD: EmpFinDetailsComponent,
 };
 export interface ComponentStagesMap {
   'Account Details': AccountDetailsComponent;
@@ -63,7 +63,7 @@ export interface ComponentStagesMap {
   'Personal Identification': PersonalIdentificationComponent;
   'Personal Details': AccountPersonalDetailsComponent;
   Summary: AccountSummaryComponent;
-  'Signature': AccountDigitalSignatureComponent;
+  Signature: AccountDigitalSignatureComponent;
   'Bussiness Details': BusinessDetailsComponent;
   'Director Document Upload': DocumentUploadComponent;
   'Director Details': AccountPersonalDetailsComponent;
@@ -83,7 +83,7 @@ export const ComponentStagesConstant: {
   'Personal Identification': PersonalIdentificationComponent,
   'Personal Details': AccountPersonalDetailsComponent,
   Summary: AccountSummaryComponent,
-  'Signature': AccountDigitalSignatureComponent,
+  Signature: AccountDigitalSignatureComponent,
   'Bussiness Details': BusinessDetailsComponent,
   'Director Document Upload': DocumentUploadComponent,
   'Director Details': AccountPersonalDetailsComponent,

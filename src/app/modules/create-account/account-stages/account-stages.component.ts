@@ -61,8 +61,8 @@ export class AccountStagesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.basisId = this.sessionStorageSerive.getItem('basisId')
-    console.log(this.basisId, "id")
+    this.basisId = this.sessionStorageSerive.getItem('basisId');
+    console.log(this.basisId, 'id');
     setTimeout(() => {
       this.panels.get(0)?.open();
     });
@@ -166,13 +166,13 @@ export class AccountStagesComponent implements OnInit {
    * to the customer will be given
    */
   fetchProductDetails() {
-     if (this.basisId === undefined) return;
+    if (this.basisId === undefined) return;
     this.loanService.getProductDetails(this?.basisId).subscribe((resp) => {
       if (resp?.statusCode === 200 && resp?.data?.length > 0) {
         this.productDetails = resp?.data[0];
         if (!this.productDetails) return;
         this.basisId = this.productDetails['id'];
-        console.log(this.basisId)
+        console.log(this.basisId);
         this.processCycleCode = this.productDetails['processCycleCode'];
         this.fetchProcessStages();
       }
