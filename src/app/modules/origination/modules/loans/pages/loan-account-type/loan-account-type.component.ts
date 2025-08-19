@@ -117,10 +117,10 @@ export class LoanAccountTypeComponent implements OnInit {
         this.category == 'Accounts' &&
         this.basisClass == 'CORPORATE ACCOUNT'
       ) {
-          this.basisId = event.selectedLoan.basisId
-          console.log(this.basisId,"1")
+        this.basisId = event.selectedLoan.basisId;
+        console.log(this.basisId, '1');
         this.sessionStorageService.setItem('basisId', this.basisId);
-        console.log(this.basisId,"2")
+        console.log(this.basisId, '2');
         this.sessionStorageService.setItem('category', this.category);
         this.goToLogin();
       } else {

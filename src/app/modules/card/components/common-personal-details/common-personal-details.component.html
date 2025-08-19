@@ -74,15 +74,6 @@
                       label="Last Name"
                     ></ic-form-field>
 
-                    <ic-select
-                      [control]="customer.get('positionId') | formcontrol"
-                      [options]="genderArray"
-                      bindLabelKey="values"
-                      bindValueKey="id"
-                      fxFlex="24"
-                      label="Position"
-                    ></ic-select>
-
                     <ic-date-picker
                       [control]="customer.get('dateOfBirth') | formcontrol"
                       [maxDate]="dobMinDate"
@@ -103,6 +94,15 @@
                     ></ic-select>
 
                     <ic-select
+                      [control]="customer.get('maritalStatusId') | formcontrol"
+                      [options]="maritalStatusArray"
+                      bindLabelKey="values"
+                      bindValueKey="id"
+                      fxFlex="24"
+                      label="Marital Status"
+                    ></ic-select>
+
+                    <ic-select
                       [control]="customer.get('nationality') | formcontrol"
                       [options]="nationalityArray"
                       bindLabelKey="nationality"
@@ -111,7 +111,37 @@
                       label="Nationality"
                     ></ic-select>
 
-                    <ng-container *ngIf="getDocumentIdArray(i) as docArray">
+                    <ic-select
+                      [control]="
+                        customer.get('countryOfResidence') | formcontrol
+                      "
+                      [options]="countryArray"
+                      bindLabelKey="countryName"
+                      bindValueKey="countryName"
+                      fxFlex="24"
+                      label="Country of residence"
+                    ></ic-select>
+
+                    <ic-select
+                      [control]="
+                        customer.get('countryOfResidence') | formcontrol
+                      "
+                      [options]="countryArray"
+                      bindLabelKey="countryName"
+                      bindValueKey="countryName"
+                      fxFlex="24"
+                      label="Customer Category"
+                    ></ic-select>
+                  </div>
+
+                  <ng-container *ngIf="getDocumentIdArray(i) as docArray">
+                    <div class="highlight_title">Identification Details</div>
+                    <div
+                      fxFlex="100"
+                      fxLayout="row wrap"
+                      fxLayoutGap="10"
+                      fxLayoutAlign="start center"
+                    >
                       <ng-container
                         *ngFor="
                           let docGroup of docArray.controls;
@@ -125,6 +155,16 @@
                           fxFlex="24"
                           label="Identification Number"
                         ></ic-form-field>
+                        <ic-select
+                          [control]="
+                            docGroup.get('countryOfIssue') | formcontrol
+                          "
+                          [options]="countryArray"
+                          bindLabelKey="countryName"
+                          bindValueKey="countryName"
+                          fxFlex="24"
+                          label="Country of Issue"
+                        ></ic-select>
 
                         <ic-date-picker
                           [control]="docGroup.get('issueDate') | formcontrol"
@@ -141,47 +181,9 @@
                           label="Expiry Date"
                         >
                         </ic-date-picker>
-                        <ic-select
-                          [control]="
-                            docGroup.get('countryOfIssue') | formcontrol
-                          "
-                          [options]="countryArray"
-                          bindLabelKey="countryName"
-                          bindValueKey="countryName"
-                          fxFlex="24"
-                          label="Country of Issue"
-                        ></ic-select>
-
-                        <ic-select
-                          [control]="
-                            customer.get('countryOfResidence') | formcontrol
-                          "
-                          [options]="countryArray"
-                          bindLabelKey="countryName"
-                          bindValueKey="countryName"
-                          fxFlex="24"
-                          label="Country of residence"
-                        ></ic-select>
                       </ng-container>
-                    </ng-container>
-
-                    <ic-select
-                      [control]="customer.get('maritalStatusId') | formcontrol"
-                      [options]="maritalStatusArray"
-                      bindLabelKey="values"
-                      bindValueKey="id"
-                      fxFlex="24"
-                      label="Marital Status"
-                    ></ic-select>
-                    <ic-form-field
-                      [control]="customer.get('sharePercentage') | formcontrol"
-                      [icNumbersOnly]="true"
-                      [maxLength]="2"
-                      fxFlex="24"
-                      label="Share Percentage"
-                    ></ic-form-field>
-                  </div>
-
+                    </div>
+                  </ng-container>
                   <div class="highlight_title">Contact Details</div>
                   <div
                     fxFlex="100"
@@ -284,7 +286,37 @@
                       fxFlex="24"
                       label="Statement Via"
                     ></ic-select>
+                  </div>
 
+                  <div
+                    fxLayout="row"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="100"
+                  >
+                    <div class="highlight_title">Contact Address</div>
+
+                    <div fxFlex="48" fxLayout="row" fxLayoutGap="5">
+                      <mat-label class="header_md"
+                        >Same as Permanent Address*</mat-label
+                      >
+                      <div fxLayout="row" fxLayoutGap="20x">
+                        <ic-radio-button
+                          *ngFor="let owner of addressTypeArr"
+                          [control]="customer.get('ownership') | formcontrol"
+                          [label]="owner.label"
+                          [value]="owner.value"
+                        >
+                        </ic-radio-button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    fxFlex="100"
+                    fxLayout="row wrap"
+                    fxLayoutGap="10"
+                    fxLayoutAlign="start center"
+                  >
                     <ng-container
                       *ngIf="
                         customer.get('contact.address')?.value as addressControl
