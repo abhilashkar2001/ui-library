@@ -24,6 +24,7 @@ import { ChequeBookDetailComponent } from 'app/modules/cheque-book/components/ch
 import { AccountDetailComponent } from 'app/modules/cheque-book/components/account-detail/account-detail.component';
 import { CardDetailsComponent } from 'app/modules/card/components/card-details/card-details.component';
 import { EmploymentFinancialDetailsComponent } from 'app/modules/card/components/employment-financial-details/employment-financial-details.component';
+import { CardSummaryComponent } from 'app/modules/card/components/summary/card-summary.component';
 import { CommonPersonalDetailsComponent } from 'app/modules/card/components/common-personal-details/common-personal-details.component';
 
 export interface ComponentMap {
@@ -38,7 +39,7 @@ export interface ComponentMap {
   W1TECO: TermsConditionComponent;
   W1SUM: SummaryComponent;
   W1SIGN: DigitalSignatureComponent;
-  W1EMFD: EmpFinDetailsComponent
+  W1EMFD: EmpFinDetailsComponent;
 }
 
 export const ComponentConstant: {
@@ -55,7 +56,7 @@ export const ComponentConstant: {
   W1TECO: TermsConditionComponent,
   W1SUM: SummaryComponent,
   W1SIGN: DigitalSignatureComponent,
-  W1EMFD: EmpFinDetailsComponent
+  W1EMFD: EmpFinDetailsComponent,
 };
 export interface ComponentStagesMap {
   'Account Details': AccountDetailsComponent;
@@ -63,7 +64,7 @@ export interface ComponentStagesMap {
   'Personal Identification': PersonalIdentificationComponent;
   'Personal Details': AccountPersonalDetailsComponent;
   Summary: AccountSummaryComponent;
-  'Signature': AccountDigitalSignatureComponent;
+  Signature: AccountDigitalSignatureComponent;
   'Bussiness Details': BusinessDetailsComponent;
   'Director Document Upload': DocumentUploadComponent;
   'Director Details': AccountPersonalDetailsComponent;
@@ -83,7 +84,7 @@ export const ComponentStagesConstant: {
   'Personal Identification': PersonalIdentificationComponent,
   'Personal Details': AccountPersonalDetailsComponent,
   Summary: AccountSummaryComponent,
-  'Signature': AccountDigitalSignatureComponent,
+  Signature: AccountDigitalSignatureComponent,
   'Bussiness Details': BusinessDetailsComponent,
   'Director Document Upload': DocumentUploadComponent,
   'Director Details': AccountPersonalDetailsComponent,
@@ -104,7 +105,7 @@ export interface ComponentCardMap {
   W1DOCU: DocumentUploadComponent;
   W1EMFD: EmploymentFinancialDetailsComponent;
   W1TECO: TermsConditionComponent;
-  W1SUM: SummaryComponent;
+  W1SUM: CardSummaryComponent;
   W1SIGN: DigitalSignatureComponent;
 }
 
@@ -118,6 +119,6 @@ export const ComponentCardConstant: {
   W1DOCU: DocumentUploadComponent,
   W1EMFD: EmploymentFinancialDetailsComponent,
   W1TECO: TermsConditionComponent,
-  W1SUM: SummaryComponent,
+  W1SUM: CardSummaryComponent,
   W1SIGN: DigitalSignatureComponent,
 };
