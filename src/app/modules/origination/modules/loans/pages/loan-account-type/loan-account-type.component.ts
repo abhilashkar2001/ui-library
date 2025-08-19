@@ -71,10 +71,14 @@ export class LoanAccountTypeComponent implements OnInit {
           data: {
             category: this.category,
             basisClass: this.basisClass,
+            basisId: this.basisId,
           },
         });
         dialogRef.afterClosed().subscribe((res) => {
           console.log(res);
+          this.sessionStorageService.setItem('category', this.category);
+          this.sessionStorageService.setItem('basisId', this.basisId);
+          console.log(this.basisId);
           if (this.category === 'Cheque') {
             this.sessionStorageService.setItem('category', this.category);
             this.sessionStorageService.setItem('basisClass', this.basisClass);
@@ -113,6 +117,11 @@ export class LoanAccountTypeComponent implements OnInit {
         this.category == 'Accounts' &&
         this.basisClass == 'CORPORATE ACCOUNT'
       ) {
+          this.basisId = event.selectedLoan.basisId
+          console.log(this.basisId,"1")
+        this.sessionStorageService.setItem('basisId', this.basisId);
+        console.log(this.basisId,"2")
+        this.sessionStorageService.setItem('category', this.category);
         this.goToLogin();
       } else {
         this.isShowCalculator = event.isShowCalculator;
