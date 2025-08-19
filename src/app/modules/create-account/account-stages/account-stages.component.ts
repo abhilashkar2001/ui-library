@@ -20,6 +20,8 @@ import {
 } from '../../../config/component.constant';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
+import { IProduct } from '@onerumango/utils';
+import { LoanService } from 'app/shared/services/loan/loan.service';
 
 @Component({
   selector: 'app-account-stages',
@@ -38,18 +40,20 @@ export class AccountStagesComponent implements OnInit {
     Record<string, any>
   >();
   private readonly componentCache = new ComponentLRUCache(6);
-  // private processCycleCode: string | undefined;
-  // private basisId = 52;
-  // private productDetails: IProduct | undefined;
+  private processCycleCode: string | undefined;
+  private basisId: number | undefined;
+  private productDetails: IProduct | undefined;
   currentStepIndex = 1;
   private componentRefs = new Map<number, ComponentRef<any>>();
   allowedPanelIndex = 0;
   completedSteps = new Set<number>();
   category: string | null;
+  processDetails: any;
+  progressMapping: Map<string, Record<string, any>> = new Map();
 
   constructor(
     private renderComponentService: RenderComponentService,
-    // private loanService: LoanService,
+    private loanService: LoanService,
     private cdr: ChangeDetectorRef,
     private sessionStorageSerive: SessionStorageService,
   ) {
@@ -57,10 +61,12 @@ export class AccountStagesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.basisId = this.sessionStorageSerive.getItem('basisId')
+    console.log(this.basisId, "id")
     setTimeout(() => {
       this.panels.get(0)?.open();
     });
-    this.fetchScreens();
+    this.fetchProductDetails();
   }
 
   /**
@@ -159,17 +165,19 @@ export class AccountStagesComponent implements OnInit {
    * We will get product id  process cycle code and other details using which the accessibility
    * to the customer will be given
    */
-  // fetchProductDetails() {
-  //   this.loanService.getProductDetails(this.basisId).subscribe((resp) => {
-  //     if (resp?.statusCode === 200 && resp?.data?.length > 0) {
-  //       this.productDetails = resp?.data[0];
-  //       if (!this.productDetails) return;
-  //       this.basisId = this.productDetails['id'];
-  //       this.processCycleCode = this.productDetails['processCycleCode'];
-  //       this.fetchProcessStages();
-  //     }
-  //   });
-  // }
+  fetchProductDetails() {
+     if (this.basisId === undefined) return;
+    this.loanService.getProductDetails(this?.basisId).subscribe((resp) => {
+      if (resp?.statusCode === 200 && resp?.data?.length > 0) {
+        this.productDetails = resp?.data[0];
+        if (!this.productDetails) return;
+        this.basisId = this.productDetails['id'];
+        console.log(this.basisId)
+        this.processCycleCode = this.productDetails['processCycleCode'];
+        this.fetchProcessStages();
+      }
+    });
+  }
 
   /**
    * This will fetch all the process stages from the give process cycle code
@@ -177,184 +185,220 @@ export class AccountStagesComponent implements OnInit {
    * for website customer portal
    * Using this fetched process stage id all the screens will be fetched
    */
-  // fetchProcessStages() {
-  //   this.loanService
-  //     .fetchProcessStages(this.processCycleCode!)
-  //     .subscribe((res) => {
-  //       if (res?.statusCode === 200 && res?.data?.processStageList.length > 0) {
-  //         const data = res?.data?.processStageList[0];
-  //         if (data && data.id) {
-  //           this.sessionStorageSerive.setCurrentStage(data.id);
-  //           this.fetchScreens(data.id);
-  //         }
-  //       }
-  //     });
-  // }
+  fetchProcessStages() {
+    this.loanService
+      .fetchProcessStages(this.processCycleCode!)
+      .subscribe((res) => {
+        if (res?.statusCode === 200 && res?.data?.processStageList.length > 0) {
+          const data = res?.data?.processStageList[0];
+          if (data && data.id) {
+            this.processDetails = {
+              id: res?.data?.id,
+              processCycleCode: res?.data?.processCycleCode,
+              processStageId: res?.data?.processStageList[0]?.id,
+            };
+            this.sessionStorageSerive.setCurrentStage(data.id);
+            this.fetchScreens(data.id);
+          }
+        }
+      });
+  }
 
   /**
    * This method will fetch all the screens based of the process stage id
    * All the screens to be filled by the customer to proceed with loan application
    * @param processStageId of the selected product
+   *
    */
-  fetchScreens() {
-    // this.loanService.fetchScreens(processStageId).subscribe((resp) => {
-    //   if (resp?.statusCode === 200 && resp?.data?.screens) {
-    const screens =
-      this.category !== 'CORPORATE ACCOUNT'
-        ? [
-            {
-              screenCode: 464,
-              screenName: 'Verify Mobile Number',
-              route: null,
-              fileUrl: null,
-              sequence: 1,
-              screenValue: 'W1VEMN',
-            },
-            {
-              screenCode: 461,
-              screenName: 'Personal Identification',
-              route: null,
-              fileUrl: null,
-              sequence: 2,
-              screenValue: 'W1SIGN',
-            },
-            {
-              screenCode: 462,
-              screenName: 'Personal Details',
-              route: null,
-              fileUrl: null,
-              sequence: 3,
-              screenValue: 'W1SUM',
-            },
-            {
-              screenCode: 462,
-              screenName: 'Account Services',
-              route: null,
-              fileUrl: null,
-              sequence: 5,
-              screenValue: 'W1SUM',
-            },
-            {
-              screenCode: 456,
-              screenName: 'Account Details',
-              route: null,
-              fileUrl: null,
-              sequence: 4,
-              screenValue: 'W1DOCU',
-            },
-            {
-              screenCode: 463,
-              screenName: 'Document Upload',
-              route: null,
-              fileUrl: null,
-              sequence: 6,
-              screenValue: 'W1TECO',
-            },
-            {
-              screenCode: 463,
-              screenName: 'Employment & Financial Details',
-              route: null,
-              fileUrl: null,
-              sequence: 7,
-              screenValue: 'W1TECO',
-            },
-            {
-              screenCode: 497,
-              screenName: 'Summary',
-              route: null,
-              fileUrl: null,
-              sequence: 8,
-              screenValue: 'W1CODE',
-            },
-            {
-              screenCode: 498,
-              screenName: 'Digital Signature',
-              route: null,
-              fileUrl: null,
-              sequence: 9,
-              screenValue: 'W1BUDE',
-            },
-          ]
-        : [
-            {
-              screenCode: 464,
-              screenName: 'Verify Mobile Number',
-              route: null,
-              fileUrl: null,
-              sequence: 1,
-              screenValue: 'W1VEMN',
-            },
-            {
-              screenCode: 456,
-              screenName: 'Account Details',
-              route: null,
-              fileUrl: null,
-              sequence: 2,
-              screenValue: 'W1DOCU',
-            },
-            {
-              screenCode: 461,
-              screenName: 'Bussiness Details',
-              route: null,
-              fileUrl: null,
-              sequence: 4,
-              screenValue: 'W1SIGN',
-            },
-            {
-              screenCode: 462,
-              screenName: 'Director Documents Upload',
-              route: null,
-              fileUrl: null,
-              sequence: 5,
-              screenValue: 'W1SUM',
-            },
-            {
-              screenCode: 463,
-              screenName: 'Document Upload',
-              route: null,
-              fileUrl: null,
-              sequence: 3,
-              screenValue: 'W1TECO',
-            },
-            {
-              screenCode: 497,
-              screenName: 'Summary',
-              route: null,
-              fileUrl: null,
-              sequence: 7,
-              screenValue: 'W1CODE',
-            },
-            {
-              screenCode: 498,
-              screenName: 'Digital Signature',
-              route: null,
-              fileUrl: null,
-              sequence: 8,
-              screenValue: 'W1BUDE',
-            },
-            {
-              screenCode: 464,
-              screenName: 'Director Details',
-              route: null,
-              fileUrl: null,
-              sequence: 6,
-              screenValue: 'W1VEMN',
-            },
-          ];
-    const i = screens.findIndex((s) => s.sequence === 1);
-    if (i > -1) screens.splice(i, 1);
-    screens
-      .sort((a, b) => a.sequence - b.sequence)
-      .forEach((screen) => {
-        this.componentMapping.set(screen.screenName, screen);
-      });
-    this.cdr.markForCheck();
 
-    setTimeout(() => {
-      this.allowedPanelIndex = 0;
-      this.panels.get(0)?.open();
+  fetchScreens(processStageId: number) {
+    this.loanService.fetchScreens(processStageId).subscribe((resp) => {
+      if (resp?.statusCode === 200 && resp?.data?.screens) {
+        const screens = resp.data.screens;
+
+        const fullScreens = [...screens].sort(
+          (a, b) => a.sequence - b.sequence,
+        );
+        this.progressMapping = new Map(
+          fullScreens.map((s) => [s.screenValue, s]),
+        );
+
+        const filteredScreens = screens.filter((s) => s.sequence !== 1);
+        filteredScreens
+          .sort((a, b) => a.sequence - b.sequence)
+          .forEach((screen) => {
+            this.componentMapping.set(screen.screenValue, screen);
+          });
+
+        this.cdr.markForCheck();
+        setTimeout(() => {
+          this.allowedPanelIndex = 0;
+          this.panels.get(0)?.open();
+        });
+
+        this.cdr.detectChanges();
+      }
     });
   }
+  // fetchScreens() {
+  //   // this.loanService.fetchScreens(processStageId).subscribe((resp) => {
+  //   //   if (resp?.statusCode === 200 && resp?.data?.screens) {
+  //   const screens =
+  //     this.category !== 'CORPORATE ACCOUNT'
+  //       ? [
+  //           {
+  //             screenCode: 464,
+  //             screenName: 'Verify Mobile Number',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 1,
+  //             screenValue: 'W1VEMN',
+  //           },
+  //           {
+  //             screenCode: 461,
+  //             screenName: 'Personal Identification',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 2,
+  //             screenValue: 'W1SIGN',
+  //           },
+  //           {
+  //             screenCode: 462,
+  //             screenName: 'Personal Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 3,
+  //             screenValue: 'W1SUM',
+  //           },
+  //           {
+  //             screenCode: 462,
+  //             screenName: 'Account Services',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 5,
+  //             screenValue: 'W1SUM',
+  //           },
+  //           {
+  //             screenCode: 456,
+  //             screenName: 'Account Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 4,
+  //             screenValue: 'W1DOCU',
+  //           },
+  //           {
+  //             screenCode: 463,
+  //             screenName: 'Document Upload',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 6,
+  //             screenValue: 'W1TECO',
+  //           },
+  //           {
+  //             screenCode: 463,
+  //             screenName: 'Employment & Financial Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 7,
+  //             screenValue: 'W1TECO',
+  //           },
+  //           {
+  //             screenCode: 497,
+  //             screenName: 'Summary',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 8,
+  //             screenValue: 'W1CODE',
+  //           },
+  //           {
+  //             screenCode: 498,
+  //             screenName: 'Digital Signature',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 9,
+  //             screenValue: 'W1BUDE',
+  //           },
+  //         ]
+  //       : [
+  //           {
+  //             screenCode: 464,
+  //             screenName: 'Verify Mobile Number',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 1,
+  //             screenValue: 'W1VEMN',
+  //           },
+  //           {
+  //             screenCode: 456,
+  //             screenName: 'Account Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 2,
+  //             screenValue: 'W1DOCU',
+  //           },
+  //           {
+  //             screenCode: 461,
+  //             screenName: 'Bussiness Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 4,
+  //             screenValue: 'W1SIGN',
+  //           },
+  //           {
+  //             screenCode: 462,
+  //             screenName: 'Director Documents Upload',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 5,
+  //             screenValue: 'W1SUM',
+  //           },
+  //           {
+  //             screenCode: 463,
+  //             screenName: 'Document Upload',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 3,
+  //             screenValue: 'W1TECO',
+  //           },
+  //           {
+  //             screenCode: 497,
+  //             screenName: 'Summary',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 7,
+  //             screenValue: 'W1CODE',
+  //           },
+  //           {
+  //             screenCode: 498,
+  //             screenName: 'Digital Signature',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 8,
+  //             screenValue: 'W1BUDE',
+  //           },
+  //           {
+  //             screenCode: 464,
+  //             screenName: 'Director Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 6,
+  //             screenValue: 'W1VEMN',
+  //           },
+  //         ];
+  //   const i = screens.findIndex((s) => s.sequence === 1);
+  //   if (i > -1) screens.splice(i, 1);
+  //   screens
+  //     .sort((a, b) => a.sequence - b.sequence)
+  //     .forEach((screen) => {
+  //       this.componentMapping.set(screen.screenName, screen);
+  //     });
+  //   this.cdr.markForCheck();
+
+  //   setTimeout(() => {
+  //     this.allowedPanelIndex = 0;
+  //     this.panels.get(0)?.open();
+  //   });
+  // }
   // });
   // }
 }
