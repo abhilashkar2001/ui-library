@@ -372,7 +372,6 @@ export class ChequeBookStagesComponent implements OnInit {
               sequence: 10,
               screenValue: 'W1BUDE',
             },
-            
           ];
     const i = screens.findIndex((s) => s.sequence === 1);
     if (i > -1) screens.splice(i, 1);
