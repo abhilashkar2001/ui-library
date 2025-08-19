@@ -64,11 +64,11 @@ export interface ComponentStagesMap {
   'Personal Details': AccountPersonalDetailsComponent;
   Summary: AccountSummaryComponent;
   'Signature': AccountDigitalSignatureComponent;
-  'Bussiness Details': BusinessDetailsComponent;
+  'Business Details': BusinessDetailsComponent;
   'Director Document Upload': DocumentUploadComponent;
   'Director Details': AccountPersonalDetailsComponent;
   'Employement Financial Details': EmpFinDetailsComponent;
-  'Terms & Conditions': TermsConditionsComponent;
+  'Terms And Conditions': TermsConditionsComponent;
   'Account Services': AccountServiceComponent;
   'Payment Details': PaymentDetailsComponent;
   'Cheque Book Details': ChequeBookDetailComponent;
@@ -84,11 +84,11 @@ export const ComponentStagesConstant: {
   'Personal Details': AccountPersonalDetailsComponent,
   Summary: AccountSummaryComponent,
   'Signature': AccountDigitalSignatureComponent,
-  'Bussiness Details': BusinessDetailsComponent,
+  'Business Details': BusinessDetailsComponent,
   'Director Document Upload': DocumentUploadComponent,
   'Director Details': AccountPersonalDetailsComponent,
   'Employement Financial Details': EmpFinDetailsComponent,
-  'Terms & Conditions': TermsConditionsComponent,
+  'Terms And Conditions': TermsConditionsComponent,
   'Account Services': AccountServiceComponent,
   'Payment Details': PaymentDetailsComponent,
   'Cheque Book Details': ChequeBookDetailComponent,

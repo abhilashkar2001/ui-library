@@ -223,7 +223,7 @@ export class AccountStagesComponent implements OnInit {
           fullScreens.map((s) => [s.screenValue, s]),
         );
 
-        const filteredScreens = screens.filter((s) => s.sequence !== 1);
+        const filteredScreens = screens.filter((s) => s.sequence !== 0);
         filteredScreens
           .sort((a, b) => a.sequence - b.sequence)
           .forEach((screen) => {
