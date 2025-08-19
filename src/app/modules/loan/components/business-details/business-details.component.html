@@ -38,6 +38,16 @@
       >
       </ic-select>
     </div>
+    <div fxFlex="24" *ngIf="category == 'Cheque'">
+      <ic-select
+        [control]="businessDetailsForm?.get('segmentId') | formcontrol"
+        [options]="segmentArr"
+        bindLabelKey="values"
+        bindValueKey="id"
+        label="Industry/Sector"
+      >
+      </ic-select>
+    </div>
     <div fxFlex="24">
       <ic-form-field
         [control]="businessDetailsForm?.get('noOfDirectors') | formcontrol"
@@ -84,6 +94,9 @@
         label="TIN Number"
       ></ic-form-field>
     </div>
+    <div class="header_md_bold_black mb-8">
+        {{ 'Business Operation Details' }}
+      </div>
     <div fxFlex="24">
       <ic-form-field
         [control]="businessDetailsForm?.get('yearsOfOperation') | formcontrol"
@@ -92,7 +105,7 @@
         label="No of years in Operation"
       ></ic-form-field>
     </div>
-    <div fxFlex="24">
+    <!-- <div fxFlex="24">
       <div class="header_md_bold_black mb-8">
         {{ 'Ownership of the collateral *' }}
       </div>
@@ -107,9 +120,17 @@
           [value]="status.value"
         ></ic-radio-button>
       </div>
+    </div> -->
+    <div fxFlex="24" *ngIf="category == 'cheque'">
+      <ic-form-field
+        [control]="businessDetailsForm?.get('yearsOfOperation') | formcontrol"
+        [icAlphanumeric]="true"
+        [maxLength]="250"
+        label="No of Employees"
+      ></ic-form-field>
     </div>
 
-    <div fxFlex="24" *ngIf="category == 'Accounts'">
+    <div fxFlex="24" *ngIf="category == 'Accounts' || category === 'cheque'">
       <ic-select
         [control]="businessDetailsForm?.get('segmentId') | formcontrol"
         [options]="segmentArr"
@@ -119,12 +140,12 @@
       >
       </ic-select>
     </div>
-    <div fxFlex="24">
+    <div fxFlex="24" *ngIf="category == 'cheque'">
       <ic-form-field
         [control]="businessDetailsForm?.get('monthlyTurnover') | formcontrol"
         [icAlphanumeric]="true"
         [maxLength]="250"
-        label="Monthly Turnover"
+        label="Annual Turnover(Last Financial Year)"
       ></ic-form-field>
     </div>
     <div fxFlex="24">
@@ -143,6 +164,66 @@
         label="Telephone"
       ></ic-form-field>
     </div>
+
+    <div fxFlex="24">
+      <div class="header_md_bold_black mb-8">
+        {{ 'Is the  business labour or capital Intensive' }}
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="50px">
+        <ic-radio-button
+          *ngFor="let status of businessIntensityArr"
+          [control]="
+            businessDetailsForm?.get('businessIntencity') | formcontrol
+          "
+          [label]="status.label"
+          [value]="status.value"
+        ></ic-radio-button>
+      </div>
+    </div>
+
+     <div class="header_md_bold_black mb-8">
+        {{ 'Address & Relationship Info' }}
+      </div>
+
+      <div fxFlex="24">
+      <ic-form-field
+        [control]="businessDetailsForm?.get('aveStockLevel') | formcontrol"
+        [icAlphanumeric]="true"
+        [maxLength]="250"
+        label="AVE stock Level"
+      ></ic-form-field>
+    </div>
+
+    <div fxFlex="49">
+      <ic-select
+        [control]="businessDetailsForm?.get('parentCompanyId') | formcontrol"
+        [options]="parentCompanyArr"
+        bindLabelKey="companyName"
+        bindValueKey="corporateId"
+        label="Parent Company"
+      >
+      </ic-select>
+      <mat-icon (click)="parentSearch()">search</mat-icon>
+    </div>
+
+    <div fxFlex="24">
+      <div class="header_md_bold_black mb-8">
+        {{ 'Is the  business labour or capital Intensive' }}
+      </div>
+
+      <div fxLayout="row" fxLayoutGap="50px">
+        <ic-radio-button
+          *ngFor="let status of businessIntensityArr"
+          [control]="
+            businessDetailsForm?.get('businessIntencity') | formcontrol
+          "
+          [label]="status.label"
+          [value]="status.value"
+        ></ic-radio-button>
+      </div>
+    </div>
+
 
     <div fxFlex="49">
       <ic-textarea

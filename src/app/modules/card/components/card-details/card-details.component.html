@@ -90,7 +90,7 @@
       gallery offers a variety of stylish themes and layouts to choose from. .
     </p>
     <div FxLayout="row" fxLayoutGap="10px">
-      <div fxFlex="30">
+      <div fxFlex="20">
         <img
           src="assets/images/debit-card.svg"
           class="pl-4"
@@ -99,20 +99,19 @@
         />
       </div>
 
-      <div
-        fxLayout="row wrap"
-        class="document-info"
-        fxFlex="60"
-        fxLayoutGap="15px"
-      >
-        <div
-          class="w-full info-block"
-          fxFlex="31"
-          *ngFor="let info of extractedFields"
-        >
-          <div class="label">{{ info.label }}</div>
-          <div class="value" class="highlight">
-            {{ info.value }}
+      <div fxLayout="column" class="info-block" fxFlex="80">
+        <h3 class="header_lg_bold_black">Card Details</h3>
+        <div fxLayout="row wrap" fxFlex="100">
+          <div
+            fxLayout="column"
+            fxFlex="24"
+            class="w-full"
+            *ngFor="let info of extractedFields"
+          >
+            <div class="breadcrum_sm">{{ info.label }}</div>
+            <div class="theme_md">
+              {{ info.value ?? '-' }}
+            </div>
           </div>
         </div>
       </div>
