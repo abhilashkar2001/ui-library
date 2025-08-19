@@ -1,10 +1,5 @@
 export enum FlowType {
-  DebitCardExisting = 'debitCardExisting',
-  DebitCardNew = 'debitCardNew',
-  CreditCardExisting = 'creditCardExisting',
-  CreditCardNew = 'creditCardNew',
-  PrepaidCardExisting = 'prepaidCardExisting',
-  PrepaidCardNew = 'prepaidCardNew',
+  CommonCardSummaryFlow = 'commonFlow',
 }
 
 export class SummaryCardStore {
@@ -139,14 +134,14 @@ export class SummaryCardStore {
         { headerCell: 'Card Network', headerDef: 'cardNetwork' },
         { headerCell: 'Branch Name', headerDef: 'branchName' },
         { headerCell: 'Bank Code', headerDef: 'bankCode' },
-        { headerCell: 'Card Preview', headerDef: 'cardPreview' },
-        { headerCell: 'Card Type (Details)', headerDef: 'cardTypeDetails' },
-        { headerCell: 'Daily Limit', headerDef: 'dailyLimit' },
-        { headerCell: 'Domestic Limit', headerDef: 'domesticLimit' },
-        { headerCell: 'International Limit', headerDef: 'internationalLimit' },
-        { headerCell: 'ATM Limit', headerDef: 'atmLimit' },
-        { headerCell: 'POS Limit', headerDef: 'posLimit' },
-        { headerCell: 'Internet Limit', headerDef: 'internetLimit' },
+        // { headerCell: 'Card Preview', headerDef: 'cardPreview' },
+        // { headerCell: 'Card Type (Details)', headerDef: 'cardTypeDetails' },
+        // { headerCell: 'Daily Limit', headerDef: 'dailyLimit' },
+        // { headerCell: 'Domestic Limit', headerDef: 'domesticLimit' },
+        // { headerCell: 'International Limit', headerDef: 'internationalLimit' },
+        // { headerCell: 'ATM Limit', headerDef: 'atmLimit' },
+        // { headerCell: 'POS Limit', headerDef: 'posLimit' },
+        // { headerCell: 'Internet Limit', headerDef: 'internetLimit' },
       ],
     },
     paymentDetails: {
@@ -158,13 +153,17 @@ export class SummaryCardStore {
         { headerCell: 'Overall Amount', headerDef: 'overallAmount' },
       ],
     },
+    documentUpload: {
+      title: 'Document and Personal Identification',
+      key: 'documentUpload',
+    },
   };
 
   static readonly flowSections: any = {
-    [FlowType.DebitCardNew]: [
+    [FlowType.CommonCardSummaryFlow]: [
       'personalDetails',
       'identificationDetails',
-      'documentUpload', //need to add.
+      'documentUpload',
       'contactDetails',
       'address',
       'spouseDetails',
@@ -172,12 +171,6 @@ export class SummaryCardStore {
       'accountDetails',
       'cardServices',
       'paymentDetails',
-    ],
-    [FlowType.CreditCardNew]: [
-      'personalDetails',
-      'contactDetails',
-      'accountDetails',
-      'cardServices',
     ],
   };
 }

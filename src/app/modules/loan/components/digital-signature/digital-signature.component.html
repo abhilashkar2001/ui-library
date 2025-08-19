@@ -1,47 +1,85 @@
-<section fxFlex="100" fxLayout="column" fxLayoutGap="2%">
-  <div>
-    <div fxFlex="50" fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxLayout="column">
-        <span class="header_md">Signature *</span>
-        <span class="breadcrum_md"
-          >Click the e-sign link to sign digitally or upload your signature
-          image</span
-        >
-      </div>
+<div
+  class="digital-signature-container"
+  fxFlex="100"
+  fxLayout="row wrap"
+  fxLayoutAlign="space-between start"
+>
+  <div fxFlex="100" class="send-link">
+    <p>
+      As the next step in the Business Loan process, each Director of the
+      company will receive a secure verification link sent to their registered
+      email address or mobile number. Once you click
+      <a href="#">‘Send Link’</a> button below, a secure verification link will
+      be sent to each Director’s registered email ID or mobile number. Each
+      Director will be required to complete
+      <strong>a face liveliness check</strong> using a real-time selfie and
+      <strong>provide their signature</strong> by either uploading it or signing
+      digitally in the provided field.
+    </p>
+    <ic-button
+      [label]="'Send Link'"
+      [type]="'button'"
+      icButtonType="filled-rounded"
+      size="medium"
+      class="mb-12"
+    >
+    </ic-button>
+  </div>
+  <div class="sign-now" fxFlex="45" fxLayout="column">
+    <span class="header_md">Sign Now *</span>
+    <span class="breadcrum_sm" fxLayoutAlign="space-between center"
+      >Click the e-sign link to sign digitally or upload your signature image
       <span
-        class="theme_md cursor-pointer"
+        class="theme_md cursor-pointer ml-24"
         (click)="openSignPopup()"
         (keydown.enter)="openSignPopup()"
         tabindex="0"
         ><u>E-Sign</u></span
-      >
-    </div>
-  </div>
-  <div
-    class="uploaded_list"
-    fxLayout="row wrap"
-    fxFlex="100"
-    fxLayoutAlign="space-between center"
-  >
-    <div
-      *ngFor="let sig of signatureArray.controls; let i = index"
-      fxFlex="49"
-      fxLayout="row"
-      fxLayoutGap="10"
-      class="upload_img"
+      ></span
     >
-      <div class="img_box">
-        <img [src]="" alt="image" />
+
+    <!-- uploaded images -->
+    <div
+      class="uploaded_list"
+      fxFlex="45"
+      fxLayout="row wrap"
+      fxLayoutAlign="space-between center"
+    >
+      <div
+        *ngFor="let sig of signatureArray.controls; let i = index"
+        fxFlex="49"
+        class="upload_img"
+      >
+        <div class="img-container">
+          <img
+            *ngIf="sig?.value?.uuid | safe: 'url' | async as filePreview"
+            [src]="filePreview"
+            alt="image"
+            class="sign-image"
+          />
+          <span
+            tabindex="0"
+            (click)="deleteSignatureAt(i)"
+            (keydown.enter)="deleteSignatureAt(i)"
+            class="x-text"
+          >
+            X
+          </span>
+        </div>
       </div>
-      <div class="img_container">
-        <span class="header_md img_name">{{ sig?.value?.uuid }}</span>
-      </div>
-      <img
-        tabindex="0"
-        (click)="deleteSignatureAt(i)"
-        src="assets/images/trash_new.svg"
-        alt="trash"
-      />
     </div>
   </div>
-</section>
+  <div class="physical-sign" fxLayout="column">
+    <span class="header_md" fxLayoutAlign="space-between center">
+      Physical Signature *
+    </span>
+    <span class="breadcrum_sm"
+      >Ensure the letter is downloaded and re-uploaded for status tracking
+      purposes.
+      <span class="theme_md cursor-pointer ml-24" tabindex="0"
+        ><u>Download</u></span
+      ></span
+    >
+    <div class="uploaded_list"></div>
+  </div>
+</div>

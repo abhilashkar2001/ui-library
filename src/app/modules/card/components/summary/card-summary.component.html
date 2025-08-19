@@ -1,12 +1,64 @@
-<div *ngFor="let section of sectionsToDisplay" class="section-container">
-  <h3>{{ section.title }}</h3>
+<div fxLayout="column" fxLayoutGap="20px">
+  <div *ngFor="let section of sectionsToDisplay" class="section-container">
+    <h3>{{ section.title }}</h3>
+    <ng-container
+      *ngIf="section.key !== 'documentUpload'; else showDocumentsSummary"
+    >
+      <div fxLayout="row wrap" fxLayoutGap="20px grid">
+        <div *ngFor="let field of section.data" fxFlex="25" fxLayout="column">
+          <span class="breadcrum_sm">{{ field.headerCell }}</span>
+          <span class="header_md">
+            {{ section.values[field.headerDef] ?? '-' }}
+          </span>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #showDocumentsSummary>
+      <div class="document-panel" *ngFor="let document of documentSummary">
+        <mat-expansion-panel
+          *ngIf="document?.docInfoModel?.length > 0"
+          class="styled-panel fileUpload"
+          [expanded]="true"
+        >
+          <mat-expansion-panel-header class="panel-header">
+            <div class="panel-header-content">
+              <div
+                class="panel-title"
+                fxLayoutGap="5"
+                fxLayoutAlign="start center"
+              >
+                <img src="assets/images/tickicon.svg" alt="Tick" />
+                <span class="header_md">{{ document?.document }}</span>
+              </div>
+              <span class="disabled_delete"> Delete </span>
+            </div>
+          </mat-expansion-panel-header>
 
-  <div fxLayout="row wrap" fxLayoutGap="20px grid">
-    <div *ngFor="let field of section.data" fxFlex="25" fxLayout="column">
-      <span class="breadcrum_sm">{{ field.headerCell }}</span>
-      <span class="header_md">
-        {{ section.values[field.headerDef] ?? '-' }}
-      </span>
-    </div>
+          <div
+            class="uploaded_list"
+            fxLayout="row wrap"
+            fxFlex="100"
+            fxLayoutAlign="space-between center"
+          >
+            <div
+              *ngFor="let file of document?.docInfoModel; let fileIndx = index"
+              fxFlex="49"
+              fxLayout="row"
+              fxLayoutGap="10"
+              class="upload_img"
+            >
+              <div class="img_box">
+                <img [src]="" alt="image" />
+              </div>
+              <div class="img_container">
+                <span class="header_md img_name">{{ file?.fileName }}</span>
+              </div>
+              <img tabindex="0" src="assets/images/trash_new.svg" alt="trash" />
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </ng-template>
+    <div class="stepper-line"></div>
   </div>
 </div>

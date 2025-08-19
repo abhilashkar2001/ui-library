@@ -23,6 +23,7 @@ export class SignPadComponent implements AfterViewInit {
     | any;
   private ctx: CanvasRenderingContext2D | any;
   private isDrawing = false;
+  private hasSigned = false;
   private lastX: number | any;
   private lastY: number | any;
 
@@ -37,20 +38,52 @@ export class SignPadComponent implements AfterViewInit {
       ),
     );
   }
+  clearCanvasIfFirstDraw() {
+    if (!this.hasSigned) {
+      const canvas = this.canvas.nativeElement;
+      this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.setCanvasBackground();
+      this.hasSigned = true;
+    }
+  }
 
   ngAfterViewInit() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
+    this.setCanvasBackground();
+    this.drawPlaceholder();
+  }
+  private drawPlaceholder() {
+    const canvas = this.canvas.nativeElement;
+    this.ctx.font = '36px "Pacifico", cursive';
+    this.ctx.fillStyle = '#ccd0d5';
+    this.ctx.textAlign = 'center';
+    this.ctx.fillText('Sign here', canvas.width / 2, canvas.height / 2);
   }
 
   handleMouseDown(event: MouseEvent) {
+    if (!this.hasSigned) {
+      this.ctx.clearRect(
+        0,
+        0,
+        this.canvas.nativeElement.width,
+        this.canvas.nativeElement.height,
+      );
+      this.setCanvasBackground();
+      this.hasSigned = true;
+    }
+
     this.isDrawing = true;
-    this.lastX = event.offsetX;
-    this.lastY = event.offsetY;
+    const { x, y } = this.getCanvasCoordinates(event);
+    this.lastX = x;
+    this.lastY = y;
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.lastX, this.lastY);
   }
 
   handleMouseMove(event: MouseEvent) {
     if (!this.isDrawing) return;
-    this.draw(event.offsetX, event.offsetY);
+    const { x, y } = this.getCanvasCoordinates(event);
+    this.draw(x, y);
   }
 
   handleMouseUp() {
@@ -58,14 +91,14 @@ export class SignPadComponent implements AfterViewInit {
   }
 
   draw(x: number, y: number) {
-    this.ctx.strokeStyle = 'black';
-    this.ctx.lineJoin = 'round';
-    this.ctx.lineCap = 'round';
     this.ctx.lineWidth = 2;
+    this.ctx.lineCap = 'round';
+    this.ctx.lineJoin = 'round';
+    this.ctx.strokeStyle = 'black';
 
     this.ctx.beginPath();
     this.ctx.moveTo(this.lastX, this.lastY);
-    this.ctx.lineTo(x, y);
+    this.ctx.quadraticCurveTo(this.lastX, this.lastY, x, y);
     this.ctx.stroke();
 
     this.lastX = x;
@@ -73,31 +106,83 @@ export class SignPadComponent implements AfterViewInit {
   }
 
   clearCanvas() {
-    this.ctx.clearRect(
+    const canvas = this.canvas.nativeElement;
+    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.setCanvasBackground();
+    this.hasSigned = false;
+    this.ctx.beginPath();
+    this.drawPlaceholder();
+  }
+
+  private setCanvasBackground() {
+    this.ctx.fillStyle = '#FEF3F2';
+    this.ctx.fillRect(
       0,
       0,
       this.canvas.nativeElement.width,
       this.canvas.nativeElement.height,
     );
   }
+  getCanvasCoordinates(event: MouseEvent) {
+    const rect = this.canvas.nativeElement.getBoundingClientRect();
+    const scaleX = this.canvas.nativeElement.width / rect.width;
+    const scaleY = this.canvas.nativeElement.height / rect.height;
+
+    return {
+      x: (event.clientX - rect.left) * scaleX,
+      y: (event.clientY - rect.top) * scaleY,
+    };
+  }
 
   saveSignature() {
-    // Create a new canvas with white background
-    const newCanvas = document.createElement('canvas');
-    const newCtx: any = newCanvas.getContext('2d');
-    newCanvas.width = this.canvas.nativeElement.width;
-    newCanvas.height = this.canvas.nativeElement.height;
-    newCtx.fillStyle = 'white';
-    newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
+    if (!this.hasSigned) {
+      return;
+    }
+    const originalCanvas = this.canvas.nativeElement;
+    const sourceWidth = originalCanvas.width;
+    const sourceHeight = originalCanvas.height;
 
-    // Draw the signature canvas onto the new canvas
-    newCtx.drawImage(this.canvas.nativeElement, 0, 0);
+    const targetSize = 300; // Final output will be 300x300 square
 
-    // Save the final signature image
-    const signatureImage = newCanvas.toDataURL('image/png');
-    fetch(signatureImage)
+    // Create square canvas
+    const squareCanvas = document.createElement('canvas');
+    squareCanvas.width = targetSize;
+    squareCanvas.height = targetSize;
+
+    const squareCtx = squareCanvas.getContext('2d');
+    if (!squareCtx) {
+      console.error('Failed to get 2D context');
+      return;
+    }
+
+    // Fill background with your desired color
+    squareCtx.fillStyle = '#FEF3F2';
+    squareCtx.fillRect(0, 0, targetSize, targetSize);
+
+    // Calculate scale and position to center the original drawing
+    const scale = Math.min(targetSize / sourceWidth, targetSize / sourceHeight);
+    const drawWidth = sourceWidth * scale;
+    const drawHeight = sourceHeight * scale;
+    const dx = (targetSize - drawWidth) / 2;
+    const dy = (targetSize - drawHeight) / 2;
+
+    // Draw scaled original canvas in center
+    squareCtx.drawImage(
+      originalCanvas,
+      0,
+      0,
+      sourceWidth,
+      sourceHeight,
+      dx,
+      dy,
+      drawWidth,
+      drawHeight,
+    );
+
+    // Export image
+    const dataURL = squareCanvas.toDataURL('image/png');
+    fetch(dataURL)
       .then((res) => res.blob())
-      .then((resp) => this.signpadImage.emit(resp));
-    // You can save or process the image data here
+      .then((blob) => this.signpadImage.emit(blob));
   }
 }
