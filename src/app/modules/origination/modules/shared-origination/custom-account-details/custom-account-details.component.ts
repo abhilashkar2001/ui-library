@@ -1,4 +1,10 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -16,7 +22,9 @@ import { catchError, map, Observable, of, Subscription, tap } from 'rxjs';
 })
 export class CustomAccountDetailsComponent {
   @Input() accountDetailsForm!: FormGroup;
-  createAccountDetailsSummaryArr: any[] = [];
+  @Output() accountSummaryEmit = new EventEmitter();
+
+  createAccountDetailsSummaryArr: any;
   genericValue: any | undefined;
   todaysDate = new Date();
   staticData = {
@@ -47,6 +55,7 @@ export class CustomAccountDetailsComponent {
   selectedAccountType: string = '';
   data: any;
   basisClass!: string | null;
+  countryArr: any;
 
   constructor(
     // private fb: FormBuilder,
@@ -73,7 +82,7 @@ export class CustomAccountDetailsComponent {
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();
     this.fetchGenericValues();
-    this.initializeCreateAccountDetailsArray();
+    // this.initializeCreateAccountDetailsArray();
     if (this.originationId) {
       this.fetchLoanDetails();
     }
@@ -100,6 +109,13 @@ export class CustomAccountDetailsComponent {
       this.accountDetailsForm?.get('holderType')?.value,
     );
   }
+  getHolderTypeById(): string | null {
+    const holderType = this.genericValue?.HOLDERTYPE.find(
+      (type: any) =>
+        type?.id == this.accountDetailsForm.get('holderTypeId')?.value,
+    );
+    return holderType ? holderType?.values : null;
+  }
 
   loadUserProfile() {
     const loadUserProfileSub = this.userProfile$.subscribe((result) => {
@@ -110,9 +126,16 @@ export class CustomAccountDetailsComponent {
     this.subscriptions.push(loadUserProfileSub);
   }
 
-  initializeCreateAccountDetailsArray(_data?: any) {
-    this.createAccountDetailsSummaryArr = [];
+  handleCurrencyChange(curId: any) {
+    const currencyCode = this.currencyArr.find(
+      (item: any) => item?.id == curId,
+    )?.currencyCode;
+    this.accountCurrency.get('currencyCode')?.setValue(currencyCode);
   }
+
+  // initializeCreateAccountDetailsArray(_data?: any) {
+  //   this.createAccountDetailsSummaryArr = [];
+  // }
 
   // fetch loan details function
   fetchLoanDetails() {
@@ -120,7 +143,7 @@ export class CustomAccountDetailsComponent {
       this.loanService.getLoanDetails(this.originationId).subscribe((resp) => {
         if (resp.statusCode === 200) {
           this.accountDetailsForm?.patchValue(resp?.data);
-          this.initializeCreateAccountDetailsArray(resp?.data);
+          // this.initializeCreateAccountDetailsArray(resp?.data);
         }
       });
   }
@@ -149,94 +172,26 @@ export class CustomAccountDetailsComponent {
 
   fetchCurrency() {
     this.accountService.fetchCurrency().subscribe((resp: any) => {
-      this.currencyArr = resp.data;
+      this.currencyArr = resp?.data ?? [];
     });
   }
   fetchCustomerCategory() {
     this.accountService.fetchCustomerCategory().subscribe((resp: any) => {
-      this.customerCategoryArr = resp.data;
+      this.customerCategoryArr = resp?.data ?? [];
     });
   }
   fetchBasicDetails() {
-    this.accountService.fetchBasicDetails('2504').subscribe((resp: any) => {
-      this.createAccountDetailsSummaryArr = resp.data;
+    this.accountService.fetchProductDetails('2948').subscribe((resp: any) => {
+      if (resp?.data?.length > 0) {
+        this.createAccountDetailsSummaryArr = resp?.data[0] ?? [];
+        this.accountSummaryEmit.emit(this.createAccountDetailsSummaryArr);
+      }
     });
   }
-
   get holderType() {
     return this.accountDetailsForm?.get('holderType')?.value;
   }
 
-  // Build Form
-  // buildLoanDetailsForm(item: any) {
-  //   this.accountDetailsForm = this.fb.group({
-  //     accountType: [item.accountType || null],
-  //     accountDescription: [item.accountDescription || null],
-  //     accountBranch: [item.accountBranch || null],
-  //     businessProductName: [item.businessProductName || null],
-  //     productDescription: [item.productDescription || null],
-  //     applicationDate: [item.applicationDate || null],
-  //     userRefNumber: [item.userRefNumber || null],
-  //     cbsRefNumber: [item.cbsRefNumber || null],
-  //     swiftCode: [item.swiftCode || null],
-  //     agentCode: [item.agentCode || null],
-  //     rmId: [item.rmId || null],
-  //     initialFunding: [item.initialFunding ?? false],
-  //     overdraftRequested: [item.overdraftRequested ?? false],
-  //     holderType: [item.holderType || null],
-  //     noOfApplicant: [item.noOfApplicant || null],
-  //     customerCategory: [item.customerCategory || null],
-  //     customerAccountInitialFunding: this.fb.group({
-  //       amount: [item.customerAccountInitialFunding?.amount || null],
-  //       fundByAccount: [
-  //         item.customerAccountInitialFunding?.fundByAccount || null,
-  //       ],
-  //       branchCode: [item.customerAccountInitialFunding?.branchCode || null],
-  //       chequeNumber: [
-  //         item.customerAccountInitialFunding?.chequeNumber || null,
-  //       ],
-  //       tellertransactionRefNo: [
-  //         item.customerAccountInitialFunding?.tellertransactionRefNo || null,
-  //       ],
-  //     }),
-
-  //     originationDetail: this.fb.group({
-  //       originationId: [item.originationDetail?.originationId || null],
-  //       applicationDate: [item.originationDetail?.applicationDate || null],
-  //       icustRefNo: [item.originationDetail?.icustRefNo || null],
-  //       source: [item.originationDetail?.source || null],
-  //       status: [item.originationDetail?.status || null],
-  //       subStatus: [item.originationDetail?.subStatus || null],
-  //       branch: this.fb.group({
-  //         id: [item.originationDetail?.branch?.id || null],
-  //       }),
-  //       accountCurrency: this.fb.group({
-  //         id: [item.originationDetail?.accountCurrency?.id || null],
-  //         currencyCode: [
-  //           item.originationDetail?.accountCurrency?.currencyCode || null,
-  //         ],
-  //       }),
-  //       productDetails: this.fb.group({
-  //         id: [item.originationDetail?.productDetails?.id || null],
-  //       }),
-  //     }),
-  //   });
-
-  //   // Holder type change logic
-  //   this.accountDetailsForm
-  //     .get('holderType')
-  //     ?.valueChanges.subscribe((holderType: string) => {
-  //       if (holderType?.toLowerCase() === 'joint') {
-  //         this.accountDetailsForm.get('noOfApplicant')?.setValue(2);
-  //       } else {
-  //         this.accountDetailsForm.get('noOfApplicant')?.reset();
-  //       }
-  //     });
-  // }
-
-  // get accountDetailsGroup(): FormGroup {
-  //   return this.accountDetailsForm.get('accountDetails') as FormGroup;
-  // }
   get customerAccountInitialFunding() {
     return this.accountDetailsForm.get(
       'customerAccountInitialFunding',
@@ -271,6 +226,14 @@ export class CustomAccountDetailsComponent {
         });
       }
     });
+  }
+  onCurrencyChange(selected: any) {
+    if (selected) {
+      this.accountCurrency.patchValue({
+        id: selected.id,
+        currencyCode: selected.isoCcyCode,
+      });
+    }
   }
 
   handleSubmit() {

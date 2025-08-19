@@ -5,14 +5,48 @@
 >
   <div class="summary_pad" fxFlex="100" fxLayout="row wrap" fxLayoutGap="10px">
     <div
-      *ngFor="let item of createAccountDetailsSummaryArr"
       class="row mt-12"
       fxFlex="24"
       fxLayout="column"
       fxLayoutAlign="start start"
     >
-      <span class="breadcrum_md">{{ item.header }}</span>
-      <span class="header_md">{{ item?.value }}</span>
+      <div class="breadcrum_md">Account Type</div>
+      <div class="header_md">
+        {{ createAccountDetailsSummaryArr?.basisClass }}
+      </div>
+    </div>
+    <div
+      class="row mt-12"
+      fxFlex="24"
+      fxLayout="column"
+      fxLayoutAlign="start start"
+    >
+      <div class="breadcrum_md">Account Description</div>
+      <div class="header_md">
+        {{ createAccountDetailsSummaryArr?.basisClassDesc }}
+      </div>
+    </div>
+    <div
+      class="row mt-12"
+      fxFlex="24"
+      fxLayout="column"
+      fxLayoutAlign="start start"
+    >
+      <div class="breadcrum_md">Business Product Name</div>
+      <div class="header_md">
+        {{ createAccountDetailsSummaryArr?.basisName }}
+      </div>
+    </div>
+    <div
+      class="row mt-12"
+      fxFlex="24"
+      fxLayout="column"
+      fxLayoutAlign="start start"
+    >
+      <div class="breadcrum_md">Product Description</div>
+      <div class="header_md">
+        {{ createAccountDetailsSummaryArr?.basisDetailStory }}
+      </div>
     </div>
   </div>
 
@@ -26,30 +60,31 @@
   >
     <div fxFlex="24">
       <ic-select
-        [control]="accountDetailsForm.get('accountBranch') | formcontrol"
+        [control]="branch.get('id') | formcontrol"
         [options]="accountBranchArr"
         bindLabelKey="branchName"
-        bindValueKey="branchCode"
+        bindValueKey="id"
         label="Account Branch 1"
         [disabled]="!isEdit"
       ></ic-select>
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="accountCurrency.get('currencyCode') | formcontrol"
+        [control]="accountCurrency.get('id') | formcontrol"
         [options]="currencyArr"
-        bindLabelKey="values"
+        bindLabelKey="currencyCode"
         bindValueKey="id"
         label="Account Currency"
         [disabled]="!isEdit"
+        (selectionChange)="handleCurrencyChange($event)"
       ></ic-select>
     </div>
     <div fxFlex="24">
       <ic-select
         [control]="accountDetailsForm.get('customerCategory') | formcontrol"
         [options]="customerCategoryArr"
-        bindLabelKey="values"
-        bindValueKey="id"
+        bindLabelKey="categoryName"
+        bindValueKey="categoryId"
         label="Customer Category"
         [disabled]="!isEdit"
       ></ic-select>
@@ -66,13 +101,7 @@
         (selectionChange)="holderTypeChange()"
       ></ic-select>
     </div>
-    <div
-      fxFlex="24"
-      *ngIf="
-        accountDetailsForm?.get('holderType')?.value?.value?.toLowerCase() ===
-        'minor'
-      "
-    >
+    <div fxFlex="24" *ngIf="getHolderTypeById()?.toLowerCase() === 'minor'">
       <ic-form-field
         [control]="accountDetailsForm.get('noOfGuardian') | formcontrol"
         label="No. of guardian"
@@ -80,12 +109,7 @@
         [disabled]="!isEdit"
       ></ic-form-field>
     </div>
-    <div
-      fxFlex="24"
-      *ngIf="
-        accountDetailsForm?.get('holderType')?.value?.toLowerCase() === 'joint'
-      "
-    >
+    <div fxFlex="24" *ngIf="getHolderTypeById()?.toLowerCase() === 'joint'">
       <ic-form-field
         [control]="accountDetailsForm.get('noOfApplicant') | formcontrol"
         label="No. of Applicant"
@@ -108,10 +132,8 @@
       *ngIf="
         basisClass == 'CORPORATE ACCOUNT' ||
         (basisClass != 'CORPORATE ACCOUNT' &&
-          (accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() ===
-            'joint' ||
-            accountDetailsForm?.get('holderTypeId')?.value?.toLowerCase() ===
-              'self'))
+          (getHolderTypeById()?.toLowerCase() === 'joint' ||
+            getHolderTypeById()?.toLowerCase() === 'self'))
       "
     >
       <ic-slide-toggle

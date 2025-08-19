@@ -46,7 +46,7 @@ export class GenericAccountFormComponent implements OnInit {
     COUNTRYOFISSUE: [],
     NATIONALITY: [],
     COUNTRYOFRESIDENCE: [],
-    MARITIALSTATUS: [],
+    MARITALSTATUS: [],
   };
   // accountValue = [
   //   { label: 'Internal', value: true },
@@ -233,6 +233,7 @@ export class GenericAccountFormComponent implements OnInit {
   subscriptions: Subscription[] = [];
 
   private localeData: LocaleData | undefined;
+  countryArr: any;
 
   constructor(
     private fb: FormBuilder,
@@ -559,6 +560,7 @@ export class GenericAccountFormComponent implements OnInit {
   loadCountries() {
     this.countryService.getCountries().subscribe((resp: any) => {
       if (resp.data.length > 0) {
+        this.countryArr = resp.data;
         this.countriesIsdCodes = resp?.data;
         this.countryTelIsdCode = resp?.data.map(
           (i: any) => i?.countryTelIsdCode,
