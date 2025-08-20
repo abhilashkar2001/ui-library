@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
@@ -48,6 +48,17 @@ export class CommonPersonalDetailsComponent implements OnInit {
   originationId: number | undefined;
   @Input() basisId: any;
   boundaries: any;
+  addressTypeArr = [
+    {
+      label: 'Yes',
+      value: true,
+    },
+    {
+      label: 'No',
+      value: false,
+    },
+  ];
+
   constructor(
     private fb: FormBuilder,
     private countryService: CountryService,
@@ -57,6 +68,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     private store: Store<AppState>,
     private loanService: LoanService,
     private dialog: MatDialog,
+    private cdr: ChangeDetectorRef,
   ) {}
   ngOnInit() {
     this.originationId = this.sessionStorageService.getOriginationId();
@@ -174,7 +186,6 @@ export class CommonPersonalDetailsComponent implements OnInit {
   }
 
   buildPersonalDetailsForm(data?: any) {
-    console.log(data);
     this.customerDetailsForm = this.fb.group({
       customer: this.fb.array([]),
     });
@@ -412,6 +423,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
         ?.values?.toLowerCase();
       this.showSpouseSection[i] = status === 'married';
     });
+    this.cdr.detectChanges();
   }
 
   addAddress(i: any, address?: any) {
@@ -462,7 +474,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       residenceTypeValue: [address?.residenceTypeValue ?? ''],
     });
     // This ensures validators are processed immediately
-    // group.updateValueAndValidity();
+    group.updateValueAndValidity();
     return group;
   }
 

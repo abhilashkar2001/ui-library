@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { debitFields, CreditFields } from './card-details.store';
 
 @Component({
   selector: 'app-card-details',
@@ -12,32 +13,13 @@ export class CardDetailsComponent implements OnInit {
     { label: 'My Address', value: true },
     { label: 'Branch Near Me', value: false },
   ];
-  extractedFields = [
-    { label: 'Card Type', value: 'Aadhar Card' },
-    {
-      label: 'Daily Limit',
-      value: '75000',
-    },
-    {
-      label: 'Domestic Limit',
-      value: '34000',
-    },
-    { label: 'International Limit', value: '10000' },
-    { label: 'ATM Limit', value: '10' },
-    {
-      label: 'POS Limit',
-      value: '50000',
-    },
-    {
-      label: 'Internet Limit',
-      value: '50000',
-    },
-  ];
+  typeOfCard = 'Credit';
+  debitFields = debitFields({});
+  CreditFields = CreditFields({});
 
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    console.log('calling');
     this.buildForm();
   }
 
@@ -45,12 +27,13 @@ export class CardDetailsComponent implements OnInit {
     this.cardForm = this.fb.group({
       cardType: [''],
       cardName: [''],
-      location: [''],
+      location: [true],
       branchName: [''],
       bankCode: [''],
       cardNetwork: [''],
       preferredBillingDate: [''],
       creditLimit: [''],
+      deliveryAddress: ['Communication Address'],
     });
   }
 }

@@ -118,9 +118,7 @@ export class OpenAccountService {
     );
   }
 
-  fetchBasicDetails(basisDetailsId: any) {
-    return this.http.get<any>(
-      `${baseUrl}/details/fetchAllDetails?basisDetailsId=${basisDetailsId}`,
-    );
+  fetchProductDetails(id: any) {
+    return this.http.get<any>(`${baseUrl}/origination-product-detail?id=${id}`);
   }
 }
