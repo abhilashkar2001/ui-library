@@ -43,7 +43,7 @@ export class GenericAccountFormComponent implements OnInit {
     RESIDENTSTATUS: [],
     RELATIONSHIP: [],
     STATEMENTVIA: [],
-
+    EMPLOYMENTTYPE: [],
     MARITALSTATUS: [],
   };
   // accountValue = [
@@ -106,6 +106,7 @@ export class GenericAccountFormComponent implements OnInit {
 
       residentStatus: [Validators.required],
       city: [Validators.required],
+      subRub: [Validators.required],
       livingAddressSince: [Validators.required],
 
       spousePrefix: [Validators.required],
@@ -381,7 +382,7 @@ export class GenericAccountFormComponent implements OnInit {
             addressTypeId: [null],
             residenceTypeId: [null],
             livingAddressSince: [''],
-            suburb: [''],
+            subRub: [''],
             city: [''],
             postalCode: [''],
           }),
@@ -518,18 +519,10 @@ export class GenericAccountFormComponent implements OnInit {
 
   fetchStateCity() {
     if (this.personalDetailsForm) {
-      // const addressArray = this.addressArray; // this comes from your getter
-      // const address = addressArray.at(0) as FormGroup;
-
       this.addressGroup
         .get('postalCode')
         ?.valueChanges.pipe(debounceTime(500), distinctUntilChanged())
         .subscribe((value: any) => {
-          console.log(
-            'customerInfo.contact.address==>',
-            this.personalDetailsForm.get('customerInfo.contact.address'),
-          );
-
           if (value && value.toString().length >= 6) {
             this.cityService
               .fetchZipcodeDetails(value)
@@ -537,16 +530,22 @@ export class GenericAccountFormComponent implements OnInit {
                 if (res?.statusCode === 200 && res.data?.length) {
                   const data = res.data[0];
 
+                  // set cities dropdown
+                  this.cities = res.data.map((city: any) => ({
+                    id: city.cityId,
+                    values: city.city,
+                  }));
                   this.addressGroup.patchValue({
-                    city: data.city || '',
-                    suburb: data.suburb || '',
-                    postalCode: value,
+                    city: data.cityId, // cityId bind hoga dropdown me
+                    subRub: data.state,
+                  });
+                  // patch selected city automatically (optional)
+                  this.emergencyContactAdress.patchValue({
+                    city: data.cityId, // cityId is your bindValueKey
                   });
                 } else {
-                  this.addressGroup.patchValue({
-                    city: '',
-                    suburb: '',
-                  });
+                  this.cities = []; // reset dropdown if no data
+                  this.emergencyContactAdress.patchValue({ city: null });
                 }
               });
           }

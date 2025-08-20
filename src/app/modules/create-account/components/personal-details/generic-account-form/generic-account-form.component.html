@@ -137,8 +137,8 @@
       <ic-select
         [control]="personalDetailsForm.get('countryOfIssue') | formcontrol"
         [options]="countryArr"
-        bindLabelKey="values"
-        bindValueKey="id"
+        bindLabelKey="countryName"
+        bindValueKey="countryCode"
         label="Country Of Issue"
       ></ic-select>
     </div>
@@ -487,7 +487,7 @@
       <div fxFlex="25">
         <ic-select
           [control]="spouce.get('employeeStatus') | formcontrol"
-          [options]="prefix"
+          [options]="genericValue?.EMPLOYMENTTYPE"
           bindLabelKey="values"
           bindValueKey="id"
           label="Employee Status"
@@ -676,7 +676,7 @@
       </div>
       <div fxFlex="25">
         <ic-form-field
-          [control]="emergencyContactAdress.get('suburb') | formcontrol"
+          [control]="emergencyContactAdress.get('subRub') | formcontrol"
           [maxLength]="20"
           label="Subrub"
         ></ic-form-field>
@@ -697,6 +697,7 @@
           [maxLength]="10"
           label="Postal Code"
           suffixIcon="search"
+          (onSuffixClick)="pincodeExpansion()"
         ></ic-form-field>
       </div>
     </ng-container>
