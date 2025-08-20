@@ -218,7 +218,15 @@ export class AccountPersonalDetailsComponent implements OnInit {
   // }
 
   handleSubmit() {
-    const payload = { ...this.personalDetailsForm.value };
+    let payload = { ...this.personalDetailsForm.value };
+    payload.customerInfo.contact.address.city = {
+      cityId: payload.customerInfo.contact.address.city,
+    };
+    payload.customerInfo.contact.address = [].concat(
+      payload.customerInfo.contact.address,
+    );
+
+    console.log('PAYLOAD==> ', payload);
 
     // payload.originationId = this.originationId;
     // payload.screenCode = this.screenCode;
