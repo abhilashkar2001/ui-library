@@ -69,7 +69,7 @@ export interface ComponentStagesMap {
   'Director Document Upload': DocumentUploadComponent;
   'Director Details': AccountPersonalDetailsComponent;
   'Employement Financial Details': EmpFinDetailsComponent;
-  'Terms & Conditions': TermsConditionsComponent;
+  'Terms And Conditions': TermsConditionsComponent;
   'Account Services': AccountServiceComponent;
   'Payment Details': PaymentDetailsComponent;
   'Cheque Book Details': ChequeBookDetailComponent;
@@ -89,7 +89,7 @@ export const ComponentStagesConstant: {
   'Director Document Upload': DocumentUploadComponent,
   'Director Details': AccountPersonalDetailsComponent,
   'Employement Financial Details': EmpFinDetailsComponent,
-  'Terms & Conditions': TermsConditionsComponent,
+  'Terms And Conditions': TermsConditionsComponent,
   'Account Services': AccountServiceComponent,
   'Payment Details': PaymentDetailsComponent,
   'Cheque Book Details': ChequeBookDetailComponent,

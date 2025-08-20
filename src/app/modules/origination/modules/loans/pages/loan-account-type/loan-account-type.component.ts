@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountSelectionComponent } from 'app/modules/create-account/components/account-selection/account-selection.component';
+// import { AccountSelectionComponent } from 'app/modules/create-account/components/account-selection/account-selection.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { ProductState } from '../../../../../../shared/models/router-state.model';
 import { CustomerTypeSelectorDialogComponent } from 'app/shared/components/customer-type-selector-dialog/customer-type-selector-dialog/customer-type-selector-dialog.component';
+import { AccountSelectionComponent } from 'app/modules/create-account/components/account-selection/account-selection.component';
 
 @Component({
   selector: 'app-loan-account-type',
@@ -56,15 +57,29 @@ export class LoanAccountTypeComponent implements OnInit {
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
+      console.log(this.basisClass, 'csbch');
+
       if (
-        (this.category === 'Accounts' || this.category === 'Cheque') &&
+        (this.basisClass == 'CHEQUE' || this.basisClass == 'CHEQUE_CORPORATE')
+      ) {
+        this.basisId = event.selectedLoan.basisId;
+        this.basisClass = event.subClass;
+        this.sessionStorageService.setItem('basisId', this.basisId);
+        this.sessionStorageService.setItem('category', this.category);
+        this.sessionStorageService.setItem('basisClass', this.basisClass);
+        this.goToLogin();
+      }
+
+     else if (
+        this.category === 'Accounts' &&
         this.basisClass == 'CURRENT ACCOUNT'
       ) {
         this.basisClass = event.subClass;
+        console.log(this.basisClass, 'basis class 1');
         this.basisId = event.selectedLoan.basisId;
         const dialogRef = this.dialog.open(AccountSelectionComponent, {
-          width: '100%',
-          height: '90%',
+          width: '60%',
+          height: 'auto',
           backdropClass: 'confirmDialogComponent',
           hasBackdrop: true,
           disableClose: true,
@@ -78,14 +93,17 @@ export class LoanAccountTypeComponent implements OnInit {
           console.log(res);
           this.sessionStorageService.setItem('category', this.category);
           this.sessionStorageService.setItem('basisId', this.basisId);
+          this.sessionStorageService.setItem('basisClass', this.basisClass);
           console.log(this.basisId);
-          if (this.category === 'Cheque') {
-            this.sessionStorageService.setItem('category', this.category);
-            this.sessionStorageService.setItem('basisClass', this.basisClass);
-            this.router.navigate(['/cheque-book/stages']);
-          } else {
-            this.goToLogin();
-          }
+          this.goToLogin();
+          // if (this.category === 'Cheque') {
+          //   this.sessionStorageService.setItem('category', this.category);
+          //   this.sessionStorageService.setItem('basisClass', this.basisClass);
+          //   this.sessionStorageService.se
+          //   this.router.navigate(['/cheque-book/stages']);
+          // } else {
+
+          // }
         });
       } else if (this.category.toLowerCase().includes('card')) {
         this.basisClass = event.subClass;
@@ -118,12 +136,14 @@ export class LoanAccountTypeComponent implements OnInit {
         this.basisClass == 'CORPORATE ACCOUNT'
       ) {
         this.basisId = event.selectedLoan.basisId;
+        this.basisClass = event.subClass;
         console.log(this.basisId, '1');
         this.sessionStorageService.setItem('basisId', this.basisId);
         console.log(this.basisId, '2');
         this.sessionStorageService.setItem('category', this.category);
         this.goToLogin();
-      } else {
+      } 
+     else {
         this.isShowCalculator = event.isShowCalculator;
         this.calculatorInfo = {
           interestRate: parseInt(event.selectedLoan?.interestRate ?? '0'),
