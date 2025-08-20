@@ -13,11 +13,11 @@
   </div>
 
   <div class="progress-wrapper"  *ngIf="progressMapping.size">
-    <div class="progress-line"  [style.width.px]="progressMapping.size * 200">
+    <div class="progress-line"  [style.width.px]="progressMapping.size * 250">
       <div
         class="progress-fill"
         [style.width.px]="
-          ((progressMapping.size * 200) / progressMapping.size) *
+          ((progressMapping.size * 250) / progressMapping.size) *
           (completedSteps().size +
             (allowedPanelIndex === completedSteps().size ? 1 : 0))
         "
@@ -25,11 +25,11 @@
     </div>
 
     <div class="step-icon-wrapper"
-    [style.width.px]="progressMapping.size * 200"
+    [style.width.px]="progressMapping.size * 250"
     >
       <ng-container *ngFor="let step of progressMapping | map; let i = index">
         <div class="step-icon-container" fxLayoutGap="10" fxLayout="row"
-        [style.width.px]="(progressMapping.size * 200) / progressMapping.size"
+        [style.width.px]="(progressMapping.size * 250) / progressMapping.size"
         >
         <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="4px">
           <img
@@ -38,7 +38,7 @@
                 ? 'assets/images/tickicon.svg'
                 : i === allowedPanelIndex
                   ? 'assets/images/progress-tick-dtb.svg'
-                  : 'assets/images/untickicon-dtb.svg'
+                  : 'assets/images/untickicon.svg'
             "
             class="step-icon"
             alt="tick"
@@ -76,7 +76,7 @@
                 ? 'assets/images/tickicon.svg'
                 : i === allowedPanelIndex
                   ? 'assets/images/progress-tick-dtb.svg'
-                  : 'assets/images/untickicon-dtb.svg'
+                  : 'assets/images/untickicon.svg'
             "
             class="step-icon"
             alt="tick"
