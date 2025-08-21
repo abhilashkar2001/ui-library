@@ -1,11 +1,29 @@
+//@ts-ignore
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+//@ts-ignore
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+//@ts-ignore
+import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { SidenavService } from 'app/shared/services/sidenav.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
-import { catchError, map, of, Subscription, tap } from 'rxjs';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
+//@ts-ignore
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  of,
+  Subscription,
+  tap,
+} from 'rxjs';
 import { CountryService } from 'app/shared/services/country-service';
 import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
 import { Store } from '@ngrx/store';
+import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
+import { MatDialog } from '@angular/material/dialog';
+import { CityService } from 'app/shared/services/city.service';
 
 @Component({
   selector: 'app-generic-account-form',
@@ -15,15 +33,19 @@ import { Store } from '@ngrx/store';
 export class GenericAccountFormComponent implements OnInit {
   // disbursementForm: FormGroup | undefined;
   // currentDate: Date | undefined;
-  // genericValue: GenericValueInfoModel | undefined;
+  genericValue: any;
   @Input() screenCode = '';
   @Output() genericForm = new EventEmitter();
 
-  // staticData = {
-  //   DISBURSEMENTTYPE: [],
-  //   ACCOUNTTYPE: [],
-  //   CHEQUETYPE: [],
-  // };
+  staticData = {
+    GENDER: [],
+    PREFIX: [],
+    RESIDENTSTATUS: [],
+    RELATIONSHIP: [],
+    STATEMENTVIA: [],
+    EMPLOYMENTTYPE: [],
+    MARITALSTATUS: [],
+  };
   // accountValue = [
   //   { label: 'Internal', value: true },
   //   { label: 'External', value: false },
@@ -40,6 +62,8 @@ export class GenericAccountFormComponent implements OnInit {
   @Input() user: any;
 
   personalDetailsForm: FormGroup | any;
+
+  nationalityArray: any[] = [];
 
   prefix = [];
   genders = [];
@@ -82,6 +106,7 @@ export class GenericAccountFormComponent implements OnInit {
 
       residentStatus: [Validators.required],
       city: [Validators.required],
+      subRub: [Validators.required],
       livingAddressSince: [Validators.required],
 
       spousePrefix: [Validators.required],
@@ -207,13 +232,19 @@ export class GenericAccountFormComponent implements OnInit {
   subscriptions: Subscription[] = [];
 
   private localeData: LocaleData | undefined;
+  countryArr: any;
 
   constructor(
     private fb: FormBuilder,
     public sidenavService: SidenavService,
     private loanService: LoanService,
+    private dialog: MatDialog,
+    //@ts-ignore
+    private sessionStorageService: SessionStorageService,
     private countryService: CountryService,
     private store: Store<AppState>,
+    private cityService: CityService,
+    private genericValueService: GenericValueService,
   ) {
     // this.currentDate?.setDate(new Date().getDate() + 1);
   }
@@ -223,6 +254,8 @@ export class GenericAccountFormComponent implements OnInit {
   // }
 
   ngOnInit(): void {
+    this.createPersonalDetailsForm();
+
     const localeData$ = this.store
       .select(selectLocaleData)
       .subscribe((res: any) => {
@@ -233,9 +266,9 @@ export class GenericAccountFormComponent implements OnInit {
     this.subscriptions.push(localeData$);
     // this.originationId = this.sessionStorageService.getOriginationId();
     // this.buildDisbursementForm();
-    // this.fetchGenericValues();
+    this.fetchGenericValues();
+    this.fetchStateCity();
     // this.fetchDisbursementDetails();
-    this.createPersonalDetailsForm();
     this.onCreateGroupFormValueChange();
 
     this.loadCountries();
@@ -343,18 +376,16 @@ export class GenericAccountFormComponent implements OnInit {
           residencePhone: [''],
           communicationPhone: [null],
           statementVia: [null],
-          address: this.fb.array([
-            this.fb.group({
-              address1: [''],
-              address2: [''],
-              addressTypeId: [null],
-              residenceTypeId: [null],
-              livingAddressSince: [''],
-              suburb: [''],
-              city: [''],
-              postalCode: [''],
-            }),
-          ]),
+          address: this.fb.group({
+            address1: [''],
+            address2: [''],
+            addressTypeId: [null],
+            residenceTypeId: [null],
+            livingAddressSince: [''],
+            subRub: [''],
+            city: [''],
+            postalCode: [''],
+          }),
         }),
 
         // Spouse Contact
@@ -397,7 +428,7 @@ export class GenericAccountFormComponent implements OnInit {
     this.addUpdateValidators();
   }
   get customerInfo(): FormGroup {
-    return this.personalDetailsForm.get('customerInfo') as FormGroup;
+    return this.personalDetailsForm?.get('customerInfo') as FormGroup;
   }
 
   get kycInfo(): FormGroup {
@@ -424,8 +455,14 @@ export class GenericAccountFormComponent implements OnInit {
     return this.customerInfo.get('identificationDetails') as FormGroup;
   }
 
-  get addressArray(): FormArray {
-    return this.contact.get('address') as FormArray;
+  // get addressArray(): FormArray {
+  //   return this.contact.get('address') as FormArray;
+  // }
+
+  get addressGroup(): FormGroup {
+    return this.personalDetailsForm.get(
+      'customerInfo.contact.address',
+    ) as FormGroup;
   }
 
   get spouce(): FormGroup {
@@ -464,14 +501,70 @@ export class GenericAccountFormComponent implements OnInit {
     }
   }
 
+  pincodeExpansion() {
+    const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
+      width: '60%',
+      disableClose: true,
+      panelClass: 'dialog-class',
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      console.log(res);
+    });
+  }
+
+  // get customer(): FormArray {
+  //   return this.personalDetailsForm.get('customer') as FormArray;
+  // }
+
+  fetchStateCity() {
+    if (this.personalDetailsForm) {
+      this.addressGroup
+        .get('postalCode')
+        ?.valueChanges.pipe(debounceTime(500), distinctUntilChanged())
+        .subscribe((value: any) => {
+          if (value && value.toString().length >= 6) {
+            this.cityService
+              .fetchZipcodeDetails(value)
+              .subscribe((res: any) => {
+                if (res?.statusCode === 200 && res.data?.length) {
+                  const data = res.data[0];
+
+                  // set cities dropdown
+                  this.cities = res.data.map((city: any) => ({
+                    id: city.cityId,
+                    values: city.city,
+                  }));
+                  this.addressGroup.patchValue({
+                    city: data.cityId, // cityId bind hoga dropdown me
+                    subRub: data.state,
+                  });
+                  // patch selected city automatically (optional)
+                  this.emergencyContactAdress.patchValue({
+                    city: data.cityId, // cityId is your bindValueKey
+                  });
+                } else {
+                  this.cities = []; // reset dropdown if no data
+                  this.emergencyContactAdress.patchValue({ city: null });
+                }
+              });
+          }
+        });
+    }
+  }
+
   // Get All Countrys and Isd code Mthd
   loadCountries() {
     this.countryService.getCountries().subscribe((resp: any) => {
       if (resp.data.length > 0) {
+        this.countryArr = resp.data;
         this.countriesIsdCodes = resp?.data;
         this.countryTelIsdCode = resp?.data.map(
           (i: any) => i?.countryTelIsdCode,
         );
+        resp?.data?.forEach((element: any) => {
+          if (element.nationality != null) this?.nationalityArray.push(element);
+        });
         const indiaIsdCode = this.countriesIsdCodes.find(
           (item: any) => item?.countryName == this.localeData?.country,
         );
@@ -528,15 +621,15 @@ export class GenericAccountFormComponent implements OnInit {
   //   });
   // }
 
-  // fetchGenericValues() {
-  //   this.genericValueService
-  //     .loadGenericValue(Object.keys(this.staticData))
-  //     .subscribe((resp: any) => {
-  //       if (resp?.statusCode === 200) {
-  //         this.genericValue = resp?.data;
-  //       }
-  //     });
-  // }
+  fetchGenericValues() {
+    this.genericValueService
+      .loadGenericValue(Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.genericValue = resp?.data;
+        }
+      });
+  }
 
   // setDisbursement(event: number) {
   //   if (event) {

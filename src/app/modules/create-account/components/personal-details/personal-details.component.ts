@@ -12,6 +12,7 @@ import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 //@ts-ignore
 import { catchError, map, of, tap } from 'rxjs';
+import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 
 @Component({
   selector: 'app-personal-details',
@@ -57,6 +58,7 @@ export class AccountPersonalDetailsComponent implements OnInit {
     private loanService: LoanService,
     //@ts-ignore
     private sessionStorageService: SessionStorageService,
+    private accountService: OpenAccountService,
   ) {
     // this.currentDate?.setDate(new Date().getDate() + 1);
   }
@@ -216,12 +218,20 @@ export class AccountPersonalDetailsComponent implements OnInit {
   // }
 
   handleSubmit() {
-    const payload = { ...this.personalDetailsForm.value };
+    let payload = { ...this.personalDetailsForm.value };
+    payload.customerInfo.contact.address.city = {
+      cityId: payload.customerInfo.contact.address.city,
+    };
+    payload.customerInfo.contact.address = [].concat(
+      payload.customerInfo.contact.address,
+    );
+
+    console.log('PAYLOAD==> ', payload);
 
     // payload.originationId = this.originationId;
     // payload.screenCode = this.screenCode;
     // delete payload.disbursementAccount.confirmAccountNo;
-    return this.loanService.saveDisbursementDetails(payload).pipe(
+    return this.accountService.saveAccountDetails(payload).pipe(
       tap((res) => {
         console.log(res);
       }),

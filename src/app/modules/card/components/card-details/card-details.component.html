@@ -1,61 +1,57 @@
 <div *ngIf="cardForm" fxFlex="100" fxLayout="column">
-  <div fxFlex="100" fxLayout="row" fxLayoutGap="10">
-    <div fxFlex="100" fxLayout="row" fxLayoutGap="5">
-      <div fxFlex="24">
-        <ic-select
-          label="Card Name"
-          [control]="cardForm?.get('cardName') | formcontrol"
-        >
-        </ic-select>
-      </div>
-      <div fxFlex="24">
-        <ic-form-field
-          label="Account Number"
-          [control]="cardForm?.get('accountNo') | formcontrol"
-          [readonly]="true"
-          [disabled]="true"
-        ></ic-form-field>
-      </div>
-      <div fxFlex="24">
-        <ic-select
-          label="Card Type"
-          [control]="cardForm?.get('cardType') | formcontrol"
-        >
-        </ic-select>
-      </div>
-      <div fxFlex="24">
-        <ic-select
-          label="Card Network"
-          [control]="cardForm?.get('cardNetwork') | formcontrol"
-        >
-        </ic-select>
-      </div>
-      <div fxFlex="24">
-        <ic-select
-          label="Preferred Billing Date"
-          [control]="cardForm?.get('preferredBillingDate') | formcontrol"
-        >
-        </ic-select>
-      </div>
-      <div fxFlex="24">
-        <ic-select
-          label="Credit Limit"
-          [control]="cardForm?.get('creditLimit') | formcontrol"
-        >
-        </ic-select>
-      </div>
+  <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="10">
+    <div fxFlex="24">
+      <ic-select
+        label="Card Name"
+        [control]="cardForm?.get('cardName') | formcontrol"
+      >
+      </ic-select>
+    </div>
+    <div fxFlex="24">
+      <ic-form-field
+        label="Account Number"
+        [control]="cardForm?.get('accountNo') | formcontrol"
+        [readonly]="true"
+        [disabled]="true"
+      ></ic-form-field>
+    </div>
+    <div fxFlex="24">
+      <ic-select
+        label="Card Type"
+        [control]="cardForm?.get('cardType') | formcontrol"
+      >
+      </ic-select>
+    </div>
+    <div fxFlex="24">
+      <ic-select
+        label="Card Network"
+        [control]="cardForm?.get('cardNetwork') | formcontrol"
+      >
+      </ic-select>
+    </div>
+    <div fxFlex="24">
+      <ic-select
+        label="Preferred Billing Date"
+        [control]="cardForm?.get('preferredBillingDate') | formcontrol"
+      >
+      </ic-select>
+    </div>
+    <div fxFlex="24">
+      <ic-select
+        label="Credit Limit"
+        [control]="cardForm?.get('creditLimit') | formcontrol"
+      >
+      </ic-select>
     </div>
   </div>
   <div>
     <div
-      class="enabled-mat-form-field p-8"
+      class="enabled-mat-form-field"
       fxFlex="24"
       fxLayout="row wrap"
       fxLayoutAlign="start center"
     >
-      <mat-label class="header_lg_bold_black" fxFlex="100"
-        >Delivery Location</mat-label
-      >
+      <h3 class="header_md_bold_black" fxFlex="100">Delivery Location</h3>
       <ic-radio-button
         *ngFor="let account of address"
         [control]="cardForm.get('location') | formcontrol"
@@ -65,8 +61,69 @@
       </ic-radio-button>
     </div>
   </div>
-  <div fxFlex="100" fxLayout="column" fxLayoutGap="5">
-    <h3>selected Branch</h3>
+
+  <div
+    fxLayout="column"
+    class="delivery-cont"
+    *ngIf="cardForm?.get('location')?.value"
+  >
+    <h3 class="header_md_bold_black" fxFlex="100">Delivery Address</h3>
+    <div fxFlex="100" fxLayout="row" fxLayoutGap="20">
+      <div
+        class="service-cont"
+        [ngClass]="
+          cardForm?.get('deliveryAddress')?.value === 'Communication Address'
+            ? ''
+            : 'active'
+        "
+        (click)="
+          cardForm?.get('deliveryAddress')?.setValue('Communication Address')
+        "
+        (keydown.enter)="
+          cardForm?.get('deliveryAddress')?.setValue('Communication Address')
+        "
+        tabindex="0"
+      >
+        <ic-radio-button
+          [control]="cardForm?.get('deliveryAddress') | formcontrol"
+          label="Communication Address"
+          value="Communication Address"
+        ></ic-radio-button>
+        <p>Akshaya Nagar 1st Block 1st Cross, Bangalore-560016</p>
+      </div>
+      <div
+        class="service-cont"
+        (click)="
+          cardForm?.get('deliveryAddress')?.setValue('Permanent Address')
+        "
+        (keydown.enter)="
+          cardForm?.get('deliveryAddress')?.setValue('Permanent Address')
+        "
+        tabindex="1"
+        [ngClass]="
+          cardForm?.get('deliveryAddress')?.value !== 'Communication Address'
+            ? ''
+            : 'active'
+        "
+      >
+        <ic-radio-button
+          [control]="cardForm?.get('deliveryAddress') | formcontrol"
+          label="Permanent Address"
+          value="Permanent Address"
+        ></ic-radio-button>
+        <p>Akshaya Nagar 1st Block 1st Cross, Bangalore-560016</p>
+      </div>
+      <div></div>
+    </div>
+  </div>
+  <div
+    *ngIf="!cardForm.get('location')?.value"
+    fxFlex="100"
+    fxLayout="column"
+    fxLayoutGap="5"
+    class="pt-4"
+  >
+    <h3 class="header_md_bold_black" fxFlex="100">Select Branch</h3>
     <div fxLayout="row" fxLayoutGap="10">
       <div fxFlex="24">
         <ic-form-field
@@ -83,13 +140,13 @@
     </div>
   </div>
 
-  <div>
-    <h3>Card Preview</h3>
-    <p>
+  <div class="pt-4" fxLayout="column">
+    <h3 class="header_md_bold_black">Card Preview</h3>
+    <p class="header_md">
       Express yourself with a card that reflects your personality. Our design
-      gallery offers a variety of stylish themes and layouts to choose from. .
+      gallery offers a variety of stylish themes and layouts to choose from.
     </p>
-    <div FxLayout="row" fxLayoutGap="10px">
+    <div fxLayout="row" fxLayoutGap="10px">
       <div fxFlex="20">
         <img
           src="assets/images/debit-card.svg"
@@ -106,9 +163,9 @@
             fxLayout="column"
             fxFlex="24"
             class="w-full"
-            *ngFor="let info of extractedFields"
+            *ngFor="let info of debitFields | keyvalue"
           >
-            <div class="breadcrum_sm">{{ info.label }}</div>
+            <div class="breadcrum_sm">{{ info.key }}</div>
             <div class="theme_md">
               {{ info.value ?? '-' }}
             </div>

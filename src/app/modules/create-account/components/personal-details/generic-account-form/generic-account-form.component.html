@@ -36,7 +36,7 @@
     <div fxFlex="25">
       <ic-select
         [control]="kycInfo.get('prefixId') | formcontrol"
-        [options]="prefix"
+        [options]="genericValue?.PREFIX"
         bindLabelKey="values"
         bindValueKey="id"
         label="Prefix"
@@ -80,7 +80,7 @@
     <div fxFlex="25">
       <ic-select
         [control]="kycInfo.get('genderId') | formcontrol"
-        [options]="genders"
+        [options]="genericValue?.GENDER"
         bindLabelKey="values"
         bindValueKey="id"
         label="Gender"
@@ -93,7 +93,7 @@
     >
       <ic-select
         [control]="kycInfo.get('maritalStatusId') | formcontrol"
-        [options]="maritalStatus"
+        [options]="genericValue?.MARITALSTATUS"
         bindLabelKey="values"
         bindValueKey="id"
         label="Marital Status"
@@ -102,18 +102,18 @@
     <div fxFlex="25">
       <ic-select
         [control]="kycInfo.get('nationality') | formcontrol"
-        [options]="nationality"
-        bindLabelKey="values"
-        bindValueKey="id"
+        [options]="countryArr"
+        bindLabelKey="nationality"
+        bindValueKey="nationality"
         label="Nationality"
       ></ic-select>
     </div>
     <div fxFlex="25">
       <ic-select
         [control]="kycInfo.get('countryOfResidence') | formcontrol"
-        [options]="countries"
-        bindLabelKey="values"
-        bindValueKey="id"
+        [options]="countryArr"
+        bindLabelKey="countryName"
+        bindValueKey="countryName"
         label="Country Of Residence"
       ></ic-select>
     </div>
@@ -136,9 +136,9 @@
     <div fxFlex="25">
       <ic-select
         [control]="personalDetailsForm.get('countryOfIssue') | formcontrol"
-        [options]="countries"
-        bindLabelKey="values"
-        bindValueKey="id"
+        [options]="countryArr"
+        bindLabelKey="countryName"
+        bindValueKey="countryCode"
         label="Country Of Issue"
       ></ic-select>
     </div>
@@ -174,7 +174,7 @@
     <div fxFlex="25" *ngIf="detailsForGeneric.accountType !== 'individual'">
       <ic-select
         [control]="personalDetailsForm.get('relationship') | formcontrol"
-        [options]="relationships"
+        [options]="genericValue?.RELATIONSHIP"
         bindLabelKey="values"
         bindValueKey="id"
         label="Relationship"
@@ -301,7 +301,7 @@
     <div fxFlex="25">
       <ic-select
         [control]="contact.get('statementVia') | formcontrol"
-        [options]="countries"
+        [options]="genericValue?.STATEMENTVIA"
         bindLabelKey="values"
         bindValueKey="id"
         label="Statement Via"
@@ -325,14 +325,14 @@
 
     <div fxFlex="calc(50%)">
       <ic-form-field
-        [control]="addressArray.get('address1') | formcontrol"
+        [control]="addressGroup.get('address1') | formcontrol"
         [maxLength]="20"
         label="Address Line 1"
       ></ic-form-field>
     </div>
     <div fxFlex="calc(50%)">
       <ic-form-field
-        [control]="addressArray.get('address2') | formcontrol"
+        [control]="addressGroup.get('address2') | formcontrol"
         [maxLength]="20"
         label="Address Line 2"
       ></ic-form-field>
@@ -340,8 +340,8 @@
 
     <div fxFlex="25">
       <ic-select
-        [control]="addressArray.get('residenceTypeId') | formcontrol"
-        [options]="residentStatus"
+        [control]="addressGroup.get('residenceTypeId') | formcontrol"
+        [options]="genericValue?.RESIDENTSTATUS"
         bindLabelKey="values"
         bindValueKey="id"
         label="Resident Status"
@@ -349,14 +349,14 @@
     </div>
     <div fxFlex="25">
       <ic-form-field
-        [control]="addressArray.get('subRub') | formcontrol"
+        [control]="addressGroup.get('subRub') | formcontrol"
         [maxLength]="20"
         label="Subrub"
       ></ic-form-field>
     </div>
     <div fxFlex="25">
       <ic-select
-        [control]="addressArray.get('city') | formcontrol"
+        [control]="addressGroup.get('city') | formcontrol"
         [options]="cities"
         bindLabelKey="values"
         bindValueKey="id"
@@ -365,17 +365,18 @@
     </div>
     <div fxFlex="25">
       <ic-form-field
-        [control]="addressArray.get('postalCode') | formcontrol"
+        [control]="addressGroup.get('postalCode') | formcontrol"
         [icNumbersOnly]="true"
         [maxLength]="10"
         label="Postal Code"
         suffixIcon="search"
+        (onSuffixClick)="pincodeExpansion()"
       ></ic-form-field>
     </div>
 
     <div fxFlex="25">
       <ic-date-picker
-        [control]="addressArray.get('livingAddressSince') | formcontrol"
+        [control]="addressGroup.get('livingAddressSince') | formcontrol"
         placeholder="Living Address Since"
         label="Living Address Since"
       >
@@ -395,7 +396,7 @@
       <div fxFlex="25">
         <ic-select
           [control]="spouce.get('prefix') | formcontrol"
-          [options]="prefix"
+          [options]="genericValue?.PREFIX"
           bindLabelKey="values"
           bindValueKey="id"
           label="Prefix"
@@ -486,7 +487,7 @@
       <div fxFlex="25">
         <ic-select
           [control]="spouce.get('employeeStatus') | formcontrol"
-          [options]="prefix"
+          [options]="genericValue?.EMPLOYMENTTYPE"
           bindLabelKey="values"
           bindValueKey="id"
           label="Employee Status"
@@ -513,7 +514,7 @@
       <div fxFlex="25">
         <ic-select
           [control]="emergencyInfo.get('prefix') | formcontrol"
-          [options]="prefix"
+          [options]="genericValue?.PREFIX"
           bindLabelKey="values"
           bindValueKey="id"
           label="Prefix"
@@ -536,7 +537,7 @@
       <div fxFlex="25">
         <ic-select
           [control]="emergencyInfo.get('relationshipValue') | formcontrol"
-          [options]="relationships"
+          [options]="genericValue?.RELATIONSHIP"
           bindLabelKey="values"
           bindValueKey="id"
           label="Relationship"
@@ -667,7 +668,7 @@
           [control]="
             emergencyContactAdress.get('residenceTypeId') | formcontrol
           "
-          [options]="residentStatus"
+          [options]="genericValue?.RESIDENTSTATUS"
           bindLabelKey="values"
           bindValueKey="id"
           label="Resident Status"
@@ -675,7 +676,7 @@
       </div>
       <div fxFlex="25">
         <ic-form-field
-          [control]="emergencyContactAdress.get('suburb') | formcontrol"
+          [control]="emergencyContactAdress.get('subRub') | formcontrol"
           [maxLength]="20"
           label="Subrub"
         ></ic-form-field>
@@ -696,6 +697,7 @@
           [maxLength]="10"
           label="Postal Code"
           suffixIcon="search"
+          (onSuffixClick)="pincodeExpansion()"
         ></ic-form-field>
       </div>
     </ng-container>

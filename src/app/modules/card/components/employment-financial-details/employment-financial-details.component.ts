@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-employment-financial-details',
@@ -8,6 +8,13 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class EmploymentFinancialDetailsComponent implements OnInit {
   employeeFinacialForm!: FormGroup;
+
+  prefixArray = [
+    { id: 1, values: 'Salaried' },
+    { id: 2, values: 'Self-Employed' },
+    { id: 3, values: 'Farmer' },
+  ];
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -15,6 +22,16 @@ export class EmploymentFinancialDetailsComponent implements OnInit {
   }
 
   buildEmploymentFinancialDetails() {
-    this.employeeFinacialForm = this.fb.group({});
+    this.employeeFinacialForm = this.fb.group({
+      prefixId: [null, Validators.required],
+      occupation: [''],
+      industrySector: [null, Validators.required],
+      employerName: [''],
+      employmentActivity: ['', []],
+      farmingActivity: ['', []],
+      estimatedMonthlyIncome: [null, Validators.required],
+      sourceOfFunds: [null, Validators.required],
+      incSrcDesp: ['', []],
+    });
   }
 }

@@ -1,1 +1,93 @@
-<p>employment-financial-details works!</p>
+<div
+  class="employment-financial-details-container"
+  fxLayout="column"
+  [formGroup]="employeeFinacialForm"
+>
+  <div fxFlex="100" fxLayout="row" fxLayoutGap="20px">
+    <ic-select
+      fxFlex="25"
+      [control]="employeeFinacialForm.get('prefixId') | formcontrol"
+      [options]="prefixArray"
+      bindLabelKey="values"
+      bindValueKey="id"
+      fxFlex="24"
+      label="Employment Status"
+    >
+    </ic-select>
+    <ic-form-field
+      fxFlex="25"
+      [control]="employeeFinacialForm.get('occupation') | formcontrol"
+      [icAlphabetOnly]="true"
+      [maxLength]="20"
+      fxFlex="24"
+      label="Occupation"
+    ></ic-form-field>
+    <ic-select
+      fxFlex="25"
+      [control]="employeeFinacialForm.get('industrySector') | formcontrol"
+      [options]="prefixArray"
+      bindLabelKey="values"
+      bindValueKey="id"
+      fxFlex="24"
+      label="Industry Sector"
+    >
+    </ic-select>
+    <ic-form-field
+      fxFlex="25"
+      [control]="employeeFinacialForm.get('employerName') | formcontrol"
+      [icAlphabetOnly]="true"
+      [maxLength]="20"
+      fxFlex="24"
+      label="Employer Name"
+    ></ic-form-field>
+  </div>
+  <div fxFlex="100" fxLayout="row" fxLayoutGap="20px">
+    <ic-form-field
+      fxFlex="25"
+      [control]="employeeFinacialForm.get('employmentActivity') | formcontrol"
+      [icAlphabetOnly]="true"
+      [maxLength]="20"
+      fxFlex="24"
+      label="Employment Activity"
+    ></ic-form-field>
+    <ic-form-field
+      fxFlex="25"
+      [control]="employeeFinacialForm.get('farmingActivity') | formcontrol"
+      [icAlphabetOnly]="true"
+      [maxLength]="20"
+      fxFlex="24"
+      label="Farming Activity"
+    ></ic-form-field>
+    <ic-select
+      fxFlex="25"
+      [control]="
+        employeeFinacialForm.get('estimatedMonthlyIncome') | formcontrol
+      "
+      [options]="prefixArray"
+      bindLabelKey="values"
+      bindValueKey="id"
+      fxFlex="24"
+      label="Estimated Monthly Income"
+    >
+    </ic-select>
+    <ic-select
+      fxFlex="25"
+      [control]="employeeFinacialForm.get('sourceOfFunds') | formcontrol"
+      [options]="prefixArray"
+      bindLabelKey="values"
+      bindValueKey="id"
+      fxFlex="24"
+      label="Source of Funds"
+    >
+    </ic-select>
+  </div>
+  <div fxFlex="100" fxLayout="row" fxLayoutGap="20px">
+    <ic-textarea
+      fxFlex="49"
+      [control]="employeeFinacialForm.get('incSrcDesp') | formcontrol"
+      [rows]="8"
+      label="Income Source Detail Description"
+    >
+    </ic-textarea>
+  </div>
+</div>

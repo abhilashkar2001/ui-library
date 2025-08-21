@@ -67,6 +67,14 @@
           </span>
         </div>
       </div>
+
+      <img
+        tabindex="0"
+        (click)="deleteSignatureAt(i)"
+        src="assets/images/trash_new.svg"
+        alt="trash"
+        (keydown.enter)="deleteSignatureAt(i)"
+      />
     </div>
   </div>
   <div class="physical-sign" fxLayout="column">

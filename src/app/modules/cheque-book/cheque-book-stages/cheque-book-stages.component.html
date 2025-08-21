@@ -1,44 +1,54 @@
 <div class="stepper-card">
   <div class="stepper-header">
     <h3 class="theme_lg">
-      {{ category == 'CURRENT ACCOUNT' ? 'Cheque Book' : 'Corporate Account' }}
+      {{ category == 'Cheque' ? 'Cheque Book Retail Account' : 'Cheque Book Corporate Account' }}
     </h3>
     <span class="header_md"
       >"Get your
       {{
-        category == 'CURRENT ACCOUNT' ? 'Savings account' : 'Corporate account'
+        category == 'Cheque' ? 'Cheque Book Retail Account' : 'Cheque Book Corporate Account'
       }}
       in just {{ componentMapping.size }} steps"</span
     >
   </div>
 
-  <div class="progress-wrapper">
-    <div class="progress-line">
+  <div class="progress-wrapper"  *ngIf="progressMapping.size">
+    <div class="progress-line"  [style.width.px]="progressMapping.size * 250">
       <div
         class="progress-fill"
-        [style.width.%]="(completedSteps.size / componentMapping.size) * 100"
+        [style.width.px]="
+          ((progressMapping.size * 250) / progressMapping.size) *
+          (completedSteps().size +
+            (allowedPanelIndex === completedSteps().size ? 1 : 0))
+        "
       ></div>
     </div>
 
-    <div class="step-icon-wrapper">
-      <ng-container *ngFor="let step of componentMapping | map; let i = index">
-        <div class="step-icon-container" fxLayoutGap="10" fxLayout="row">
+    <div class="step-icon-wrapper"
+    [style.width.px]="progressMapping.size * 250"
+    >
+      <ng-container *ngFor="let step of progressMapping | map; let i = index">
+        <div class="step-icon-container" fxLayoutGap="10" fxLayout="row"
+        [style.width.px]="(progressMapping.size * 250) / progressMapping.size"
+        >
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="4px">
           <img
             [src]="
-              completedSteps.has(i)
+              completedSteps().has(i)
                 ? 'assets/images/tickicon.svg'
                 : i === allowedPanelIndex
                   ? 'assets/images/progress-tick-dtb.svg'
-                  : 'assets/images/untick-dtb.svg'
+                  : 'assets/images/untickicon.svg'
             "
             class="step-icon"
             alt="tick"
           />
-          <div>
+          <div fxLayout="column">
             <div class="step-label">{{ step.screenName }}</div>
             <div class="step-sub-label">Stage {{ i + 1 }}</div>
           </div>
         </div>
+      </div>
       </ng-container>
     </div>
   </div>
@@ -62,11 +72,11 @@
         >
           <img
             [src]="
-              completedSteps.has(i)
+              completedSteps().has(i)
                 ? 'assets/images/tickicon.svg'
                 : i === allowedPanelIndex
                   ? 'assets/images/progress-tick-dtb.svg'
-                  : 'assets/images/untick-dtb.svg'
+                  : 'assets/images/untickicon.svg'
             "
             class="step-icon"
             alt="tick"
@@ -81,7 +91,7 @@
             fxLayout="row"
             fxLayoutAlign="end center"
             fxLayoutGap="1%"
-            style="margin-top: 50px"
+            style="margin-top: 24px"
           >
             <div *ngIf="panel.screenName === 'Account Details'">
               <ic-button
