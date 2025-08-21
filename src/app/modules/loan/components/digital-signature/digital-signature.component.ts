@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SignaturePopupComponent } from './signature-popup/signature-popup.component';
 import { DmsService } from '@onerumango/utils';
@@ -7,13 +7,14 @@ import { SessionStorageService } from 'app/shared/services/session-storage.servi
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpEventType } from '@angular/common/http';
 import { tap, map, catchError, of } from 'rxjs';
+import { BranchService } from 'app/modules/origination/modules/origination-external-callback/digital-sign/sign-now-popup/branch.service';
 
 @Component({
   selector: 'app-digital-signature',
   templateUrl: './digital-signature.component.html',
   styleUrls: ['./digital-signature.component.scss'],
 })
-export class DigitalSignatureComponent {
+export class DigitalSignatureComponent implements OnInit {
   customerStagingId: number | undefined;
   signatureForm!: FormGroup;
   constructor(
@@ -23,11 +24,14 @@ export class DigitalSignatureComponent {
     private sessionStorageService: SessionStorageService,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
+    private branchService: BranchService,
   ) {}
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    this.customerStagingId = this.sessionStorageService.getCustomerStagingId();
     this.buildSignatureForm();
+    this.fetchSignature();
   }
   buildSignatureForm() {
     this.signatureForm = this.fb.group({
@@ -42,27 +46,33 @@ export class DigitalSignatureComponent {
     return this.fb.group({
       signatureId: [data?.documentId ?? ''],
       uuid: [data?.uuid ?? ''],
+      documentName: [data?.fileName ?? ''],
+      isESign: [data?.isESign ?? null],
     });
   }
   openSignPopup(): void {
     const dialogRef = this.dialog.open(SignaturePopupComponent, {
-      height: '65%',
+      height: 'auto',
       width: '50%',
       panelClass: 'custom-dialog',
     });
 
     dialogRef.afterClosed().subscribe((res: any) => {
       console.log(res);
-      if (res?.result) {
-        this.uploadSignature(res?.result);
+      if (res?.result?.uuid) {
+        this.signatureArray.push(this.addSignature(res?.result));
+        this.cdr.detectChanges();
+      } else if (res?.result) {
+        this.uploadSignature(res?.result, res?.isESign);
       }
     });
   }
-
-  uploadSignature(res: any) {
-    const base64Data = res.split(',')[1];
-    const contentType = 'image/jpeg';
-    const fileName = 'Signature_2_1.jpeg';
+  sendLink() {}
+  uploadSignature(base64String: string, isESign?: boolean | undefined) {
+    const base64Data = base64String.split(',')[1] ?? '';
+    const contentType = base64String.match(/data:(.*?);/)?.[1] || 'image/jpeg';
+    const fileExtension = contentType.split('/')[1] || 'jpeg';
+    const fileName = `Signature_${Date.now()}.${fileExtension}`;
 
     const byteCharacters = atob(base64Data);
     const byteNumbers = Array.from(byteCharacters, (char) =>
@@ -97,19 +107,32 @@ export class DigitalSignatureComponent {
           );
 
           if (!exists) {
-            this.signatureArray.push(this.addSignature(res));
-            console.log('UPLOAD res', res);
+            this.signatureArray.push(this.addSignature({ ...res, isESign }));
           } else {
             console.warn('Duplicate prevented');
           }
         } else {
           console.log('Progress event:', event);
         }
+
         this.cdr.detectChanges();
       });
   }
+
   get signatureArray(): FormArray {
     return this.signatureForm.get('signatureId') as FormArray;
+  }
+
+  fetchSignature() {
+    if (!this.customerStagingId) return;
+    this.branchService
+      .fetchCustomerSign(this.customerStagingId)
+      .subscribe((res: any) => {
+        res?.data?.forEach((item: any) => {
+          this.signatureArray.push(this.addSignature(item));
+        });
+        this.cdr.detectChanges();
+      });
   }
 
   deleteSignatureAt(index: any) {
@@ -130,7 +153,7 @@ export class DigitalSignatureComponent {
     );
     const payload = {
       signatureId: signatureIdsOnly,
-      custStagingId: this.sessionStorageService.getCustomerStagingId(),
+      customerStagingId: this.customerStagingId,
     };
 
     return this.loanService.saveSignature(payload).pipe(

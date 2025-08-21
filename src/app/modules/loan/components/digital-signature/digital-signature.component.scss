@@ -1,3 +1,52 @@
 .upload_img {
-  background-color: #f6faff !important;
+  margin-bottom: 12px;
+}
+
+.img-container {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  overflow: hidden;
+}
+
+.sign-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 4px;
+  user-select: none;
+}
+
+.x-text {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  z-index: 1;
+  color: #c11010;
+  padding: 4px;
+  background-color: #fff;
+}
+.uploaded_list::after {
+  content: '';
+  display: block;
+  border-bottom: #adadad 1px solid;
+  width: 100%;
+  margin: 12px;
+}
+.send-link {
+  background-color: #fef3f2;
+  padding: 8px 8px 0px 8px;
+  margin-bottom: 16px;
+  &::after {
+    content: '';
+    display: block;
+    border-bottom: #e71b3c 2px solid;
+    margin-top: 12px;
+  }
 }
