@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { RouterInfo } from '../account-detail/account-detail.model';
 
 @Component({
   selector: 'app-account-type',
@@ -7,11 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./account-type.component.scss'],
 })
 export class AccountTypeComponent {
+  routerStateData: RouterInfo | undefined;
   accounts: any[] = [
     {
       title: "Women's Savings Account",
       description:
         'A Savings Account is a basic deposit account that helps you securely store your money while earning interest. It allows easy access to your funds, supports digital transactions, and is ideal for everyday banking needs.',
+      businessProductName: 'Resident Account',
+      productDescription:
+        'Safegaurd your money and Pays a certain amount of interest',
       selected: false,
       highlight: true,
     },
@@ -52,7 +57,12 @@ export class AccountTypeComponent {
   constructor(
     private cd: ChangeDetectorRef,
     private router: Router,
-  ) {}
+  ) {
+    let state = this.router.getCurrentNavigation()?.extras?.state as RouterInfo;
+    if (state) {
+      this.routerStateData = state;
+    }
+  }
 
   ngAfterViewInit() {
     this.cd.detectChanges();
@@ -102,9 +112,14 @@ export class AccountTypeComponent {
 
   onClickAction() {
     console.log('Selected Accounts being sent:', this.selectedAccounts);
-
-    this.router.navigate(['/cheque-book/stages'], {
-      state: { accounts: this.selectedAccounts },
-    });
+    if (this.routerStateData?.url.includes('card')) {
+      this.router.navigate(['/apply-card/stages'], {
+        state: { accounts: this.selectedAccounts },
+      });
+    } else if (this.routerStateData?.url.includes('cheque')) {
+      this.router.navigate(['/cheque-book/stages'], {
+        state: { accounts: this.selectedAccounts },
+      });
+    }
   }
 }

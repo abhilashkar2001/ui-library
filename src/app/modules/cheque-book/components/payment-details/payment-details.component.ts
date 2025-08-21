@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AdminLayoutComponent } from 'app/layouts/admin-layout/admin-layout.component';
 import { OtpVerificationComponent } from 'app/shared/components/otp-verification/otp-verification.component';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 // import { OtpVerificationComponent } from 'app/shared/components/otp-verification/otp-verification.component';
 
 @Component({
@@ -27,14 +28,17 @@ export class PaymentDetailsComponent {
   paymentDetailsForm!: FormGroup;
   countriesIsdCodes: any[] = [];
   accountNumbers: any = [];
+  type!: string;
 
   constructor(
     private fb: FormBuilder,
     private adminLayout: AdminLayoutComponent,
+    private sessionStorage: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
     this.buildForm();
+    this.type = this.sessionStorage.getTypeOfFlow();
   }
   buildForm() {
     this.paymentDetailsForm = this.fb.group({

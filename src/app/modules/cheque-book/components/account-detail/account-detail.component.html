@@ -19,12 +19,50 @@
   ></ic-button>
 </div>
 
-<mat-expansion-panel *ngFor="let account of accounts; let i = index">
+<mat-expansion-panel
+  class="account_expansions"
+  *ngFor="let account of accounts; let i = index"
+>
   <mat-expansion-panel-header>
-    <mat-panel-title>
-      {{ account.title }}
-    </mat-panel-title>
+    <div fxLayout="column">
+      <mat-panel-title>
+        {{ account.title }}
+      </mat-panel-title>
+    </div>
   </mat-expansion-panel-header>
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between stretch"
+    fxLayoutGap="24px"
+    class="account-detail-row"
+  >
+    <!-- Account Type -->
+    <div fxFlex="25" class="detail-column">
+      <div class="label">Account Type</div>
+      <div class="value">{{ account.title }}</div>
+    </div>
+
+    <!-- Account Description -->
+    <div fxFlex="25" class="detail-column">
+      <div class="label">Account Description</div>
+      <div class="value">{{ account.description }}</div>
+    </div>
+
+    <!-- Business Product Name -->
+    <div fxFlex="25" class="detail-column">
+      <div class="label">Business Product Name</div>
+      <div class="value">{{ account.businessProductName }}</div>
+    </div>
+
+    <!-- Product Description -->
+    <div fxFlex="25" class="detail-column">
+      <div class="label">Product Description</div>
+      <div class="value">{{ account.productDescription }}</div>
+    </div>
+  </div>
+</mat-expansion-panel>
+<!-- common section, that gets visible after the 'select account-> proceed' -->
+<div *ngIf="accounts && accounts.length > 0" fxLayout="column">
   <div
     class="account-details"
     fxLayout="row"
@@ -33,7 +71,7 @@
   >
     <div fxFlex="24">
       <ic-select
-        [control]="accountDetailsForm.get('accountBranch') | formcontrol"
+        [control]="accountDetailsForm.get('commonAccountBranch') | formcontrol"
         [options]="branches"
         bindLabelKey="values"
         bindValueKey="id"
@@ -42,7 +80,9 @@
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="accountDetailsForm.get('accountCurrency') | formcontrol"
+        [control]="
+          accountDetailsForm.get('commonAccountCurrency') | formcontrol
+        "
         [options]="branches"
         bindLabelKey="values"
         bindValueKey="id"
@@ -51,7 +91,7 @@
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="accountDetailsForm.get('holderType') | formcontrol"
+        [control]="accountDetailsForm.get('commonHolderType') | formcontrol"
         [options]="branches"
         bindLabelKey="label"
         bindValueKey="value"
@@ -60,29 +100,29 @@
     </div>
     <div fxFlex="24">
       <ic-slide-toggle
-        [formControl]="accountDetailsForm.get('initialFunding') | formcontrol"
+        [formControl]="
+          accountDetailsForm.get('commonInitialFunding') | formcontrol
+        "
         color="primary"
         labelPosition="after"
         [disabled]="!isEdit"
       >
-        Initial Funding
+        Initial Funding ?
       </ic-slide-toggle>
     </div>
   </div>
-  <div class="button-group">
-    <ic-button
-      [icButtonType]="'outlined-rounded'"
-      label="Back"
-      size="medium"
-      type="button"
-      (OnClick)="cancel()"
-    ></ic-button>
-    <ic-button
-      [icButtonType]="'filled-rounded'"
-      label="Next"
-      size="medium"
-      type="submit"
-      (OnClick)="onSubmit()"
-    ></ic-button>
+  <div>
+    <div fxFlex="24">
+      <ic-slide-toggle
+        [formControl]="
+          accountDetailsForm.get('commonOverdraftRequired') | formcontrol
+        "
+        color="primary"
+        labelPosition="after"
+        [disabled]="!isEdit"
+      >
+        Overdraft Required ?
+      </ic-slide-toggle>
+    </div>
   </div>
-</mat-expansion-panel>
+</div>

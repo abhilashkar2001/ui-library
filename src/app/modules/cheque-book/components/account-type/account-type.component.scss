@@ -76,10 +76,12 @@
 // ::ng-deep .mdc-tab-indicator.active {
 //     background-color: var(--ic-primary, #E71B3C);
 // }
-::ng-deep .mat-expansion-panel {
-  padding: 10px !important;
-  margin: 10px !important;
-}
+
+// un-commenting the below snippet will give rise to margin and padding when the 'stages' renders initially
+// ::ng-deep .mat-expansion-panel {
+//   padding: 10px !important;
+//   margin: 10px !important;
+// }
 
 ::ng-deep
   .mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs

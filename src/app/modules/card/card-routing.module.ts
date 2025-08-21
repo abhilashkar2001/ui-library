@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { StagesComponent } from './stages/stages.component';
 import { LoginComponent } from '../loan/login/login.component';
 import { CardComponent } from './card.component';
+import { AccountTypeComponent } from '../cheque-book/components/account-type/account-type.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'stages',
         component: StagesComponent,
+      },
+      {
+        path: 'account-type',
+        component: AccountTypeComponent,
       },
     ],
   },

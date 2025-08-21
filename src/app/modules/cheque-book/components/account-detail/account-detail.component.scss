@@ -9,3 +9,19 @@
   justify-content: flex-end;
   gap: 10px;
 }
+
+.account_expansions {
+  background-color: #f6faff;
+  mat-expansion-panel-header {
+    margin: 1% 0% 2% 0%;
+  }
+  .account-detail-row {
+    .detail-column .label {
+      font-size: 12px;
+      color: gray;
+    }
+    .detail-column .value {
+      font-weight: 500;
+    }
+  }
+}
