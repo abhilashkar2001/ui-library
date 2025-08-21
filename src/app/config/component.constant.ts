@@ -24,6 +24,7 @@ import { ChequeBookDetailComponent } from 'app/modules/cheque-book/components/ch
 import { AccountDetailComponent } from 'app/modules/cheque-book/components/account-detail/account-detail.component';
 import { CardDetailsComponent } from 'app/modules/card/components/card-details/card-details.component';
 import { EmploymentFinancialDetailsComponent } from 'app/modules/card/components/employment-financial-details/employment-financial-details.component';
+import { CardSummaryComponent } from 'app/modules/card/components/summary/card-summary.component';
 import { CommonPersonalDetailsComponent } from 'app/modules/card/components/common-personal-details/common-personal-details.component';
 
 export interface ComponentMap {
@@ -68,10 +69,10 @@ export interface ComponentStagesMap {
   'Director Document Upload': DocumentUploadComponent;
   'Director Details': AccountPersonalDetailsComponent;
   'Employement Financial Details': EmpFinDetailsComponent;
-  'Terms & Conditions': TermsConditionsComponent;
+  'Terms And Conditions': TermsConditionsComponent;
   'Account Services': AccountServiceComponent;
   'Payment Details': PaymentDetailsComponent;
-  'Cheque Book Details': ChequeBookDetailComponent;
+  'Cheque Details': ChequeBookDetailComponent;
   'Account Detail': AccountDetailComponent;
 }
 
@@ -88,10 +89,10 @@ export const ComponentStagesConstant: {
   'Director Document Upload': DocumentUploadComponent,
   'Director Details': AccountPersonalDetailsComponent,
   'Employement Financial Details': EmpFinDetailsComponent,
-  'Terms & Conditions': TermsConditionsComponent,
+  'Terms And Conditions': TermsConditionsComponent,
   'Account Services': AccountServiceComponent,
   'Payment Details': PaymentDetailsComponent,
-  'Cheque Book Details': ChequeBookDetailComponent,
+  'Cheque Details': ChequeBookDetailComponent,
   'Account Detail': AccountDetailComponent,
 };
 
@@ -104,7 +105,7 @@ export interface ComponentCardMap {
   W1DOCU: DocumentUploadComponent;
   W1EMFD: EmploymentFinancialDetailsComponent;
   W1TECO: TermsConditionComponent;
-  W1SUM: SummaryComponent;
+  W1SUM: CardSummaryComponent;
   W1SIGN: DigitalSignatureComponent;
   W1CRBU: CreditBureauComponent;
   W1PYDE: PaymentDetailsComponent;
@@ -120,7 +121,7 @@ export const ComponentCardConstant: {
   W1DOCU: DocumentUploadComponent,
   W1EMFD: EmploymentFinancialDetailsComponent,
   W1TECO: TermsConditionComponent,
-  W1SUM: SummaryComponent,
+  W1SUM: CardSummaryComponent,
   W1SIGN: DigitalSignatureComponent,
   W1CRBU: CreditBureauComponent,
   W1PYDE: PaymentDetailsComponent,

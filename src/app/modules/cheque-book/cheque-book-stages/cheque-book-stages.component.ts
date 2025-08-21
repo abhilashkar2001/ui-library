@@ -9,12 +9,18 @@ import {
   ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
+import { Router } from '@angular/router';
+import { IProduct, TokenStorageService } from '@onerumango/utils';
 import {
   ComponentStagesConstant,
   ComponentStagesMap,
 } from 'app/config/component.constant';
 import { ComponentLRUCache } from 'app/modules/loan/stages/component-lru-cache';
+import { LoanFlowConstants } from 'app/modules/origination/modules/loans/pages/loan-flow/loan-flow.constant';
+import { SuccessModalPopupComponent } from 'app/shared/components/success-modal-popup/success-modal-popup.component';
+import { LoanService } from 'app/shared/services/loan/loan.service';
 import { RenderComponentService } from 'app/shared/services/render-component.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
@@ -37,31 +43,38 @@ export class ChequeBookStagesComponent implements OnInit {
     Record<string, any>
   >();
   private readonly componentCache = new ComponentLRUCache(6);
-  // private processCycleCode: string | undefined;
-  // private basisId = 52;
-  // private productDetails: IProduct | undefined;
+  private processCycleCode: string | undefined;
+  private basisId: number | undefined;
+  private productDetails: IProduct | undefined;
   currentStepIndex = 1;
   private componentRefs = new Map<number, ComponentRef<any>>();
   allowedPanelIndex = 0;
-  completedSteps = new Set<number>();
+  completedSteps = signal<Set<number>>(new Set<number>());
+  customHeader = LoanFlowConstants.CUSTOM_HEADER;
   category: string | null;
+  processDetails: any;
+  email: any
+  progressMapping: Map<string, Record<string, any>> = new Map();
 
   constructor(
     private renderComponentService: RenderComponentService,
-    // private loanService: LoanService,
+    private loanService: LoanService,
     private cdr: ChangeDetectorRef,
     private sessionStorageSerive: SessionStorageService,
+    private tokenStorageService: TokenStorageService,
+    private dialog: MatDialog,
+    private router: Router,
   ) {
     this.category = this.sessionStorageSerive.getItem('basisClass');
   }
 
   ngOnInit() {
     console.log(this.category);
-
+    this.basisId = this.sessionStorageSerive.getItem('basisId')
     setTimeout(() => {
       this.panels.get(0)?.open();
     });
-    this.fetchScreens();
+    this.fetchProductDetails();
   }
 
   /**
@@ -83,9 +96,10 @@ export class ChequeBookStagesComponent implements OnInit {
       const container = this.container.get(index);
       if (container && !this.componentCache.get(index)) {
         const component = ComponentStagesConstant[screenName];
-        const componentRef = this.renderComponentService.loadComponent<
-          ComponentStagesMap[K]
-        >(container, component);
+        const componentRef = this.renderComponentService.loadComponent(
+          container,
+          component,
+        );
         if ('screenCode' in componentRef.instance) {
           (componentRef.instance as any).screenCode = screenCodeNum;
         }
@@ -107,16 +121,24 @@ export class ChequeBookStagesComponent implements OnInit {
     if (instance.submitForm) {
       const result = await instance.submitForm();
       if (result === 'success') {
-        this.completedSteps.add(index);
-        this.openNextPanel(index);
-      } else {
-        this.openNextPanel(index);
+        this.completedSteps.update((set) => {
+          const newSet = new Set(set);
+          newSet.add(index);
+          return newSet;
+        });
+        this.cdr.markForCheck();
+        if (index === this.componentMapping.size - 1) {
+          this.onFlowDone();
+        } else {
+          this.openNextPanel(index);
+        }
       }
     }
   }
 
   openNextPanel(currentIndex: number) {
     const nextIndex = currentIndex + 1;
+    this.allowedPanelIndex = nextIndex;
     const nextPanel = this.panels.get(nextIndex);
     if (nextPanel) {
       nextPanel.open();
@@ -130,6 +152,10 @@ export class ChequeBookStagesComponent implements OnInit {
       (componentRef.instance as any).isEdit = true;
       componentRef.changeDetectorRef.detectChanges();
     }
+  }
+
+  isEditing(i: number): boolean {
+    return !!this.componentRefs.get(i)?.instance?.isEdit;
   }
 
   /**
@@ -158,17 +184,19 @@ export class ChequeBookStagesComponent implements OnInit {
    * We will get product id  process cycle code and other details using which the accessibility
    * to the customer will be given
    */
-  // fetchProductDetails() {
-  //   this.loanService.getProductDetails(this.basisId).subscribe((resp) => {
-  //     if (resp?.statusCode === 200 && resp?.data?.length > 0) {
-  //       this.productDetails = resp?.data[0];
-  //       if (!this.productDetails) return;
-  //       this.basisId = this.productDetails['id'];
-  //       this.processCycleCode = this.productDetails['processCycleCode'];
-  //       this.fetchProcessStages();
-  //     }
-  //   });
-  // }
+  fetchProductDetails() {
+    console.log(this.basisId, "gdud")
+    if (this.basisId === undefined) return;
+    this.loanService.getProductDetails(this?.basisId).subscribe((resp) => {
+      if (resp?.statusCode === 200 && resp?.data?.length > 0) {
+        this.productDetails = resp?.data[0];
+        if (!this.productDetails) return;
+        this.basisId = this.productDetails['id'];
+        this.processCycleCode = this.productDetails['processCycleCode'];
+        this.fetchProcessStages();
+      }
+    });
+  }
 
   /**
    * This will fetch all the process stages from the give process cycle code
@@ -176,218 +204,313 @@ export class ChequeBookStagesComponent implements OnInit {
    * for website customer portal
    * Using this fetched process stage id all the screens will be fetched
    */
-  // fetchProcessStages() {
-  //   this.loanService
-  //     .fetchProcessStages(this.processCycleCode!)
-  //     .subscribe((res) => {
-  //       if (res?.statusCode === 200 && res?.data?.processStageList.length > 0) {
-  //         const data = res?.data?.processStageList[0];
-  //         if (data && data.id) {
-  //           this.sessionStorageSerive.setCurrentStage(data.id);
-  //           this.fetchScreens(data.id);
-  //         }
-  //       }
-  //     });
-  // }
+  fetchProcessStages() {
+    this.loanService
+      .fetchProcessStages(this.processCycleCode!)
+      .subscribe((res) => {
+        if (res?.statusCode === 200 && res?.data?.processStageList.length > 0) {
+          const data = res?.data?.processStageList[0];
+          if (data && data.id) {
+            this.processDetails = {
+              id: res?.data?.id,
+              processCycleCode: res?.data?.processCycleCode,
+              processStageId: res?.data?.processStageList[0]?.id,
+            };
+            this.sessionStorageSerive.setCurrentStage(data.id);
+            this.fetchScreens(data.id);
+          }
+        }
+      });
+  }
 
   /**
    * This method will fetch all the screens based of the process stage id
    * All the screens to be filled by the customer to proceed with loan application
    * @param processStageId of the selected product
    */
-  fetchScreens() {
-    // this.loanService.fetchScreens(processStageId).subscribe((resp) => {
-    //   if (resp?.statusCode === 200 && resp?.data?.screens) {
-    const screens =
-      this.category !== 'CORPORATE ACCOUNT'
-        ? [
-            {
-              screenCode: 464,
-              screenName: 'Verify Mobile Number',
-              route: null,
-              fileUrl: null,
-              sequence: 1,
-              screenValue: 'W1VEMN',
-            },
-            {
-              screenCode: 456,
-              screenName: 'Personal Identification',
-              route: null,
-              fileUrl: null,
-              sequence: 2,
-              screenValue: 'W1DOCU',
-            },
-            {
-              screenCode: 461,
-              screenName: 'Personal Details',
-              route: null,
-              fileUrl: null,
-              sequence: 4,
-              screenValue: 'W1SIGN',
-            },
-            {
-              screenCode: 462,
-              screenName: 'Account Detail',
-              route: null,
-              fileUrl: null,
-              sequence: 5,
-              screenValue: 'W1SUM',
-            },
-            {
-              screenCode: 463,
-              screenName: 'Cheque Book Details',
-              route: null,
-              fileUrl: null,
-              sequence: 3,
-              screenValue: 'W1TECO',
-            },
-            {
-              screenCode: 497,
-              screenName: 'Terms & Conditions',
-              route: null,
-              fileUrl: null,
-              sequence: 9,
-              screenValue: 'W1CODE',
-            },
-            {
-              screenCode: 464,
-              screenName: 'Document Upload',
-              route: null,
-              fileUrl: null,
-              sequence: 6,
-              screenValue: 'W1VEMN',
-            },
-            {
-              screenCode: 497,
-              screenName: 'Summary',
-              route: null,
-              fileUrl: null,
-              sequence: 7,
-              screenValue: 'W1CODE',
-            },
-            {
-              screenCode: 498,
-              screenName: 'Digital Signature',
-              route: null,
-              fileUrl: null,
-              sequence: 8,
-              screenValue: 'W1BUDE',
-            },
-            {
-              screenCode: 498,
-              screenName: 'Payment Details',
-              route: null,
-              fileUrl: null,
-              sequence: 9,
-              screenValue: 'W1BUDE',
-            },
-            {
-              screenCode: 498,
-              screenName: 'Bussiness Details',
-              route: null,
-              fileUrl: null,
-              sequence: 10,
-              screenValue: 'W1BUDE',
-            },
-          ]
-        : [
-            {
-              screenCode: 456,
-              screenName: 'Account Details',
-              route: null,
-              fileUrl: null,
-              sequence: 2,
-              screenValue: 'W1DOCU',
-            },
-            {
-              screenCode: 461,
-              screenName: 'Personal Identification',
-              route: null,
-              fileUrl: null,
-              sequence: 3,
-              screenValue: 'W1SIGN',
-            },
-            {
-              screenCode: 462,
-              screenName: 'Personal Details',
-              route: null,
-              fileUrl: null,
-              sequence: 4,
-              screenValue: 'W1SUM',
-            },
-            {
-              screenCode: 463,
-              screenName: 'Document Upload',
-              route: null,
-              fileUrl: null,
-              sequence: 5,
-              screenValue: 'W1TECO',
-            },
-            {
-              screenCode: 463,
-              screenName: 'Employment & Financial Details',
-              route: null,
-              fileUrl: null,
-              sequence: 6,
-              screenValue: 'W1TECO',
-            },
-            {
-              screenCode: 497,
-              screenName: 'Summary',
-              route: null,
-              fileUrl: null,
-              sequence: 7,
-              screenValue: 'W1CODE',
-            },
-            {
-              screenCode: 498,
-              screenName: 'Digital Signature',
-              route: null,
-              fileUrl: null,
-              sequence: 8,
-              screenValue: 'W1BUDE',
-            },
-            {
-              screenCode: 464,
-              screenName: 'Verify Mobile Number',
-              route: null,
-              fileUrl: null,
-              sequence: 1,
-              screenValue: 'W1VEMN',
-            },
-            {
-              screenCode: 498,
-              screenName: 'Payment Details',
-              route: null,
-              fileUrl: null,
-              sequence: 9,
-              screenValue: 'W1BUDE',
-            },
 
-            {
-              screenCode: 498,
-              screenName: 'Bussiness Details',
-              route: null,
-              fileUrl: null,
-              sequence: 10,
-              screenValue: 'W1BUDE',
-            },
-            
-          ];
-    const i = screens.findIndex((s) => s.sequence === 1);
-    if (i > -1) screens.splice(i, 1);
-    screens
-      .sort((a, b) => a.sequence - b.sequence)
-      .forEach((screen) => {
-        this.componentMapping.set(screen.screenName, screen);
-      });
-    this.cdr.markForCheck();
+  fetchScreens(processStageId: number) {
+    this.loanService.fetchScreens(processStageId).subscribe((resp) => {
+      if (resp?.statusCode === 200 && resp?.data?.screens) {
+        const screens = resp.data.screens;
 
-    setTimeout(() => {
-      this.allowedPanelIndex = 0;
-      this.panels.get(0)?.open();
+        const fullScreens = [...screens].sort(
+          (a, b) => a.sequence - b.sequence,
+        );
+        this.progressMapping = new Map(
+          fullScreens.map((s) => [s.screenValue, s]),
+        );
+
+        const filteredScreens = screens.filter((s) => s.sequence !== 1);
+        filteredScreens
+          .sort((a, b) => a.sequence - b.sequence)
+          .forEach((screen) => {
+            this.componentMapping.set(screen.screenValue, screen);
+          });
+
+        this.cdr.markForCheck();
+        setTimeout(() => {
+          this.allowedPanelIndex = 0;
+          this.panels.get(0)?.open();
+        });
+
+        this.cdr.detectChanges();
+      }
     });
   }
+
+  // fetchScreens() {
+  //   // this.loanService.fetchScreens(processStageId).subscribe((resp) => {
+  //   //   if (resp?.statusCode === 200 && resp?.data?.screens) {
+  //   const screens =
+  //     this.category !== 'CORPORATE ACCOUNT'
+  //       ? [
+  //           {
+  //             screenCode: 464,
+  //             screenName: 'Verify Mobile Number',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 1,
+  //             screenValue: 'W1VEMN',
+  //           },
+  //           {
+  //             screenCode: 456,
+  //             screenName: 'Personal Identification',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 2,
+  //             screenValue: 'W1DOCU',
+  //           },
+  //           {
+  //             screenCode: 461,
+  //             screenName: 'Personal Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 4,
+  //             screenValue: 'W1SIGN',
+  //           },
+  //           {
+  //             screenCode: 462,
+  //             screenName: 'Account Detail',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 5,
+  //             screenValue: 'W1SUM',
+  //           },
+  //           {
+  //             screenCode: 463,
+  //             screenName: 'Cheque Book Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 3,
+  //             screenValue: 'W1TECO',
+  //           },
+  //           {
+  //             screenCode: 497,
+  //             screenName: 'Terms & Conditions',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 9,
+  //             screenValue: 'W1CODE',
+  //           },
+  //           {
+  //             screenCode: 464,
+  //             screenName: 'Document Upload',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 6,
+  //             screenValue: 'W1VEMN',
+  //           },
+  //           {
+  //             screenCode: 497,
+  //             screenName: 'Summary',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 7,
+  //             screenValue: 'W1CODE',
+  //           },
+  //           {
+  //             screenCode: 498,
+  //             screenName: 'Digital Signature',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 8,
+  //             screenValue: 'W1BUDE',
+  //           },
+  //           {
+  //             screenCode: 498,
+  //             screenName: 'Payment Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 9,
+  //             screenValue: 'W1BUDE',
+  //           },
+  //           {
+  //             screenCode: 498,
+  //             screenName: 'Bussiness Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 10,
+  //             screenValue: 'W1BUDE',
+  //           },
+  //         ]
+  //       : [
+  //           {
+  //             screenCode: 456,
+  //             screenName: 'Account Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 2,
+  //             screenValue: 'W1DOCU',
+  //           },
+  //           {
+  //             screenCode: 461,
+  //             screenName: 'Personal Identification',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 3,
+  //             screenValue: 'W1SIGN',
+  //           },
+  //           {
+  //             screenCode: 462,
+  //             screenName: 'Personal Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 4,
+  //             screenValue: 'W1SUM',
+  //           },
+  //           {
+  //             screenCode: 463,
+  //             screenName: 'Document Upload',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 5,
+  //             screenValue: 'W1TECO',
+  //           },
+  //           {
+  //             screenCode: 463,
+  //             screenName: 'Employment & Financial Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 6,
+  //             screenValue: 'W1TECO',
+  //           },
+  //           {
+  //             screenCode: 497,
+  //             screenName: 'Summary',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 7,
+  //             screenValue: 'W1CODE',
+  //           },
+  //           {
+  //             screenCode: 498,
+  //             screenName: 'Digital Signature',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 8,
+  //             screenValue: 'W1BUDE',
+  //           },
+  //           {
+  //             screenCode: 464,
+  //             screenName: 'Verify Mobile Number',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 1,
+  //             screenValue: 'W1VEMN',
+  //           },
+  //           {
+  //             screenCode: 498,
+  //             screenName: 'Payment Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 9,
+  //             screenValue: 'W1BUDE',
+  //           },
+
+  //           {
+  //             screenCode: 498,
+  //             screenName: 'Bussiness Details',
+  //             route: null,
+  //             fileUrl: null,
+  //             sequence: 10,
+  //             screenValue: 'W1BUDE',
+  //           },
+            
+  //         ];
+  //   const i = screens.findIndex((s) => s.sequence === 1);
+  //   if (i > -1) screens.splice(i, 1);
+  //   screens
+  //     .sort((a, b) => a.sequence - b.sequence)
+  //     .forEach((screen) => {
+  //       this.componentMapping.set(screen.screenName, screen);
+  //     });
+  //   this.cdr.markForCheck();
+
+  //   setTimeout(() => {
+  //     this.allowedPanelIndex = 0;
+  //     this.panels.get(0)?.open();
+  //   });
+  // }
   // });
   // }
+
+  onFlowDone() {
+      const originationId = this.sessionStorageSerive.getOriginationId();
+      if (originationId) {
+        this.fetchPersonalDetails(originationId);
+      }
+      const payload: any = {};
+      payload.properties = {};
+      payload.screenCode = null;
+      payload.processStageId = null;
+      payload.processCycleId = this.processDetails?.id;
+      payload.originationId = originationId;
+      payload.action = 'Submit';
+      payload.transactionType = 'CORP_LOAN';
+      this.loanService.verifyWorkFlow(payload).subscribe((resp: any) => {
+        if (resp?.status === 200) {
+          const dialogRef = this.dialog.open(SuccessModalPopupComponent, {
+            data: {
+              applicationNo: originationId,
+              msg: resp?.data?.isComplete
+                ? 'Application is approved successfully'
+                : 'Application is submitted successfully',
+              note: 'Please quote the above reference number in all communications with the bank and We will review and get back to you.',
+              email: this.email ?? 'shiyam.ram@rumango.com',
+              type: 'loan',
+              isComplete: resp?.data?.isComplete,
+              cifApplicationNo: resp?.data?.cifApplicationNo,
+              kycRefNo: resp?.data?.kycRefNo,
+              cbsReferenceNo: resp?.data?.cbsReferenceNo,
+            },
+            width: '45%',
+            height: 'auto',
+            disableClose: true,
+            panelClass: 'ic-dialog__panelclass',
+            backdropClass: 'bdrop',
+          });
+          dialogRef.afterClosed().subscribe((resp) => {
+            if (resp === true) {
+              this.tokenStorageService.clearSessionExceptLoginInfo();
+              this.router.navigate(['origination/loan/landing']);
+            } else if (resp === 'tracking') {
+              this.tokenStorageService.clearSessionExceptLoginInfo();
+            }
+          });
+        }
+      });
+    }
+
+      // To get the customer email calling this method
+  fetchPersonalDetails(originationId: number) {
+    if (originationId)
+      this.loanService
+        .getPersonalDetailsData(originationId)
+        .subscribe((res) => {
+          if (res.data.customerInfo.length > 0) {
+            this.email = res.data.customerInfo[0]?.contact?.email;
+          }
+        });
+  }
 }
