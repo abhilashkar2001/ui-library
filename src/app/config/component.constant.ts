@@ -67,7 +67,7 @@ export interface ComponentStagesMap {
   Signature: AccountDigitalSignatureComponent;
   'Bussiness Details': BusinessDetailsComponent;
   'Director Document Upload': DocumentUploadComponent;
-  'Director Details': AccountPersonalDetailsComponent;
+  'Director Details': DirectorDetailsComponent;
   'Employement Financial Details': EmpFinDetailsComponent;
   'Terms And Conditions': TermsConditionsComponent;
   'Account Services': AccountServiceComponent;
@@ -87,7 +87,7 @@ export const ComponentStagesConstant: {
   Signature: AccountDigitalSignatureComponent,
   'Bussiness Details': BusinessDetailsComponent,
   'Director Document Upload': DocumentUploadComponent,
-  'Director Details': AccountPersonalDetailsComponent,
+  'Director Details': DirectorDetailsComponent,
   'Employement Financial Details': EmpFinDetailsComponent,
   'Terms And Conditions': TermsConditionsComponent,
   'Account Services': AccountServiceComponent,

@@ -38,7 +38,7 @@
       >
       </ic-select>
     </div>
-    <div fxFlex="24" *ngIf="category == 'Cheque'">
+    <div fxFlex="24">
       <ic-select
         [control]="businessDetailsForm?.get('segmentId') | formcontrol"
         [options]="segmentArr"
@@ -94,7 +94,7 @@
         label="TIN Number"
       ></ic-form-field>
     </div>
-    <div class="header_md_bold_black mb-8">
+    <div fxFlex="100" class="header_md_bold_black mb-8">
       {{ 'Business Operation Details' }}
     </div>
     <div fxFlex="24">
@@ -121,7 +121,7 @@
         ></ic-radio-button>
       </div>
     </div> -->
-    <div fxFlex="24" *ngIf="category == 'cheque'">
+    <div fxFlex="24">
       <ic-form-field
         [control]="businessDetailsForm?.get('yearsOfOperation') | formcontrol"
         [icAlphanumeric]="true"
@@ -130,7 +130,7 @@
       ></ic-form-field>
     </div>
 
-    <div fxFlex="24" *ngIf="category == 'Accounts' || category === 'cheque'">
+    <!-- <div fxFlex="24" *ngIf="category == 'Accounts' || category === 'cheque'">
       <ic-select
         [control]="businessDetailsForm?.get('segmentId') | formcontrol"
         [options]="segmentArr"
@@ -139,8 +139,8 @@
         label="Source of Income"
       >
       </ic-select>
-    </div>
-    <div fxFlex="24" *ngIf="category == 'cheque'">
+    </div> -->
+    <div fxFlex="24">
       <ic-form-field
         [control]="businessDetailsForm?.get('monthlyTurnover') | formcontrol"
         [icAlphanumeric]="true"
@@ -182,10 +182,10 @@
       </div>
     </div>
 
-    <div class="header_md_bold_black mb-8">
+    <div fxFlex="100" class="header_md_bold_black mb-8">
       {{ 'Address & Relationship Info' }}
     </div>
-
+    <!-- 
     <div fxFlex="24">
       <ic-form-field
         [control]="businessDetailsForm?.get('aveStockLevel') | formcontrol"
@@ -193,23 +193,37 @@
         [maxLength]="250"
         label="AVE stock Level"
       ></ic-form-field>
-    </div>
+    </div> -->
 
     <div fxFlex="49">
-      <ic-select
+      <ic-form-field
         [control]="businessDetailsForm?.get('parentCompanyId') | formcontrol"
-        [options]="parentCompanyArr"
-        bindLabelKey="companyName"
-        bindValueKey="corporateId"
-        label="Parent Company"
+        label="Business Address"
       >
-      </ic-select>
+      </ic-form-field>
+    </div>
+    <div
+      fxFlex="49"
+      fxLayout="row"
+      fxLayoutGap="5"
+      fxLayoutAlign="space-between center"
+    >
+      <div fxFlex="100">
+        <ic-select
+          [control]="businessDetailsForm?.get('parentCompanyId') | formcontrol"
+          [options]="parentCompanyArr"
+          bindLabelKey="companyName"
+          bindValueKey="corporateId"
+          label="Parent Company"
+        >
+        </ic-select>
+      </div>
       <mat-icon (click)="parentSearch()">search</mat-icon>
     </div>
 
-    <div fxFlex="24">
-      <div class="header_md_bold_black mb-8">
-        {{ 'Is the  business labour or capital Intensive' }}
+    <div fxFlex="49">
+      <div class="mb-8">
+        {{ 'Does the business have an existing banking relationship with us?' }}
       </div>
 
       <div fxLayout="row" fxLayoutGap="50px">
@@ -224,6 +238,9 @@
       </div>
     </div>
 
+    <div fxFlex="100" class="header_md_bold_black mb-8 mt-8">
+      {{ 'Additional Details' }}
+    </div>
     <div fxFlex="49">
       <ic-textarea
         [control]="
@@ -245,18 +262,6 @@
         label="Description of Business"
       >
       </ic-textarea>
-    </div>
-
-    <div fxFlex="49">
-      <ic-select
-        [control]="businessDetailsForm?.get('parentCompanyId') | formcontrol"
-        [options]="parentCompanyArr"
-        bindLabelKey="companyName"
-        bindValueKey="corporateId"
-        label="Parent Company"
-      >
-      </ic-select>
-      <mat-icon (click)="parentSearch()">search</mat-icon>
     </div>
   </div>
 </div>

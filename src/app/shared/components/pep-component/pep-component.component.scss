@@ -1,0 +1,9 @@
+.pep-status-container {
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.actionSelected {
+  color: var(--ic-text-theme) !important;
+}
+

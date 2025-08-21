@@ -36,6 +36,7 @@ import { FaceScanComponent } from './face-scan/face-scan.component';
 import { OtpVerificationComponent } from './otp-verification/otp-verification.component';
 import { SelectAccountComponent } from './select-account/select-account.component';
 import { CustomerTypeSelectorDialogComponent } from './customer-type-selector-dialog/customer-type-selector-dialog/customer-type-selector-dialog.component';
+import { PepComponentComponent } from './pep-component/pep-component.component';
 
 const components = [
   HeaderTopComponent,
@@ -60,6 +61,7 @@ const components = [
   OtpVerificationComponent,
   SelectAccountComponent,
   CustomerTypeSelectorDialogComponent,
+  PepComponentComponent
 ];
 
 @NgModule({
