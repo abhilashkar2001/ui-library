@@ -4,6 +4,7 @@ import { StagesComponent } from './stages/stages.component';
 import { LoginComponent } from '../loan/login/login.component';
 import { CardComponent } from './card.component';
 import { AccountTypeComponent } from '../cheque-book/components/account-type/account-type.component';
+import { CardLandingComponent } from './card-landing/card-landing.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
         path: '',
         redirectTo: 'login',
         pathMatch: 'full',
+      },
+      {
+        path: 'landing',
+        component: CardLandingComponent,
       },
       {
         path: 'login',

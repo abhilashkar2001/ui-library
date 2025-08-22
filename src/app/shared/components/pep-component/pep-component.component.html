@@ -5,7 +5,8 @@
     fxFlex="100"
     fxLayout="row wrap"
     [formGroup]="pepStatusForm"
-    fxLayoutAlign="space-around stretch">
+    fxLayoutAlign="space-around stretch"
+  >
     <div
       *ngFor="let field of pepStatusFields"
       fxFlex="32"
@@ -13,7 +14,8 @@
       [ngClass]="{ actionSelected: pepStatusForm.value[field.value] }"
       (click)="onToggle(field.value)"
       (keydown.enter)="onToggle(field.value)"
-      tabindex="0">
+      tabindex="0"
+    >
       <div class="pep-icon">
         <mat-icon>trip_origin</mat-icon>
       </div>

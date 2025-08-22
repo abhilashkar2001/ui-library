@@ -53,7 +53,7 @@ export class ChequeBookStagesComponent implements OnInit {
   customHeader = LoanFlowConstants.CUSTOM_HEADER;
   category: string | null;
   processDetails: any;
-  email: any
+  email: any;
   progressMapping: Map<string, Record<string, any>> = new Map();
 
   constructor(
@@ -70,7 +70,7 @@ export class ChequeBookStagesComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.category);
-    this.basisId = this.sessionStorageSerive.getItem('basisId')
+    this.basisId = this.sessionStorageSerive.getItem('basisId');
     setTimeout(() => {
       this.panels.get(0)?.open();
     });
@@ -185,7 +185,7 @@ export class ChequeBookStagesComponent implements OnInit {
    * to the customer will be given
    */
   fetchProductDetails() {
-    console.log(this.basisId, "gdud")
+    console.log(this.basisId, 'gdud');
     if (this.basisId === undefined) return;
     this.loanService.getProductDetails(this?.basisId).subscribe((resp) => {
       if (resp?.statusCode === 200 && resp?.data?.length > 0) {
@@ -436,7 +436,7 @@ export class ChequeBookStagesComponent implements OnInit {
   //             sequence: 10,
   //             screenValue: 'W1BUDE',
   //           },
-            
+
   //         ];
   //   const i = screens.findIndex((s) => s.sequence === 1);
   //   if (i > -1) screens.splice(i, 1);
@@ -456,53 +456,53 @@ export class ChequeBookStagesComponent implements OnInit {
   // }
 
   onFlowDone() {
-      const originationId = this.sessionStorageSerive.getOriginationId();
-      if (originationId) {
-        this.fetchPersonalDetails(originationId);
-      }
-      const payload: any = {};
-      payload.properties = {};
-      payload.screenCode = null;
-      payload.processStageId = null;
-      payload.processCycleId = this.processDetails?.id;
-      payload.originationId = originationId;
-      payload.action = 'Submit';
-      payload.transactionType = 'CORP_LOAN';
-      this.loanService.verifyWorkFlow(payload).subscribe((resp: any) => {
-        if (resp?.status === 200) {
-          const dialogRef = this.dialog.open(SuccessModalPopupComponent, {
-            data: {
-              applicationNo: originationId,
-              msg: resp?.data?.isComplete
-                ? 'Application is approved successfully'
-                : 'Application is submitted successfully',
-              note: 'Please quote the above reference number in all communications with the bank and We will review and get back to you.',
-              email: this.email ?? 'shiyam.ram@rumango.com',
-              type: 'loan',
-              isComplete: resp?.data?.isComplete,
-              cifApplicationNo: resp?.data?.cifApplicationNo,
-              kycRefNo: resp?.data?.kycRefNo,
-              cbsReferenceNo: resp?.data?.cbsReferenceNo,
-            },
-            width: '45%',
-            height: 'auto',
-            disableClose: true,
-            panelClass: 'ic-dialog__panelclass',
-            backdropClass: 'bdrop',
-          });
-          dialogRef.afterClosed().subscribe((resp) => {
-            if (resp === true) {
-              this.tokenStorageService.clearSessionExceptLoginInfo();
-              this.router.navigate(['origination/loan/landing']);
-            } else if (resp === 'tracking') {
-              this.tokenStorageService.clearSessionExceptLoginInfo();
-            }
-          });
-        }
-      });
+    const originationId = this.sessionStorageSerive.getOriginationId();
+    if (originationId) {
+      this.fetchPersonalDetails(originationId);
     }
+    const payload: any = {};
+    payload.properties = {};
+    payload.screenCode = null;
+    payload.processStageId = null;
+    payload.processCycleId = this.processDetails?.id;
+    payload.originationId = originationId;
+    payload.action = 'Submit';
+    payload.transactionType = 'CORP_LOAN';
+    this.loanService.verifyWorkFlow(payload).subscribe((resp: any) => {
+      if (resp?.status === 200) {
+        const dialogRef = this.dialog.open(SuccessModalPopupComponent, {
+          data: {
+            applicationNo: originationId,
+            msg: resp?.data?.isComplete
+              ? 'Application is approved successfully'
+              : 'Application is submitted successfully',
+            note: 'Please quote the above reference number in all communications with the bank and We will review and get back to you.',
+            email: this.email ?? 'shiyam.ram@rumango.com',
+            type: 'loan',
+            isComplete: resp?.data?.isComplete,
+            cifApplicationNo: resp?.data?.cifApplicationNo,
+            kycRefNo: resp?.data?.kycRefNo,
+            cbsReferenceNo: resp?.data?.cbsReferenceNo,
+          },
+          width: '45%',
+          height: 'auto',
+          disableClose: true,
+          panelClass: 'ic-dialog__panelclass',
+          backdropClass: 'bdrop',
+        });
+        dialogRef.afterClosed().subscribe((resp) => {
+          if (resp === true) {
+            this.tokenStorageService.clearSessionExceptLoginInfo();
+            this.router.navigate(['origination/loan/landing']);
+          } else if (resp === 'tracking') {
+            this.tokenStorageService.clearSessionExceptLoginInfo();
+          }
+        });
+      }
+    });
+  }
 
-      // To get the customer email calling this method
+  // To get the customer email calling this method
   fetchPersonalDetails(originationId: number) {
     if (originationId)
       this.loanService

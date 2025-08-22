@@ -1,11 +1,9 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { AccountSelectionComponent } from 'app/modules/create-account/components/account-selection/account-selection.component';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { ProductState } from '../../../../../../shared/models/router-state.model';
-import { CustomerTypeSelectorDialogComponent } from 'app/shared/components/customer-type-selector-dialog/customer-type-selector-dialog/customer-type-selector-dialog.component';
 import { AccountSelectionComponent } from 'app/modules/create-account/components/account-selection/account-selection.component';
 
 @Component({
@@ -60,7 +58,8 @@ export class LoanAccountTypeComponent implements OnInit {
       console.log(this.basisClass, 'csbch');
 
       if (
-        (this.basisClass == 'CHEQUE' || this.basisClass == 'CHEQUE_CORPORATE')
+        this.basisClass == 'CHEQUE' ||
+        this.basisClass == 'CHEQUE_CORPORATE'
       ) {
         this.basisId = event.selectedLoan.basisId;
         this.basisClass = event.subClass;
@@ -68,9 +67,7 @@ export class LoanAccountTypeComponent implements OnInit {
         this.sessionStorageService.setItem('category', this.category);
         this.sessionStorageService.setItem('basisClass', this.basisClass);
         this.goToLogin();
-      }
-
-     else if (
+      } else if (
         this.category === 'Accounts' &&
         this.basisClass == 'CURRENT ACCOUNT'
       ) {
@@ -109,21 +106,18 @@ export class LoanAccountTypeComponent implements OnInit {
         this.basisClass = event.subClass;
         this.basisId = event.selectedLoan.basisId;
 
-        const dialogRef = this.dialog.open(
-          CustomerTypeSelectorDialogComponent,
-          {
-            width: '50%',
-            height: 'auto',
-            backdropClass: 'confirmDialogComponent',
-            hasBackdrop: true,
-            disableClose: true,
-            data: {
-              category: this.category,
-              basisClass: this.basisClass,
-              basisId: this.basisId,
-            },
+        const dialogRef = this.dialog.open(AccountSelectionComponent, {
+          width: '50%',
+          height: 'auto',
+          backdropClass: 'confirmDialogComponent',
+          hasBackdrop: true,
+          disableClose: true,
+          data: {
+            category: this.category,
+            basisClass: this.basisClass,
+            basisId: this.basisId,
           },
-        );
+        });
         dialogRef.afterClosed().subscribe((res) => {
           console.log(res);
           this.sessionStorageService.setItem('category', this.category);
@@ -142,8 +136,7 @@ export class LoanAccountTypeComponent implements OnInit {
         console.log(this.basisId, '2');
         this.sessionStorageService.setItem('category', this.category);
         this.goToLogin();
-      } 
-     else {
+      } else {
         this.isShowCalculator = event.isShowCalculator;
         this.calculatorInfo = {
           interestRate: parseInt(event.selectedLoan?.interestRate ?? '0'),
