@@ -25,6 +25,7 @@ import { CardBannerComponent } from './card-banner/card-banner.component';
 import { CardAdvertisementComponent } from './card-advertisement/card-advertisement.component';
 import { OverViewComponent } from './about-card/over-view/over-view.component';
 import { BenefitsComponent } from './about-card/benefits/benefits.component';
+import { EligibilityComponent } from './about-card/eligibility/eligibility.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { BenefitsComponent } from './about-card/benefits/benefits.component';
     CardAdvertisementComponent,
     OverViewComponent,
     BenefitsComponent,
+    EligibilityComponent,
   ],
   imports: [
     CommonModule,
