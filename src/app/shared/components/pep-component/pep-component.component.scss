@@ -4,5 +4,20 @@
   flex-direction: column;
 }
 .actionSelected {
-  color: var(--ic-text-theme) !important;
+  .pep-icon {
+    color: var(--ic-text-theme) !important;
+  }
+  .pep-label {
+    color: var(--ic-text-theme) !important;
+  }
+  .pep-desc {
+    p {
+      color: light gray !important;
+    }
+  }
+  border: 1px solid var(--ic-text-theme) !important;
+}
+.pepClass {
+  padding: 10px 5px;
+  border: 1px solid #cac4da;
 }

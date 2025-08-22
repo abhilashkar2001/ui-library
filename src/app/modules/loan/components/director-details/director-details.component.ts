@@ -41,6 +41,7 @@ export class DirectorDetailsComponent implements OnInit {
   statementOptionArr: GenericValueInfoModel[] = [];
   residenceTypeArray: GenericValueInfoModel[] = [];
   maritalStatusArray: GenericValueData[] = [];
+  customerCategory: GenericValueData[] = [];
   countriesIsdCodes: any[] = [];
   countryArray: any;
   nationalityArray: any[] = [];
@@ -144,6 +145,7 @@ export class DirectorDetailsComponent implements OnInit {
           this.empoymentArray = resp.data['EMPLOYMENTTYPE'];
           this.relationArray = resp.data['RELATIONSHIPTYPE'];
           this.statementOptionArr = resp.data['COMMUNICATIONTYPE'];
+          this.customerCategory=resp.data['CUSTOMERCATEGORY']
         }
       });
   }
