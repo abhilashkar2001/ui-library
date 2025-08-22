@@ -63,13 +63,15 @@
         <span *ngIf="dataSource">Search Results</span>
       </div>
       <div></div>
-      <button
+
+      <ic-button
+        [icButtonType]="'filled-rounded'"
+        [label]="'Fetch'"
+        [type]="'submit'"
+        size="medium"
         (click)="fetchResultArray()"
-        class="submit-button"
-        mat-raised-button
       >
-        Fetch
-      </button>
+      </ic-button>
     </div>
 
     <ng-container *ngIf="dataSource">
