@@ -1,1 +1,58 @@
-<p>card-banner works!</p>
+<div
+  class="card_banner_container"
+  fxFlex="100"
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+>
+  <div
+    class="details_section"
+    fxFlex="40"
+    fxLayout="column"
+    fxLayoutAlign="start start"
+  >
+    <h1
+      class="details_header"
+      data-aos="fade-up"
+      data-aos-delay="200"
+      data-aos-duration="500"
+    >
+      Recommended Rubyx Platinum Credit Card
+    </h1>
+    <p
+      class="details_desc"
+      data-aos="fade-up"
+      data-aos-delay="250"
+      data-aos-duration="500"
+    >
+      Experience financial empowerment with tailored solutions that meet your
+      needs, exclusively from our bank.
+    </p>
+    <div class="details_feat">
+      <ng-container *ngFor="let feature of features">
+        <div class="feat_item" fxLayout="row" fxLayoutAlign="start center">
+          <ic-icon name="green-tick"></ic-icon>
+          <div>{{ feature }}</div>
+        </div>
+      </ng-container>
+    </div>
+    <ic-button
+      class="mt-24"
+      aria-label="Apply Now"
+      label="Apply Now"
+      icButtonType="filled"
+      size="large"
+    ></ic-button>
+  </div>
+  <div
+    class="card_animator_container"
+    fxFlex="60"
+    data-aos="zoom-in"
+    data-aos-delay="200"
+    data-aos-duration="500"
+  >
+    <img
+      src="../../../../assets/images/card-assets/democard_illustrator.svg"
+      alt=""
+    />
+  </div>
+</div>
