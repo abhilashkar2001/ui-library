@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
+import { CardSerivce } from 'app/modules/card/card.service';
 import { PersonalDetailsConstant } from 'app/modules/origination/modules/dynamic-pages/common-personal-details/personal-details.constant';
 import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 import { pluckOnlyDate } from 'app/shared/helpers/utils';
@@ -24,7 +25,6 @@ import {
   Subscription,
   tap,
 } from 'rxjs';
-import { CardSerivce } from '../../card.service';
 
 @Component({
   selector: 'app-common-personal-details',
@@ -238,6 +238,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
       source: 'Website',
       kycStatus: data?.kycStatus && data?.kycStatus,
       documentId: this.fb.array([]),
+      isSameAddress: [true],
       spouseInfo: this.fb.group({
         spouseDetilsId: [data?.spouseInfo?.spouseDetilsId ?? null],
         prefixId: [data?.spouseInfo?.prefixId ?? ''],
@@ -532,6 +533,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
             this.addEmergencyContactAddress(customerIndex, res);
           }
         }
+        this.cdr.detectChanges();
       }
     });
   }

@@ -17,7 +17,6 @@ import { SharedPipesModule } from 'app/shared/pipes/shared-pipes.module';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { OriginationExternalCallbackModule } from '../origination/modules/origination-external-callback/origination-external-callback.module';
 import { SharedOriginationModule } from '../origination/modules/shared-origination/shared-origination.module';
-import { CommonPersonalDetailsComponent } from './components/common-personal-details/common-personal-details.component';
 import { CardLandingComponent } from './card-landing/card-landing.component';
 import { CardCatalogueComponent } from './card-catalogue/card-catalogue.component';
 import { AboutCardComponent } from './about-card/about-card.component';
@@ -30,7 +29,6 @@ import { CardAdvertisementComponent } from './card-advertisement/card-advertisem
     EmploymentFinancialDetailsComponent,
     CardSummaryComponent,
     CardDetailsComponent,
-    CommonPersonalDetailsComponent,
     CardLandingComponent,
     CardCatalogueComponent,
     AboutCardComponent,

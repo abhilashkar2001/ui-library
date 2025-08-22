@@ -25,7 +25,7 @@ import { AccountDetailComponent } from 'app/modules/cheque-book/components/accou
 import { CardDetailsComponent } from 'app/modules/card/components/card-details/card-details.component';
 import { EmploymentFinancialDetailsComponent } from 'app/modules/card/components/employment-financial-details/employment-financial-details.component';
 import { CardSummaryComponent } from 'app/modules/card/components/summary/card-summary.component';
-import { CommonPersonalDetailsComponent } from 'app/modules/card/components/common-personal-details/common-personal-details.component';
+import { CommonPersonalDetailsComponent } from 'app/shared/components/common-personal-details/common-personal-details.component';
 
 export interface ComponentMap {
   W1LACC: LoanDetailsComponent;

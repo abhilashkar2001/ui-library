@@ -37,6 +37,7 @@ import { OtpVerificationComponent } from './otp-verification/otp-verification.co
 import { SelectAccountComponent } from './select-account/select-account.component';
 import { CustomerTypeSelectorDialogComponent } from './customer-type-selector-dialog/customer-type-selector-dialog/customer-type-selector-dialog.component';
 import { PepComponentComponent } from './pep-component/pep-component.component';
+import { CommonPersonalDetailsComponent } from './common-personal-details/common-personal-details.component';
 
 const components = [
   HeaderTopComponent,
@@ -62,6 +63,7 @@ const components = [
   SelectAccountComponent,
   CustomerTypeSelectorDialogComponent,
   PepComponentComponent,
+  CommonPersonalDetailsComponent,
 ];
 
 @NgModule({
