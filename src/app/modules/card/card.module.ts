@@ -23,6 +23,8 @@ import { CardCatalogueComponent } from './card-catalogue/card-catalogue.componen
 import { AboutCardComponent } from './about-card/about-card.component';
 import { CardBannerComponent } from './card-banner/card-banner.component';
 import { CardAdvertisementComponent } from './card-advertisement/card-advertisement.component';
+import { OverViewComponent } from './about-card/over-view/over-view.component';
+import { BenefitsComponent } from './about-card/benefits/benefits.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { CardAdvertisementComponent } from './card-advertisement/card-advertisem
     AboutCardComponent,
     CardBannerComponent,
     CardAdvertisementComponent,
+    OverViewComponent,
+    BenefitsComponent,
   ],
   imports: [
     CommonModule,

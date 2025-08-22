@@ -1,1 +1,38 @@
-<p>about-card works!</p>
+<div class="tabs">
+  <div
+    class="tab"
+    *ngFor="let tab of tabs; let i = index"
+    [class.active]="selectedIndex === i"
+    (click)="selectTab(i)"
+    tabindex="0"
+    (keydown.enter)="selectTab(i)"
+  >
+    {{ tab }}
+  </div>
+
+  <!-- underline -->
+  <div class="underline" [style.transform]="getUnderlineTransform()"></div>
+</div>
+
+<div class="tab-content">
+  <ng-container [ngSwitch]="selectedIndex">
+    <div *ngSwitchCase="0">
+      <app-over-view
+        [title]="overViewTitle"
+        [description]="overViewDescription"
+        [cardInfo]="overViewCardInfo"
+        [keyHighLights]="overViewKeyHightLights"
+      ></app-over-view>
+    </div>
+    <div *ngSwitchCase="1">
+      <app-benefits
+        [title]="benefitsTitle"
+        [description]="benefitsDescription"
+        [cardInfo]="benefitsCardInfo"
+      ></app-benefits>
+    </div>
+    <div *ngSwitchCase="2">Features Content</div>
+    <div *ngSwitchCase="3">Eligibility Content</div>
+    <div *ngSwitchCase="4">Fees & Charges Content</div>
+  </ng-container>
+</div>

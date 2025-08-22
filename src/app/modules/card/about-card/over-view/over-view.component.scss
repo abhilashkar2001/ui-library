@@ -1,0 +1,44 @@
+.overview {
+  @mixin cards_more_details($size, $weight, $color) {
+    font-family: --var(--ic-primary-font-family);
+    font-size: $size px;
+    font-weight: $weight;
+    color: $color;
+  }
+  .title {
+    @include cards_more_details(24, 600, #06113c);
+  }
+  .description {
+    @include cards_more_details(18, 400, #4c5371);
+  }
+  .card_item {
+    padding: 16px 8px;
+    margin-bottom: 16px;
+    border-radius: 16px;
+    background-color: #f8f9fa;
+    .card_title {
+      @include cards_more_details(18, 600, #06113c);
+    }
+    .card_value {
+      @include cards_more_details(24, 700, #004c97);
+    }
+    .card_description {
+      @include cards_more_details(14, 400, #6b7280);
+    }
+  }
+  .key_highlights {
+    .key_title {
+      @include cards_more_details(16, 600, #000000);
+    }
+    .points {
+      .point {
+        border-radius: 50%;
+        background-color: #004c97;
+        margin: 9px 3px 0px 0px;
+        width: 4px;
+        height: 4px;
+      }
+      @include cards_more_details(14, 400, #525252);
+    }
+  }
+}

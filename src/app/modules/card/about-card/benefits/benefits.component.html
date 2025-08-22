@@ -1,0 +1,31 @@
+<div class="benefits">
+  <!-- Title -->
+  <div class="title">
+    {{ title }}
+  </div>
+  <!-- Description -->
+  <div class="description">
+    {{ description }}
+  </div>
+  <!-- Card Info-->
+  <div
+    class="cards_info"
+    fxLayout="row wrap"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start stretch"
+  >
+    <div class="card_item" *ngFor="let info of cardInfo" fxLayout="row">
+      <span> <img src="images/assets/star.svg" alt="star" /></span>
+      <div fxLayout="column">
+        <span class="card_title">{{ info?.title }}</span>
+        <span class="card_description">{{ info?.description }}</span>
+        <span class="card_points" *ngFor="let point of info?.cardPoints">
+          <div fxLayout="row">
+            <div class="point"></div>
+            <span>{{ point }}</span>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
