@@ -57,8 +57,8 @@ export class LoginComponent implements OnInit {
     this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
     this.category = this.sessionStorageService.getItem('category');
-    this.basisClass = this.sessionStorageService.getItem('basisClass')
-    console.log(this.basisClass,"basisClass")
+    this.basisClass = this.sessionStorageService.getItem('basisClass');
+    console.log(this.basisClass, 'basisClass');
   }
 
   ngOnInit(): void {
@@ -211,13 +211,15 @@ export class LoginComponent implements OnInit {
         otp: this.otpForm.value?.otpValue,
       })
       .subscribe((response: any) => {
-        if (this.category === 'Accounts' && (this.basisClass === 'Cheque' || this.basisClass === 'Cheque Corporate')) {
-          this.router.navigate(['/cheque-book/stages'])
-        }
-        else if (this.category === 'Accounts'){
+        if (
+          this.category === 'Accounts' &&
+          (this.basisClass === 'Cheque' ||
+            this.basisClass === 'Cheque Corporate')
+        ) {
+          this.router.navigate(['/cheque-book/stages']);
+        } else if (this.category === 'Accounts') {
           this.router.navigate(['create-account/stages']);
-        }
-        else if (this.category === 'Card') {
+        } else if (this.category === 'Card') {
           this.router.navigate(['apply-card/stages']);
         } else {
           if (response.status === 401) {

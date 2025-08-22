@@ -61,7 +61,7 @@ const components = [
   OtpVerificationComponent,
   SelectAccountComponent,
   CustomerTypeSelectorDialogComponent,
-  PepComponentComponent
+  PepComponentComponent,
 ];
 
 @NgModule({

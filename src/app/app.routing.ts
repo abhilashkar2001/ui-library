@@ -85,6 +85,7 @@ export const rootRouterConfig: Routes = [
       },
     ],
   },
+
   {
     path: '**',
     redirectTo: 'home/404',

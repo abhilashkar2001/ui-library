@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
 import { PersonalDetailsConstant } from 'app/modules/origination/modules/dynamic-pages/common-personal-details/personal-details.constant';
 import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
+import { pluckOnlyDate } from 'app/shared/helpers/utils';
 import {
   GenericValueInfoModel,
   GenericValueData,
@@ -14,7 +15,16 @@ import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { finalize, forkJoin, Subscription } from 'rxjs';
+import {
+  catchError,
+  finalize,
+  forkJoin,
+  map,
+  of,
+  Subscription,
+  tap,
+} from 'rxjs';
+import { CardSerivce } from '../../card.service';
 
 @Component({
   selector: 'app-common-personal-details',
@@ -67,6 +77,7 @@ export class CommonPersonalDetailsComponent implements OnInit {
     private openAccSerivce: OpenAccountService,
     private store: Store<AppState>,
     private loanService: LoanService,
+    private cardService: CardSerivce,
     private dialog: MatDialog,
     private cdr: ChangeDetectorRef,
   ) {}
@@ -528,5 +539,72 @@ export class CommonPersonalDetailsComponent implements OnInit {
   addEmergencyContactAddress(index: number, address?: any): void {
     const addressArray = this.getEmergencyContactAddress(index);
     addressArray.push(this.createEmergencyContactAddressGroup(address));
+  }
+
+  // Save method
+  handleSubmit() {
+    const customerData = this.customer.controls.map((customerGroup, index) => {
+      const customer = customerGroup.value;
+
+      const maritalStatus = this.maritalStatusArray
+        .find((item: GenericValueData) => item.id === customer.maritalStatusId)
+        ?.values?.toLowerCase();
+
+      const isMarried = maritalStatus === 'married';
+
+      const formattedCustomer = {
+        ...customer,
+        dateOfBirth: pluckOnlyDate(customer.dateOfBirth),
+        primaryCustomer: index === 0,
+        spouseInfo: isMarried
+          ? {
+              ...customer.spouseInfo,
+              dateOfBirth: pluckOnlyDate(customer.spouseInfo?.dateOfBirth),
+            }
+          : undefined,
+      };
+
+      if (!isMarried) {
+        delete formattedCustomer.spouseInfo;
+      }
+
+      return formattedCustomer;
+    });
+
+    const payload = {
+      originationId: this.originationId,
+      screenCode: 460,
+      customerInfo: customerData,
+    };
+
+    console.log(payload, 'payload');
+
+    return this.cardService.saveCardPersonalDetails(payload).pipe(
+      tap((res) => {
+        const customerInfo = res?.data?.customerInfo;
+        if (
+          customerInfo &&
+          customerInfo.length > 0 &&
+          customerInfo[0]?.custStagingId
+        ) {
+          this.sessionStorageService.setCustomerStagingId(
+            customerInfo[0]?.custStagingId,
+          );
+        }
+      }),
+      map((res) =>
+        res?.statusCode == 200 || res?.statusCode == 201
+          ? ('success' as const)
+          : ('failure' as const),
+      ),
+      catchError((_err) => {
+        console.error(_err);
+        return of('failure' as const);
+      }),
+    );
+  }
+
+  submitForm() {
+    return this.handleSubmit().toPromise();
   }
 }

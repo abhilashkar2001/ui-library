@@ -47,7 +47,7 @@ export class PepComponentComponent implements OnInit {
       notApplicable: [item?.notApplicable ?? false],
     });
 
-    this.pepStatusForm.valueChanges.subscribe(val => {
+    this.pepStatusForm.valueChanges.subscribe((val) => {
       const selectedValue = this.getSelectedValue(val);
       this.PepStatus.emit(selectedValue);
     });

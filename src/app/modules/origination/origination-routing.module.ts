@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { CardLandingComponent } from '../card/card-landing/card-landing.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,11 @@ const routes: Routes = [
         (m) => m.SharedOriginationModule,
       ),
     data: { preload: false, title: 'Home', breadcrumb: 'Home' },
+  },
+
+  {
+    path: 'card-landing',
+    component: CardLandingComponent,
   },
 ];
 
