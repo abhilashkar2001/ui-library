@@ -1,0 +1,23 @@
+<div class="eligibility-tab">
+  <div>Eligibility Criteria</div>
+  <div>{{ eligibilityData?.description }}</div>
+  <div fxLayout="row" fxLayoutGap="16px" class="basic-requirements">
+    <div class="star-bg">
+      <img src="assets/images/star.svg" class="star-icon" alt="star" />
+    </div>
+    <div fxLayout="column">
+      <div>Basic Eligibility Requirements</div>
+      <div>Fundamental criteria that all applicants must meet</div>
+      <ul>
+        <li *ngFor="let item of eligibilityData?.basicRequirements">
+          {{ item }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="eligibility-note-alert">
+    <img src="assets/images/Alert.svg" alt="alert" />
+    Meeting eligibility criteria does not guarantee approval. Final decision is
+    based on comprehensive credit assessment and bank policies.
+  </div>
+</div>

@@ -1,0 +1,38 @@
+.eligibility-tab {
+  .basic-requirements {
+    padding: 16px 8px;
+    margin-bottom: 16px;
+    border-radius: 16px;
+    background-color: #f8f9fa;
+    ul {
+      padding: 12px;
+    }
+    .star-bg {
+      background-color: #ff2807;
+      height: 48px;
+      width: 48px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .star-icon {
+        height: 24px;
+        width: 24px;
+      }
+    }
+  }
+  .eligibility-note-alert {
+    background-color: #fff7e8;
+    color: #ffa800;
+    padding: 12px 4px;
+    border: 2px solid #ffa800;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    img {
+      margin-right: 8px;
+      height: 24px;
+      width: 24px;
+    }
+  }
+}

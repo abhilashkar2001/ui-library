@@ -1,0 +1,33 @@
+<div class="overview">
+  <!-- Title -->
+  <div class="title">
+    {{ title }}
+  </div>
+  <!-- Description -->
+  <div class="description">
+    {{ description }}
+  </div>
+  <!-- Card Info-->
+  <div
+    class="cards_info"
+    fxLayout="row wrap"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start stretch"
+  >
+    <div class="card_item" *ngFor="let info of cardInfo" fxLayout="column">
+      <span class="card_title">{{ info?.title }}</span>
+      <span class="card_value">{{ info?.value }}</span>
+      <span class="card_description">{{ info?.description }}</span>
+    </div>
+  </div>
+  <!-- Key Highlights -->
+  <div class="key_highlights">
+    <div class="key_title">Key Highlights</div>
+    <span class="points" *ngFor="let key of keyHighLights">
+      <div fxLayout="row">
+        <div class="point"></div>
+        <span>{{ key }}</span>
+      </div>
+    </span>
+  </div>
+</div>
