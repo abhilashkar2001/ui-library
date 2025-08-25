@@ -15,7 +15,7 @@ import { catchError, map, of, tap } from 'rxjs';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
 
 @Component({
-  selector: 'app-personal-details',
+  selector: 'app-common-personal-details',
   templateUrl: './personal-details.component.html',
   styleUrls: ['./personal-details.component.scss'],
 })

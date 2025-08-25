@@ -30,7 +30,7 @@ export class LoansLandingComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.type = params['type'] || 'Account';
+      this.type = params['type'] || 'Cheque';
       console.log(this.type);
       if (this.type) {
         this.sessionStorage.setTypeOfFlow(this.type);
@@ -40,7 +40,7 @@ export class LoansLandingComponent implements OnInit {
   }
 
   updateLandingContent(): void {
-    if (this.type === 'Account' || this.type === 'Cheque') {
+    if (this.type === 'Account') {
       this.imageUrl = 'assets/images/account_landing.svg';
       this.profileHeader =
         'Savings Made Simple: Open Your Account in 3 Easy Steps';
@@ -49,6 +49,15 @@ export class LoansLandingComponent implements OnInit {
       this.routeUrl = 'loan/loan-type';
       this.category = 'Accounts';
       this.businessSuiteName = 'Account Opening Services';
+      this.getLoanServices();
+    } else if (this.type === 'Cheque') {
+      this.imageUrl = 'assets/images/account_landing.svg';
+      this.profileHeader = 'Cheque Book Services at Your Fingertips';
+      this.profileHint =
+        'Experience the convenience of managing your cheque book services online. Request, track, and manage your cheques with ease.';
+      this.routeUrl = 'loan/loan-type';
+      this.category = 'Cheque';
+      this.businessSuiteName = 'Cheque Book Services';
       this.getLoanServices();
     } else if (this.type === 'Card') {
       this.imageUrl = 'assets/images/account_landing.svg';

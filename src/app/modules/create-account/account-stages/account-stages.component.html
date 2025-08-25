@@ -71,7 +71,14 @@
         [ngClass]="{ 'panel-opened': activePanels().has(i) }"
         *ngFor="let panel of componentMapping | map; let i = index"
         (closed)="onPanelClosed(i)"
-        (opened)="onPanelOpened(i, panel.screenName, panel.screenCode)"
+        (opened)="
+          onPanelOpened(
+            i,
+            panel.screenValue,
+            panel.screenName,
+            panel.screenCode
+          )
+        "
       >
         <mat-expansion-panel-header
           class="panel-header"
