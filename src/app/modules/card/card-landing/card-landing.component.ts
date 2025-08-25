@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-card-landing',
@@ -27,4 +27,79 @@ export class CardLandingComponent {
       description: 'Get 25% off on select partner restaurants every weekend',
     },
   ];
+
+  @ViewChild('featuresWrapper', { read: ElementRef })
+  featuresWrapper!: ElementRef<HTMLDivElement>;
+
+  private autoScrollInterval: any;
+  private isPaused = false;
+
+  ngAfterViewInit() {
+    this.startAutoScroll();
+  }
+
+  ngOnDestroy() {
+    this.clearAutoScroll();
+  }
+
+  private clearAutoScroll() {
+    if (this.autoScrollInterval) {
+      clearInterval(this.autoScrollInterval);
+      this.autoScrollInterval = null;
+    }
+  }
+
+  startAutoScroll() {
+    const scrollStep = 1;
+    const scrollDelay = 10;
+
+    this.autoScrollInterval = setInterval(() => {
+      if (this.isPaused) return;
+
+      const wrapper = this.featuresWrapper.nativeElement;
+      const singleSetWidth = wrapper.scrollWidth / 2;
+
+      if (wrapper.scrollLeft >= singleSetWidth) {
+        wrapper.scrollLeft = 0; // reset
+      } else {
+        wrapper.scrollBy({ left: scrollStep, behavior: 'smooth' });
+      }
+
+      setTimeout(() => (window as any).AOS?.refresh?.(), 350);
+    }, scrollDelay);
+  }
+
+  pauseAutoScroll() {
+    this.isPaused = true;
+  }
+
+  resumeAutoScroll() {
+    this.isPaused = false;
+  }
+
+  navigateLeft() {
+    this.pauseAutoScroll();
+    const wrapper = this.featuresWrapper.nativeElement;
+    const singleSetWidth = wrapper.scrollWidth / 2;
+
+    if (wrapper.scrollLeft <= 0) {
+      wrapper.scrollTo({ left: singleSetWidth, behavior: 'smooth' });
+    } else {
+      wrapper.scrollBy({ left: -300, behavior: 'smooth' });
+    }
+    setTimeout(() => (window as any).AOS?.refresh?.(), 350);
+  }
+
+  navigateRight() {
+    this.pauseAutoScroll();
+    const wrapper = this.featuresWrapper.nativeElement;
+    const singleSetWidth = wrapper.scrollWidth / 2;
+
+    if (wrapper.scrollLeft + wrapper.clientWidth >= singleSetWidth) {
+      wrapper.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      wrapper.scrollBy({ left: 300, behavior: 'smooth' });
+    }
+    setTimeout(() => (window as any).AOS?.refresh?.(), 350);
+  }
 }

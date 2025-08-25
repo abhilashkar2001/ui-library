@@ -1,53 +1,76 @@
 .card_landing_container {
   margin-top: 58px;
-}
-
-.features_wrapper {
-  display: flex;
-  gap: 20px;
-
-  .feature_box {
-    width: 380px;
-    padding: 16px;
-    position: relative;
-    flex-shrink: 0;
-    border-radius: 12px;
-    border: 1px solid #ffe1df;
-    background: #fef3f2;
-
-    .feature_tag {
-      position: absolute;
-      top: -12px;
-      left: -9px;
-      background: #e63946;
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 4px 4px 4px 0;
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 16px;
-    }
-    .feature_tag::after {
-      content: '';
-      position: absolute;
-      left: -5px;
-      bottom: -17px;
-      width: 5px;
-      height: 14px;
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-      border-right: 8px solid #e63946;
-      border-bottom-left-radius: 3px;
-    }
-    .feature_content {
+  background-color: var(--ic-surface-primary-a30);
+  .navigator_btn_group {
+    --ic-btn-outlined-bg: var(--ic-surface-tonal-a0);
+    --ic-btn-outlined-hover-bg: var(--ic-surface-tonal-a10);
+    --ic-icon-color: var(--ic-clr-tonal-a30);
+    --ic-btn-outlined-border: var(--ic-surface-tonal-a20);
+  }
+  .features_container {
+    padding: 2.5% 5%;
+    background: var(--ic-surface-primary-a0);
+    .features_wrapper {
       display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      margin-top: 16px;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      overflow-y: visible;
+      padding: 20px 10px;
+      .feature_box {
+        width: 380px;
+        padding: 16px;
+        position: relative;
+        flex-shrink: 0;
+        border-radius: 12px;
+        border: 1px solid #ffe1df;
+        background: #fef3f2;
+        transform: scale(1);
+        transition:
+          transform 0.3s ease-in-out,
+          filter 0.3s ease-in-out;
+        &:hover {
+          filter: saturate(2);
+          transform: scale(1.1);
+        }
 
-      .feature_icon {
-        width: 40px;
-        height: 40px;
+        .feature_tag {
+          position: absolute;
+          top: -12px;
+          left: -9px;
+          background: #e63946;
+          color: #fff;
+          padding: 6px 12px;
+          border-radius: 4px 4px 4px 0;
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 16px;
+          font-family: var(--ic-primary-font-family);
+        }
+        .feature_tag::after {
+          content: '';
+          position: absolute;
+          left: -5px;
+          bottom: -17px;
+          width: 5px;
+          height: 14px;
+          border-top: 8px solid transparent;
+          border-bottom: 8px solid transparent;
+          border-right: 8px solid #e63946;
+          border-bottom-left-radius: 3px;
+        }
+        .feature_content {
+          display: flex;
+          align-items: flex-start;
+          gap: 16px;
+          margin-top: 16px;
+
+          .feature_icon {
+            width: 40px;
+            height: 40px;
+          }
+        }
       }
     }
   }

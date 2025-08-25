@@ -1,5 +1,8 @@
 .page-container {
   padding: 16px;
+  background: #f7f1f8;
+  --ic-card-shadow: none;
+
   .divider {
     border-color: var(--ic-btn-toggle-group-border);
   }
@@ -7,7 +10,6 @@
     border-radius: 12px;
     margin-bottom: 16px;
     background: #fff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 
     .card-image {
       padding: 16px;
