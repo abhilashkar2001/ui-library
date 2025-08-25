@@ -28,7 +28,7 @@ export class CardCatalogueComponent {
   cards = [
     {
       title: 'Times Black DTB Bank Credit Card',
-      image: 'assets/card1.png',
+      image: 'assets/images/card.svg',
       benefits: [
         'Luxury stay gift card from EaseMyTrip worth ₹10,000',
         'Travel Visa Benefits with Altas and OneVasco worth ₹10,000',
@@ -40,7 +40,18 @@ export class CardCatalogueComponent {
     },
     {
       title: 'Emeralde Private Metal Credit Card',
-      image: 'assets/card2.png',
+      image: 'assets/images/card.svg',
+      benefits: [
+        '1 Complimentary night stay with Epicure Plus Membership',
+        'Complimentary EazyDiner Prime Membership every year',
+        '12,500 ICICI Bank Reward Points as Joining Bonus and Annual Bonus',
+      ],
+      joiningFee: '₹12,500 + GST',
+      annualFee: '₹12,500 + GST',
+    },
+    {
+      title: 'Emeralde Private Metal Credit Card',
+      image: 'assets/images/card.svg',
       benefits: [
         '1 Complimentary night stay with Epicure Plus Membership',
         'Complimentary EazyDiner Prime Membership every year',
