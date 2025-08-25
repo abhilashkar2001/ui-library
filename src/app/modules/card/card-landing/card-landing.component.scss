@@ -1,3 +1,54 @@
 .card_landing_container {
   margin-top: 58px;
 }
+
+.features_wrapper {
+  display: flex;
+  gap: 20px;
+
+  .feature_box {
+    width: 380px;
+    padding: 16px;
+    position: relative;
+    flex-shrink: 0;
+    border-radius: 12px;
+    border: 1px solid #ffe1df;
+    background: #fef3f2;
+
+    .feature_tag {
+      position: absolute;
+      top: -12px;
+      left: -9px;
+      background: #e63946;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 4px 4px 4px 0;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 16px;
+    }
+    .feature_tag::after {
+      content: '';
+      position: absolute;
+      left: -5px;
+      bottom: -17px;
+      width: 5px;
+      height: 14px;
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-right: 8px solid #e63946;
+      border-bottom-left-radius: 3px;
+    }
+    .feature_content {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-top: 16px;
+
+      .feature_icon {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+}

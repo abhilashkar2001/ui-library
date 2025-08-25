@@ -1,3 +1,33 @@
 <div class="card_landing_container">
-  <p>card-landing works!</p>
+  <div class="features_container">
+    <div fxLayout="row">
+      <span class="header_lg_bold_black">Credit Card Features & Benefits</span>
+    </div>
+
+    <div
+      class="features_wrapper mt-16"
+      fxLayout="row"
+      fxLayoutGap="20px"
+      fxLayoutAlign="start stretch"
+    >
+      <div class="feature_box" *ngFor="let feature of features">
+        <span class="feature_tag curved">{{ feature.tag }}</span>
+        <div
+          class="feature_content"
+          fxLayout="row"
+          fxLayoutAlign="start start"
+          fxLayoutGap="16px"
+        >
+          <img
+            src="assets/images/card.svg"
+            alt="card-icon"
+            class="feature_icon"
+          />
+          <span class="feature_description medium_txt">{{
+            feature.description
+          }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
