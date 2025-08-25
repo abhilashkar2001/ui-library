@@ -40,11 +40,11 @@
         fxLayout="row"
         [ngClass]="{
           'selected-card':
-            paymentDetailsForm.get('paymentMethod')?.value === card.name,
+            paymentDetailsForm.get('services')?.value === card.name,
         }"
       >
         <ic-radio-button
-          [control]="paymentDetailsForm.get('paymentMethod') | formcontrol"
+          [control]="paymentDetailsForm.get('services') | formcontrol"
           [value]="card.name"
         ></ic-radio-button>
         <div>
@@ -54,24 +54,22 @@
       </div>
     </ng-container>
   </div>
-  <h3>{{ paymentDetailsForm.get('paymentMethod')?.value }}</h3>
+  <h3>{{ paymentDetailsForm.get('services')?.value }}</h3>
   <div class="details-container" fxFlex="100" fxLayout="row" fxLayoutGap="20px">
     <div fxFlex="25">
-      <div *ngIf="paymentDetailsForm.get('paymentMethod')?.value === 'M-pesa'">
+      <div *ngIf="paymentDetailsForm.get('services')?.value === 'M-pesa'">
         <ic-mobile-field
           [isdCode]="countriesIsdCodes"
           [isdControl]="paymentDetailsForm.get('isdCode') | formcontrol"
-          [formControl]="paymentDetailsForm.get('phone') | formcontrol"
+          [formControl]="paymentDetailsForm.get('mobile') | formcontrol"
           label="Mobile Number"
         ></ic-mobile-field>
       </div>
-      <div *ngIf="paymentDetailsForm.get('paymentMethod')?.value === 'Cash'">
+      <div *ngIf="paymentDetailsForm.get('services')?.value === 'Cash'">
         <p>You have selected Cash as your payment method.</p>
       </div>
       <div
-        *ngIf="
-          paymentDetailsForm.get('paymentMethod')?.value === 'Account Debit'
-        "
+        *ngIf="paymentDetailsForm.get('services')?.value === 'Account Debit'"
       >
         <ic-select
           [control]="paymentDetailsForm.get('accountNumber') | formcontrol"
@@ -82,13 +80,13 @@
     </div>
     <div
       *ngIf="
-        paymentDetailsForm.get('paymentMethod')?.value === 'M-pesa' ||
-        paymentDetailsForm.get('paymentMethod')?.value === 'Account Debit'
+        paymentDetailsForm.get('services')?.value === 'M-pesa' ||
+        paymentDetailsForm.get('services')?.value === 'Account Debit'
       "
       fxFlex="25"
     >
       <ic-form-field
-        [control]="paymentDetailsForm.get('amount') | formcontrol"
+        [control]="paymentDetailsForm.get('overallAmount') | formcontrol"
         label="Amount"
         placeholder="Enter the amount"
         [disabled]="true"

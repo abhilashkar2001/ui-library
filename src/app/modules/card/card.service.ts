@@ -14,4 +14,8 @@ export class CardSerivce {
   saveCardPersonalDetails(payload: any) {
     return this.http.post<any>(`${baseUrl}/card/personal-details`, payload);
   }
+  //  Save card payment details
+  saveCardPaymentDetails(payload: any) {
+    return this.http.post<any>(`${baseUrl}/card/payment-details`, payload);
+  }
 }
