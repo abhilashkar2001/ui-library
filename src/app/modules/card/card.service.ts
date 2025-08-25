@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
+import {
+  CardResponse,
+  EmpAndFinInfoPayload,
+  SaveCardDetailsPayload,
+} from './cardModel';
 
 const baseUrl = environment.microServiceURL;
 
@@ -13,5 +18,21 @@ export class CardSerivce {
   //   Save card personal details
   saveCardPersonalDetails(payload: any) {
     return this.http.post<any>(`${baseUrl}/card/personal-details`, payload);
+  }
+
+  // Save Employment and financial details
+  saveEmployeementFinancialDetails(payload: EmpAndFinInfoPayload) {
+    return this.http.post<any>(
+      `${baseUrl}/card/employment-financial-details`,
+      payload,
+    );
+  }
+
+  // Save Card Details
+  saveCardDetails(payload: SaveCardDetailsPayload) {
+    return this.http.post<CardResponse>(
+      `${baseUrl}/card/card-services`,
+      payload,
+    );
   }
 }
