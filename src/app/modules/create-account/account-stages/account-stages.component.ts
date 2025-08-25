@@ -15,8 +15,8 @@ import { RenderComponentService } from '../../../shared/services/render-componen
 import { ComponentLRUCache } from './component-lru-cache';
 // import { IProduct } from '@onerumango/utils';
 import {
-  ComponentStagesConstant,
-  ComponentStagesMap,
+  ComponentAccountConstant,
+  ComponentAccountMap,
 } from '../../../config/component.constant';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
@@ -86,9 +86,10 @@ export class AccountStagesComponent implements OnInit {
    * @param index
    * @param screenCode
    */
-  onPanelOpened<K extends keyof ComponentStagesMap>(
+  onPanelOpened<K extends keyof ComponentAccountMap>(
     index: number,
-    screenName: K,
+    screenCode: K,
+    screenName?: string,
     screenCodeNum?: number,
   ) {
     const currentSet = new Set(this.activePanels());
@@ -97,11 +98,26 @@ export class AccountStagesComponent implements OnInit {
       this.activePanels.set(currentSet);
       const container = this.container.get(index);
       if (container && !this.componentCache.get(index)) {
-        const component = ComponentStagesConstant[screenName];
-        const componentRef = this.renderComponentService.loadComponent(
-          container,
-          component,
-        );
+        const component = ComponentAccountConstant[screenCode];
+        // const componentRef = this.renderComponentService.loadComponent(
+        //   container,
+        //   component,
+        // );
+
+        // if ('screenCode' in componentRef.instance) {
+        //   (componentRef.instance as any).screenCode = screenCodeNum;
+        // }
+
+        // if (screenName && 'screenName' in componentRef.instance) {
+        //   (componentRef.instance as any).screenName = screenName;
+        // }
+
+        // this.componentCache.set(index, componentRef);
+        // this.componentRefs.set(index, componentRef);
+        // console.log(this.componentRefs, 'componentrefs');
+        const componentRef = this.renderComponentService.loadComponent<
+          ComponentAccountMap[K]
+        >(container, component);
 
         if ('screenCode' in componentRef.instance) {
           (componentRef.instance as any).screenCode = screenCodeNum;
@@ -113,7 +129,6 @@ export class AccountStagesComponent implements OnInit {
 
         this.componentCache.set(index, componentRef);
         this.componentRefs.set(index, componentRef);
-        console.log(this.componentRefs, 'componentrefs');
       }
     }
   }

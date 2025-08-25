@@ -212,9 +212,8 @@ export class LoginComponent implements OnInit {
       })
       .subscribe((response: any) => {
         if (
-          this.category === 'Accounts' &&
-          (this.basisClass === 'Cheque' ||
-            this.basisClass === 'Cheque Corporate')
+          this.basisClass === 'Cheque' ||
+          this.basisClass === 'Cheque Corporate'
         ) {
           this.router.navigate(['/cheque-book/stages']);
         } else if (this.category === 'Accounts') {

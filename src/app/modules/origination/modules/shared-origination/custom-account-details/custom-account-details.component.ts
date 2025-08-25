@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LocaleData, selectUser, User } from '@onerumango/utils';
+import { AccountService } from 'app/shared/services/account.service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { OpenAccountService } from 'app/shared/services/open-service/open-account.service';
@@ -62,9 +63,10 @@ export class CustomAccountDetailsComponent {
     private genericValueService: GenericValueService,
     private store: Store,
     private loanService: LoanService,
+    private accountService: AccountService,
     // private dialog: MatDialog,
 
-    private accountService: OpenAccountService,
+    private openAccountService: OpenAccountService,
     private sessionStorageService: SessionStorageService,
     private activatedRoute: ActivatedRoute,
   ) {
@@ -80,7 +82,8 @@ export class CustomAccountDetailsComponent {
   }
 
   ngOnInit() {
-    this.originationId = this.sessionStorageService.getOriginationId();
+    this.originationId =
+      this.sessionStorageService.getOriginationId() || '1152';
     this.fetchGenericValues();
     // this.initializeCreateAccountDetailsArray();
     if (this.originationId) {
@@ -140,12 +143,14 @@ export class CustomAccountDetailsComponent {
   // fetch loan details function
   fetchLoanDetails() {
     if (this.originationId)
-      this.loanService.getLoanDetails(this.originationId).subscribe((resp) => {
-        if (resp.statusCode === 200) {
-          this.accountDetailsForm?.patchValue(resp?.data);
-          // this.initializeCreateAccountDetailsArray(resp?.data);
-        }
-      });
+      this.accountService
+        .getAccountDetails(this.originationId)
+        .subscribe((resp) => {
+          if (resp.statusCode === 200) {
+            this.accountDetailsForm?.patchValue(resp?.data);
+            // this.initializeCreateAccountDetailsArray(resp?.data);
+          }
+        });
   }
 
   // fetch Generic Method
@@ -161,7 +166,7 @@ export class CustomAccountDetailsComponent {
   }
 
   fetchBranch() {
-    this.accountService.fetchBranch().subscribe((resp: any) => {
+    this.openAccountService.fetchBranch().subscribe((resp: any) => {
       this.accountBranchArr = Array.isArray(resp.data)
         ? resp.data
         : Object.values(resp.data);
@@ -171,22 +176,24 @@ export class CustomAccountDetailsComponent {
   }
 
   fetchCurrency() {
-    this.accountService.fetchCurrency().subscribe((resp: any) => {
+    this.openAccountService.fetchCurrency().subscribe((resp: any) => {
       this.currencyArr = resp?.data ?? [];
     });
   }
   fetchCustomerCategory() {
-    this.accountService.fetchCustomerCategory().subscribe((resp: any) => {
+    this.openAccountService.fetchCustomerCategory().subscribe((resp: any) => {
       this.customerCategoryArr = resp?.data ?? [];
     });
   }
   fetchBasicDetails() {
-    this.accountService.fetchProductDetails('2948').subscribe((resp: any) => {
-      if (resp?.data?.length > 0) {
-        this.createAccountDetailsSummaryArr = resp?.data[0] ?? [];
-        this.accountSummaryEmit.emit(this.createAccountDetailsSummaryArr);
-      }
-    });
+    this.openAccountService
+      .fetchProductDetails(this.originationId)
+      .subscribe((resp: any) => {
+        if (resp?.data?.length > 0) {
+          this.createAccountDetailsSummaryArr = resp?.data[0] ?? [];
+          this.accountSummaryEmit.emit(this.createAccountDetailsSummaryArr);
+        }
+      });
   }
   get holderType() {
     return this.accountDetailsForm?.get('holderType')?.value;
