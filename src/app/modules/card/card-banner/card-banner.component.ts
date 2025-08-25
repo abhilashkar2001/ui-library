@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./card-banner.component.scss']
 })
 export class CardBannerComponent {
+  features = [
+    'BookMyShow and Inox Offer',
+    'Spends-based complimentary airport lounge access',
+    'Higher reward points'
+  ]
 
 }
