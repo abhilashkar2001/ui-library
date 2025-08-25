@@ -8,15 +8,17 @@
     {{ description }}
   </div>
   <!-- Card Info-->
-  <div
-    class="cards_info"
-    fxLayout="row wrap"
-    fxLayoutGap="16px"
-    fxLayoutAlign="start stretch"
-  >
-    <div class="card_item" *ngFor="let info of cardInfo" fxLayout="row">
-      <span> <img src="assets/images/star.svg" alt="star" /></span>
-      <div fxLayout="column">
+  <div class="cards_info" fxLayout="row wrap" fxLayoutAlign="start stretch">
+    <div
+      class="card_item"
+      *ngFor="let info of cardInfo"
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+    >
+      <span fxFlex="8" class="star_icon">
+        <img src="assets/images/star.svg" alt="star" />
+      </span>
+      <div fxFlex="88" fxLayout="column">
         <span class="card_title">{{ info?.title }}</span>
         <span class="card_description">{{ info?.description }}</span>
         <span class="card_points" *ngFor="let point of info?.cardPoints">

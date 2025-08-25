@@ -26,4 +26,10 @@ export class AboutCardComponent {
   benefitsTitle = AboutCard.benefits[0]?.title;
   benefitsDescription = AboutCard.benefits[0]?.description;
   benefitsCardInfo = AboutCard.benefits[0]?.cardInfo;
+  // features constants
+  featuresTitle = AboutCard.features[0]?.title;
+  featuresDescription = AboutCard.features[0]?.description;
+  featuresBannerInfo = AboutCard.features[0]?.bannerInfo;
+  featuresCardTitle = AboutCard.features[0]?.cardTitle;
+  featuresCardInfo = AboutCard.features[0]?.cardInfo;
 }

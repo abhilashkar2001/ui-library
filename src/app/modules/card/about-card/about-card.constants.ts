@@ -83,4 +83,48 @@ export class AboutCard {
       ],
     },
   ];
+  static readonly features = [
+    {
+      title: 'Advanced Card Features',
+      description:
+        'Experience next-generation banking technology with premium features designed for the modern lifestyle.',
+      bannerInfo: {
+        title: 'Premium Metal Card',
+        description:
+          'Crafted from premium metal with cutting-edge technology embedded within.',
+        types: [
+          {
+            title: 'Contactless Technology',
+            description: 'Tap & pay anywhere',
+          },
+          {
+            title: 'Contactless Technology',
+            description: 'Tap & pay anywhere',
+          },
+          {
+            title: 'Contactless Technology',
+            description: 'Tap & pay anywhere',
+          },
+        ],
+      },
+      cardTitle: 'Digital Banking Excellence',
+      cardInfo: [
+        {
+          title: 'AI-Powered Mobile App',
+          description: `Intelligent spending insights, budget tracking, and personalized <br/> recommendations powered by machine learning.`,
+          options: ['Smart Analytics', 'Voice Commands'],
+        },
+        {
+          title: 'Biometric Authentication',
+          description: `Multi-layer security with fingerprint, face recognition, and voice <br/> authentication for ultimate protection.`,
+          options: ['Face ID', 'Touch ID'],
+        },
+        {
+          title: 'Blockchain Integration',
+          description: `Secure transaction ledger with blockchain technology ensuring transparency <br/> and immutable records.`,
+          options: ['Immutable', 'Transparent'],
+        },
+      ],
+    },
+  ];
 }
