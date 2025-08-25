@@ -100,12 +100,9 @@ export class StagesComponent implements OnInit {
           component,
         );
 
-        if ('screenCode' in componentRef.instance) {
-          (componentRef.instance as any).screenCode = screenCodeNum;
-        }
-
-        if (screenName && 'screenName' in componentRef.instance) {
-          (componentRef.instance as any).screenName = screenName;
+        componentRef.setInput('screenCode', screenCodeNum);
+        if (screenName) {
+          componentRef.setInput('screenName', screenName);
         }
 
         this.componentCache.set(index, componentRef);

@@ -18,21 +18,21 @@
     <div fxFlex="24">
       <ic-select
         label="Card Type"
-        [control]="cardForm?.get('cardType') | formcontrol"
+        [control]="cardForm?.get('cardTypeId') | formcontrol"
       >
       </ic-select>
     </div>
     <div fxFlex="24">
       <ic-select
         label="Card Network"
-        [control]="cardForm?.get('cardNetwork') | formcontrol"
+        [control]="cardForm?.get('cardNetworkId') | formcontrol"
       >
       </ic-select>
     </div>
     <div fxFlex="24">
       <ic-select
         label="Preferred Billing Date"
-        [control]="cardForm?.get('preferredBillingDate') | formcontrol"
+        [control]="cardForm?.get('preferredBillingDateId') | formcontrol"
       >
       </ic-select>
     </div>
@@ -54,7 +54,7 @@
       <h3 class="header_md_bold_black" fxFlex="100">Delivery Location</h3>
       <ic-radio-button
         *ngFor="let account of address"
-        [control]="cardForm.get('location') | formcontrol"
+        [control]="cardForm.get('deliveryLocation') | formcontrol"
         [label]="account.label"
         [value]="account.value"
       >
@@ -65,7 +65,7 @@
   <div
     fxLayout="column"
     class="delivery-cont"
-    *ngIf="cardForm?.get('location')?.value"
+    *ngIf="cardForm?.get('deliveryLocation')?.value"
   >
     <h3 class="header_md_bold_black" fxFlex="100">Delivery Address</h3>
     <div fxFlex="100" fxLayout="row" fxLayoutGap="20">
