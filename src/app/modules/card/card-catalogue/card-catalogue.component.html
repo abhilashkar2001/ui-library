@@ -1,1 +1,94 @@
-<p>card-catalogue works!</p>
+<div fxLayout="row" fxLayoutGap="16px" class="page-container">
+  <!-- Sidebar Filters -->
+  <ic-card fxFlex="25">
+    <div fxLayoutAlign="space-between center">
+      <h3 class="header_gt_md_bold_black">Advanced Filters</h3>
+      <a class="theme_md"><u>Clear Filter</u></a>
+    </div>
+    <mat-divider class="breadcrum_sm"></mat-divider>
+    <div class="mx-8 mt-4">
+      <h4 class="theme_gt_md">Card Type</h4>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        *ngFor="let type of cardTypes"
+        class="py-2"
+      >
+        <ic-checkbox></ic-checkbox>
+        <span class="header_md">{{ type }}</span>
+      </div>
+    </div>
+
+    <div class="mx-8 mt-4">
+      <h4 class="theme_gt_md">Annual Fee Range</h4>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        *ngFor="let fee of feeRanges"
+        class="py-2"
+      >
+        <ic-checkbox></ic-checkbox>
+        <span class="header_md">{{ fee }}</span>
+      </div>
+    </div>
+
+    <div class="mx-8 mt-4">
+      <h4 class="theme_gt_md">Card Variant</h4>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        *ngFor="let variant of variants"
+        class="py-2"
+      >
+        <ic-checkbox></ic-checkbox>
+        <span class="header_md">{{ variant }}</span>
+      </div>
+    </div>
+  </ic-card>
+
+  <!-- Card List -->
+  <div fxFlex="75">
+    <div fxLayoutAlign="space-between center">
+      <h2 class="header_xl_black">Choose the best Credit Card</h2>
+      <span class="breadcrum_md">{{ cards.length }} cards found</span>
+    </div>
+
+    <div
+      *ngFor="let card of cards"
+      class="card"
+      fxLayout="row"
+      fxLayoutGap="16px"
+    >
+      <!-- Card Image -->
+      <div fxFlex="25" class="card-image">
+        <img [src]="'assets/images/card.svg'" alt="Card image" />
+      </div>
+      <mat-divider class="breadcrum_sm"></mat-divider>
+      <!-- Card Details -->
+      <div fxFlex="75" class="card-details">
+        <h3>{{ card.title }}</h3>
+        <ul>
+          <li *ngFor="let benefit of card.benefits">{{ benefit }}</li>
+        </ul>
+        <div class="fees">
+          <span
+            >Joining Fee: <strong>{{ card.joiningFee }}</strong></span
+          >
+          <span
+            >Annual Fee: <strong>{{ card.annualFee }}</strong></span
+          >
+        </div>
+        <div fxLayoutAlign="start center" fxLayoutGap="12">
+          <ic-button
+            [icButtonType]="'filled-rounded'"
+            [label]="'Apply Now'"
+            [type]="'submit'"
+            size="medium"
+          >
+          </ic-button>
+          <span class="theme_md">More Details</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
