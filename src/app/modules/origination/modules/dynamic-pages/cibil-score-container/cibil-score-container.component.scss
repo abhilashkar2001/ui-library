@@ -39,7 +39,7 @@ p {
 
 .text-info-1 {
   display: block;
-  color: #0033a1;
+  color: var(--ic-text-theme);
   font-family: var(--ic-primary-font-family);
   font-size: 20px;
   font-style: normal;
@@ -63,7 +63,7 @@ p {
 }
 
 .mobile {
-  color: #0033a1;
+  color: var(--ic-text-theme);
   font-weight: 600;
 }
 
@@ -72,7 +72,7 @@ p {
 }
 
 .link {
-  color: #0033a1;
+  color: var(--ic-text-theme);
   font-family: var(--ic-primary-font-family);
   font-size: 13px;
   font-weight: 500;

@@ -34,7 +34,7 @@
     align-items: center;
 
     span {
-      color: #0033a1;
+      color: var(--ic-text-theme);
       font-weight: 600;
       font-size: 20px;
     }
@@ -69,7 +69,7 @@
 
 .shareBtn {
   box-shadow: 3px 3px 15px 0px #0000000f;
-  color: #0033a1;
+  color: var(--ic-text-theme);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,7 +87,7 @@
 }
 
 .call_link {
-  color: #0033a1;
+  color: var(--ic-text-theme);
 }
 
 .appointment-card {
@@ -96,7 +96,7 @@
   font-weight: 500;
 
   span {
-    color: #0033a1;
+    color: var(--ic-text-theme);
   }
 }
 

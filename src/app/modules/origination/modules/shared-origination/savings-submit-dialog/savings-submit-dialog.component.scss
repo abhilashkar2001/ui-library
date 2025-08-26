@@ -40,7 +40,7 @@
 .standard-font-blue {
   font-weight: 500;
   font-size: 20px;
-  color: #0033a1;
+  color: var(--ic-text-theme);
   font-family: var(--ic-primary-font-family);
 }
 
@@ -67,7 +67,7 @@
 .image-button {
   width: 135px;
   height: 37px;
-  color: #0033a1 !important;
+  color: var(--ic-text-theme) !important;
   background: #ffffff 0% 0% no-repeat padding-box;
   border-radius: 35px;
   opacity: 1;

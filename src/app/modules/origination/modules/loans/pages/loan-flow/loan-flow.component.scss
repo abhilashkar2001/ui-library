@@ -26,7 +26,7 @@
 .deposit_icon {
   width: 75px;
   height: 75px;
-  background: linear-gradient(137.16deg, #051a2d 0%, #0033a1 96.5%);
+  background: linear-gradient(137.16deg, #051a2d 0%, var(--ic-text-theme) 96.5%);
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -54,7 +54,7 @@
 ::ng-deep .mat-step-header.mat-vertical-stepper-header .mat-step-icon {
   background: #e6efff;
   border: 1px solid #bac0d7 !important;
-  color: #0033a1 !important;
+  color: var(--ic-clr-primary-a10) !important;
   font-size: 24px;
   width: 60px;
   border-radius: 10px;
@@ -83,7 +83,7 @@
   }
 
   .mat-step-label.mat-step-label-active.mat-step-label-selected {
-    // color: #0033a1 !important;
+    // color: var(--ic-text-theme) !important;
     // font-weight: 600;
     font-size: 24px !important;
     padding-left: 33px !important;
@@ -107,7 +107,7 @@
 }
 
 ::ng-deep .mat-step-header.mat-vertical-stepper-header .mat-step-icon-selected {
-  background: linear-gradient(137.16deg, #051a2d 0%, #0033a1 96.5%);
+  background: linear-gradient(137.16deg, #051a2d 0%, var(--ic-clr-primary-a10) 96.5%);
   color: white !important;
   width: 60px;
   border-radius: 10px;
@@ -139,7 +139,7 @@
 .deposit_icon {
   width: 75px;
   height: 75px;
-  background: linear-gradient(137.16deg, #051a2d 0%, #0033a1 96.5%);
+  background: linear-gradient(137.16deg, #051a2d 0%, var(--ic-clr-primary-a10) 96.5%);
   border-radius: 10px;
   display: flex;
   justify-content: center;

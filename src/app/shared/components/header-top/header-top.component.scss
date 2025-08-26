@@ -22,7 +22,7 @@ header.navbar {
 .login {
   width: 168px;
   height: 48px;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0%
+  background: transparent linear-gradient(91deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%) 0% 0%
     no-repeat padding-box;
   border-radius: 24px;
   font: normal normal 15px/23px var(--ic-primary-font-family);

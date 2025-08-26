@@ -138,12 +138,12 @@ mat-expansion-panel.default-expansion-panel {
 
 .title-text {
   font-family: var(--ic-primary-font-family), serif;
-  color: #0033a1;
+  color: var(--ic-text-theme);
   font-weight: 600;
 }
 
 .text-highlighted {
-  color: #0033a1;
+  color: var(--ic-text-theme);
   font-family: var(--ic-primary-font-family), serif;
 }
 
