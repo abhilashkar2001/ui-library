@@ -8,7 +8,7 @@ describe('OverViewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [OverViewComponent]
+      declarations: [OverViewComponent],
     });
     fixture = TestBed.createComponent(OverViewComponent);
     component = fixture.componentInstance;
