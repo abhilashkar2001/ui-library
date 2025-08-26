@@ -18,19 +18,20 @@ export class PepComponentComponent implements OnInit {
     {
       label: 'Politically Exposed Person (PEP)',
       value: 'ispoliticalPersion',
-      description:'Secure and manage your funds easily with M-pesa during low balance situations',
+      description:
+        'Secure and manage your funds easily with M-pesa during low balance situations',
     },
     {
       label: 'Related to a Politically Exposed Person (PEP)',
       value: 'isrelatedtoPoliticalperson',
-      description:'Pay with cash directly at the counter for a quick and easy transaction.',
-
+      description:
+        'Pay with cash directly at the counter for a quick and easy transaction.',
     },
     {
       label: 'Not Applicable',
       value: 'notApplicable',
-      description:'Amount is auto-debited from your account for smooth, hassle-free payments.',
-
+      description:
+        'Amount is auto-debited from your account for smooth, hassle-free payments.',
     },
   ];
 

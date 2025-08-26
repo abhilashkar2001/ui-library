@@ -94,12 +94,21 @@ export class LoansLandingComponent implements OnInit {
   }
 
   customApplyLoan(e: any) {
-    this.router.navigate(['/origination/loan/loan-type'], {
-      queryParams: {
-        subClass: e,
-        category: this.type === 'Cheque' ? this.type : this.category,
-      },
-    });
+    if (e.toLowerCase().includes('card')) {
+      this.router.navigate(['/apply-card/landing'], {
+        queryParams: {
+          subClass: e,
+          category: this.type === 'Cheque' ? this.type : this.category,
+        },
+      });
+    } else {
+      this.router.navigate(['/origination/loan/loan-type'], {
+        queryParams: {
+          subClass: e,
+          category: this.type === 'Cheque' ? this.type : this.category,
+        },
+      });
+    }
   }
 
   customApply() {

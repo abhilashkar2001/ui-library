@@ -1,11 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AccountSelectionComponent } from 'app/modules/create-account/components/account-selection/account-selection.component';
+import { LoanService } from 'app/shared/services/loan/loan.service';
+import { SessionStorageService } from 'app/shared/services/session-storage.service';
 
 @Component({
   selector: 'app-card-catalogue',
   templateUrl: './card-catalogue.component.html',
   styleUrls: ['./card-catalogue.component.scss'],
 })
-export class CardCatalogueComponent {
+export class CardCatalogueComponent implements OnInit {
   cardTypes = [
     'All Cards',
     'Rewards Cards',
@@ -25,40 +30,88 @@ export class CardCatalogueComponent {
   ];
   variants = ['VISA', 'AMERICAN EXPRESS', 'MasterCard', 'RuPay'];
 
-  cards = [
-    {
-      title: 'Times Black DTB Bank Credit Card',
-      image: 'assets/images/card.svg',
-      benefits: [
-        'Luxury stay gift card from EaseMyTrip worth ₹10,000',
-        'Travel Visa Benefits with Altas and OneVasco worth ₹10,000',
-        'Special Access to The Quorum club with exceptional benefits',
-        'Unlimited complimentary access to lounges',
-      ],
-      joiningFee: '₹20,000 + GST',
-      annualFee: '₹20,000 + GST',
-    },
-    {
-      title: 'Emeralde Private Metal Credit Card',
-      image: 'assets/images/card.svg',
-      benefits: [
-        '1 Complimentary night stay with Epicure Plus Membership',
-        'Complimentary EazyDiner Prime Membership every year',
-        '12,500 ICICI Bank Reward Points as Joining Bonus and Annual Bonus',
-      ],
-      joiningFee: '₹12,500 + GST',
-      annualFee: '₹12,500 + GST',
-    },
-    {
-      title: 'Emeralde Private Metal Credit Card',
-      image: 'assets/images/card.svg',
-      benefits: [
-        '1 Complimentary night stay with Epicure Plus Membership',
-        'Complimentary EazyDiner Prime Membership every year',
-        '12,500 ICICI Bank Reward Points as Joining Bonus and Annual Bonus',
-      ],
-      joiningFee: '₹12,500 + GST',
-      annualFee: '₹12,500 + GST',
-    },
-  ];
+  basisClass!: string;
+  category!: string;
+  productList: any;
+  basisId!: number;
+  cards:
+    | {
+        title: string;
+        image: string;
+        benefits: string;
+        joiningFee: number;
+        annualFee: number;
+        basisId: number;
+      }[]
+    | undefined;
+
+  constructor(
+    private cardService: LoanService,
+    private activateRoute: ActivatedRoute,
+    private dialog: MatDialog,
+    private sessionStorageService: SessionStorageService,
+    private router: Router,
+  ) {}
+
+  ngOnInit() {
+    this.activateRoute.queryParamMap.subscribe((params: any) => {
+      this.basisClass = params.get('subClass');
+      this.category = params.get('category');
+    });
+    this.fetchSubClassProducts();
+  }
+
+  fetchSubClassProducts() {
+    this.cardService
+      .getSubLoanTypes(this.basisClass)
+      .subscribe((response: any) => {
+        this.productList = response.data.filter(
+          (item: any) => !!item?.productDetails,
+        );
+
+        if (this.productList.length > 0) {
+          const product = this.productList[0].productDetails[0];
+          this.cards = [
+            {
+              title: product?.basisName || 'Card',
+              image: 'assets/images/card.svg',
+              benefits: product?.featureInfo?.length
+                ? product.featureInfo.map((f: any) => f.description)
+                : ['No benefits available'],
+              joiningFee: product?.joiningFee || '₹20,000 + GST',
+              annualFee: product?.annualFee || '₹20,000 + GST',
+              basisId: product?.basisId,
+            },
+          ];
+        }
+      });
+  }
+
+  applyCard(selectedCard: any) {
+    const dialogRef = this.dialog.open(AccountSelectionComponent, {
+      width: '50%',
+      height: 'auto',
+      backdropClass: 'confirmDialogComponent',
+      hasBackdrop: true,
+      disableClose: true,
+      data: {
+        category: this.category,
+        basisClass: this.basisClass,
+        basisId: selectedCard.basisId,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.sessionStorageService.setItem('category', this.category);
+      this.sessionStorageService.setItem('basisClass', this.basisClass);
+      this.sessionStorageService.setItem('basisId', selectedCard.basisId);
+      this.goToLogin();
+    });
+  }
+
+  goToLogin() {
+    this.sessionStorageService.setItem('category', this.category);
+    this.sessionStorageService.setItem('basisClass', this.basisClass);
+    this.router.navigate(['loan/login']);
+  }
 }

@@ -60,8 +60,8 @@
   <!-- Card List -->
   <div fxFlex="75">
     <div fxLayoutAlign="space-between center">
-      <h2 class="header_xl_black">Choose the best Credit Card</h2>
-      <span class="breadcrum_md">{{ cards.length }} cards found</span>
+      <h2 class="header_xl_black">Choose the best {{ basisClass }}</h2>
+      <span class="breadcrum_md">{{ cards?.length }} cards found</span>
     </div>
 
     <div
@@ -100,6 +100,7 @@
             [label]="'Apply Now'"
             [type]="'submit'"
             size="medium"
+            (OnClick)="applyCard(card)"
           >
           </ic-button>
           <span class="theme_md">More Details</span>

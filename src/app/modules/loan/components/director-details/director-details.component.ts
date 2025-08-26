@@ -145,7 +145,7 @@ export class DirectorDetailsComponent implements OnInit {
           this.empoymentArray = resp.data['EMPLOYMENTTYPE'];
           this.relationArray = resp.data['RELATIONSHIPTYPE'];
           this.statementOptionArr = resp.data['COMMUNICATIONTYPE'];
-          this.customerCategory=resp.data['CUSTOMERCATEGORY']
+          this.customerCategory = resp.data['CUSTOMERCATEGORY'];
         }
       });
   }
