@@ -1,7 +1,7 @@
 .overview {
   @mixin cards_more_details($size, $weight, $color) {
-    font-family: --var(--ic-primary-font-family);
-    font-size: $size px;
+    font-family: var(--ic-primary-font-family);
+    font-size: #{$size}px;
     font-weight: $weight;
     color: $color;
   }
@@ -9,21 +9,28 @@
     @include cards_more_details(24, 600, #06113c);
   }
   .description {
+    margin: 1% 0% 0% 0%;
     @include cards_more_details(18, 400, #4c5371);
   }
-  .card_item {
-    padding: 16px 8px;
-    margin-bottom: 16px;
-    border-radius: 16px;
-    background-color: #f8f9fa;
-    .card_title {
-      @include cards_more_details(18, 600, #06113c);
-    }
-    .card_value {
-      @include cards_more_details(24, 700, #004c97);
-    }
-    .card_description {
-      @include cards_more_details(14, 400, #6b7280);
+  .cards_info {
+    margin: 1% 0% 0% 0%;
+    .card_item {
+      padding: 24px;
+      margin-bottom: 16px;
+      border-radius: 12px;
+      background-color: #f8f9fa;
+      flex: 1 1 calc(50% - 16px);
+      max-width: calc(50% - 16px);
+      box-sizing: border-box;
+      .card_title {
+        @include cards_more_details(18, 600, #06113c);
+      }
+      .card_value {
+        @include cards_more_details(24, 700, #004c97);
+      }
+      .card_description {
+        @include cards_more_details(14, 400, #6b7280);
+      }
     }
   }
   .key_highlights {
@@ -31,6 +38,7 @@
       @include cards_more_details(16, 600, #000000);
     }
     .points {
+      margin: 1% 0% 0% 0%;
       .point {
         border-radius: 50%;
         background-color: #004c97;

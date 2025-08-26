@@ -1,7 +1,7 @@
 .benefits {
   @mixin cards_more_details($size, $weight, $color) {
-    font-family: --var(--ic-primary-font-family);
-    font-size: $size px;
+    font-family: var(--ic-primary-font-family);
+    font-size: #{$size}px;
     font-weight: $weight;
     color: $color;
   }
@@ -9,27 +9,45 @@
     @include cards_more_details(24, 600, #06113c);
   }
   .description {
+    margin: 1% 0% 0% 0%;
     @include cards_more_details(18, 400, #4c5371);
   }
-  .card_item {
-    padding: 16px 8px;
-    margin-bottom: 16px;
-    border-radius: 16px;
-    background-color: #f8f9fa;
-    .card_title {
-      @include cards_more_details(18, 600, #06113c);
-    }
-    .card_description {
-      @include cards_more_details(14, 400, #6b7280);
-    }
-    .card_points {
-      @include cards_more_details(12, 400, #525252);
-      .point {
-        border-radius: 50%;
+  .cards_info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 1% 0% 0% 0%;
+    .card_item {
+      flex: 1 1 calc(50% - 16px);
+      max-width: calc(50% - 16px);
+      box-sizing: border-box;
+      .star_icon {
         background-color: #004c97;
-        margin: 9px 3px 0px 0px;
-        width: 4px;
-        height: 4px;
+        border-radius: 8px;
+        padding: 12px;
+        height: 40%;
+      }
+      padding: 24px;
+      margin-bottom: 16px;
+      border-radius: 12px;
+      background-color: #f8f9fa;
+      .card_title {
+        @include cards_more_details(18, 600, #06113c);
+      }
+      .card_description {
+        margin: 1% 0% 0% 0%;
+        @include cards_more_details(14, 400, #6b7280);
+      }
+      .card_points {
+        margin: 1% 0% 0% 0%;
+        @include cards_more_details(12, 400, #525252);
+        .point {
+          border-radius: 50%;
+          background-color: #004c97;
+          margin: 9px 3px 0px 0px;
+          width: 4px;
+          height: 4px;
+        }
       }
     }
   }

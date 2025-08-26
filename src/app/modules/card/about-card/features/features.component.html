@@ -1,0 +1,66 @@
+<div class="features">
+  <!-- Title -->
+  <div class="title">
+    {{ title }}
+  </div>
+
+  <!-- Description -->
+  <div class="description">
+    {{ description }}
+  </div>
+
+  <!-- Banner Info -->
+  <div class="banner_card">
+    <div class="banner_title">{{ bannerInfo?.title }}</div>
+    <div class="banner_description">{{ bannerInfo?.description }}</div>
+
+    <div class="banner_types" fxLayout="row" fxLayoutAlign=" space-between">
+      <div
+        fxFlex="30"
+        *ngFor="let typ of bannerInfo?.types"
+        fxLayoutAlign="space-between"
+        fxLayout="row"
+      >
+        <div fxFlex="13" fxLayoutAlign="center start" class="banner_star_icon">
+          <img src="assets/images/star.svg" alt="star" />
+        </div>
+
+        <div fxFlex="80" class="type_content" fxLayout="column">
+          <span class="type_title">{{ typ?.title }}</span>
+          <span class="type_description">{{ typ?.description }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card Info -->
+  <div class="card_info">
+    <div class="title">{{ cardTitle }}</div>
+    <div fxLayout="row wrap" fxLayoutGap="16px">
+      <div
+        fxLayoutAlign="space-between"
+        class="cards"
+        *ngFor="let card of cardInfo"
+        fxLayout="row"
+      >
+        <div fxFlex="8" class="card_star_icon">
+          <img src="assets/images/blue-star.svg" alt="star" />
+        </div>
+        <div
+          fxFlex="88"
+          class="card_content"
+          fxLayout="column"
+          fxLayoutGap="6px"
+        >
+          <span class="title">{{ card?.title }}</span>
+          <div class="description" [innerHTML]="card?.description"></div>
+          <div class="options" fxLayout="row" fxLayoutGap="8px">
+            <span *ngFor="let opt of card?.options" class="label">
+              {{ opt }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
