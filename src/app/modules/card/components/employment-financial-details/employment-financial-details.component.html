@@ -6,7 +6,7 @@
   <div fxFlex="100" fxLayout="row" fxLayoutGap="20px">
     <ic-select
       fxFlex="25"
-      [control]="employeeFinacialForm.get('prefixId') | formcontrol"
+      [control]="employeeFinacialForm.get('employmentStatusId') | formcontrol"
       [options]="prefixArray"
       bindLabelKey="values"
       bindValueKey="id"
@@ -24,7 +24,7 @@
     ></ic-form-field>
     <ic-select
       fxFlex="25"
-      [control]="employeeFinacialForm.get('industrySector') | formcontrol"
+      [control]="employeeFinacialForm.get('industrySectorId') | formcontrol"
       [options]="prefixArray"
       bindLabelKey="values"
       bindValueKey="id"
@@ -44,7 +44,7 @@
   <div fxFlex="100" fxLayout="row" fxLayoutGap="20px">
     <ic-form-field
       fxFlex="25"
-      [control]="employeeFinacialForm.get('employmentActivity') | formcontrol"
+      [control]="employeeFinacialForm.get('employerActivity') | formcontrol"
       [icAlphabetOnly]="true"
       [maxLength]="20"
       fxFlex="24"
@@ -61,7 +61,7 @@
     <ic-select
       fxFlex="25"
       [control]="
-        employeeFinacialForm.get('estimatedMonthlyIncome') | formcontrol
+        employeeFinacialForm.get('estimatedMonthIncomeId') | formcontrol
       "
       [options]="prefixArray"
       bindLabelKey="values"
@@ -72,7 +72,7 @@
     </ic-select>
     <ic-select
       fxFlex="25"
-      [control]="employeeFinacialForm.get('sourceOfFunds') | formcontrol"
+      [control]="employeeFinacialForm.get('sourceOfFundsId') | formcontrol"
       [options]="prefixArray"
       bindLabelKey="values"
       bindValueKey="id"
@@ -84,7 +84,7 @@
   <div fxFlex="100" fxLayout="row" fxLayoutGap="20px">
     <ic-textarea
       fxFlex="49"
-      [control]="employeeFinacialForm.get('incSrcDesp') | formcontrol"
+      [control]="employeeFinacialForm.get('incomeSourceDesc') | formcontrol"
       [rows]="8"
       label="Income Source Detail Description"
     >

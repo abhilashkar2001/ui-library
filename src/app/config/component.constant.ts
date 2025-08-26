@@ -58,6 +58,26 @@ export const ComponentConstant: {
   W1SIGN: DigitalSignatureComponent,
   W1EMFD: EmpFinDetailsComponent,
 };
+export interface ComponentAccountMap {
+  W1PEID: PersonalIdentificationComponent;
+  W1PERD: CommonPersonalDetailsComponent;
+  W1ACDE: AccountDetailsComponent;
+  W1DOCU: DocumentUploadComponent;
+  W1SUM: AccountSummaryComponent;
+  W1SIGN: DigitalSignatureComponent;
+}
+
+export const ComponentAccountConstant: {
+  [K in keyof ComponentAccountMap]: Type<ComponentAccountMap[K]>;
+} = {
+  W1PEID: PersonalIdentificationComponent,
+  W1PERD: CommonPersonalDetailsComponent,
+  W1ACDE: AccountDetailsComponent,
+  W1DOCU: DocumentUploadComponent,
+  W1SUM: AccountSummaryComponent,
+  W1SIGN: DigitalSignatureComponent,
+};
+
 export interface ComponentStagesMap {
   'Account Details': AccountDetailsComponent;
   'Loan Document': AccountDocumentUploadComponent;

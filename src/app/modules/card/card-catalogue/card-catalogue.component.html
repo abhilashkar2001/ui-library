@@ -5,40 +5,42 @@
       <h3 class="header_gt_md_bold_black">Advanced Filters</h3>
       <a class="theme_md"><u>Clear Filter</u></a>
     </div>
-    <mat-divider class="breadcrum_sm"></mat-divider>
-    <div class="mx-8 mt-4">
+    <mat-divider class="divider mt-12"></mat-divider>
+    <div class="m-8 mt-12">
       <h4 class="theme_gt_md">Card Type</h4>
       <div
         fxLayout="row"
         fxLayoutAlign="start center"
         *ngFor="let type of cardTypes"
-        class="py-2"
+        class="pt-12"
       >
         <ic-checkbox></ic-checkbox>
         <span class="header_md">{{ type }}</span>
       </div>
     </div>
+    <mat-divider class="divider mt-12"></mat-divider>
 
-    <div class="mx-8 mt-4">
+    <div class="m-8 mt-12">
       <h4 class="theme_gt_md">Annual Fee Range</h4>
       <div
         fxLayout="row"
         fxLayoutAlign="start center"
         *ngFor="let fee of feeRanges"
-        class="py-2"
+        class="pt-12"
       >
         <ic-checkbox></ic-checkbox>
         <span class="header_md">{{ fee }}</span>
       </div>
     </div>
+    <mat-divider class="divider mt-12"></mat-divider>
 
-    <div class="mx-8 mt-4">
+    <div class="m-8 mt-12">
       <h4 class="theme_gt_md">Card Variant</h4>
       <div
         fxLayout="row"
         fxLayoutAlign="start center"
         *ngFor="let variant of variants"
-        class="py-2"
+        class="pt-12"
       >
         <ic-checkbox></ic-checkbox>
         <span class="header_md">{{ variant }}</span>
@@ -61,14 +63,16 @@
     >
       <!-- Card Image -->
       <div fxFlex="25" class="card-image">
-        <img [src]="'assets/images/card.svg'" alt="Card image" />
+        <img [src]="card.image" alt="Card image" />
       </div>
       <mat-divider class="breadcrum_sm"></mat-divider>
       <!-- Card Details -->
       <div fxFlex="75" class="card-details">
-        <h3>{{ card.title }}</h3>
+        <h3 class="header_lg_bold_black">{{ card.title }}</h3>
         <ul>
-          <li *ngFor="let benefit of card.benefits">{{ benefit }}</li>
+          <li *ngFor="let benefit of card.benefits" class="breadcrum_md">
+            {{ benefit }}
+          </li>
         </ul>
         <div class="fees">
           <span
@@ -80,7 +84,7 @@
         </div>
         <div fxLayoutAlign="start center" fxLayoutGap="12">
           <ic-button
-            [icButtonType]="'filled-rounded'"
+            [icButtonType]="'filled'"
             [label]="'Apply Now'"
             [type]="'submit'"
             size="medium"
