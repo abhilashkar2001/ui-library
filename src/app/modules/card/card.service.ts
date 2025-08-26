@@ -23,7 +23,7 @@ export class CardSerivce {
   //  Save card payment details
   saveCardPaymentDetails(payload: any) {
     return this.http.post<any>(`${baseUrl}/card/payment-details`, payload);
-
+  }
   // Save Employment and financial details
   saveEmployeementFinancialDetails(payload: EmpAndFinInfoPayload) {
     return this.http.post<any>(
@@ -38,6 +38,5 @@ export class CardSerivce {
       `${baseUrl}/card/card-services`,
       payload,
     );
-
   }
 }

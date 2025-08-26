@@ -29,7 +29,7 @@ const directives = [
   WebhostDirective,
   NumberAnimationDirective,
   DragDropDirective,
-  InViewAnimateDirective
+  InViewAnimateDirective,
 ];
 
 @NgModule({
