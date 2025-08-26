@@ -69,6 +69,10 @@ code {
   }
 }
 
+.swiper-pagination-bullet-active{
+  background: var(--ic-clr-primary-a10) !important;
+}
+
 //mat-tree
 .mat-tree {
   font-family: var(--ic-primary-font-family), sans-serif !important;

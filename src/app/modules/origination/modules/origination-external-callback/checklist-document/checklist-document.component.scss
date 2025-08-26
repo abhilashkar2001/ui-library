@@ -16,7 +16,7 @@
       right: 121px;
       width: 150px;
       text-align: center;
-      border: 1px solid #0033a1;
+      border: 1px solid var(--ic-clr-primary-a10);
       background-color: #eceffa;
       border-radius: 5px;
       height: 60px;
@@ -30,7 +30,7 @@
 
       .text-content {
         font-size: 15px;
-        color: #0033a1;
+        color: var(--ic-text-theme);
       }
     }
   }
@@ -66,7 +66,7 @@ hr.line {
 
 .add-doc-btn {
   text-align: center;
-  color: #0033a1;
+  color: var(--ic-text-theme);
   text-decoration: underline;
   font-family: var(--ic-primary-font-family), Medium;
   font-size: 20px;
@@ -96,7 +96,7 @@ hr.line {
 .card-title {
   text-align: left;
   letter-spacing: 0px;
-  color: #0033a1;
+  color: var(--ic-text-theme);
   opacity: 1;
   font-size: 18px;
   font-family: var(--ic-primary-font-family), 'Medium';
@@ -216,7 +216,7 @@ hr.line {
 }
 
 .scanColor {
-  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0%
+  background: transparent linear-gradient(91deg, #051a2d 0%, var(--ic-text-theme) 100%) 0% 0%
     no-repeat padding-box;
   color: #fff !important;
   font-size: 12px;
@@ -229,7 +229,7 @@ hr.line {
 .uploadColor {
   background: #ffffff 0% 0% no-repeat padding-box;
   box-shadow: 3px 3px 15px #0000000f;
-  color: #0033a1;
+  color: var(--ic-text-theme);
   font-size: 12px;
   font-family: var(--ic-primary-font-family), 'SemiBold';
   letter-spacing: 0px;

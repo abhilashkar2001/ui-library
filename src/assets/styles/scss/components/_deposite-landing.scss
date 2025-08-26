@@ -150,11 +150,11 @@
       filter: grayscale(0%);
 
       .renew_check {
-        color: #0033a1;
+        color: var(--ic-text-theme);
       }
 
       .gd_value {
-        color: #0033a1;
+        color: var(--ic-text-theme);
         font-weight: 600 !important;
       }
 

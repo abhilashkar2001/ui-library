@@ -18,15 +18,15 @@
     box-shadow: 3px 3px 20px #0000000d;
     border-radius: 10px;
     opacity: 1;
-    color: #0033a1 !important;
+    color: var(--ic-text-theme) !important;
 
     &:focus {
-      outline-color: #0033a1;
+      outline-color: var(--ic-clr-primary-a10);
     }
   }
 
   .submit-btn {
-    background: transparent linear-gradient(90deg, #051a2d 0%, #0033a1 100%) 0%
+    background: transparent linear-gradient(90deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%) 0%
       0% no-repeat padding-box;
     color: white !important;
     width: 40% !important;
@@ -36,7 +36,7 @@
   .reset-btn {
     background: #fffefe 0% 0% no-repeat padding-box !important;
     box-shadow: 0px 3px 15px #00000017;
-    color: #0033a1;
+    color: var(--ic-text-theme);
     max-width: none;
   }
 
@@ -63,7 +63,7 @@
 
   .selected-card {
     @include default-container();
-    color: #0033a1;
+    color: var(--ic-text-theme);
   }
 
   .text-area {
@@ -72,7 +72,7 @@
   }
 
   .otp-btn {
-    background: transparent linear-gradient(90deg, #051a2d 0%, #0033a1 100%) 0%
+    background: transparent linear-gradient(90deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%) 0%
       0% no-repeat padding-box;
     border: 1px solid #00000000;
     opacity: 1;
@@ -120,12 +120,12 @@
 
   .title-text {
     font-family: var(--ic-primary-font-family);
-    color: #0033a1;
+    color: var(--ic-text-theme);
     font-weight: 600;
   }
 
   .text-highlighted {
-    color: #0033a1;
+    color: var(--ic-text-theme);
     font: normal normal normal 12px/16px Roboto;
   }
 

@@ -49,7 +49,7 @@
     .addbtn {
       // padding-left: 5px;
       font-size: 38px;
-      color: #0033a1;
+      color: var(--ic-text-theme);
       cursor: pointer;
       z-index: 0;
       height: 83%;
@@ -73,11 +73,9 @@
 
   .digsign {
     color: white !important;
-    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0%
-      0% no-repeat padding-box !important;
     border-radius: 23px !important;
     color: #ffffff !important;
-    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0%
+    background: transparent linear-gradient(91deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%) 0%
       0% no-repeat padding-box !important;
     border-radius: 23px !important;
     font-size: 12px;
@@ -92,7 +90,7 @@
     background: #ffffff 0% 0% no-repeat padding-box !important;
     box-shadow: 3px 3px 15px #0000000f;
     border-radius: 35px !important;
-    color: #0033a1 !important;
+    color: var(--ic-text-theme) !important;
     font-size: 12px;
     font-family: var(--ic-primary-font-family);
     font-weight: 600 !important;
@@ -284,7 +282,7 @@
   .headings {
     font-family: var(--ic-primary-font-family), sans-serif;
     font-size: 15px;
-    color: #0033a1;
+    color: var(--ic-text-theme);
     font-weight: 600;
   }
 
@@ -298,7 +296,7 @@
   .customer-button {
     width: 206px;
     height: 40px;
-    background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0%
+    background: transparent linear-gradient(91deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%) 0%
       0% no-repeat padding-box;
     border-radius: 23px;
     color: #fff;
@@ -428,11 +426,9 @@
 
 .digsign {
   color: white !important;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0%
-    no-repeat padding-box !important;
   border-radius: 23px !important;
   color: #ffffff !important;
-  background: transparent linear-gradient(91deg, #051a2d 0%, #0033a1 100%) 0% 0%
+  background: transparent linear-gradient(91deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%) 0% 0%
     no-repeat padding-box !important;
   border-radius: 23px !important;
   font-size: 12px;
@@ -447,7 +443,7 @@
   background: #ffffff 0% 0% no-repeat padding-box !important;
   box-shadow: 3px 3px 15px #0000000f;
   border-radius: 35px !important;
-  color: #0033a1 !important;
+  color: var(--ic-text-theme) !important;
   font-size: 12px;
   font-family: var(--ic-primary-font-family);
   font-weight: 600 !important;

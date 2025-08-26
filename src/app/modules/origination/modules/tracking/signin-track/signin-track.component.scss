@@ -91,7 +91,7 @@
   }
 
   .addcolor {
-    color: #0033a1 !important;
+    color: var(--ic-text-theme) !important;
     opacity: 1 !important;
     text-decoration: underline;
   }

@@ -127,7 +127,7 @@
   <button
     (click)="addDocument()"
     [disabled]="checkValidity()"
-    [ngStyle]="{ color: checkValidity() ? '#b4b4b4 ' : '#0033a1' }"
+    [ngStyle]="{ color: checkValidity() ? '#b4b4b4 ' : 'var(--ic-text-theme)' }"
     class="add-more-btn"
     type="button"
   >

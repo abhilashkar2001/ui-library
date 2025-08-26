@@ -93,7 +93,7 @@ mat-form-field {
 }
 
 .text-doc {
-  color: #0033a1;
+  color: var(--ic-text-theme);
   font-family: var(--ic-primary-font-family);
   font-size: 18px;
   font-style: normal;
@@ -125,7 +125,7 @@ mat-form-field {
 }
 
 .text-header {
-  color: #0033a1;
+  color: var(--ic-text-theme);
   font-family: var(--ic-primary-font-family);
   font-size: 18px;
   font-style: normal;
@@ -182,7 +182,7 @@ mat-form-field {
 
   button {
     border-radius: 10px;
-    color: #0033a1;
+    color: var(--ic-text-theme);
     font-size: 15px;
     line-height: 22.5px;
     height: 50px;

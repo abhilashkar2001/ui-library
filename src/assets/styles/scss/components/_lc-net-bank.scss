@@ -22,7 +22,7 @@
 
 .clause-btn {
   @include buttonStyle;
-  border: 2px solid #0033a1;
+  border: 2px solid var(--ic-clr-primary-a10);
 }
 
 .sub-head {

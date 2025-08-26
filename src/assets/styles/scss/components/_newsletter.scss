@@ -30,7 +30,7 @@
       left: -30px;
       width: 171px;
       height: 171px;
-      background-color: #0033a1;
+      background-color: var(--ic-clr-primary-a10);
       border-radius: 0 0 0 95px;
       z-index: -1;
     }
@@ -43,7 +43,7 @@
         font-family: var(--ic-primary-font-family);
         font-weight: 500;
         margin-bottom: 1rem;
-        color: #0064fc;
+        color: var(--ic-clr-primary-a0);
       }
 
       p {
@@ -94,7 +94,7 @@
       button {
         height: 100%;
         width: 38%;
-        background-color: #0033a1;
+        background-color: var(--ic-clr-primary-a10);
         color: #fff;
         border: none;
         outline: none;

@@ -36,7 +36,7 @@
     .standard-content-title-header {
       position: relative;
       display: inline-flex;
-      color: #0033a1;
+      color: var(--ic-text-theme);
       font-family: Arial;
       font-size: 30px;
       font-style: normal;
@@ -113,7 +113,7 @@
 }
 
 .show-hyperLink {
-  color: #0033a1;
+  color: var(--ic-text-theme);
   text-decoration: none;
   font-weight: 600;
   cursor: pointer !important;
