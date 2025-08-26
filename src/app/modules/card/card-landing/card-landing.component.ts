@@ -1,11 +1,19 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-card-landing',
   templateUrl: './card-landing.component.html',
   styleUrls: ['./card-landing.component.scss'],
 })
-export class CardLandingComponent {
+export class CardLandingComponent implements OnInit, AfterViewInit, OnDestroy {
   features = [
     {
       tag: 'Tap and Pay',
@@ -33,6 +41,17 @@ export class CardLandingComponent {
 
   private autoScrollInterval: any;
   private isPaused = false;
+  basisClass: any;
+  category: any;
+
+  constructor(private activateRoute: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.activateRoute.queryParamMap.subscribe((params: any) => {
+      this.basisClass = params.get('subClass');
+      this.category = params.get('category');
+    });
+  }
 
   ngAfterViewInit() {
     this.startAutoScroll();

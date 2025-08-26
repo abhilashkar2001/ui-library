@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-card-banner',
@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./card-banner.component.scss'],
 })
 export class CardBannerComponent {
+  @Input() basisClass!: string;
   features = [
     'BookMyShow and Inox Offer',
     'Spends-based complimentary airport lounge access',

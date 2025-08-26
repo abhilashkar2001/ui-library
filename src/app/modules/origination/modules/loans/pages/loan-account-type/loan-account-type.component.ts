@@ -55,8 +55,6 @@ export class LoanAccountTypeComponent implements OnInit {
     if (event?.selectedLoan?.productDetails)
       this.subLoanList = event?.selectedLoan?.productDetails;
     else {
-      console.log(this.basisClass, 'csbch');
-
       if (
         this.basisClass == 'CHEQUE' ||
         this.basisClass == 'CHEQUE_CORPORATE'
@@ -101,29 +99,6 @@ export class LoanAccountTypeComponent implements OnInit {
           // } else {
 
           // }
-        });
-      } else if (this.category.toLowerCase().includes('card')) {
-        this.basisClass = event.subClass;
-        this.basisId = event.selectedLoan.basisId;
-
-        const dialogRef = this.dialog.open(AccountSelectionComponent, {
-          width: '50%',
-          height: 'auto',
-          backdropClass: 'confirmDialogComponent',
-          hasBackdrop: true,
-          disableClose: true,
-          data: {
-            category: this.category,
-            basisClass: this.basisClass,
-            basisId: this.basisId,
-          },
-        });
-        dialogRef.afterClosed().subscribe((res) => {
-          console.log(res);
-          this.sessionStorageService.setItem('category', this.category);
-          this.sessionStorageService.setItem('basisClass', this.basisClass);
-          this.sessionStorageService.setItem('basisId', this.basisId);
-          this.goToLogin();
         });
       } else if (
         this.category == 'Accounts' &&
