@@ -37,6 +37,10 @@ code {
   font-size: 14px;
 }
 
+.in-view-animate-init {
+  opacity: 0;
+}
+
 .mat-form-field-appearance-outline .mat-form-field-flex {
   font-family: var(--ic-primary-font-family);
 }

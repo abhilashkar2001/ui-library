@@ -1,43 +1,89 @@
-<!-- Card Banner -->
-<app-card-banner></app-card-banner>
-
-<!-- Card Catalougue -->
-<app-card-catalogue></app-card-catalogue>
-
-<!-- Card Feature and Benifits Static Data -->
 <div class="card_landing_container">
-  <div class="features_container">
-    <div fxLayout="row">
-      <span class="header_lg_bold_black">Credit Card Features & Benefits</span>
-    </div>
+  <!-- Card Banner -->
+  <app-card-banner></app-card-banner>
 
-    <div
-      class="features_wrapper mt-16"
-      fxLayout="row"
-      fxLayoutGap="20px"
-      fxLayoutAlign="start stretch"
-    >
-      <div class="feature_box" *ngFor="let feature of features">
-        <span class="feature_tag curved">{{ feature.tag }}</span>
+  <!-- Card Catalougue -->
+  <div class="card_landing_content">
+    <app-card-catalogue></app-card-catalogue>
+    <!-- Card Feature and Benifits Static Data -->
+    <div class="features_container">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span class="header_xl_black"> Credit Card Features & Benefits </span>
         <div
-          class="feature_content"
+          class="navigator_btn_group"
           fxLayout="row"
-          fxLayoutAlign="start start"
-          fxLayoutGap="16px"
+          fxLayoutAlign="center center"
+          fxLayoutGap="8px"
         >
-          <img
-            src="assets/images/card-static.svg"
-            alt="card-icon"
-            class="feature_icon"
-          />
-          <span class="feature_description medium_txt">{{
-            feature.description
-          }}</span>
+          <ic-button
+            type="icon"
+            icButtonType="outlined-rounded"
+            icIcon="keyboard-arrow-left"
+            (OnClick)="navigateLeft()"
+          ></ic-button>
+          <ic-button
+            type="icon"
+            icButtonType="outlined-rounded"
+            icIcon="keyboard-arrow-right"
+            (OnClick)="navigateRight()"
+          ></ic-button>
         </div>
+      </div>
+
+      <div
+        class="features_wrapper"
+        fxLayout="row"
+        fxLayoutGap="20px"
+        fxLayoutAlign="start stretch"
+        #featuresWrapper
+        (mouseenter)="pauseAutoScroll()"
+        (mouseleave)="resumeAutoScroll()"
+      >
+        <ng-container *ngFor="let feature of features">
+          <div class="feature_box">
+            <span class="feature_tag curved">{{ feature.tag }}</span>
+            <div
+              class="feature_content"
+              fxLayout="row"
+              fxLayoutAlign="start start"
+              fxLayoutGap="16px"
+            >
+              <img
+                src="assets/images/card-static.svg"
+                alt="card-icon"
+                class="feature_icon"
+              />
+              <span class="feature_description medium_txt">{{
+                feature.description
+              }}</span>
+            </div>
+          </div>
+        </ng-container>
+        <!-- Duplicate for seamless loop -->
+        <ng-container *ngFor="let feature of features">
+          <div class="feature_box">
+            <span class="feature_tag curved">{{ feature.tag }}</span>
+            <div
+              class="feature_content"
+              fxLayout="row"
+              fxLayoutAlign="start start"
+              fxLayoutGap="16px"
+            >
+              <img
+                src="assets/images/card-static.svg"
+                alt="card-icon"
+                class="feature_icon"
+              />
+              <span class="feature_description medium_txt">{{
+                feature.description
+              }}</span>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Card Advertisment -->
-<app-card-advertisement></app-card-advertisement>
+  <!-- Card Advertisment -->
+  <app-card-advertisement></app-card-advertisement>
+</div>

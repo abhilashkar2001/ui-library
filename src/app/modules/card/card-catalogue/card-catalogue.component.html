@@ -13,6 +13,9 @@
         fxLayoutAlign="start center"
         *ngFor="let type of cardTypes"
         class="pt-12"
+        data-aos="fade-up"
+        data-aos-delay="100"
+        data-aos-duration="300"
       >
         <ic-checkbox></ic-checkbox>
         <span class="header_md">{{ type }}</span>
@@ -27,6 +30,9 @@
         fxLayoutAlign="start center"
         *ngFor="let fee of feeRanges"
         class="pt-12"
+        data-aos="fade-up"
+        data-aos-delay="100"
+        data-aos-duration="300"
       >
         <ic-checkbox></ic-checkbox>
         <span class="header_md">{{ fee }}</span>
@@ -41,6 +47,9 @@
         fxLayoutAlign="start center"
         *ngFor="let variant of variants"
         class="pt-12"
+        data-aos="fade-up"
+        data-aos-delay="100"
+        data-aos-duration="300"
       >
         <ic-checkbox></ic-checkbox>
         <span class="header_md">{{ variant }}</span>
@@ -60,6 +69,9 @@
       class="card"
       fxLayout="row"
       fxLayoutGap="16px"
+      data-aos="fade-up"
+      data-aos-delay="200"
+      data-aos-duration="500"
     >
       <!-- Card Image -->
       <div fxFlex="25" class="card-image">
