@@ -31,7 +31,8 @@
 .confirm-button {
   width: 200px;
   height: 45px;
-  background: transparent linear-gradient(91deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%) 0% 0%
+  background: transparent
+    linear-gradient(91deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%) 0% 0%
     no-repeat padding-box !important;
   border-radius: 23px !important;
   color: #ffffff !important;

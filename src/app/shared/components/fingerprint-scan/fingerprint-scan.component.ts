@@ -26,7 +26,7 @@ export class FingerprintScanComponent {
     this.commonService.CallingSGIFPCapture().subscribe((res: any) => {
       if (res?.ErrorCode == 0) {
         this.fingerprintData = 'data:image/bmp;base64,' + res?.BMPBase64;
-        (this.templateBase64 = res?.TemplateBase64), (this.isScanned = true);
+        ((this.templateBase64 = res?.TemplateBase64), (this.isScanned = true));
         this.isFailed = false;
       } else {
         this.isScanned = false;

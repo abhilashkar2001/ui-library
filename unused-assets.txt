@@ -1,0 +1,196 @@
+src\assets\images\account-img2.png
+src\assets\images\arrow-down-white.svg
+src\assets\images\arrow-left-circle.png
+src\assets\images\auto-debit-blue.svg
+src\assets\images\auto-debit-white.svg
+src\assets\images\background-mask.svg
+src\assets\images\backGround_logPage.png
+src\assets\images\bank_home.svg
+src\assets\images\billing-cycle-blue.svg
+src\assets\images\billing-cycle-white.svg
+src\assets\images\block-card-blue.svg
+src\assets\images\block-card-white.svg
+src\assets\images\blue-download.svg
+src\assets\images\bluecard.png
+src\assets\images\bulk-upload.svg
+src\assets\images\businesswoman-holding-jar.jpg
+src\assets\images\businesswoman-holding-jar.png
+src\assets\images\calc-bg.svg
+src\assets\images\calc-bluebg-card.png
+src\assets\images\calc-whitebg-card.png
+src\assets\images\calculator_image.png
+src\assets\images\calendar copy.svg
+src\assets\images\card-02.png
+src\assets\images\card-25.png
+src\assets\images\card-assets\app_advert_qr.svg
+src\assets\images\card-control-icon.svg
+src\assets\images\card-payment-blue.svg
+src\assets\images\card-payment-white.svg
+src\assets\images\card-shadow.svg
+src\assets\images\card-steps.png
+src\assets\images\card-summary-blue.svg
+src\assets\images\card-summary-white.svg
+src\assets\images\Card_home.png
+src\assets\images\card_img1.png
+src\assets\images\card_payment.svg
+src\assets\images\change-pin-blue.svg
+src\assets\images\change-pin-white.svg
+src\assets\images\chat-bot.svg
+src\assets\images\check.jpg
+src\assets\images\client-group-photos.png
+src\assets\images\close.svg
+src\assets\images\closed-loan1.png
+src\assets\images\closed-loan2.png
+src\assets\images\closed-loan3.png
+src\assets\images\close_enabled.svg
+src\assets\images\convert-emi-blue.svg
+src\assets\images\convert-emi-white.svg
+src\assets\images\create-account\individual.png
+src\assets\images\create-account\joint.png
+src\assets\images\create-account\minor.png
+src\assets\images\credit-card-green.png
+src\assets\images\credit-card-red.png
+src\assets\images\credit-card.png
+src\assets\images\custom-menu.svg
+src\assets\images\cvv-image.svg
+src\assets\images\debit-card.png
+src\assets\images\delete.svg
+src\assets\images\deposit-landing-image.svg
+src\assets\images\Download-icon.png
+src\assets\images\download_white.svg
+src\assets\images\dtblogo.svg
+src\assets\images\dtb_fav.jpeg
+src\assets\images\dummy_doc.svg
+src\assets\images\e-statement-blue.svg
+src\assets\images\e-statment-white.svg
+src\assets\images\earn-reward.png
+src\assets\images\edit-icon.svg
+src\assets\images\edit_pen.svg
+src\assets\images\education.svg
+src\assets\images\education_emi.svg
+src\assets\images\education_tax.svg
+src\assets\images\Ellipse 2.svg
+src\assets\images\Ellipse2.jpg
+src\assets\images\Ellipse5.jpg
+src\assets\images\Ellipse_169.svg
+src\assets\images\emi-details-blue.svg
+src\assets\images\emi-details-white.svg
+src\assets\images\error\400-error.svg
+src\assets\images\error\403-error.svg
+src\assets\images\error\404-not-found.svg
+src\assets\images\error\500-error.svg
+src\assets\images\error\501-error.svg
+src\assets\images\error\503-error.svg
+src\assets\images\error\504-error.svg
+src\assets\images\error\505-error.svg
+src\assets\images\error_icon.svg
+src\assets\images\exit-to-app_black.svg
+src\assets\images\extend-arrow.svg
+src\assets\images\external-link-bg-image.svg
+src\assets\images\favicon.svg
+src\assets\images\feather-info.svg
+src\assets\images\file_img.svg
+src\assets\images\filter-icon.svg
+src\assets\images\fund-transfer.svg
+src\assets\images\Group 13675.png
+src\assets\images\Group 13808.svg
+src\assets\images\Group 13937.svg
+src\assets\images\Group 13944.svg
+src\assets\images\Group 13946.svg
+src\assets\images\Group 1796.png
+src\assets\images\Group 2979.png
+src\assets\images\Group 5698.png
+src\assets\images\Group 64.png
+src\assets\images\Group 64.svg
+src\assets\images\Group.jpg
+src\assets\images\Group.png
+src\assets\images\Group4.jpg
+src\assets\images\Group_13850.svg
+src\assets\images\Group_13851.svg
+src\assets\images\hand.png
+src\assets\images\hdfc_bank_logo.svg
+src\assets\images\help-circle.svg
+src\assets\images\home.png
+src\assets\images\home_icon.svg
+src\assets\images\icici_bank_logo.svg
+src\assets\images\Icon feather-info.png
+src\assets\images\Icon material-delete.png
+src\assets\images\image 9.svg
+src\assets\images\image1.jpg
+src\assets\images\image2.jpg
+src\assets\images\image3.jpg
+src\assets\images\image4.jpg
+src\assets\images\image5.jpg
+src\assets\images\image6.jpg
+src\assets\images\image7.jpg
+src\assets\images\images.png
+src\assets\images\info-circle-gray.svg
+src\assets\images\insta-loan-blue.svg
+src\assets\images\insta-loan-white.svg
+src\assets\images\issue-draft.svg
+src\assets\images\level_complete.svg
+src\assets\images\level_pending.svg
+src\assets\images\level_rejected.svg
+src\assets\images\loan.png
+src\assets\images\loan_calculator.svg
+src\assets\images\login-image.png
+src\assets\images\logPerson_img.svg
+src\assets\images\Mask Group 3107.svg
+src\assets\images\Mask Group.svg
+src\assets\images\mobileVerifyImage.png
+src\assets\images\new-web-images\demoBankLogo.svg
+src\assets\images\news-dots.png
+src\assets\images\newsletters.png
+src\assets\images\next.png
+src\assets\images\notes-icon.svg
+src\assets\images\noun-search-875352.svg
+src\assets\images\Ok.png
+src\assets\images\payment-failed.png
+src\assets\images\payment-success.png
+src\assets\images\Personal loan.png
+src\assets\images\pin-generation-blue.svg
+src\assets\images\pin-generation-white.svg
+src\assets\images\plus-icon.svg
+src\assets\images\plus-white.svg
+src\assets\images\pre-generated-blue.svg
+src\assets\images\pre-generated-white.svg
+src\assets\images\previous.png
+src\assets\images\profile-user.png
+src\assets\images\Rectangle 1779.png
+src\assets\images\Rectangle 30.svg
+src\assets\images\Rectangle 32.svg
+src\assets\images\Rectangle 4.svg
+src\assets\images\Rectangle_7294.svg
+src\assets\images\regular-saving-img.png
+src\assets\images\reward.svg
+src\assets\images\right_arrow.svg
+src\assets\images\schedule-payment.svg
+src\assets\images\search-icon.svg
+src\assets\images\selected-card-control-icon.svg
+src\assets\images\selected-money-abroad.svg
+src\assets\images\selected-quick-transfer.svg
+src\assets\images\selected-schedule-payment.svg
+src\assets\images\selected-usage-limit-icon.svg
+src\assets\images\self-transfer-blue.svg
+src\assets\images\self-transfer.svg
+src\assets\images\send-money-abroad.svg
+src\assets\images\send-money-icon.svg
+src\assets\images\send-money-unselected.svg
+src\assets\images\shadow-card.png
+src\assets\images\shadow-debit-card.png
+src\assets\images\Share-icon.png
+src\assets\images\share.svg
+src\assets\images\sidenav_icon.svg
+src\assets\images\signLater.svg
+src\assets\images\single-trans.svg
+src\assets\images\slide_img2.png
+src\assets\images\SM.png
+src\assets\images\sort-down.svg
+src\assets\images\stanbic.svg
+src\assets\images\tracking-icon.svg
+src\assets\images\unbilled-transcation-blue.svg
+src\assets\images\upgrade-blue.svg
+src\assets\images\upgrade-white.svg
+src\assets\images\upload-icon.svg
+src\assets\images\upload_white.svg
+src\assets\images\white-background.png
