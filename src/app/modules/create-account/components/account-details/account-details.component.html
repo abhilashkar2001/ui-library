@@ -1,7 +1,8 @@
-<div *ngIf="!customerId">
+<div *ngIf="category === 'Accounts'">
   <app-custom-account-details
     [accountDetailsForm]="accountDetailsForm"
     (accountSummaryEmit)="accountSummaryEmit($event)"
+    [createAccountDetailsSummaryArr]="createAccountDetailsSummaryArr"
   ></app-custom-account-details>
 </div>
 
