@@ -127,4 +127,48 @@ export class AboutCard {
       ],
     },
   ];
+  static readonly FEE_CONFIG: any = {
+    columns: [
+      { key: 'type', header: 'Fee Type' },
+      { key: 'amount', header: 'Amount' },
+      { key: 'details', header: 'Details' },
+    ],
+  };
+
+  static readonly FEES_AND_CHARGES_DATA = [
+    {
+      type: 'Annual Fee',
+      amount: '₹0 (First Year)',
+      details: '₹5,000 from 2nd year, waived on ₹2L+ spend',
+    },
+    {
+      type: 'Cash Advance Fee',
+      amount: '2.5%',
+      details: 'Minimum ₹500 per transaction',
+    },
+    {
+      type: 'Late Payment Fee',
+      amount: 'Up to ₹1,300',
+      details: 'Based on outstanding amount',
+    },
+    {
+      type: 'Over Limit Fee',
+      amount: '₹500',
+      details: 'Per occurrence',
+    },
+    {
+      type: 'Foreign Currency Markup',
+      amount: '0%',
+      details: 'No charges on international transactions',
+    },
+    {
+      type: 'Interest Rate (APR)',
+      amount: '3.5% per month',
+      details: '42% per annum on outstanding balance',
+    },
+  ];
+  static readonly CARD_DATA = {
+    title: 'Fees & Charges',
+    description: 'All fees and charges are subject to change without notice.',
+  };
 }

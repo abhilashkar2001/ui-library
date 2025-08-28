@@ -40,7 +40,9 @@
         [cardInfo]="featuresCardInfo"
       ></app-features>
     </div>
-    <div *ngSwitchCase="3">Eligibility Content</div>
-    <div *ngSwitchCase="4">Fees & Charges Content</div>
+    <div *ngSwitchCase="3">
+      <app-eligibility></app-eligibility>
+    </div>
+    <div *ngSwitchCase="4"><app-fees-and-charges></app-fees-and-charges></div>
   </ng-container>
 </div>

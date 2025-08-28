@@ -69,7 +69,7 @@ code {
   }
 }
 
-.swiper-pagination-bullet-active{
+.swiper-pagination-bullet-active {
   background: var(--ic-clr-primary-a10) !important;
 }
 
@@ -204,4 +204,31 @@ code {
 .container {
   padding: 0 5%;
   width: 100%;
+}
+// card common styles
+@mixin cards_more_details($size, $weight, $color) {
+  font-family: var(--ic-primary-font-family);
+  font-size: #{$size}px;
+  font-weight: $weight;
+  color: $color;
+}
+.title_header {
+  @include cards_more_details(24, 600, #06113c);
+}
+.description {
+  @include cards_more_details(18, 400, #4c5371);
+}
+.card_title {
+  @include cards_more_details(18, 600, #06113c);
+}
+.card_description {
+  margin: 1% 0% 0% 0%;
+  @include cards_more_details(14, 400, #6b7280);
+}
+.card_points {
+  margin: 1% 0% 0% 0%;
+  @include cards_more_details(12, 400, #525252);
+  li::marker {
+    color: #ff2807;
+  }
 }
