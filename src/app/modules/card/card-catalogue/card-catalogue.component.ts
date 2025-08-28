@@ -29,20 +29,20 @@ export class CardCatalogueComponent implements OnInit {
     'High ($300+)',
   ];
   variants = ['VISA', 'AMERICAN EXPRESS', 'MasterCard', 'RuPay'];
-
+  aboutSectionToggler = false;
   basisClass!: string;
   category!: string;
   productList: any;
   basisId!: number;
   cards:
     | {
-        title: string;
-        image: string;
-        benefits: string;
-        joiningFee: number;
-        annualFee: number;
-        basisId: number;
-      }[]
+      title: string;
+      image: string;
+      benefits: string;
+      joiningFee: number;
+      annualFee: number;
+      basisId: number;
+    }[]
     | undefined;
 
   constructor(
@@ -51,7 +51,7 @@ export class CardCatalogueComponent implements OnInit {
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.activateRoute.queryParamMap.subscribe((params: any) => {
@@ -59,6 +59,10 @@ export class CardCatalogueComponent implements OnInit {
       this.category = params.get('category');
     });
     this.fetchSubClassProducts();
+  }
+
+  cardAbout(){
+    this.aboutSectionToggler = !this.aboutSectionToggler;
   }
 
   fetchSubClassProducts() {

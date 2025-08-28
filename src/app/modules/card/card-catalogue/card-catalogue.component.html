@@ -1,111 +1,79 @@
 <div fxLayout="row" fxLayoutGap="16px" class="page-container">
-  <!-- Sidebar Filters -->
-  <ic-card fxFlex="25">
-    <div fxLayoutAlign="space-between center">
-      <h3 class="header_gt_md_bold_black">Advanced Filters</h3>
-      <a class="theme_md"><u>Clear Filter</u></a>
-    </div>
-    <mat-divider class="divider mt-12"></mat-divider>
-    <div class="m-8 mt-12">
-      <h4 class="theme_gt_md">Card Type</h4>
-      <div
-        fxLayout="row"
-        fxLayoutAlign="start center"
-        *ngFor="let type of cardTypes"
-        class="pt-12"
-        data-aos="fade-up"
-        data-aos-delay="100"
-        data-aos-duration="300"
-      >
-        <ic-checkbox></ic-checkbox>
-        <span class="header_md">{{ type }}</span>
+  <ng-container *ngIf="aboutSectionToggler == false; else aboutSection">
+    <!-- Sidebar Filters -->
+    <ic-card fxFlex="25">
+      <div fxLayoutAlign="space-between center">
+        <h3 class="header_gt_md_bold_black">Advanced Filters</h3>
+        <a class="theme_md"><u>Clear Filter</u></a>
       </div>
-    </div>
-    <mat-divider class="divider mt-12"></mat-divider>
-
-    <div class="m-8 mt-12">
-      <h4 class="theme_gt_md">Annual Fee Range</h4>
-      <div
-        fxLayout="row"
-        fxLayoutAlign="start center"
-        *ngFor="let fee of feeRanges"
-        class="pt-12"
-        data-aos="fade-up"
-        data-aos-delay="100"
-        data-aos-duration="300"
-      >
-        <ic-checkbox></ic-checkbox>
-        <span class="header_md">{{ fee }}</span>
-      </div>
-    </div>
-    <mat-divider class="divider mt-12"></mat-divider>
-
-    <div class="m-8 mt-12">
-      <h4 class="theme_gt_md">Card Variant</h4>
-      <div
-        fxLayout="row"
-        fxLayoutAlign="start center"
-        *ngFor="let variant of variants"
-        class="pt-12"
-        data-aos="fade-up"
-        data-aos-delay="100"
-        data-aos-duration="300"
-      >
-        <ic-checkbox></ic-checkbox>
-        <span class="header_md">{{ variant }}</span>
-      </div>
-    </div>
-  </ic-card>
-
-  <!-- Card List -->
-  <div fxFlex="75">
-    <div fxLayoutAlign="space-between center">
-      <h2 class="header_xl_black">Choose the best {{ basisClass }}</h2>
-      <span class="breadcrum_md">{{ cards?.length }} cards found</span>
-    </div>
-
-    <div
-      *ngFor="let card of cards"
-      class="card"
-      fxLayout="row"
-      fxLayoutGap="16px"
-      data-aos="fade-up"
-      data-aos-delay="200"
-      data-aos-duration="500"
-    >
-      <!-- Card Image -->
-      <div fxFlex="25" class="card-image">
-        <img [src]="card.image" alt="Card image" />
-      </div>
-      <mat-divider class="breadcrum_sm"></mat-divider>
-      <!-- Card Details -->
-      <div fxFlex="75" class="card-details">
-        <h3 class="header_lg_bold_black">{{ card.title }}</h3>
-        <ul>
-          <li *ngFor="let benefit of card.benefits" class="breadcrum_md">
-            {{ benefit }}
-          </li>
-        </ul>
-        <div class="fees">
-          <span
-            >Joining Fee: <strong>{{ card.joiningFee }}</strong></span
-          >
-          <span
-            >Annual Fee: <strong>{{ card.annualFee }}</strong></span
-          >
+      <mat-divider class="divider mt-12"></mat-divider>
+      <div class="m-8 mt-12">
+        <h4 class="theme_gt_md">Card Type</h4>
+        <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let type of cardTypes" class="pt-12"
+          [inViewAnimate]="'fade-up'" style="animation-delay: 0.1s">
+          <ic-checkbox></ic-checkbox>
+          <span class="header_md">{{ type }}</span>
         </div>
-        <div fxLayoutAlign="start center" fxLayoutGap="12">
-          <ic-button
-            [icButtonType]="'filled'"
-            [label]="'Apply Now'"
-            [type]="'submit'"
-            size="medium"
-            (OnClick)="applyCard(card)"
-          >
-          </ic-button>
-          <span class="theme_md">More Details</span>
+      </div>
+      <mat-divider class="divider mt-12"></mat-divider>
+
+      <div class="m-8 mt-12">
+        <h4 class="theme_gt_md">Annual Fee Range</h4>
+        <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let fee of feeRanges" class="pt-12"
+          [inViewAnimate]="'fade-up'" style="animation-delay: 0.1s">
+          <ic-checkbox></ic-checkbox>
+          <span class="header_md">{{ fee }}</span>
+        </div>
+      </div>
+      <mat-divider class="divider mt-12"></mat-divider>
+
+      <div class="m-8 mt-12">
+        <h4 class="theme_gt_md">Card Variant</h4>
+        <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let variant of variants" class="pt-12"
+          [inViewAnimate]="'fade-up'" style="animation-delay: 0.1s">
+          <ic-checkbox></ic-checkbox>
+          <span class="header_md">{{ variant }}</span>
+        </div>
+      </div>
+    </ic-card>
+
+    <!-- Card List -->
+    <div fxFlex="75">
+      <div fxLayoutAlign="space-between center">
+        <h2 class="header_xl_black">Choose the best {{ basisClass }}</h2>
+        <span class="breadcrum_md">{{ cards?.length }} cards found</span>
+      </div>
+
+      <div *ngFor="let card of cards" class="card" fxLayout="row" fxLayoutGap="16px" [inViewAnimate]="'zoom-in'"
+        style="animation-delay: 0.1s">
+        <!-- Card Image -->
+        <div fxFlex="25" class="card-image">
+          <img [src]="card.image" alt="Card image" />
+        </div>
+        <mat-divider class="breadcrum_sm"></mat-divider>
+        <!-- Card Details -->
+        <div fxFlex="75" class="card-details">
+          <h3 class="header_lg_bold_black">{{ card.title }}</h3>
+          <ul>
+            <li *ngFor="let benefit of card.benefits" class="breadcrum_md">
+              {{ benefit }}
+            </li>
+          </ul>
+          <div class="fees">
+            <span>Joining Fee: <strong>{{ card.joiningFee }}</strong></span>
+            <span>Annual Fee: <strong>{{ card.annualFee }}</strong></span>
+          </div>
+          <div fxLayoutAlign="start center" fxLayoutGap="12">
+            <ic-button [icButtonType]="'filled'" [label]="'Apply Now'" [type]="'submit'" size="medium"
+              (OnClick)="applyCard(card)">
+            </ic-button>
+            <span class="theme_md" (click)="cardAbout()">More Details</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
+  <ng-template #aboutSection>
+    <app-about-card></app-about-card>
+  </ng-template>
 </div>

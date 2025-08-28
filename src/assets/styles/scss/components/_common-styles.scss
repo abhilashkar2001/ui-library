@@ -4,6 +4,7 @@
   font-weight: 500;
   font-size: 40px;
   color: var(--ic-text-black);
+
   @media screen and (max-width: $mobile) {
     font-size: 26px;
   }
@@ -15,6 +16,7 @@
   font-family: var(--ic-primary-font-family);
   font-size: 18px;
   margin: 0.8rem 0 1.2rem 0;
+
   @media screen and (max-width: $mobile) {
     font-size: 16px;
     margin-top: 0.4rem;
@@ -54,8 +56,7 @@ code {
   overflow: visible;
 }
 
-.mdc-text-field--no-label:not(.mdc-text-field--textarea)
-  .mat-mdc-form-field-input-control.mdc-text-field__input,
+.mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input,
 .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
   height: 100% !important;
 }
@@ -63,13 +64,14 @@ code {
 .mdc-text-field--filled {
   --mdc-filled-text-field-active-indicator-height: 0 !important;
 }
+
 .mat-form-field-appearance-fill {
   .mat-mdc-form-field-subscript-wrapper {
     position: absolute !important;
   }
 }
 
-.swiper-pagination-bullet-active{
+.swiper-pagination-bullet-active {
   background: var(--ic-clr-primary-a10) !important;
 }
 
@@ -82,12 +84,8 @@ code {
   background-color: var(--current-theme-background) !important;
 }
 
-.egret-navy
-  .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent
-  .mat-ripple-element,
-.egret-navy
-  .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent
-  .mat-ripple-element {
+.egret-navy .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
+.egret-navy .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
   background: var(--current-theme-background);
 }
 
@@ -204,4 +202,40 @@ code {
 .container {
   padding: 0 5%;
   width: 100%;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+
+.zoom-in {
+  opacity: 0;
+  animation: zoomIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+// Zoom In Animation
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

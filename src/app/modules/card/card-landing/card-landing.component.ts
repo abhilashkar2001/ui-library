@@ -14,6 +14,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./card-landing.component.scss'],
 })
 export class CardLandingComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('cardLandingContent', { read: ElementRef })
+  cardLandingContent!: ElementRef<HTMLDivElement>;
   features = [
     {
       tag: 'Tap and Pay',
@@ -44,7 +46,7 @@ export class CardLandingComponent implements OnInit, AfterViewInit, OnDestroy {
   basisClass: any;
   category: any;
 
-  constructor(private activateRoute: ActivatedRoute) {}
+  constructor(private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.activateRoute.queryParamMap.subscribe((params: any) => {
@@ -59,6 +61,12 @@ export class CardLandingComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.clearAutoScroll();
+  }
+
+  catalogueMove() {
+     if (this.cardLandingContent) {
+      this.cardLandingContent.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   private clearAutoScroll() {
