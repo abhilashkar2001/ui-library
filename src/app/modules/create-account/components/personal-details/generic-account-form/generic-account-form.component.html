@@ -1,722 +1,570 @@
-<form [formGroup]="personalDetailsForm" class="generic">
-  <div fxLayout="row wrap" fxLayoutGap="16px grid">
-    <!-- 1 -->
-    <div fxFlex="25">
-      <ic-form-field
-        [control]="customerInfo.get('cifNumber') | formcontrol"
-        [icNumbersOnly]="true"
-        [maxLength]="20"
-        label="CIF Number"
-      ></ic-form-field>
-    </div>
-    <div fxFlex="25"></div>
-    <div fxFlex="25"></div>
-    <div fxFlex="25">
-      <ng-container
-        *ngIf="user?.accountType !== 'individual' && user?.showIsPrimary"
-      >
-        <ng-container [ngSwitch]="user?.accountType">
-          <mat-slide-toggle *ngSwitchCase="'joint'" class="toggle">
-            Is this applicant a primary customer?
-          </mat-slide-toggle>
-          <mat-slide-toggle *ngSwitchCase="'corporate'" class="toggle">
-            Is this applicant a primary customer?
-          </mat-slide-toggle>
-          <mat-slide-toggle *ngSwitchCase="'minor'" class="toggle">
-            Is this applicant a primary guardian?
-          </mat-slide-toggle>
-          <mat-slide-toggle *ngSwitchDefault class="toggle">
-            Is this applicant a primary guardian?
-          </mat-slide-toggle>
-        </ng-container>
-      </ng-container>
-      <!-- <mat-slide-toggle class="toggle" *ngIf="user?.accountType !== 'individual' && user?.showIsPrimary">{{'Is this applicant a primary ' }} {{user?.accountType == 'joint' ? 'customer?' : 'guardian?'}}</mat-slide-toggle> -->
-    </div>
-    <!-- 2 -->
-    <div fxFlex="25">
-      <ic-select
-        [control]="kycInfo.get('prefixId') | formcontrol"
-        [options]="genericValue?.PREFIX"
-        bindLabelKey="values"
-        bindValueKey="id"
-        label="Prefix"
-      ></ic-select>
-    </div>
-    <div fxFlex="25">
-      <ic-form-field
-        [control]="kycInfo.get('firstName') | formcontrol"
-        [maxLength]="20"
-        label="First Name"
-      ></ic-form-field>
-    </div>
-    <div fxFlex="25">
-      <ic-form-field
-        [control]="kycInfo.get('lastName') | formcontrol"
-        [maxLength]="20"
-        label="Last Name"
-      ></ic-form-field>
-    </div>
+<form [formGroup]="customerForm" class="generic"></form>
 
-    <div fxFlex="25" *ngIf="detailsForGeneric.accountType == 'corporate'">
-      <ic-select
-        [control]="kycInfo.get('position') | formcontrol"
-        [options]="positions"
-        bindLabelKey="values"
-        bindValueKey="id"
-        label="Position"
-      ></ic-select>
-    </div>
+<div fxLayout="column">
+  <div
+    fxFlex="100"
+    fxLayout="row wrap"
+    fxLayoutGap="10"
+    fxLayoutAlign="start center"
+  >
+    <ic-select
+      [control]="getKycInfo().get('prefixId') | formcontrol"
+      [options]="genericValue?.['PREFIX']"
+      bindLabelKey="values"
+      bindValueKey="id"
+      fxFlex="24"
+      label="Prefix"
+    ></ic-select>
+    <ic-form-field
+      [control]="getKycInfo().get('firstName') | formcontrol"
+      [icAlphabetOnly]="true"
+      [maxLength]="20"
+      fxFlex="24"
+      label="First Name"
+    ></ic-form-field>
 
-    <div fxFlex="25">
-      <ic-date-picker
-        [control]="kycInfo.get('dateOfBirth') | formcontrol"
-        placeholder="Date of Birth"
-        label="Date of Birth"
-      >
-      </ic-date-picker>
-    </div>
+    <ic-form-field
+      [control]="getKycInfo().get('lastName') | formcontrol"
+      [icAlphabetOnly]="true"
+      [maxLength]="20"
+      fxFlex="24"
+      label="Last Name"
+    ></ic-form-field>
 
-    <!-- 3 -->
-    <div fxFlex="25">
-      <ic-select
-        [control]="kycInfo.get('genderId') | formcontrol"
-        [options]="genericValue?.GENDER"
-        bindLabelKey="values"
-        bindValueKey="id"
-        label="Gender"
-      ></ic-select>
-    </div>
-
-    <div
-      fxFlex="25"
-      *ngIf="user?.accountType !== 'minor' && user?.accountType !== 'corporate'"
+    <ic-date-picker
+      [control]="getKycInfo().get('dateOfBirth') | formcontrol"
+      [maxDate]="dobMinDate"
+      [minDate]="dobMaxDate"
+      placeholder="dateFormat"
+      fxFlex="24"
+      label="DateOfBirth"
     >
-      <ic-select
-        [control]="kycInfo.get('maritalStatusId') | formcontrol"
-        [options]="genericValue?.MARITALSTATUS"
-        bindLabelKey="values"
-        bindValueKey="id"
-        label="Marital Status"
-      ></ic-select>
-    </div>
-    <div fxFlex="25">
-      <ic-select
-        [control]="kycInfo.get('nationality') | formcontrol"
-        [options]="countryArr"
-        bindLabelKey="nationality"
-        bindValueKey="nationality"
-        label="Nationality"
-      ></ic-select>
-    </div>
-    <div fxFlex="25">
-      <ic-select
-        [control]="kycInfo.get('countryOfResidence') | formcontrol"
-        [options]="countryArr"
-        bindLabelKey="countryName"
-        bindValueKey="countryName"
-        label="Country Of Residence"
-      ></ic-select>
-    </div>
+    </ic-date-picker>
 
-    <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
-      <div class="title standard-margin">
-        {{ 'Identification Details' }}
-      </div>
-    </div>
+    <ic-select
+      [control]="getKycInfo().get('genderId') | formcontrol"
+      [options]="genericValue?.['GENDER']"
+      bindLabelKey="values"
+      bindValueKey="id"
+      fxFlex="24"
+      label="Gender"
+    ></ic-select>
 
-    <div fxFlex="25">
+    <ic-select
+      [control]="getKycInfo().get('maritalStatusId') | formcontrol"
+      [options]="genericValue?.['MARITAL_STATUS']"
+      bindLabelKey="values"
+      bindValueKey="id"
+      fxFlex="24"
+      label="Marital Status"
+    ></ic-select>
+
+    <ic-select
+      [control]="getKycInfo().get('nationality') | formcontrol"
+      [options]="nationalityArray"
+      bindLabelKey="nationality"
+      bindValueKey="nationality"
+      fxFlex="24"
+      label="Nationality"
+    ></ic-select>
+
+    <ic-select
+      [control]="getKycInfo().get('countryOfResidence') | formcontrol"
+      [options]="countryArray"
+      bindLabelKey="countryName"
+      bindValueKey="countryName"
+      fxFlex="24"
+      label="Country of residence"
+    ></ic-select>
+  </div>
+
+  <div fxLayout="column" class="mt-16">
+    <div class="header_md_bold_black">Identification Details</div>
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutGap="10"
+      fxLayoutAlign="start center"
+    >
       <ic-form-field
         [control]="
-          identificationDetails.get('identificationNumber') | formcontrol
+          getIdentificationDetails().get('identificationNumber') | formcontrol
         "
-        [maxLength]="20"
+        fxFlex="24"
         label="Identification Number"
       ></ic-form-field>
-    </div>
-    <div fxFlex="25">
       <ic-select
-        [control]="personalDetailsForm.get('countryOfIssue') | formcontrol"
-        [options]="countryArr"
+        [control]="
+          getIdentificationDetails().get('countryOfIssue') | formcontrol
+        "
+        [options]="countryArray"
         bindLabelKey="countryName"
-        bindValueKey="countryCode"
-        label="Country Of Issue"
+        bindValueKey="countryName"
+        fxFlex="24"
+        label="Country of Issue"
       ></ic-select>
-    </div>
-    <div fxFlex="25">
+
       <ic-date-picker
-        [control]="personalDetailsForm.get('dateIssued') | formcontrol"
-        placeholder="Date Of Issue"
-        label="Date Of Issue"
-      >
-      </ic-date-picker>
-    </div>
-    <div fxFlex="25">
+        [control]="getIdentificationDetails().get('issueDate') | formcontrol"
+        [maxDate]="todayDate"
+        fxFlex="24"
+        label="Date Issued"
+      ></ic-date-picker>
+
       <ic-date-picker
-        [control]="personalDetailsForm.get('expiryDate') | formcontrol"
-        placeholder="Expiry Date"
+        [control]="
+          getIdentificationDetails().get('passportExpiryDate') | formcontrol
+        "
+        [minDate]="getExpDateMin()"
+        placeholder="dateFormat"
+        fxFlex="24"
         label="Expiry Date"
       >
       </ic-date-picker>
     </div>
+  </div>
 
+  <!--  <div fxLayout="column" class="mt-16">
+    <div class="header_md_bold_black">Contact Details</div>
     <div
       fxFlex="100"
-      fxLayout="row"
-      fxLayoutAlign="space-between center"
-      *ngIf="detailsForGeneric.accountType !== 'individual'"
+      fxLayout="row wrap"
+      fxLayoutGap="10"
+      fxLayoutAlign="start center"
     >
-      <div class="title standard-margin">
-        {{ 'Relationship ' }}
-        {{ user?.accountType == 'joint' ? '& Applicant’s Share (%)' : '' }}
-      </div>
-    </div>
+      <ic-mobile-field
+        [formControl]="customer.get('contact')?.get('mobile') | formcontrol"
+        [isdCode]="countriesIsdCodes"
+        [isdControl]="customer.get('contact')?.get('mobtCode') | formcontrol"
+        fxFlex="24"
+        label="Mobile Number"
+      ></ic-mobile-field>
 
-    <div fxFlex="25" *ngIf="detailsForGeneric.accountType !== 'individual'">
-      <ic-select
-        [control]="personalDetailsForm.get('relationship') | formcontrol"
-        [options]="genericValue?.RELATIONSHIP"
-        bindLabelKey="values"
-        bindValueKey="id"
-        label="Relationship"
-      ></ic-select>
-    </div>
+      <ic-mobile-field
+        [formControl]="
+          customer.get('contact')?.get('alternativeNumber') | formcontrol
+        "
+        [isdCode]="countriesIsdCodes"
+        [isdControl]="customer.get('contact')?.get('altCode') | formcontrol"
+        [maxLength]="maxMobileLength"
+        fxFlex="24"
+        label="Alternate Number"
+      ></ic-mobile-field>
 
-    <div
-      fxFlex="25"
-      *ngIf="user?.accountType == 'joint' || user?.accountType == 'corporate'"
-    >
+      <ic-mobile-field
+        [formControl]="customer.get('contact')?.get('whatsappNo') | formcontrol"
+        [isdCode]="countriesIsdCodes"
+        [isdControl]="customer.get('contact')?.get('waptCode') | formcontrol"
+        [maxLength]="maxMobileLength"
+        fxFlex="24"
+        label="Whatsapp Number"
+      ></ic-mobile-field>
+
       <ic-form-field
-        [control]="personalDetailsForm.get('sharePercentage') | formcontrol"
-        [maxLength]="20"
-        label="Share Percentage"
+        [control]="customer.get('contact')?.get('email') | formcontrol"
+        [customError]="
+          customer.get('contact')?.get('email')?.hasError('pattern')
+            ? 'Please enter Valid Email'
+            : ''
+        "
+        [maxLength]="250"
+        fxFlex="24"
+        label="Email ID"
       ></ic-form-field>
-    </div>
 
-    <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
-      <div class="title standard-margin">
-        {{ 'Contact Details' }}
-      </div>
-    </div>
-
-    <div fxFlex="25">
-      <ic-mobile-field
-        (onSelectionChangeOutput)="setMobileLength()"
-        [isdCode]="countriesIsdCodes"
-        [customError]="
-          contact.get('mobile')?.hasError('invalidLength')
-            ? 'Max mobile length is ' + maxMobileLength
-            : ''
-        "
-        [maxLength]="maxMobileLength"
-        [formControl]="contact.get('mobile') | formcontrol"
-        [isdCode]="countriesIsdCodes"
-        [isdControl]="contact.get('mobtCode') | formcontrol"
-        [maxLength]="maxMobileLength"
-        label="Mobile No"
-      ></ic-mobile-field>
-    </div>
-    <div fxFlex="25">
-      <ic-mobile-field
-        (onSelectionChangeOutput)="setMobileLength()"
-        [isdCode]="countriesIsdCodes"
-        [customError]="
-          contact.get('alternativeNumber')?.hasError('invalidLength')
-            ? 'Max mobile length is ' + maxMobileLength
-            : ''
-        "
-        [maxLength]="maxMobileLength"
-        [formControl]="contact.get('alternativeNumber') | formcontrol"
-        [isdCode]="countriesIsdCodes"
-        [isdControl]="contact.get('mobtCode') | formcontrol"
-        [maxLength]="maxMobileLength"
-        label="Alternate No"
-      ></ic-mobile-field>
-    </div>
-    <div fxFlex="25">
-      <ic-mobile-field
-        (onSelectionChangeOutput)="setMobileLength()"
-        [isdCode]="countriesIsdCodes"
-        [customError]="
-          contact.get('whatsappNo')?.hasError('invalidLength')
-            ? 'Max mobile length is ' + maxMobileLength
-            : ''
-        "
-        [maxLength]="maxMobileLength"
-        [formControl]="contact.get('whatsappNo') | formcontrol"
-        [isdCode]="countriesIsdCodes"
-        [isdControl]="contact.get('mobtCode') | formcontrol"
-        [maxLength]="maxMobileLength"
-        label="WhatsApp No"
-      ></ic-mobile-field>
-    </div>
-    <div fxFlex="25">
       <ic-form-field
-        [control]="contact.get('email') | formcontrol"
+        [control]="customer.get('contact')?.get('telephone') | formcontrol"
+        [icNumbersOnly]="true"
         [maxLength]="20"
-        label="Email Id"
-      ></ic-form-field>
-    </div>
-
-    <div fxFlex="25">
-      <ic-mobile-field
-        (onSelectionChangeOutput)="setMobileLength()"
-        [isdCode]="countriesIsdCodes"
-        [customError]="
-          contact.get('telephone')?.hasError('invalidLength')
-            ? 'Max mobile length is ' + maxMobileLength
-            : ''
-        "
-        [maxLength]="maxMobileLength"
-        [formControl]="contact.get('telephone') | formcontrol"
-        [isdCode]="countriesIsdCodes"
-        [isdControl]="contact.get('mobtCode') | formcontrol"
-        [maxLength]="maxMobileLength"
+        fxFlex="24"
         label="Telephone (Home)"
-      ></ic-mobile-field>
-    </div>
-    <div fxFlex="25" *ngIf="detailsForGeneric.accountType !== 'minor'">
-      <ic-mobile-field
-        (onSelectionChangeOutput)="setMobileLength()"
-        [isdCode]="countriesIsdCodes"
-        [customError]="
-          contact.get('workTelephone')?.hasError('invalidLength')
-            ? 'Max mobile length is ' + maxMobileLength
-            : ''
-        "
-        [maxLength]="maxMobileLength"
-        [formControl]="contact.get('workTelephone') | formcontrol"
-        [isdCode]="countriesIsdCodes"
-        [isdControl]="contact.get('mobtCode') | formcontrol"
-        [maxLength]="maxMobileLength"
-        label="Telephone (Work)"
-      ></ic-mobile-field>
-    </div>
-    <div fxFlex="25">
+      ></ic-form-field>
       <ic-form-field
-        [control]="contact.get('fax') | formcontrol"
+        [control]="customer.get('contact')?.get('workTelephone') | formcontrol"
+        [icNumbersOnly]="true"
         [maxLength]="20"
+        fxFlex="24"
+        label="Telephone (Work)"
+      ></ic-form-field>
+      <ic-form-field
+        [control]="customer.get('contact')?.get('fax') | formcontrol"
+        [icNumbersOnly]="true"
+        [maxLength]="25"
+        fxFlex="24"
         label="Fax"
       ></ic-form-field>
-    </div>
-    <div fxFlex="25">
       <ic-select
-        [control]="contact.get('statementVia') | formcontrol"
-        [options]="genericValue?.STATEMENTVIA"
+        [control]="customer.get('contact')?.get('statementViaId') | formcontrol"
+        [options]="statementOptionArr"
         bindLabelKey="values"
         bindValueKey="id"
+        fxFlex="24"
         label="Statement Via"
       ></ic-select>
     </div>
+  </div>
 
-    <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
-      <div fxFlex="calc(50%)" class="title standard-margin">
-        {{ 'Contact Address' }}
-      </div>
-      <div fxFlex="calc(50%)" *ngIf="detailsForGeneric.accountType == 'minor'">
-        <span *ngIf="user?.header == 'Minor Details'">
-          {{ 'Same as Guardian Address' }}
-          <mat-radio-group aria-label="Select an option">
-            <mat-radio-button value="1">Yes</mat-radio-button>
-            <mat-radio-button value="2">No</mat-radio-button>
-          </mat-radio-group>
-        </span>
-      </div>
-    </div>
+  <div fxLayout="column" class="mt-16">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="100">
+      <div class="header_md_bold_black">Contact Address</div>
 
-    <div fxFlex="calc(50%)">
-      <ic-form-field
-        [control]="addressGroup.get('address1') | formcontrol"
-        [maxLength]="20"
-        label="Address Line 1"
-      ></ic-form-field>
-    </div>
-    <div fxFlex="calc(50%)">
-      <ic-form-field
-        [control]="addressGroup.get('address2') | formcontrol"
-        [maxLength]="20"
-        label="Address Line 2"
-      ></ic-form-field>
-    </div>
-
-    <div fxFlex="25">
-      <ic-select
-        [control]="addressGroup.get('residenceTypeId') | formcontrol"
-        [options]="genericValue?.RESIDENTSTATUS"
-        bindLabelKey="values"
-        bindValueKey="id"
-        label="Resident Status"
-      ></ic-select>
-    </div>
-    <div fxFlex="25">
-      <ic-form-field
-        [control]="addressGroup.get('subRub') | formcontrol"
-        [maxLength]="20"
-        label="Subrub"
-      ></ic-form-field>
-    </div>
-    <div fxFlex="25">
-      <ic-select
-        [control]="addressGroup.get('city') | formcontrol"
-        [options]="cities"
-        bindLabelKey="values"
-        bindValueKey="id"
-        label="City"
-      ></ic-select>
-    </div>
-    <div fxFlex="25">
-      <ic-form-field
-        [control]="addressGroup.get('postalCode') | formcontrol"
-        [icNumbersOnly]="true"
-        [maxLength]="10"
-        label="Postal Code"
-        suffixIcon="search"
-        (onSuffixClick)="pincodeExpansion()"
-      ></ic-form-field>
-    </div>
-
-    <div fxFlex="25">
-      <ic-date-picker
-        [control]="addressGroup.get('livingAddressSince') | formcontrol"
-        placeholder="Living Address Since"
-        label="Living Address Since"
-      >
-      </ic-date-picker>
-    </div>
-    <div fxFlex="25"></div>
-    <div fxFlex="25"></div>
-    <div fxFlex="25"></div>
-
-    <ng-container *ngIf="user?.header !== 'Minor Details'">
-      <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
-        <div class="title standard-margin">
-          {{ 'Spouse Details' }}
+      <div fxFlex="48" fxLayout="row" fxLayoutGap="5">
+        <mat-label class="header_md">Same as Permanent Address*</mat-label>
+        <div fxLayout="row" fxLayoutGap="20x">
+          <ic-radio-button
+            *ngFor="let address of addressTypeArr"
+            [control]="customer.get('isSameAddress') | formcontrol"
+            [label]="address.label"
+            [value]="address.value"
+          >
+          </ic-radio-button>
         </div>
       </div>
+    </div>
 
-      <div fxFlex="25">
-        <ic-select
-          [control]="spouce.get('prefix') | formcontrol"
-          [options]="genericValue?.PREFIX"
-          bindLabelKey="values"
-          bindValueKey="id"
-          label="Prefix"
-        ></ic-select>
-      </div>
-      <div fxFlex="25">
-        <ic-form-field
-          [control]="spouce.get('firstName') | formcontrol"
-          [maxLength]="20"
-          label="First Name"
-        ></ic-form-field>
-      </div>
-      <div fxFlex="25">
-        <ic-form-field
-          [control]="spouce.get('lastName') | formcontrol"
-          [maxLength]="20"
-          label="Last Name"
-        ></ic-form-field>
-      </div>
-      <div fxFlex="25">
-        <ic-date-picker
-          [control]="spouce.get('dateOfBirth') | formcontrol"
-          placeholder="Date of Birth"
-          label="Date of Birth"
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutGap="10"
+      fxLayoutAlign="start center"
+    >
+      <ng-container
+        *ngIf="customer.get('contact.address')?.value as addressControl"
+      >
+        <ng-container
+          *ngFor="
+            let addressGroup of (
+              customer?.get('contact')?.get('address') | formarray
+            ).controls;
+            let addressIndex = index
+          "
+          [formGroup]="addressGroup | formgroup"
         >
-        </ic-date-picker>
-      </div>
-
-      <div fxFlex="25">
-        <ic-mobile-field
-          (onSelectionChangeOutput)="setMobileLength()"
-          [isdCode]="countriesIsdCodes"
-          [customError]="
-            spouceContact.get('telephone')?.hasError('invalidLength')
-              ? 'Max mobile length is ' + maxMobileLength
-              : ''
-          "
-          [maxLength]="maxMobileLength"
-          [formControl]="spouceContact.get('telephone') | formcontrol"
-          [isdCode]="countriesIsdCodes"
-          [isdControl]="spouceContact.get('mobtCode') | formcontrol"
-          [maxLength]="maxMobileLength"
-          label="Spouse Telephone (Work)"
-        ></ic-mobile-field>
-      </div>
-      <div fxFlex="25">
-        <ic-mobile-field
-          (onSelectionChangeOutput)="setMobileLength()"
-          [isdCode]="countriesIsdCodes"
-          [customError]="
-            spouceContact.get('workTelephone')?.hasError('invalidLength')
-              ? 'Max mobile length is ' + maxMobileLength
-              : ''
-          "
-          [maxLength]="maxMobileLength"
-          [formControl]="spouceContact.get('workTelephone') | formcontrol"
-          [isdCode]="countriesIsdCodes"
-          [isdControl]="spouceContact.get('mobtCode') | formcontrol"
-          [maxLength]="maxMobileLength"
-          label="Spouse Telephone (Work)"
-        ></ic-mobile-field>
-      </div>
-      <div fxFlex="25">
-        <ic-mobile-field
-          (onSelectionChangeOutput)="setMobileLength()"
-          [isdCode]="countriesIsdCodes"
-          [customError]="
-            spouceContact.get('mobile')?.hasError('invalidLength')
-              ? 'Max mobile length is ' + maxMobileLength
-              : ''
-          "
-          [maxLength]="maxMobileLength"
-          [formControl]="spouceContact.get('mobile') | formcontrol"
-          [isdCode]="countriesIsdCodes"
-          [isdControl]="spouceContact.get('mobtCode') | formcontrol"
-          [maxLength]="maxMobileLength"
-          label="Mobile No"
-        ></ic-mobile-field>
-      </div>
-      <div fxFlex="25">
-        <ic-form-field
-          [control]="spouceContact.get('email') | formcontrol"
-          [maxLength]="20"
-          label="Email"
-        ></ic-form-field>
-      </div>
-
-      <div fxFlex="25">
-        <ic-select
-          [control]="spouce.get('employeeStatus') | formcontrol"
-          [options]="genericValue?.EMPLOYMENTTYPE"
-          bindLabelKey="values"
-          bindValueKey="id"
-          label="Employee Status"
-        ></ic-select>
-      </div>
-      <div fxFlex="25">
-        <ic-form-field
-          [control]="spouce.get('netIncome') | formcontrol"
-          [maxLength]="20"
-          label="Net Income"
-        ></ic-form-field>
-      </div>
-      <div fxFlex="25"></div>
-      <div fxFlex="25"></div>
-    </ng-container>
-
-    <ng-container *ngIf="user?.header !== 'Minor Details'">
-      <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between center">
-        <div class="title standard-margin">
-          {{ 'Emergency Contact Details / Next of Kin' }}
-        </div>
-      </div>
-
-      <div fxFlex="25">
-        <ic-select
-          [control]="emergencyInfo.get('prefix') | formcontrol"
-          [options]="genericValue?.PREFIX"
-          bindLabelKey="values"
-          bindValueKey="id"
-          label="Prefix"
-        ></ic-select>
-      </div>
-      <div fxFlex="25">
-        <ic-form-field
-          [control]="emergencyInfo.get('firstName') | formcontrol"
-          [maxLength]="20"
-          label="First Name"
-        ></ic-form-field>
-      </div>
-      <div fxFlex="25">
-        <ic-form-field
-          [control]="emergencyInfo.get('lastName') | formcontrol"
-          [maxLength]="20"
-          label="Last Name"
-        ></ic-form-field>
-      </div>
-      <div fxFlex="25">
-        <ic-select
-          [control]="emergencyInfo.get('relationshipValue') | formcontrol"
-          [options]="genericValue?.RELATIONSHIP"
-          bindLabelKey="values"
-          bindValueKey="id"
-          label="Relationship"
-        ></ic-select>
-      </div>
-
-      <div fxFlex="25">
-        <ic-mobile-field
-          (onSelectionChangeOutput)="setMobileLength()"
-          [isdCode]="countriesIsdCodes"
-          [customError]="
-            emergencyContact.get('mobile')?.hasError('invalidLength')
-              ? 'Max mobile length is ' + maxMobileLength
-              : ''
-          "
-          [maxLength]="maxMobileLength"
-          [formControl]="emergencyContact.get('mobile') | formcontrol"
-          [isdCode]="countriesIsdCodes"
-          [isdControl]="emergencyContact.get('mobtCode') | formcontrol"
-          [maxLength]="maxMobileLength"
-          label="Mobile No"
-        ></ic-mobile-field>
-      </div>
-      <div fxFlex="25">
-        <ic-mobile-field
-          (onSelectionChangeOutput)="setMobileLength()"
-          [isdCode]="countriesIsdCodes"
-          [customError]="
-            emergencyContact.get('alternativeNumber')?.hasError('invalidLength')
-              ? 'Max mobile length is ' + maxMobileLength
-              : ''
-          "
-          [maxLength]="maxMobileLength"
-          [formControl]="
-            emergencyContact.get('alternativeNumber') | formcontrol
-          "
-          [isdCode]="countriesIsdCodes"
-          [isdControl]="emergencyContact.get('mobtCode') | formcontrol"
-          [maxLength]="maxMobileLength"
-          label="Alternate No"
-        ></ic-mobile-field>
-      </div>
-      <div fxFlex="25">
-        <ic-mobile-field
-          (onSelectionChangeOutput)="setMobileLength()"
-          [isdCode]="countriesIsdCodes"
-          [customError]="
-            emergencyContact.get('whatsappNo')?.hasError('invalidLength')
-              ? 'Max mobile length is ' + maxMobileLength
-              : ''
-          "
-          [maxLength]="maxMobileLength"
-          [formControl]="emergencyContact.get('whatsappNo') | formcontrol"
-          [isdCode]="countriesIsdCodes"
-          [isdControl]="emergencyContact.get('mobtCode') | formcontrol"
-          [maxLength]="maxMobileLength"
-          label="WhatsApp No"
-        ></ic-mobile-field>
-      </div>
-      <div fxFlex="25">
-        <ic-form-field
-          [control]="emergencyContact.get('email') | formcontrol"
-          [maxLength]="20"
-          label="Email Id"
-        ></ic-form-field>
-      </div>
-
-      <div fxFlex="25">
-        <ic-mobile-field
-          (onSelectionChangeOutput)="setMobileLength()"
-          [isdCode]="countriesIsdCodes"
-          [customError]="
-            emergencyContact.get('telephone')?.hasError('invalidLength')
-              ? 'Max mobile length is ' + maxMobileLength
-              : ''
-          "
-          [maxLength]="maxMobileLength"
-          [formControl]="emergencyContact.get('telephone') | formcontrol"
-          [isdCode]="countriesIsdCodes"
-          [isdControl]="emergencyContact.get('mobtCode') | formcontrol"
-          [maxLength]="maxMobileLength"
-          label="Telephone (Home)"
-        ></ic-mobile-field>
-      </div>
-      <div fxFlex="25">
-        <ic-mobile-field
-          (onSelectionChangeOutput)="setMobileLength()"
-          [isdCode]="countriesIsdCodes"
-          [customError]="
-            emergencyContact.get('workTelephone')?.hasError('invalidLength')
-              ? 'Max mobile length is ' + maxMobileLength
-              : ''
-          "
-          [maxLength]="maxMobileLength"
-          [formControl]="emergencyContact.get('workTelephone') | formcontrol"
-          [isdCode]="countriesIsdCodes"
-          [isdControl]="emergencyContact.get('mobtCode') | formcontrol"
-          [maxLength]="maxMobileLength"
-          label="Telephone (Work)"
-        ></ic-mobile-field>
-      </div>
-      <div fxFlex="25">
-        <ic-form-field
-          [control]="emergencyContact.get('fax') | formcontrol"
-          [maxLength]="20"
-          label="Fax"
-        ></ic-form-field>
-      </div>
-      <div fxFlex="25"></div>
-
-      <div fxFlex="calc(50%)">
-        <ic-form-field
-          [control]="emergencyContactAdress.get('address1') | formcontrol"
-          [maxLength]="20"
-          label="Address Line 1"
-        ></ic-form-field>
-      </div>
-      <div fxFlex="calc(50%)">
-        <ic-form-field
-          [control]="emergencyContactAdress.get('address2') | formcontrol"
-          [maxLength]="20"
-          label="Address Line 2"
-        ></ic-form-field>
-      </div>
-
-      <div fxFlex="25">
-        <ic-select
-          [control]="
-            emergencyContactAdress.get('residenceTypeId') | formcontrol
-          "
-          [options]="genericValue?.RESIDENTSTATUS"
-          bindLabelKey="values"
-          bindValueKey="id"
-          label="Resident Status"
-        ></ic-select>
-      </div>
-      <div fxFlex="25">
-        <ic-form-field
-          [control]="emergencyContactAdress.get('subRub') | formcontrol"
-          [maxLength]="20"
-          label="Subrub"
-        ></ic-form-field>
-      </div>
-      <div fxFlex="25">
-        <ic-select
-          [control]="emergencyContactAdress.get('city') | formcontrol"
-          [options]="cities"
-          bindLabelKey="values"
-          bindValueKey="id"
-          label="City"
-        ></ic-select>
-      </div>
-      <div fxFlex="25">
-        <ic-form-field
-          [control]="emergencyContactAdress.get('postalCode') | formcontrol"
-          [icNumbersOnly]="true"
-          [maxLength]="10"
-          label="Postal Code"
-          suffixIcon="search"
-          (onSuffixClick)="pincodeExpansion()"
-        ></ic-form-field>
-      </div>
-    </ng-container>
-    <div fxFlex="25"></div>
-    <div fxFlex="25"></div>
-    <div fxFlex="25"></div>
-    <div fxFlex="25" fxLayoutAlign="end center" *ngIf="user">
-      <ic-button
-        [icButtonType]="'filled-rounded'"
-        [label]="'Save'"
-        [type]="'submit'"
-        size="medium"
-        (click)="onSave()"
-      >
-      </ic-button>
+          <ic-form-field
+            [control]="addressGroup.get('address1') | formcontrol"
+            [maxLength]="200"
+            fxFlex="49"
+            label="Address1"
+          ></ic-form-field>
+          <ic-form-field
+            [control]="addressGroup.get('address2') | formcontrol"
+            [maxLength]="200"
+            fxFlex="49"
+            label="Address2"
+          ></ic-form-field>
+          <ic-select
+            [control]="addressGroup.get('residenceType') | formcontrol"
+            [options]="residenceTypeArray"
+            bindLabelKey="values"
+            bindValueKey="id"
+            fxFlex="24"
+            label="Residential Status"
+          ></ic-select>
+          <ic-form-field
+            [control]="addressGroup.get('address2') | formcontrol"
+            fxFlex="24"
+            label="Suburb"
+          ></ic-form-field>
+          <ic-form-field
+            (onSuffixClick)="pincodeExpansion(i, 'customer')"
+            [control]="addressGroup.get('pincode') | formcontrol"
+            [icNumbersOnly]="true"
+            [maxLength]="10"
+            fxFlex="24"
+            label="Postal Code"
+            suffixIcon="search"
+          ></ic-form-field>
+          <ic-form-field
+            [control]="addressGroup.get('cityName') | formcontrol"
+            fxFlex="24"
+            label="City"
+          ></ic-form-field>
+          <ic-date-picker
+            [control]="addressGroup.get('livingAddressSince') | formcontrol"
+            fxFlex="24"
+            label="Living Address Since"
+          >
+          </ic-date-picker>
+        </ng-container>
+      </ng-container>
     </div>
   </div>
 
-  <!-- <div fxLayout="row wrap" fxLayoutGap="1%">
-    Joint /Minor
+  <div fxLayout="column" class="mt-16">
+    <ng-container *ngIf="showSpouseSection[i]">
+      <div class="header_md_bold_black">Spouse Details</div>
+      <div
+        fxFlex="100"
+        fxLayout="row wrap"
+        fxLayoutGap="10"
+        fxLayoutAlign="start center"
+      >
+        <ic-select
+          [control]="getSpouseInfo(i).get('prefixId') | formcontrol"
+          [options]="prefixArray"
+          bindLabelKey="values"
+          bindValueKey="id"
+          fxFlex="24"
+          label="Prefix"
+        ></ic-select>
+
+        <ic-form-field
+          [control]="getSpouseInfo(i).get('firstName') | formcontrol"
+          [icAlphabetOnly]="true"
+          [maxLength]="20"
+          fxFlex="24"
+          label="First Name"
+        ></ic-form-field>
+
+        <ic-form-field
+          [control]="getSpouseInfo(i).get('lastName') | formcontrol"
+          [icAlphabetOnly]="true"
+          [maxLength]="20"
+          fxFlex="24"
+          label="Last Name"
+        ></ic-form-field>
+
+        <ic-date-picker
+          [control]="getSpouseInfo(i).get('dateOfBirth') | formcontrol"
+          dateFormat=""
+          fxFlex="24"
+          label="DateofBirth"
+        >
+        </ic-date-picker>
+        <ic-form-field
+          [control]="getSpouseContactDetails(i).get('telephone') | formcontrol"
+          [icNumbersOnly]="true"
+          [maxLength]="20"
+          fxFlex="24"
+          label="Spouse Telephone (Home)"
+        ></ic-form-field>
+        <ic-form-field
+          [control]="
+            getSpouseContactDetails(i).get('workTelephone') | formcontrol
+          "
+          [icNumbersOnly]="true"
+          [maxLength]="20"
+          fxFlex="24"
+          label="Spouse Telephone (Work)"
+        ></ic-form-field>
+        <ic-mobile-field
+          [formControl]="getSpouseContactDetails(i).get('mobile') | formcontrol"
+          [isdCode]="countriesIsdCodes"
+          [isdControl]="
+            getSpouseContactDetails(i).get('mobtCode') | formcontrol
+          "
+          [maxLength]="maxMobileLength"
+          fxFlex="24"
+          label="Mobile Number"
+        ></ic-mobile-field>
+        <ic-form-field
+          [control]="getSpouseContactDetails(i).get('email') | formcontrol"
+          [icNoSpace]="true"
+          [maxLength]="250"
+          fxFlex="24"
+          label="Email ID"
+          [customError]="
+            getSpouseContactDetails(i).get('email')?.hasError('pattern')
+              ? 'Please enter Valid Email'
+              : ''
+          "
+        ></ic-form-field>
+        <ic-select
+          [control]="getSpouseInfo(i).get('employeeStatusId') | formcontrol"
+          [options]="empoymentArray"
+          bindLabelKey="values"
+          bindValueKey="id"
+          fxFlex="24"
+          label="Employee status"
+        ></ic-select>
+        <ic-form-field
+          [control]="getSpouseInfo(i).get('netIncome') | formcontrol"
+          [decimalPlaces]="3"
+          [icTwoDigitDecimalNumber]="true"
+          [maxLength]="22"
+          [numLength]="22"
+          fxFlex="24"
+          label="Net Income"
+        ></ic-form-field>
+      </div>
+    </ng-container>
+  </div>
+
+  <div fxLayout="column" class="mt-16">
+    <div class="header_md_bold_black">
+      Emergency Contact Details / Next of Kin
+    </div>
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutGap="10"
+      fxLayoutAlign="start center"
+    >
+      <ic-select
+        [control]="getEmergencyContactInfo(i).get('prefixId') | formcontrol"
+        [options]="prefixArray"
+        bindLabelKey="values"
+        bindValueKey="id"
+        fxFlex="24"
+        label="Prefix"
+      ></ic-select>
+      <ic-form-field
+        [control]="getEmergencyContactInfo(i).get('firstName') | formcontrol"
+        [icAlphabetOnly]="true"
+        [maxLength]="20"
+        fxFlex="24"
+        label="First Name"
+      ></ic-form-field>
+
+      <ic-form-field
+        [control]="getEmergencyContactInfo(i).get('lastName') | formcontrol"
+        [icAlphabetOnly]="true"
+        [maxLength]="20"
+        fxFlex="24"
+        label="Last Name"
+      ></ic-form-field>
+      <ic-select
+        [control]="
+          getEmergencyContactInfo(i).get('relationshipId') | formcontrol
+        "
+        bindLabelKey="values"
+        bindValueKey="id"
+        fxFlex="24"
+        label="Relationship"
+      ></ic-select>
+
+      <ic-mobile-field
+        [formControl]="
+          getEmergencyContactDetails(i).get('mobile') | formcontrol
+        "
+        [icNumbersOnly]="true"
+        [isdCode]="countriesIsdCodes"
+        [isdControl]="
+          getEmergencyContactDetails(i).get('mobtCode') | formcontrol
+        "
+        [maxLength]="maxMobileLength"
+        fxFlex="24"
+        label="Mobile Number"
+      ></ic-mobile-field>
+      <ic-mobile-field
+        [formControl]="
+          getEmergencyContactDetails(i).get('alternativeNumber') | formcontrol
+        "
+        [icNumbersOnly]="true"
+        [isdCode]="countriesIsdCodes"
+        [isdControl]="
+          getEmergencyContactDetails(i).get('altCode') | formcontrol
+        "
+        [maxLength]="maxMobileLength"
+        fxFlex="24"
+        label="Alternate Number"
+      ></ic-mobile-field>
+      <ic-mobile-field
+        [formControl]="
+          getEmergencyContactDetails(i).get('whatsappNo') | formcontrol
+        "
+        [icNumbersOnly]="true"
+        [isdCode]="countriesIsdCodes"
+        [isdControl]="
+          getEmergencyContactDetails(i).get('waptCode') | formcontrol
+        "
+        [maxLength]="maxMobileLength"
+        fxFlex="24"
+        label="Whatsapp Number"
+      ></ic-mobile-field>
+
+      <ic-form-field
+        [control]="getEmergencyContactDetails(i).get('email') | formcontrol"
+        [maxLength]="250"
+        [customError]="
+          getEmergencyContactDetails(i).get('email')?.hasError('pattern')
+            ? 'Please enter Valid Email'
+            : ''
+        "
+        fxFlex="24"
+        label="Email ID"
+      ></ic-form-field>
+
+      <ic-form-field
+        [control]="getEmergencyContactInfo(i).get('fax') | formcontrol"
+        [icNumbersOnly]="true"
+        [maxLength]="10"
+        fxFlex="24"
+        label="Fax"
+      ></ic-form-field>
+
+      <ic-form-field
+        [control]="getEmergencyContactDetails(i).get('telephone') | formcontrol"
+        [icNumbersOnly]="true"
+        [maxLength]="20"
+        fxFlex="24"
+        label="Telephone Number (Home)"
+      ></ic-form-field>
+      <ic-form-field
+        [control]="
+          getEmergencyContactDetails(i).get('workTelephone') | formcontrol
+        "
+        [icNumbersOnly]="true"
+        [maxLength]="20"
+        fxFlex="24"
+        label="Telephone Number (Work)"
+      ></ic-form-field>
+
+      <ic-form-field
+        [control]="
+          getEmergencyContactAddress(i).controls[0]?.get('address1')
+            | formcontrol
+        "
+        [maxLength]="250"
+        fxFlex="49"
+        label="Address1"
+      ></ic-form-field>
+      <ic-form-field
+        [control]="
+          getEmergencyContactAddress(i).controls[0]?.get('address1')
+            | formcontrol
+        "
+        [maxLength]="250"
+        fxFlex="49"
+        label="Address1"
+      ></ic-form-field>
+      <ic-select
+        [control]="
+          getEmergencyContactAddress(i).controls[0]?.get('residenceType')
+            | formcontrol
+        "
+        [options]="residenceTypeArray"
+        bindLabelKey="values"
+        bindValueKey="id"
+        fxFlex="24"
+        label="Residential status"
+      ></ic-select>
+      <ic-form-field
+        [control]="
+          getEmergencyContactAddress(i).controls[0]?.get('address2')
+            | formcontrol
+        "
+        fxFlex="24"
+        label="Suburb"
+      ></ic-form-field>
+      <ic-form-field
+        (onSuffixClick)="pincodeExpansion(i, 'emergency')"
+        [control]="
+          getEmergencyContactAddress(i).controls[0]?.get('pincode')
+            | formcontrol
+        "
+        fxFlex="24"
+        label="Postal Code"
+        suffixIcon="search"
+      ></ic-form-field>
+      <ic-form-field
+        [control]="
+          getEmergencyContactAddress(i).controls[0]?.get('cityName')
+            | formcontrol
+        "
+        fxFlex="24"
+        label="City"
+      ></ic-form-field>
+    </div>
   </div> -->
-</form>
+</div>

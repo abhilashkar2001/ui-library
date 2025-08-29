@@ -6,24 +6,16 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GenericValueInfoModel } from 'app/shared/models/generic-value.model';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
 import { SidenavService } from 'app/shared/services/sidenav.service';
-import { LoanService } from 'app/shared/services/loan/loan.service';
+// import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 //@ts-ignore
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  of,
-  Subscription,
-  tap,
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 import { CountryService } from 'app/shared/services/country-service';
 import { AppState, LocaleData, selectLocaleData } from '@onerumango/utils';
 import { Store } from '@ngrx/store';
 import { ReusablePincodePopupComponent } from 'app/shared/components/reusable-pincode-popup/reusable-pincode-popup.component';
 import { MatDialog } from '@angular/material/dialog';
-import { CityService } from 'app/shared/services/city.service';
+// import { CityService } from 'app/shared/services/city.service';
 
 @Component({
   selector: 'app-generic-account-form',
@@ -31,9 +23,14 @@ import { CityService } from 'app/shared/services/city.service';
   styleUrls: ['./generic-account-form.component.scss'],
 })
 export class GenericAccountFormComponent implements OnInit {
-  // disbursementForm: FormGroup | undefined;
-  // currentDate: Date | undefined;
-  genericValue: any;
+  @Input() customerForm!: FormGroup | any;
+  @Input() genericValue!: any;
+  @Input() tabIndex!: number | any;
+  @Input() dobMaxDate: Date | any;
+  @Input() dobMinDate: Date | any;
+  @Input() countryArray: any[] = [];
+  todayDate: Date = new Date();
+
   @Input() screenCode = '';
   @Output() genericForm = new EventEmitter();
 
@@ -46,16 +43,6 @@ export class GenericAccountFormComponent implements OnInit {
     EMPLOYMENTTYPE: [],
     MARITALSTATUS: [],
   };
-  // accountValue = [
-  //   { label: 'Internal', value: true },
-  //   { label: 'External', value: false },
-  // ];
-  // internalAccount = [
-  //   { label: 'Yes', value: true },
-  //   { label: 'No', value: false },
-  // ];
-  // chequeValiadtors = ['chequeTypeId', 'customerName', 'branchCode'];
-  // accountValidators = ['accountTypeId'];
   originationId: number | undefined;
 
   @Input() detailsForGeneric: any;
@@ -235,15 +222,15 @@ export class GenericAccountFormComponent implements OnInit {
   countryArr: any;
 
   constructor(
-    private fb: FormBuilder,
+    // private fb: FormBuilder,
     public sidenavService: SidenavService,
-    private loanService: LoanService,
+    // private loanService: LoanService,
     private dialog: MatDialog,
     //@ts-ignore
     private sessionStorageService: SessionStorageService,
     private countryService: CountryService,
     private store: Store<AppState>,
-    private cityService: CityService,
+    // private cityService: CityService,
     private genericValueService: GenericValueService,
   ) {
     // this.currentDate?.setDate(new Date().getDate() + 1);
@@ -254,8 +241,6 @@ export class GenericAccountFormComponent implements OnInit {
   // }
 
   ngOnInit(): void {
-    this.createPersonalDetailsForm();
-
     const localeData$ = this.store
       .select(selectLocaleData)
       .subscribe((res: any) => {
@@ -267,214 +252,31 @@ export class GenericAccountFormComponent implements OnInit {
     // this.originationId = this.sessionStorageService.getOriginationId();
     // this.buildDisbursementForm();
     this.fetchGenericValues();
-    this.fetchStateCity();
+    // this.fetchStateCity();
     // this.fetchDisbursementDetails();
     this.onCreateGroupFormValueChange();
 
     this.loadCountries();
   }
+
+  getKycInfo(): FormGroup {
+    return this.customerForm.get('kycInfo') as FormGroup;
+  }
+
+  getIdentificationDetails(): FormGroup {
+    return this.customerForm.get('identificationDetails') as FormGroup;
+  }
+
+  getExpDateMin() {
+    const currentDate = new Date(this.todayDate);
+    currentDate.setDate(currentDate.getDate() + 1);
+    return currentDate;
+  }
+
   onCreateGroupFormValueChange() {
     this.personalDetailsForm.valueChanges.subscribe(() => {
       this.genericForm.emit(this.personalDetailsForm);
     });
-  }
-  createPersonalDetailsForm() {
-    this.personalDetailsForm = this.fb.group({
-      id: [null],
-      originationDetail: this.fb.group({
-        originationId: [null],
-      }),
-
-      customerInfo: this.fb.group({
-        userRefnumber: [''],
-        icustRefNo: [''],
-        cifNumber: [''],
-        autoVerificationType: [false],
-        corporateOnboardingStatus: [''],
-
-        // PEP & Resident status
-        pepStatus: [''],
-        isResidentOfIndia: [false],
-
-        // FATCA/CRS Info
-        customerFatcaAndCrsInfoList: this.fb.array([
-          this.fb.group({
-            fatcaId: [null],
-            countryId: [null],
-            tinNumber: [''],
-            selectTinReason: [''],
-            tinUnableReason: [''],
-          }),
-        ]),
-
-        // KYC Info
-        kycInfo: this.fb.group({
-          userRefnumber: [''],
-          prefixId: [null],
-          firstName: [''],
-          middleName: [''],
-          lastName: [''],
-          dateOfBirth: [''],
-          maritalStatusId: [null],
-          genderId: [null],
-          nationality: [''],
-          branchId: [null],
-
-          // Emergency Contact
-          emergencyContactDto: this.fb.group({
-            prefix: [''],
-            firstName: [''],
-            middleName: [''],
-            lastName: [''],
-            relationshipId: [null],
-            relationshipValue: [''],
-            contact: this.fb.group({
-              telephone: [''],
-              mobile: [''],
-              isphoneNumVerified: [false],
-              email: [''],
-              workTelephone: [''],
-              isEmailVerified: [false],
-              fax: [null],
-              whatsappNo: [''],
-              alternativeNumber: [''],
-              residencePhone: [''],
-              communicationPhone: [null],
-              statementVia: [null],
-              address: this.fb.array([
-                this.fb.group({
-                  address1: [''],
-                  address2: [''],
-                  addressTypeId: [null],
-                  residenceTypeId: [null],
-                  livingAddressSince: [''],
-                }),
-              ]),
-            }),
-          }),
-        }),
-
-        // Identification Details
-        identificationDetails: this.fb.group({
-          identificationNumber: [''],
-          countryOfIssue: [null],
-          dateIssued: [''],
-          expiryDate: [''],
-        }),
-
-        // Main Contact
-        contact: this.fb.group({
-          telephone: [''],
-          mobile: [''],
-          isphoneNumVerified: [false],
-          email: [''],
-          workTelephone: [''],
-          isEmailVerified: [false],
-          fax: [null],
-          whatsappNo: [''],
-          alternativeNumber: [''],
-          residencePhone: [''],
-          communicationPhone: [null],
-          statementVia: [null],
-          address: this.fb.group({
-            address1: [''],
-            address2: [''],
-            addressTypeId: [null],
-            residenceTypeId: [null],
-            livingAddressSince: [''],
-            subRub: [''],
-            city: [''],
-            postalCode: [''],
-          }),
-        }),
-
-        // Spouse Contact
-        spouceContact: this.fb.group({
-          prefix: [''],
-          firstName: [''],
-          lastName: [''],
-          dateOfBirth: [''],
-          employeeStatus: [''],
-          netIncome: [null],
-          contact: this.fb.group({
-            telephone: [''],
-            mobile: [''],
-            email: [''],
-            workTelephone: [''],
-            residencePhone: [''],
-          }),
-        }),
-      }),
-
-      // Loan/Account Details (from JSON bottom part)
-      accountDescription: [''],
-      accountBranch: [''],
-      businessProductName: [''],
-      productDescription: [''],
-      accountType: [''],
-      accountCurrency: [''],
-      applicationDate: [''],
-      userRefNumber: [''],
-      cbsRefNumber: [''],
-      swiftCode: [''],
-      agentCode: [''],
-      rmId: [''],
-      initialFunding: [false],
-      overdraftRequested: [false],
-      holderTypeId: [null],
-      holderType: [''],
-    });
-
-    this.addUpdateValidators();
-  }
-  get customerInfo(): FormGroup {
-    return this.personalDetailsForm?.get('customerInfo') as FormGroup;
-  }
-
-  get kycInfo(): FormGroup {
-    return this.customerInfo.get('kycInfo') as FormGroup;
-  }
-
-  get emergencyInfo(): FormGroup {
-    return this.kycInfo.get('emergencyContactDto') as FormGroup;
-  }
-
-  get emergencyContact(): FormGroup {
-    return this.emergencyInfo.get('contact') as FormGroup;
-  }
-
-  get emergencyContactAdress(): FormGroup {
-    return this.emergencyContact.get('address') as FormGroup;
-  }
-
-  get contact(): FormGroup {
-    return this.customerInfo.get('contact') as FormGroup;
-  }
-
-  get identificationDetails(): FormGroup {
-    return this.customerInfo.get('identificationDetails') as FormGroup;
-  }
-
-  // get addressArray(): FormArray {
-  //   return this.contact.get('address') as FormArray;
-  // }
-
-  get addressGroup(): FormGroup {
-    return this.personalDetailsForm.get(
-      'customerInfo.contact.address',
-    ) as FormGroup;
-  }
-
-  get spouce(): FormGroup {
-    return this.customerInfo.get('spouceContact') as FormGroup;
-  }
-
-  get spouceContact(): FormGroup {
-    return this.spouce.get('contact') as FormGroup;
-  }
-
-  get customerFatcaAndCrsInfoList(): FormArray {
-    return this.customerInfo.get('customerFatcaAndCrsInfoList') as FormArray;
   }
 
   addUpdateValidators() {
@@ -495,12 +297,6 @@ export class GenericAccountFormComponent implements OnInit {
     });
   }
 
-  onSave() {
-    if (this.personalDetailsForm.invalid) {
-      this.personalDetailsForm.markAllAsTouched();
-    }
-  }
-
   pincodeExpansion() {
     const dialogRef = this.dialog.open(ReusablePincodePopupComponent, {
       width: '60%',
@@ -513,45 +309,41 @@ export class GenericAccountFormComponent implements OnInit {
     });
   }
 
-  // get customer(): FormArray {
-  //   return this.personalDetailsForm.get('customer') as FormArray;
+  // fetchStateCity() {
+  //   if (this.personalDetailsForm) {
+  //     this.addressGroup
+  //       .get('postalCode')
+  //       ?.valueChanges.pipe(debounceTime(500), distinctUntilChanged())
+  //       .subscribe((value: any) => {
+  //         if (value && value.toString().length >= 6) {
+  //           this.cityService
+  //             .fetchZipcodeDetails(value)
+  //             .subscribe((res: any) => {
+  //               if (res?.statusCode === 200 && res.data?.length) {
+  //                 const data = res.data[0];
+
+  //                 // set cities dropdown
+  //                 this.cities = res.data.map((city: any) => ({
+  //                   id: city.cityId,
+  //                   values: city.city,
+  //                 }));
+  //                 this.addressGroup.patchValue({
+  //                   city: data.cityId, // cityId bind hoga dropdown me
+  //                   subRub: data.state,
+  //                 });
+  //                 // patch selected city automatically (optional)
+  //                 this.emergencyContactAdress.patchValue({
+  //                   city: data.cityId, // cityId is your bindValueKey
+  //                 });
+  //               } else {
+  //                 this.cities = []; // reset dropdown if no data
+  //                 this.emergencyContactAdress.patchValue({ city: null });
+  //               }
+  //             });
+  //         }
+  //       });
+  //   }
   // }
-
-  fetchStateCity() {
-    if (this.personalDetailsForm) {
-      this.addressGroup
-        .get('postalCode')
-        ?.valueChanges.pipe(debounceTime(500), distinctUntilChanged())
-        .subscribe((value: any) => {
-          if (value && value.toString().length >= 6) {
-            this.cityService
-              .fetchZipcodeDetails(value)
-              .subscribe((res: any) => {
-                if (res?.statusCode === 200 && res.data?.length) {
-                  const data = res.data[0];
-
-                  // set cities dropdown
-                  this.cities = res.data.map((city: any) => ({
-                    id: city.cityId,
-                    values: city.city,
-                  }));
-                  this.addressGroup.patchValue({
-                    city: data.cityId, // cityId bind hoga dropdown me
-                    subRub: data.state,
-                  });
-                  // patch selected city automatically (optional)
-                  this.emergencyContactAdress.patchValue({
-                    city: data.cityId, // cityId is your bindValueKey
-                  });
-                } else {
-                  this.cities = []; // reset dropdown if no data
-                  this.emergencyContactAdress.patchValue({ city: null });
-                }
-              });
-          }
-        });
-    }
-  }
 
   // Get All Countrys and Isd code Mthd
   loadCountries() {
@@ -597,30 +389,6 @@ export class GenericAccountFormComponent implements OnInit {
     }
   }
 
-  // buildDisbursementForm(data?: any) {
-  //   this.disbursementForm = this.fb.group({
-  //     originationId: this.originationId,
-  //     disbursementTypeId: [data?.disbursementTypeId ?? '', Validators.required],
-  //     disbursementTypeValue: [data?.disbursementTypeValue ?? 'Cash'],
-  //     loanAmount: [data?.principalAmount ?? '5678'],
-  //     firstDisbursementDate: [data?.firstDisbursementDate ?? this.currentDate],
-  //     chequeTypeId: [data?.chequeTypeId ?? ''],
-  //     branchCode: [data?.branchCode ?? ''],
-  //     internal: [data?.internal ?? false],
-  //     customerName: [''],
-  //     internalAccount: [true],
-  //     createAccountWithUs: [false],
-  //     disbursementAccount: this.fb.group({
-  //       accountNo: [data?.disbursementAccount?.accountNo ?? ''],
-  //       confirmAccountNo: [data?.disbursementAccount?.accountNo ?? ''],
-  //       accountTypeId: [data?.disbursementAccount?.accountTypeId ?? null],
-  //       customerName: [data?.disbursementAccount?.customerName ?? ''],
-  //       bankCode: [data?.disbursementAccount?.bankCode ?? ''],
-  //       branchName: [data?.disbursementAccount?.branchName ?? ''],
-  //     }),
-  //   });
-  // }
-
   fetchGenericValues() {
     this.genericValueService
       .loadGenericValue(Object.keys(this.staticData))
@@ -629,69 +397,5 @@ export class GenericAccountFormComponent implements OnInit {
           this.genericValue = resp?.data;
         }
       });
-  }
-
-  // setDisbursement(event: number) {
-  //   if (event) {
-  //     const disbursement = this.genericValue?.['DISBURSEMENTTYPE']?.find(
-  //       (value: { id: number; values: string }) => value?.id === event,
-  //     )?.values;
-  //     this.disbursementForm
-  //       ?.get('disbursementTypeValue')
-  //       ?.setValue(disbursement);
-  //     if (disbursement?.includes('Cheque')) {
-  //       this.chequeValiadtors.forEach((field) => {
-  //         this.disbursementForm
-  //           ?.get(field)
-  //           ?.setValidators([Validators.required]);
-  //         this.disbursementForm?.get(field)?.updateValueAndValidity();
-  //       });
-  //       this.accountValidators.forEach((field) => {
-  //         this.disbursementForm?.get(field)?.clearValidators();
-  //         this.disbursementForm?.get(field)?.updateValueAndValidity();
-  //       });
-  //     }
-  //   }
-  // }
-
-  // searchBankCode() {
-  //   const contextData = {
-  //     data: 2,
-  //   };
-  //   this.sidenavService;
-  //   console.log(contextData);
-  //   this.sidenavService.open(contextData);
-  // }
-
-  // fetchDisbursementDetails() {
-  //   this.loanService.fetchDisbursementDetails(962).subscribe((res: any) => {
-  //     if (res?.statusCode === 200 || res?.statusCode === 201)
-  //       this.buildDisbursementForm(res?.data[0]);
-  //   });
-  // }
-
-  handleSubmit() {
-    const payload = { ...this.personalDetailsForm?.value };
-    payload.originationId = this.originationId;
-    payload.screenCode = this.screenCode;
-    delete payload.disbursementAccount.confirmAccountNo;
-    return this.loanService.saveDisbursementDetails(payload).pipe(
-      tap((res) => {
-        console.log(res);
-      }),
-      map((res: any) =>
-        res?.statusCode == 200 || res?.statusCode == 201
-          ? ('success' as const)
-          : ('failure' as const),
-      ),
-      catchError((_err) => {
-        console.error(_err);
-        return of('failure' as const);
-      }),
-    );
-  }
-
-  submitForm() {
-    return this.handleSubmit().toPromise();
   }
 }

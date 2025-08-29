@@ -236,21 +236,20 @@ export class LoginComponent implements OnInit {
                 source: 'Website',
                 currencyCode: this.profileInfo?.currencyCode,
                 currencyId: this.profileInfo?.currencyId,
-                originationProductId:
+                productDetailsId:
                   this.sessionStorageService.getLoanBasisDetails()?.basisId,
               },
             };
             this.accountService
               .saveAccountDetails(data)
               .subscribe((resp: any) => {
-                if (resp.statusCode === 200) {
+                if (resp.statusCode === 200 || resp.statusCode === 201) {
                   this.sessionStorageService.setOriginationId(
                     resp?.data?.originationModel?.originationId,
                   );
                   this.router.navigate(['create-account/stages']);
                 }
               });
-            this.router.navigate(['create-account/stages']);
           }
         } else if (this.category === 'Card') {
           this.router.navigate(['apply-card/stages']);
