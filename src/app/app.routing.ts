@@ -2,8 +2,6 @@ import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { AboutCardComponent } from './modules/card/about-card/about-card.component';
-// import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
-// import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.compone/nt';
 
 export const rootRouterConfig: Routes = [
   {
@@ -90,7 +88,6 @@ export const rootRouterConfig: Routes = [
       },
     ],
   },
-
   {
     path: '**',
     redirectTo: 'home/404',
