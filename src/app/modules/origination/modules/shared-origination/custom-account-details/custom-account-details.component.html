@@ -5,48 +5,16 @@
 >
   <div class="summary_pad" fxFlex="100" fxLayout="row wrap" fxLayoutGap="10px">
     <div
+      *ngFor="let item of createAccountDetailsSummaryArr"
       class="row mt-12"
       fxFlex="24"
       fxLayout="column"
       fxLayoutAlign="start start"
     >
-      <div class="breadcrum_md">Account Type</div>
-      <div class="header_md">
-        {{ createAccountDetailsSummaryArr?.basisClass }}
-      </div>
-    </div>
-    <div
-      class="row mt-12"
-      fxFlex="24"
-      fxLayout="column"
-      fxLayoutAlign="start start"
-    >
-      <div class="breadcrum_md">Account Description</div>
-      <div class="header_md">
-        {{ createAccountDetailsSummaryArr?.basisClassDesc }}
-      </div>
-    </div>
-    <div
-      class="row mt-12"
-      fxFlex="24"
-      fxLayout="column"
-      fxLayoutAlign="start start"
-    >
-      <div class="breadcrum_md">Business Product Name</div>
-      <div class="header_md">
-        {{ createAccountDetailsSummaryArr?.basisName }}
-      </div>
-    </div>
-    <div
-      class="row mt-12"
-      fxFlex="24"
-      fxLayout="column"
-      fxLayoutAlign="start start"
-    >
-      <div class="breadcrum_md">Product Description</div>
-      <div class="header_md">
-        {{ createAccountDetailsSummaryArr?.basisDetailStory }}
-      </div>
+      <span class="breadcrum_md">{{ item.header }}</span>
+      <span class="header_md">
+        {{ item.value || '-' }}
+      </span>
     </div>
   </div>
 
@@ -60,23 +28,22 @@
   >
     <div fxFlex="24">
       <ic-select
-        [control]="branch.get('id') | formcontrol"
+        [control]="originationModel.get('branchId') | formcontrol"
         [options]="accountBranchArr"
         bindLabelKey="branchName"
         bindValueKey="id"
-        label="Account Branch 1"
+        label="Account Branch"
         [disabled]="!isEdit"
       ></ic-select>
     </div>
     <div fxFlex="24">
       <ic-select
-        [control]="accountCurrency.get('id') | formcontrol"
+        [control]="originationModel.get('currencyId') | formcontrol"
         [options]="currencyArr"
         bindLabelKey="currencyCode"
         bindValueKey="id"
         label="Account Currency"
         [disabled]="!isEdit"
-        (selectionChange)="handleCurrencyChange($event)"
       ></ic-select>
     </div>
     <div fxFlex="24">
@@ -97,11 +64,13 @@
         bindLabelKey="values"
         bindValueKey="id"
         label="Holder Type"
-        [disabled]="!isEdit"
-        (selectionChange)="holderTypeChange()"
+        [disabled]="true"
       ></ic-select>
     </div>
-    <div fxFlex="24" *ngIf="getHolderTypeById()?.toLowerCase() === 'minor'">
+    <div
+      fxFlex="24"
+      *ngIf="accountDetailsForm?.get('holderType')?.value === 'Minor'"
+    >
       <ic-form-field
         [control]="accountDetailsForm.get('noOfGuardian') | formcontrol"
         label="No. of guardian"
@@ -109,7 +78,10 @@
         [disabled]="!isEdit"
       ></ic-form-field>
     </div>
-    <div fxFlex="24" *ngIf="getHolderTypeById()?.toLowerCase() === 'joint'">
+    <div
+      fxFlex="24"
+      *ngIf="accountDetailsForm?.get('holderType')?.value === 'Joint'"
+    >
       <ic-form-field
         [control]="accountDetailsForm.get('noOfApplicant') | formcontrol"
         label="No. of Applicant"
@@ -132,8 +104,8 @@
       *ngIf="
         basisClass == 'CORPORATE ACCOUNT' ||
         (basisClass != 'CORPORATE ACCOUNT' &&
-          (getHolderTypeById()?.toLowerCase() === 'joint' ||
-            getHolderTypeById()?.toLowerCase() === 'self'))
+          (accountDetailsForm?.get('holderType')?.value === 'Joint' ||
+            accountDetailsForm?.get('holderType')?.value === 'Self'))
       "
     >
       <ic-slide-toggle

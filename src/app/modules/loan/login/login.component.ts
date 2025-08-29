@@ -15,6 +15,7 @@ import moment from 'moment';
 import { LoanService } from 'app/shared/services/loan/loan.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { Router } from '@angular/router';
+import { AccountService } from 'app/shared/services/account.service';
 
 @Component({
   selector: 'app-login',
@@ -53,6 +54,7 @@ export class LoginComponent implements OnInit {
     private loanService: LoanService,
     private sessionStorageService: SessionStorageService,
     private router: Router,
+    private accountService: AccountService,
   ) {
     this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
@@ -217,7 +219,39 @@ export class LoginComponent implements OnInit {
         ) {
           this.router.navigate(['/cheque-book/stages']);
         } else if (this.category === 'Accounts') {
-          this.router.navigate(['create-account/stages']);
+          if (response.status === 401) {
+            this.invalidOtp = true;
+            this.isLoading = false;
+          } else if (response.status === 200) {
+            const accountType = JSON.parse(
+              localStorage?.getItem('account-type') || '{}',
+            );
+            this.isLoading = false;
+            this.invalidOtp = false;
+            const data = {
+              holderTypeId: accountType?.holderTypeId,
+              originationModel: {
+                applicationDate: moment(new Date()).format('MM-DD-YYYY'),
+                branchId: this.profileInfo?.branchId,
+                source: 'Website',
+                currencyCode: this.profileInfo?.currencyCode,
+                currencyId: this.profileInfo?.currencyId,
+                originationProductId:
+                  this.sessionStorageService.getLoanBasisDetails()?.basisId,
+              },
+            };
+            this.accountService
+              .saveAccountDetails(data)
+              .subscribe((resp: any) => {
+                if (resp.statusCode === 200) {
+                  this.sessionStorageService.setOriginationId(
+                    resp?.data?.originationModel?.originationId,
+                  );
+                  this.router.navigate(['create-account/stages']);
+                }
+              });
+            this.router.navigate(['create-account/stages']);
+          }
         } else if (this.category === 'Card') {
           this.router.navigate(['apply-card/stages']);
         } else {

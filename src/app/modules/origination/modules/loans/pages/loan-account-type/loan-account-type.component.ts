@@ -85,7 +85,13 @@ export class LoanAccountTypeComponent implements OnInit {
           },
         });
         dialogRef.afterClosed().subscribe((res) => {
-          console.log(res);
+          localStorage.setItem(
+            'account-type',
+            JSON.stringify({
+              holderTypeId: res?.holderTypeId,
+              holderType: res?.type,
+            }),
+          );
           this.sessionStorageService.setItem('category', this.category);
           this.sessionStorageService.setItem('basisId', this.basisId);
           this.sessionStorageService.setItem('basisClass', this.basisClass);
