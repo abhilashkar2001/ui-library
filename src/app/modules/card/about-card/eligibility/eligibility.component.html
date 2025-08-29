@@ -1,14 +1,16 @@
 <div class="eligibility-tab">
-  <div>Eligibility Criteria</div>
-  <div>{{ eligibilityData?.description }}</div>
+  <div class="title_header">Eligibility Criteria</div>
+  <div class="description">{{ eligibilityData?.description }}</div>
   <div fxLayout="row" fxLayoutGap="16px" class="basic-requirements">
     <div class="star-bg">
       <img src="assets/images/star.svg" class="star-icon" alt="star" />
     </div>
     <div fxLayout="column">
-      <div>Basic Eligibility Requirements</div>
-      <div>Fundamental criteria that all applicants must meet</div>
-      <ul>
+      <div class="card_title">Basic Eligibility Requirements</div>
+      <div class="card_description">
+        Fundamental criteria that all applicants must meet
+      </div>
+      <ul class="card_points">
         <li *ngFor="let item of eligibilityData?.basicRequirements">
           {{ item }}
         </li>

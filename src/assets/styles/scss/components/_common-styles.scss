@@ -56,7 +56,8 @@ code {
   overflow: visible;
 }
 
-.mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input,
+.mdc-text-field--no-label:not(.mdc-text-field--textarea)
+  .mat-mdc-form-field-input-control.mdc-text-field__input,
 .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
   height: 100% !important;
 }
@@ -84,8 +85,12 @@ code {
   background-color: var(--current-theme-background) !important;
 }
 
-.egret-navy .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
-.egret-navy .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
+.egret-navy
+  .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent
+  .mat-ripple-element,
+.egret-navy
+  .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent
+  .mat-ripple-element {
   background: var(--current-theme-background);
 }
 
@@ -203,7 +208,33 @@ code {
   padding: 0 5%;
   width: 100%;
 }
-
+// card common styles
+@mixin cards_more_details($size, $weight, $color) {
+  font-family: var(--ic-primary-font-family);
+  font-size: #{$size}px;
+  font-weight: $weight;
+  color: $color;
+}
+.title_header {
+  @include cards_more_details(24, 600, #06113c);
+}
+.description {
+  @include cards_more_details(18, 400, #4c5371);
+}
+.card_title {
+  @include cards_more_details(18, 600, #06113c);
+}
+.card_description {
+  margin: 1% 0% 0% 0%;
+  @include cards_more_details(14, 400, #6b7280);
+}
+.card_points {
+  margin: 1% 0% 0% 0%;
+  @include cards_more_details(12, 400, #525252);
+  li::marker {
+    color: #ff2807;
+  }
+}
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -220,7 +251,6 @@ code {
   opacity: 0;
   animation: fadeUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
-
 
 .zoom-in {
   opacity: 0;
