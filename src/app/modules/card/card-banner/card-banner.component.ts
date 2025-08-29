@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-card-banner',
@@ -7,9 +7,15 @@ import { Component, Input } from '@angular/core';
 })
 export class CardBannerComponent {
   @Input() basisClass!: string;
+  @Output() onApplyClick = new EventEmitter<any>();
+
   features = [
     'BookMyShow and Inox Offer',
     'Spends-based complimentary airport lounge access',
     'Higher reward points',
   ];
+
+  goToCatalogue(e: Event) {
+    this.onApplyClick.emit(e);
+  }
 }
