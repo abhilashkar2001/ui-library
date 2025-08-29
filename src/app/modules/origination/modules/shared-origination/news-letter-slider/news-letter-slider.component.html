@@ -1,42 +1,20 @@
 <section class="testimonial">
   <div class="container">
-    <div
-      class="row mb-3"
-      data-aos="fade-top"
-      data-aos-delay="200"
-      data-aos-duration="500"
-    >
+    <div class="row mb-3" [inViewAnimate]="'fade-up'" style="animation-delay: 0.1s">
       <h1 class="section_heading">What our happy client say</h1>
       <p class="section_subHeading">
         Several selected clients, who already believe in our service.
       </p>
     </div>
-    <div
-      data-aos="zoom-in"
-      data-aos-delay="200"
-      data-aos-duration="500"
-      fxLayout="row"
-      fxLayoutAlign="space-between center"
-    >
-      <swiper
-        [autoplay]="{ delay: 3000, disableOnInteraction: false }"
-        [loop]="true"
-        [navigation]="true"
-        [pagination]="{ clickable: true }"
-        class="mySwiper"
-        fxFlex="69"
-        fxFlex.lt-md="100"
-      >
+    <div [inViewAnimate]="'zoom-in'" style="animation-delay: 0.1s" fxLayout="row" fxLayoutAlign="space-between center">
+      <swiper [autoplay]="{ delay: 3000, disableOnInteraction: false }" [loop]="true" [navigation]="true"
+        [pagination]="{ clickable: true }" class="mySwiper" fxFlex="69" fxFlex.lt-md="100">
         <ng-container *ngFor="let img of images">
           <ng-template swiperSlide>
             <div class="testimonial_section">
               <div class="client_img">
                 <img [src]="img.image" alt="Client" />
-                <img
-                  alt="Options"
-                  class="dots_img"
-                  src="assets/images/Group 75.svg"
-                />
+                <img alt="Options" class="dots_img" src="assets/images/Group 75.svg" />
               </div>
               <div class="client_text">
                 <div class="header_lg_bold_black">{{ img.client }}</div>
@@ -47,12 +25,7 @@
         </ng-container>
       </swiper>
 
-      <img
-        alt="Image"
-        class="img-fluid"
-        fxFlex="30"
-        src="assets/images/Group 13938.svg"
-      />
+      <img alt="Image" class="img-fluid" fxFlex="30" src="assets/images/Group 13938.svg" />
     </div>
   </div>
 </section>

@@ -216,7 +216,8 @@ hr.line {
 }
 
 .scanColor {
-  background: transparent linear-gradient(91deg, #051a2d 0%, var(--ic-text-theme) 100%) 0% 0%
+  background: transparent
+    linear-gradient(91deg, #051a2d 0%, var(--ic-text-theme) 100%) 0% 0%
     no-repeat padding-box;
   color: #fff !important;
   font-size: 12px;
