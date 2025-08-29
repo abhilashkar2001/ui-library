@@ -8,7 +8,7 @@ import { AboutCard } from './about-card.constants';
 })
 export class AboutCardComponent {
   tabs = ['Overview', 'Benefits', 'Features', 'Eligibility', 'Fees & Charges'];
-  selectedIndex = 4;
+  selectedIndex = 0;
 
   selectTab(index: number) {
     this.selectedIndex = index;

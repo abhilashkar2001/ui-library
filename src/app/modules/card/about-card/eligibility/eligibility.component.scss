@@ -1,35 +1,41 @@
 .eligibility-tab {
   .basic-requirements {
-    padding: 2rem 1rem;
-    margin-bottom: 16px;
+    padding: 1rem;
+    margin: 16px 0px;
     border-radius: 16px;
-    background-color: #f8f9fa;
+    background-color: var(--ic-surface-tonal-a0);
+
     ul {
       padding: 12px;
     }
+
     .star-bg {
-      background-color: #ff2807;
+      background-color: var(--ic-surface-tonal-a50);
       height: 48px;
       width: 48px;
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
+
       .star-icon {
         height: 24px;
         width: 24px;
       }
     }
   }
+
   .eligibility-note-alert {
     background-color: #fff7e8;
     color: #ffa800;
     padding: 12px 4px;
-    border: 2px solid #ffa800;
+    border: 1px solid #ffa800;
     border-radius: 12px;
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
+    font-family: var(--ic-primary-font-family);
+
     img {
       margin-right: 8px;
       height: 24px;

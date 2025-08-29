@@ -1,4 +1,4 @@
-.features {
+.features_container {
   @mixin cards_more_details($size, $weight, $color) {
     font-family: var(--ic-primary-font-family);
     font-size: #{$size}px;
@@ -11,31 +11,44 @@
   }
 
   .description {
-    @include cards_more_details(18, 400, #4c5371);
+    margin: 1% 0% 0% 0%;
+    @include cards_more_details(16, 400, #4c5371);
   }
 
   .banner_card {
-    background: linear-gradient(90deg, #004c97 0%, #06113c 100%);
+    background: linear-gradient(270deg,
+        var(--ic-clr-primary-a10),
+        var(--ic-clr-primary-a30),
+        var(--ic-clr-primary-a10));
+    background-size: 600% 600%;
     border-radius: 16px;
     padding: 24px;
     margin: 1% 0% 1% 0%;
+
+    animation: gradientFlow 8s ease infinite;
+
     .banner_title {
       @include cards_more_details(24, 600, #ffffff);
     }
+
     .banner_description {
       @include cards_more_details(14, 400, #ffffff);
     }
+
     .banner_types {
       margin: 2% 0% 0% 0%;
+
       .banner_star_icon {
         background-color: #ffffff33;
         padding: 12px;
         border-radius: 8px;
       }
+
       .type_content {
         .type_title {
           @include cards_more_details(16, 600, #ffffff);
         }
+
         .type_description {
           @include cards_more_details(14, 400, #ffffff);
         }
@@ -43,38 +56,67 @@
     }
   }
 
+  @keyframes gradientFlow {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+
   .card_info {
     .title {
       @include cards_more_details(20, 700, #06113c);
     }
+
     .cards {
       border: solid #c6c6c6 1px;
       border-radius: 12px;
       padding: 24px;
       width: 48%;
       margin: 2% 0% 0% 0%;
+      background-color: var(--ic-card-bg);
+      cursor: pointer;
+      transition: all 0.3s ease;
+
       .card_star_icon {
         background-color: #f8f9fa;
         padding: 12px;
         border-radius: 8px;
         height: 40%;
       }
+
       .card_content {
         .title {
           @include cards_more_details(16, 600, #06113c);
         }
+
         .description {
           @include cards_more_details(14, 400, #6b7280);
         }
+
         .options {
           .label {
             padding: 8px;
-            border: solid #c6c6c666 0.5px;
+            border: 1px solid var(--ic-surface-tonal-a20);
             border-radius: 4px;
-            background-color: #f5faff;
-            @include cards_more_details(12, 400, #004c97);
+            background-color: var(--ic-surface-tonal-a0);
+            @include cards_more_details(12, 400, var(--ic-text-theme));
           }
         }
+      }
+
+      &:hover {
+        background-color: var(--ic-surface-primary-a30);
+        border: solid var(--ic-surface-tonal-a20) 1px;
+        transform: scale(1.02);
       }
     }
   }
