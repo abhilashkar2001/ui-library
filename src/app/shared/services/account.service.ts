@@ -20,4 +20,32 @@ export class AccountService {
   saveAccountPersonalDetails(payload: any) {
     return this.http.post<any>(`${baseUrl}/account`, payload);
   }
+
+  saveAccountDetails(payload: any) {
+    console.log('PAYLOAD: ', payload);
+    return this.http.post<any>(`${baseUrl}/account`, payload);
+  }
+
+  fetchBranch() {
+    return this.http.get<any>(
+      `${baseUrl}/branch?oneTimeAuth=Y&recordStatus=OPEN`,
+    );
+  }
+  fetchCurrency() {
+    return this.http.get<any>(
+      `${baseUrl}/icCurrency?oneTimeAuth=Y&recordStatus=OPEN`,
+    );
+  }
+
+  fetchCustomerCategory() {
+    return this.http.get<any>(
+      `${baseUrl}/customerCategory?oneTimeAuth=Y&recordStatus=OPEN`,
+    );
+  }
+
+  getstaticdata(screenName: string, staticdataneeded: any) {
+    return this.http.get<any>(
+      `${baseUrl}/generic-value?screenName=${screenName}&genericName=${staticdataneeded}&authStatus=AUTHORIZED&recordStatus=OPEN`,
+    );
+  }
 }

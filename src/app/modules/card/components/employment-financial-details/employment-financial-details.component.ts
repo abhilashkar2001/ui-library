@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { tap, map, catchError, of } from 'rxjs';
@@ -19,17 +19,37 @@ export class EmploymentFinancialDetailsComponent implements OnInit {
     { id: 2, values: 'Self-Employed' },
     { id: 3, values: 'Farmer' },
   ];
-  originationId!: number | null;
+  cardId!: number | null;
 
   constructor(
     private fb: FormBuilder,
     private sessionStorageService: SessionStorageService,
+
     private cardService: CardSerivce,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
-    this.originationId = this.sessionStorageService.getOriginationId();
+    this.cardId = this.sessionStorageService.getOriginationId();
     this.buildEmploymentFinancialDetails();
+    if (this.cardId) {
+      this.getEmployeeFinancialDetails();
+    }
+  }
+
+  getEmployeeFinancialDetails() {
+    if (this.cardId)
+      this.cardService
+        .fetchDynamicScreen(this.cardId, 'EmploymentAndFinancialInfo')
+        .subscribe((res: any) => {
+          if (res?.data) {
+            this.cardId = res?.data?.cardId;
+            if (res.data.empAndFin) {
+              this.employeeFinacialForm.patchValue(res.data.empAndFin);
+            }
+          }
+          this.cdr.detectChanges();
+        });
   }
 
   buildEmploymentFinancialDetails() {
@@ -53,9 +73,9 @@ export class EmploymentFinancialDetailsComponent implements OnInit {
 
   handleSubmit() {
     const payload: EmpAndFinInfoPayload = {
-      id: this.originationId,
+      cardId: this.cardId,
       screenCode: this.screenCode,
-      empAndFinInfo: this.employeeFinacialForm.value,
+      empAndFin: this.employeeFinacialForm.value,
     };
 
     return this.cardService.saveEmployeementFinancialDetails(payload).pipe(

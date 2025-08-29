@@ -6,6 +6,7 @@ import {
   EmpAndFinInfoPayload,
   SaveCardDetailsPayload,
 } from './cardModel';
+import { IcHttpResponseModel } from '@onerumango/utils';
 
 const baseUrl = environment.microServiceURL;
 
@@ -39,4 +40,13 @@ export class CardSerivce {
       payload,
     );
   }
+
+  // get Financial EmployeeDetails
+  fetchDynamicScreen(customerStageId: number, className: string) {
+    return this.http.get<IcHttpResponseModel<any>>(
+      `${baseUrl}/card/fetch?customerCardStgId=${customerStageId}&className=${className}`,
+    );
+  }
 }
+
+// 453;
