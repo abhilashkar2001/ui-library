@@ -117,8 +117,9 @@
         border-radius: 24px !important;
         opacity: 1 !important;
         width: 100%;
-        background: transparent linear-gradient(90deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%)
-          0% 0% no-repeat padding-box;
+        background: transparent
+          linear-gradient(90deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%) 0%
+          0% no-repeat padding-box;
         color: #ffffff;
         height: 48px;
         font: normal normal 500 15px/23px var(--ic-primary-font-family);
@@ -274,7 +275,8 @@
 }
 
 .saveButton {
-  background: transparent linear-gradient(91deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%) 0% 0%
+  background: transparent
+    linear-gradient(91deg, #051a2d 0%, var(--ic-clr-primary-a10) 100%) 0% 0%
     no-repeat padding-box;
   border-radius: 24px;
   font: normal normal 500 15px/23px var(--ic-primary-font-family);

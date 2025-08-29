@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { debitFields, CreditFields } from './card-details.store';
 import { tap, map, catchError, of } from 'rxjs';
 import { CardSerivce } from '../../card.service';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
 import { CardServiceModel, SaveCardDetailsPayload } from '../../cardModel';
+import { GenericValueService } from 'app/shared/services/generic-value.service';
 
 @Component({
   selector: 'app-card-details',
@@ -14,24 +15,62 @@ import { CardServiceModel, SaveCardDetailsPayload } from '../../cardModel';
 export class CardDetailsComponent implements OnInit {
   cardForm!: FormGroup;
   @Input() screenCode: number | undefined;
+  @Input() basisClass: string | undefined;
   address = [
     { label: 'My Address', value: true },
     { label: 'Branch Near Me', value: false },
   ];
+  staticData = {
+    CARDTYPE: [],
+    CARDNETWORK: [],
+    PREFERREDBILLINGDATE: [],
+  };
   typeOfCard = 'Credit';
   debitFields = debitFields({});
   CreditFields = CreditFields({});
-  originationId!: number;
+  cardId!: number | null;
+  genericValue: any | undefined;
 
   constructor(
     private fb: FormBuilder,
     private cardService: CardSerivce,
     private sessionStorageService: SessionStorageService,
+    private genericValueService: GenericValueService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    this.originationId = this.sessionStorageService.getOriginationId();
+    this.cardId = this.sessionStorageService.getOriginationId();
+    this.fetchGenericValues();
     this.buildForm();
+    if (this.cardId) {
+      this.fetchCardDetails();
+    }
+  }
+
+  fetchGenericValues() {
+    this.genericValueService
+      .loadGenericValue(Object.keys(this.staticData))
+      .subscribe((resp: any) => {
+        if (resp?.statusCode === 200) {
+          this.genericValue = resp?.data;
+        }
+      });
+  }
+
+  fetchCardDetails() {
+    if (this.cardId)
+      this.cardService
+        .fetchDynamicScreen(this.cardId, 'CardServicesInfo')
+        .subscribe((res: any) => {
+          if (res?.data) {
+            this.cardId = res?.data?.cardId;
+            if (res) {
+              this.cardForm.patchValue(res.data?.cardService);
+            }
+          }
+          this.cdr.detectChanges();
+        });
   }
 
   buildForm() {
@@ -57,7 +96,7 @@ export class CardDetailsComponent implements OnInit {
 
   handleSubmit() {
     const payload: SaveCardDetailsPayload = {
-      id: this.originationId,
+      cardId: this.cardId,
       screenCode: this.screenCode,
       cardService: this.cardForm.value as CardServiceModel,
     };
