@@ -66,7 +66,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    this.originationId = this.sessionStorageService.getOriginationId() || 1503;
+    this.originationId = this.sessionStorageService.getOriginationId();
     this.holderTypeDetails = JSON.parse(
       localStorage?.getItem('account-type') || '{}',
     );
@@ -92,6 +92,8 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   initializeCreateAccountDetailsArray(data?: any) {
+    console.log(data);
+
     this.createAccountDetailsSummaryArr = [
       {
         header: 'Account Type',
@@ -129,14 +131,15 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
         .getAccountDetails(this.originationId)
         .subscribe((resp) => {
           if (resp.statusCode === 200) {
-            this.accountDetailsForm?.patchValue(resp?.data);
             this.initializeCreateAccountDetailsArray(resp?.data);
+            this.accountDetailsForm?.patchValue(resp?.data);
           }
         });
   }
 
   buildLoanDetailsForm(item: any) {
     this.accountDetailsForm = this.fb.group({
+      id: [item.id || null],
       productDescription: [item.productDescription || null],
       applicationDate: [item.applicationDate || null],
       userRefNumber: [item.userRefNumber || null],
@@ -153,21 +156,8 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
         this.holderTypeDetails?.holderTypeId ?? item.holderTypeId ?? null,
       ],
       noOfApplicant: [item.noOfApplicant || null],
-      customerCategory: [item.customerCategory || null],
-      customerAccountInitialFunding: this.fb.group({
-        amount: [item.customerAccountInitialFunding?.amount || null],
-        fundByAccount: [
-          item.customerAccountInitialFunding?.fundByAccount || null,
-        ],
-        branchCode: [item.customerAccountInitialFunding?.branchCode || null],
-        chequeNumber: [
-          item.customerAccountInitialFunding?.chequeNumber || null,
-        ],
-        tellertransactionRefNo: [
-          item.customerAccountInitialFunding?.tellertransactionRefNo || null,
-        ],
-      }),
-
+      customerCategoryId: [item.customerCategoryId || null],
+      customerCategoryValue: [item.customerCategoryValue || null],
       originationModel: this.fb.group({
         originationId: [
           this.originationId ?? item.originationModel?.originationId ?? null,
@@ -178,9 +168,9 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
         status: [item.originationModel?.status || null],
         subStatus: [item.originationModel?.subStatus || null],
         branchId: [item.originationModel?.branchId || null],
-        branchCode: [item.originationModel?.branchCode || null],
+        branchCode: [item.originationModel?.accountBranch || null],
         currencyId: [item.originationModel?.currencyId || null],
-        currencyCode: [item.originationModel?.currencyCode || null],
+        currencyCode: [item.originationModel?.accountCurrency || null],
         productDetailsId: [item.originationModel?.productDetailsId || null],
       }),
     });
