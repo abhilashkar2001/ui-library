@@ -1,9 +1,4 @@
-<section
-  class="carousel py-5 py-md-0"
-  data-aos="fade-top"
-  data-aos-delay="100"
-  data-aos-duration="400"
->
+<section class="carousel py-5 py-md-0" [inViewAnimate]="'fade-up'" style="animation-delay: 0.1s">
   <div class="px-3">
     <h1 class="section_heading">{{ businessSuiteName }}</h1>
     <p class="section_subHeading">
@@ -11,29 +6,15 @@
     </p>
   </div>
 
-  <div
-    class="carousel_section"
-    data-aos="zoom-in"
-    data-aos-delay="200"
-    data-aos-duration="500"
-  >
+  <div class="carousel_section" [inViewAnimate]="'zoom-in'" style="animation-delay: 0.1s">
     <div class="ellipse"></div>
     <swiper [config]="swiperConfig" [navigation]="true">
-      <ng-template
-        *ngFor="let imagesdata of dynamicList; let i = index"
-        swiperSlide
-      >
-        <div
-          [ngStyle]="
+      <ng-template *ngFor="let imagesdata of dynamicList; let i = index" swiperSlide>
+        <div [ngStyle]="
             backgroundStyles[i] || {
               'background-image': 'url(assets/images/default_fallback_img.svg)',
             }
-          "
-          class="single_card"
-          data-aos="zoom-out"
-          data-aos-delay="200"
-          data-aos-duration="500"
-        >
+          " class="single_card" [inViewAnimate]="'zoom-in'" style="animation-delay: 0.3s">
           <div class="card_overlay">
             <div>
               <div class="card_title">{{ imagesdata?.basisClass }}</div>
@@ -42,13 +23,8 @@
               </div>
             </div>
             <div class="button-container py-16">
-              <ic-button
-                (click)="moveToSubAccountPage(imagesdata.basisClass)"
-                icButtonType="outlined-rounded-transparent"
-                label="Apply now"
-                size="medium"
-                type="submit"
-              ></ic-button>
+              <ic-button (click)="moveToSubAccountPage(imagesdata.basisClass)"
+                icButtonType="outlined-rounded-transparent" label="Apply now" size="medium" type="submit"></ic-button>
             </div>
           </div>
         </div>
