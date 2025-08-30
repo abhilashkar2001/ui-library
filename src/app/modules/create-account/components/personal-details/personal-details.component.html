@@ -1,6 +1,4 @@
-<app-common-personal-details></app-common-personal-details>
-
-<div [ngSwitch]="detailsForGeneric.accountType">
+<!-- <div [ngSwitch]="detailsForGeneric.accountType">
   <ng-template [ngSwitchCase]="'individual'">
     <app-generic-account-form
       (genericForm)="getForm($event)"
@@ -30,13 +28,11 @@
                 fxLayoutGap="5"
                 fxLayoutAlign="start center"
               >
-                <!-- *ngIf="getFileInfo(i)?.length > 0; else unticked" -->
                 <img src="assets/images/tickicon.svg" alt="Tick" />
                 <ng-template #unticked>
                   <img src="assets/images/untickicon.svg" alt="Untick" />
                 </ng-template>
                 <span class="header_md"> {{ user.header }} </span>
-                <!-- <span class="required">*</span> -->
               </div>
               <span
                 [ngClass]="
@@ -84,13 +80,11 @@
                 fxLayoutGap="5"
                 fxLayoutAlign="start center"
               >
-                <!-- *ngIf="getFileInfo(i)?.length > 0; else unticked" -->
                 <img src="assets/images/tickicon.svg" alt="Tick" />
                 <ng-template #unticked>
                   <img src="assets/images/untickicon.svg" alt="Untick" />
                 </ng-template>
                 <span class="header_md"> {{ user.header }} </span>
-                <!-- <span class="required">*</span> -->
               </div>
               <span
                 [ngClass]="
@@ -140,21 +134,13 @@
                 fxLayoutGap="5"
                 fxLayoutAlign="start center"
               >
-                <!-- *ngIf="getFileInfo(i)?.length > 0; else unticked" -->
                 <img src="assets/images/tickicon.svg" alt="Tick" />
                 <ng-template #unticked>
                   <img src="assets/images/untickicon.svg" alt="Untick" />
                 </ng-template>
                 <span class="header_md"> {{ user.header }} </span>
-                <!-- <span class="required">*</span> -->
               </div>
-              <!-- <span [ngClass]="
-                  accordionItems.length <= 2 
-                    ? 'disabled_delete'
-                    : 'delete_btn'
-                " (click)="deleteAccordian(i)">
-                Delete
-              </span> -->
+
               <mat-icon class="arrow-icon" [class.rotate]="panel.expanded">
                 expand_more
               </mat-icon>
@@ -173,188 +159,66 @@
   <ng-template *ngSwitchDefault>
     <p>Nothing to show</p>
   </ng-template>
-</div>
+</div> -->
 
-<!-- <form *ngIf="disbursementForm" [formGroup]="disbursementForm" fxLayout="column">
-  <div fxLayout="row wrap" fxLayoutGap="1%">
-    <div fxFlex="24">
-      <ic-select
-        (selectionChange)="setDisbursement($event)"
-        [control]="disbursementForm.get('disbursementTypeId') | formcontrol"
-        [options]="genericValue?.['DISBURSEMENTTYPE'] || []"
-        bindLabelKey="values"
-        bindValueKey="id"
-        label="Disbursement Type"
-      ></ic-select>
+<div *ngIf="customerDetailsForm" fxLayout="column">
+  <form [formGroup]="customerDetailsForm">
+    <div formArrayName="customer">
+      <div *ngFor="let customer of customer.controls; let i = index">
+        <div [formGroup]="customer | formgroup">
+          <div class="custom_accordin">
+            <mat-accordion>
+              <mat-expansion-panel [expanded]="i === 0">
+                <mat-expansion-panel-header class="customer_Header">
+                  <mat-panel-description>
+                    <div
+                      fxLayout="row"
+                      fxLayoutAlign="start center"
+                      fxLayoutGap="10px"
+                    >
+                      <img
+                        *ngIf="customer.valid"
+                        alt="image"
+                        src="../../../../../../assets/images/done_icon.svg"
+                      />
+                      <span class="header_lg_bold_black p-12"
+                        >Applicant {{ i + 1 }}</span
+                      >
+                    </div>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <ic-form-field
+                    [control]="customer.get('customerNo') | formcontrol"
+                    [icAlphabetOnly]="true"
+                    [maxLength]="20"
+                    fxFlex="24"
+                    label="CIF Number"
+                  ></ic-form-field>
+
+                  <ic-slide-toggle
+                    [formControl]="
+                      customer.get('primaryCustomer') | formcontrol
+                    "
+                    color="primary"
+                    labelPosition="after"
+                  >
+                    Is this applicant a primary customer?
+                  </ic-slide-toggle>
+                </div>
+                <app-generic-account-form
+                  [customerForm]="customer"
+                  [genericValue]="staticData"
+                  [tabIndex]="i"
+                  [dobMaxDate]="dobMaxDate"
+                  [dobMinDate]="dobMinDate"
+                  [countryArray]="countryArray"
+                ></app-generic-account-form>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+      </div>
     </div>
-    <div
-      *ngIf="
-        disbursementForm?.get('disbursementTypeValue')?.value === 'Account'
-      "
-      class="enabled-mat-form-field p-8"
-      fxFlex="24"
-      fxLayout="row wrap"
-      fxLayoutAlign="start center"
-    >
-      <mat-label class="header_md_bold_black" fxFlex="100">Account</mat-label>
-      <ic-radio-button
-        *ngFor="let account of accountValue"
-        [control]="disbursementForm.get('internal') | formcontrol"
-        [label]="account.label"
-        [value]="account.value"
-      >
-      </ic-radio-button>
-    </div>
-    <ng-container
-      *ngIf="
-        disbursementForm?.get('disbursementTypeValue')?.value.includes('Cheque')
-      "
-    >
-      <div fxFlex="24">
-        <ic-select
-          [control]="disbursementForm.get('chequeTypeId') | formcontrol"
-          [options]="genericValue?.['CHEQUETYPE'] || []"
-          bindLabelKey="values"
-          bindValueKey="id"
-          label="Cheque Type"
-        ></ic-select>
-      </div>
-      <div fxFlex="24">
-        <ic-form-field
-          [control]="disbursementForm.get('customerName') | formcontrol"
-          [icAlphabetOnly]="true"
-          [maxLength]="40"
-          label="Name"
-        ></ic-form-field>
-      </div>
-      <div fxFlex="24">
-        <ic-form-field
-          [control]="disbursementForm.get('branchCode') | formcontrol"
-          label="Collecting Branch"
-          suffixIcon="search"
-        ></ic-form-field>
-      </div>
-    </ng-container>
-  </div>
-  <div fxLayout="row wrap" fxLayoutGap="1%">
-    <ng-container
-      *ngIf="
-        disbursementForm?.get('disbursementTypeValue')?.value === 'Account'
-      "
-    >
-      <div
-        *ngIf="disbursementForm?.get('internal')?.value === true"
-        class="enabled-mat-form-field p-8"
-        fxFlex="24"
-        fxLayout="row wrap"
-        fxLayoutAlign="start center"
-      >
-        <mat-label class="header_md_bold_black" fxFlex="100"
-          >Do you have Internal Account
-        </mat-label>
-        <ic-radio-button
-          *ngFor="let account of internalAccount"
-          [control]="disbursementForm.get('internalAccount') | formcontrol"
-          [label]="account.label"
-          [value]="account.value"
-          fxFlex="25"
-        >
-        </ic-radio-button>
-      </div>
-      <div
-        *ngIf="
-          disbursementForm?.get('internalAccount')?.value === false &&
-          disbursementForm?.get('internal')?.value === true
-        "
-        fxLayoutAlign="center center"
-        fxFlex="24"
-        fxLayoutGap="5"
-      >
-        <ic-slide-toggle
-          [checked]="disbursementForm.get('createAccountWithUs')?.value"
-          [formControl]="
-            disbursementForm.get('createAccountWithUs') | formcontrol
-          "
-        >
-        </ic-slide-toggle>
-        Do you want to create a account? *
-      </div>
-      <ng-container
-        *ngIf="
-          disbursementForm?.get('internal')?.value === false ||
-          disbursementForm?.get('internalAccount')?.value === true
-        "
-      >
-        <div fxFlex="24">
-          <ic-form-field
-            [control]="loanDisbursementAccount.get('accountNo') | formcontrol"
-            [icNumbersOnly]="true"
-            [maxLength]="20"
-            label="Account Number"
-          ></ic-form-field>
-        </div>
-        <div fxFlex="24">
-          <ic-form-field
-            [control]="
-              loanDisbursementAccount.get('confirmAccountNo') | formcontrol
-            "
-            [icNumbersOnly]="true"
-            [maxLength]="20"
-            label="Confirm Account Number"
-            [customError]="
-              loanDisbursementAccount.get('confirmAccountNo')?.value &&
-              loanDisbursementAccount.get('accountNo')?.value !==
-                loanDisbursementAccount.get('confirmAccountNo')?.value
-                ? 'Confirm Account Number is not same as Account Number'
-                : ''
-            "
-          ></ic-form-field>
-        </div>
-        <div
-          *ngIf="disbursementForm?.get('internal')?.value === false"
-          fxFlex="24"
-        >
-          <ic-select
-            [control]="
-              loanDisbursementAccount.get('accountTypeId') | formcontrol
-            "
-            [options]="genericValue?.['ACCOUNTTYPE'] ?? []"
-            bindLabelKey="values"
-            bindValueKey="id"
-            label="Account Type"
-          ></ic-select>
-        </div>
-        <div fxFlex="24">
-          <ic-form-field
-            [control]="
-              loanDisbursementAccount.get('customerName') | formcontrol
-            "
-            [icAlphaNumericWithSpace]="true"
-            [maxLength]="40"
-            label="Account Holder"
-          ></ic-form-field>
-        </div>
-        <div
-          *ngIf="disbursementForm?.get('internal')?.value === false"
-          fxFlex="24"
-        >
-          <ic-form-field
-            (onSuffixClick)="searchBankCode()"
-            [control]="loanDisbursementAccount.get('bankCode') | formcontrol"
-            [icAlphanumeric]="true"
-            [maxLength]="35"
-            label="Bank Code"
-            suffixIcon="search"
-          ></ic-form-field>
-        </div>
-        <div fxFlex="24">
-          <ic-form-field
-            [control]="loanDisbursementAccount.get('branchName') | formcontrol"
-            [icAlphabetOnly]="true"
-            label="Branch Name"
-          ></ic-form-field>
-        </div>
-      </ng-container>
-    </ng-container>
-  </div>
-</form> -->
+  </form>
+</div>

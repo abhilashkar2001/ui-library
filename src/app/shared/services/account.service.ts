@@ -48,4 +48,8 @@ export class AccountService {
       `${baseUrl}/generic-value?screenName=${screenName}&genericName=${staticdataneeded}&authStatus=AUTHORIZED&recordStatus=OPEN`,
     );
   }
+
+  fetchBoundariesDetails(productId: number) {
+    return this.http.get<any>(`${baseUrl}/boundaries?productId=${productId}`);
+  }
 }

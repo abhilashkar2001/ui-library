@@ -60,7 +60,7 @@ export const ComponentConstant: {
 };
 export interface ComponentAccountMap {
   W1PEID: PersonalIdentificationComponent;
-  W1PERD: CommonPersonalDetailsComponent;
+  W1PERD: AccountPersonalDetailsComponent;
   W1ACDE: AccountDetailsComponent;
   W1DOCU: DocumentUploadComponent;
   W1SUM: AccountSummaryComponent;
@@ -71,7 +71,7 @@ export const ComponentAccountConstant: {
   [K in keyof ComponentAccountMap]: Type<ComponentAccountMap[K]>;
 } = {
   W1PEID: PersonalIdentificationComponent,
-  W1PERD: CommonPersonalDetailsComponent,
+  W1PERD: AccountPersonalDetailsComponent,
   W1ACDE: AccountDetailsComponent,
   W1DOCU: DocumentUploadComponent,
   W1SUM: AccountSummaryComponent,
