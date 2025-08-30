@@ -1,128 +1,81 @@
 <section class="plan_accordion">
   <div class="accordian-section" fxLayout="column">
-    <div
-      class="px-3"
-      data-aos="fade-top"
-      data-aos-delay="200"
-      data-aos-duration="500"
-    >
+    <div class="px-3" [inViewAnimate]="'fade-up'" style="animation-delay: 0.1s">
       <h1 class="section_heading">Our Top Performing Plans</h1>
       <p class="section_subHeading">
         Select wisely from our plans & invest your money for higher returns.
       </p>
     </div>
-    <div
-      class="accordian-item"
-      data-aos="fade-down"
-      data-aos-delay="200"
-      data-aos-duration="500"
-    >
+    <div class="accordian-item" [inViewAnimate]="'zoom-in'" style="animation-delay: 0.1s">
       <mat-accordion>
-        <mat-expansion-panel
-          (closed)="panelOpenState = false"
-          (opened)="panelOpenState = true"
-          class="panel"
-        >
+        <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true" class="panel">
           <mat-expansion-panel-header>
             <mat-panel-title class="panel-header" fxLayoutAlign="center center">
               Money Market
               <span class="text-place">({{ moneyMarket.length }} Found)</span>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div
-            *ngFor="
+          <div *ngFor="
               let market of !isMoneyMarketReadMore
                 ? moneyMarket?.slice(0, 5)
                 : moneyMarket
-            "
-            class="accordian-list"
-          >
+            " class="accordian-list">
             <div class="accordion-text-list">{{ market?.name }}</div>
             <div class="accordain-list">
               <div class="graph_img" fxLayout="row">
-                <img
-                  [src]="
+                <img [src]="
                     market?.increased
                       ? '/assets/images/system-uicons_graph-increase.svg'
                       : '/assets/images/system-uicons_graph-decrease.svg'
-                  "
-                  alt="graph image"
-                />
+                  " alt="graph image" />
               </div>
-              <div
-                [class]="
+              <div [class]="
                   market?.increased ? 'range-text-green' : 'range-text-red'
-                "
-              >
+                ">
                 {{ market?.value }}
               </div>
             </div>
           </div>
-          <div
-            (click)="isMoneyMarketReadMore = !isMoneyMarketReadMore"
-            (keydown.enter)="isMoneyMarketReadMore = !isMoneyMarketReadMore"
-            class="read-text"
-            fxLayoutAlign="center center"
-            tabindex="0"
-          >
+          <div (click)="isMoneyMarketReadMore = !isMoneyMarketReadMore"
+            (keydown.enter)="isMoneyMarketReadMore = !isMoneyMarketReadMore" class="read-text"
+            fxLayoutAlign="center center" tabindex="0">
             View
             {{ isMoneyMarketReadMore ? 'Less' : 'More' }}
           </div>
         </mat-expansion-panel>
       </mat-accordion>
     </div>
-    <div
-      class="accordian-item"
-      data-aos="fade-down"
-      data-aos-delay="200"
-      data-aos-duration="500"
-    >
+    <div class="accordian-item" [inViewAnimate]="'fade-up'" style="animation-delay: 0.1s">
       <mat-accordion>
-        <mat-expansion-panel
-          (closed)="panelOpenState = false"
-          (opened)="panelOpenState = true"
-          class="panel"
-        >
+        <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true" class="panel">
           <mat-expansion-panel-header>
             <mat-panel-title class="panel-header" fxLayoutAlign="center center">
               Stocks
               <span class="text-place">( {{ stocks.length }} Found)</span>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div
-            *ngFor="
+          <div *ngFor="
               let stock of !isStocksIsReadMore ? stocks?.slice(0, 5) : stocks
-            "
-            class="accordian-list"
-          >
+            " class="accordian-list">
             <div class="accordion-text-list">{{ stock?.stock }}</div>
             <div class="accordain-list">
               <div class="graph_img" fxLayout="row">
-                <img
-                  [src]="
+                <img [src]="
                     stock?.increased
                       ? '/assets/images/system-uicons_graph-increase.svg'
                       : '/assets/images/system-uicons_graph-decrease.svg'
-                  "
-                  alt="graph image"
-                />
+                  " alt="graph image" />
               </div>
-              <div
-                [class]="
+              <div [class]="
                   stock?.increased ? 'range-text-green' : 'range-text-red'
-                "
-              >
+                ">
                 {{ stock?.value }}
               </div>
             </div>
           </div>
-          <div
-            (click)="isStocksIsReadMore = !isStocksIsReadMore"
-            (keydown.enter)="isStocksIsReadMore = !isStocksIsReadMore"
-            class="read-text"
-            fxLayoutAlign="center center"
-            tabindex="1"
-          >
+          <div (click)="isStocksIsReadMore = !isStocksIsReadMore"
+            (keydown.enter)="isStocksIsReadMore = !isStocksIsReadMore" class="read-text" fxLayoutAlign="center center"
+            tabindex="1">
             View
             {{ isStocksIsReadMore ? 'Less' : 'All' }}
           </div>

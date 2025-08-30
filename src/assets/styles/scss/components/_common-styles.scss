@@ -4,6 +4,7 @@
   font-weight: 500;
   font-size: 40px;
   color: var(--ic-text-black);
+
   @media screen and (max-width: $mobile) {
     font-size: 26px;
   }
@@ -15,6 +16,7 @@
   font-family: var(--ic-primary-font-family);
   font-size: 18px;
   margin: 0.8rem 0 1.2rem 0;
+
   @media screen and (max-width: $mobile) {
     font-size: 16px;
     margin-top: 0.4rem;
@@ -63,13 +65,14 @@ code {
 .mdc-text-field--filled {
   --mdc-filled-text-field-active-indicator-height: 0 !important;
 }
+
 .mat-form-field-appearance-fill {
   .mat-mdc-form-field-subscript-wrapper {
     position: absolute !important;
   }
 }
 
-.swiper-pagination-bullet-active{
+.swiper-pagination-bullet-active {
   background: var(--ic-clr-primary-a10) !important;
 }
 
@@ -204,4 +207,65 @@ code {
 .container {
   padding: 0 5%;
   width: 100%;
+}
+// card common styles
+@mixin cards_more_details($size, $weight, $color) {
+  font-family: var(--ic-primary-font-family);
+  font-size: #{$size}px;
+  font-weight: $weight;
+  color: $color;
+}
+.title_header {
+  @include cards_more_details(24, 600, #06113c);
+}
+.description {
+  @include cards_more_details(18, 400, #4c5371);
+}
+.card_title {
+  @include cards_more_details(18, 600, #06113c);
+}
+.card_description {
+  margin: 1% 0% 0% 0%;
+  @include cards_more_details(14, 400, #6b7280);
+}
+.card_points {
+  margin: 1% 0% 0% 0%;
+  @include cards_more_details(12, 400, #525252);
+  li::marker {
+    color: #ff2807;
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  opacity: 0;
+  animation: fadeUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.zoom-in {
+  opacity: 0;
+  animation: zoomIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+// Zoom In Animation
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

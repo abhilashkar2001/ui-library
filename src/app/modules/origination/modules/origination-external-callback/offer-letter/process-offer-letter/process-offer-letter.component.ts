@@ -34,8 +34,8 @@ export class ProcessOfferLetterComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadUserProfile();
     this.buildRevisiteForm();
-    (this.originationId = this.sessionStorageService.getOriginationId()),
-      this.fetchOfferDetails();
+    ((this.originationId = this.sessionStorageService.getOriginationId()),
+      this.fetchOfferDetails());
   }
 
   loadUserProfile() {

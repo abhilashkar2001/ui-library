@@ -1,0 +1,21 @@
+<table class="custom-table">
+  <thead>
+    <tr>
+      <th *ngFor="let col of config.columns">
+        {{ col.header }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of data">
+      <td
+        *ngFor="let col of config.columns"
+        [ngClass]="
+          col.key === 'amount' ? 'theme_highlight' : 'card_description'
+        "
+      >
+        {{ row[col.key] }}
+      </td>
+    </tr>
+  </tbody>
+</table>

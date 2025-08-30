@@ -48,8 +48,8 @@ export class ScanComponent implements OnInit {
     this.dialogData;
     this.startVideo();
     this.randomDirection = Math.random() < 0.5 ? 'RIGHT' : 'LEFT';
-    faceapi.nets.tinyFaceDetector.loadFromUri('../../assets/models'),
-      await faceapi.nets.faceLandmark68Net.loadFromUri('../../assets/models');
+    (faceapi.nets.tinyFaceDetector.loadFromUri('../../assets/models'),
+      await faceapi.nets.faceLandmark68Net.loadFromUri('../../assets/models'));
     await faceapi.nets.faceRecognitionNet.loadFromUri('../../assets/models');
     await faceapi.nets.faceExpressionNet.loadFromUri('../../assets/models');
   }

@@ -26,6 +26,8 @@ import { OverViewComponent } from './about-card/over-view/over-view.component';
 import { BenefitsComponent } from './about-card/benefits/benefits.component';
 import { EligibilityComponent } from './about-card/eligibility/eligibility.component';
 import { FeaturesComponent } from './about-card/features/features.component';
+import { FeesAndChargesComponent } from './about-card/fees-and-charges/fees-and-charges.component';
+import { FeesAndChargesTableComponent } from './about-card/fees-and-charges-table/fees-and-charges-table.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { FeaturesComponent } from './about-card/features/features.component';
     BenefitsComponent,
     EligibilityComponent,
     FeaturesComponent,
+    FeesAndChargesComponent,
+    FeesAndChargesTableComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,12 @@
+<div class="">
+  <div class="title_header">{{ cardData.title }}</div>
+  <div class="description">
+    {{ cardData.description }}
+  </div>
+  <div class="table">
+    <app-fees-and-charges-table
+      [config]="feeConfig"
+      [data]="feesAndChargeData"
+    ></app-fees-and-charges-table>
+  </div>
+</div>

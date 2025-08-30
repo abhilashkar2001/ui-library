@@ -1,0 +1,26 @@
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  th,
+  td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    border: 1px solid #ddd;
+    &.theme_highlight {
+      color: #ff2807;
+      font-weight: 600;
+    }
+  }
+
+  th {
+    background: #f8f9fa;
+    font-weight: 600;
+  }
+
+  tr:nth-child(even) {
+    background: #f8f9fa;
+  }
+}
