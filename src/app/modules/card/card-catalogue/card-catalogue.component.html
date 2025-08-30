@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutGap="16px" class="page-container">
   <ng-container *ngIf="aboutSectionToggler == false; else aboutSection">
     <!-- Sidebar Filters -->
-    <ic-card fxFlex="25">
+    <ic-card fxFlex="25" style="animation-delay: 0.2s;">
       <div fxLayoutAlign="space-between center">
         <h3 class="header_gt_md_bold_black">Advanced Filters</h3>
         <a class="theme_md"><u>Clear Filter</u></a>
@@ -74,6 +74,6 @@
     </div>
   </ng-container>
   <ng-template #aboutSection>
-    <app-about-card></app-about-card>
+    <app-about-card [inViewAnimate]="'fade-down'" fxFlex="100"></app-about-card>
   </ng-template>
 </div>

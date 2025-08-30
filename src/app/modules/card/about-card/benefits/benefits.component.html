@@ -1,6 +1,6 @@
-<div class="benefits">
+<div class="benefits_container">
   <!-- Title -->
-  <div class="title">
+  <div class="header_xl_black">
     {{ title }}
   </div>
   <!-- Description -->
@@ -8,26 +8,23 @@
     {{ description }}
   </div>
   <!-- Card Info-->
-  <div class="cards_info" fxLayout="row wrap" fxLayoutAlign="start stretch">
-    <div
-      class="card_item"
-      *ngFor="let info of cardInfo"
-      fxLayout="row"
-      fxLayoutAlign="space-between"
-    >
-      <span fxFlex="8" class="star_icon">
-        <img src="assets/images/star.svg" alt="star" />
-      </span>
-      <div fxFlex="88" fxLayout="column">
-        <span class="card_title">{{ info?.title }}</span>
-        <span class="card_description">{{ info?.description }}</span>
-        <span class="card_points" *ngFor="let point of info?.cardPoints">
-          <div fxLayout="row">
-            <div class="point"></div>
-            <span>{{ point }}</span>
-          </div>
+  <div class="cards_info" fxLayout="row wrap" fxLayoutAlign="space-between start">
+    <ng-container *ngFor="let info of cardInfo">
+      <div class="card_item" fxFlex="49" fxFlex.lt-md="100" fxLayout="row" fxLayoutAlign="space-between">
+        <span class="star_icon" [inViewAnimate]="'zoom-out'">
+          <img src="assets/images/star.svg" alt="star" />
         </span>
+        <div fxFlex="88" fxLayout="column">
+          <span class="card_title" [inViewAnimate]="'fade-left'">{{ info?.title }}</span>
+          <span class="card_description" [inViewAnimate]="'fade-left'">{{ info?.description }}</span>
+          <span class="card_points" *ngFor="let point of info?.cardPoints">
+            <div fxLayout="row" [inViewAnimate]="'fade-up'">
+              <div class="point"></div>
+              <span>{{ point }}</span>
+            </div>
+          </span>
+        </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 </div>

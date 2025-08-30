@@ -32,9 +32,9 @@ export class AboutCard {
       ],
       keyHighLights: [
         '1 Complimentary night stay with Epicure Plus Membership (validity of 1 year)',
-        '1 Complimentary night stay with Epicure Plus Membership (validity of 1 year)',
-        '1 Complimentary night stay with Epicure Plus Membership (validity of 1 year)',
-        '1 Complimentary night stay with Epicure Plus Membership (validity of 1 year)',
+        'Complimentary EazyDiner Prime Membership every year',
+        '12,500 DTB Bank Reward Points as Joining Bonus and Annual Bonus',
+        '2 EaseMyTrip Air Travel Vouchers worth ₹3,000 each on first ₹4,00,000 spends and next ₹4,00,000 spends',
       ],
     },
   ];
