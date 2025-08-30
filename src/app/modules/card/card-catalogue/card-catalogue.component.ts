@@ -105,7 +105,9 @@ export class CardCatalogueComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) return;
+      else
       this.sessionStorageService.setItem('category', this.category);
       this.sessionStorageService.setItem('basisClass', this.basisClass);
       this.sessionStorageService.setItem('basisId', selectedCard.basisId);

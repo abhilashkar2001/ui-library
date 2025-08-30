@@ -236,7 +236,7 @@ export class LoginComponent implements OnInit {
                 source: 'Website',
                 currencyCode: this.profileInfo?.currencyCode,
                 currencyId: this.profileInfo?.currencyId,
-                productDetailsId:
+                originationProductId:
                   this.sessionStorageService.getLoanBasisDetails()?.basisId,
               },
             };

@@ -63,7 +63,7 @@ export class CardLandingComponent implements OnInit, AfterViewInit, OnDestroy {
     this.clearAutoScroll();
   }
 
-  catalogueMove() {
+  moveToCatalogue() {
      if (this.cardLandingContent) {
       this.cardLandingContent.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -76,25 +76,23 @@ export class CardLandingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  startAutoScroll() {
-    const scrollStep = 1;
-    const scrollDelay = 10;
+startAutoScroll() {
+  const scrollStep = 1; // smaller step for smoothness
+  const scrollDelay = 16; // ~60fps
+  const wrapper = this.featuresWrapper.nativeElement;
+  const singleSetWidth = wrapper.scrollWidth / 2;
 
-    this.autoScrollInterval = setInterval(() => {
-      if (this.isPaused) return;
+  this.autoScrollInterval = setInterval(() => {
+    if (this.isPaused) return;
 
-      const wrapper = this.featuresWrapper.nativeElement;
-      const singleSetWidth = wrapper.scrollWidth / 2;
-
-      if (wrapper.scrollLeft >= singleSetWidth) {
-        wrapper.scrollLeft = 0; // reset
-      } else {
-        wrapper.scrollBy({ left: scrollStep, behavior: 'smooth' });
-      }
-
-      setTimeout(() => (window as any).AOS?.refresh?.(), 350);
-    }, scrollDelay);
-  }
+    if (wrapper.scrollLeft >= singleSetWidth) {
+      // Jump back instantly (no flicker because duplicate exists)
+      wrapper.scrollLeft = 0;
+    } else {
+      wrapper.scrollLeft += scrollStep;
+    }
+  }, scrollDelay);
+}
 
   pauseAutoScroll() {
     this.isPaused = true;

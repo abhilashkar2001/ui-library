@@ -9,8 +9,9 @@
     border-bottom: 1px solid #ddd;
     text-align: left;
     border: 1px solid #ddd;
+    font-family: var(--ic-primary-font-family);
     &.theme_highlight {
-      color: #ff2807;
+      color: var(--ic-text-theme);
       font-weight: 600;
     }
   }

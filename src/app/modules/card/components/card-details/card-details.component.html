@@ -1,11 +1,10 @@
 <div *ngIf="cardForm" fxFlex="100" fxLayout="column">
   <div fxFlex="100" fxLayout="row wrap" fxLayoutGap="10">
     <div fxFlex="24">
-      <ic-select
+      <ic-form-field
         label="Card Name"
         [control]="cardForm?.get('cardName') | formcontrol"
-      >
-      </ic-select>
+      ></ic-form-field>
     </div>
     <div fxFlex="24">
       <ic-form-field
@@ -19,6 +18,9 @@
       <ic-select
         label="Card Type"
         [control]="cardForm?.get('cardTypeId') | formcontrol"
+        [options]="genericValue?.CARDTYPE"
+        bindLabelKey="values"
+        bindValueKey="id"
       >
       </ic-select>
     </div>
@@ -26,17 +28,29 @@
       <ic-select
         label="Card Network"
         [control]="cardForm?.get('cardNetworkId') | formcontrol"
+        [options]="genericValue?.CARDNETWORK"
+        bindLabelKey="values"
+        bindValueKey="id"
       >
       </ic-select>
     </div>
-    <div fxFlex="24">
+    <div
+      fxFlex="24"
+      *ngIf="basisClass && basisClass.toLowerCase().includes('credit')"
+    >
       <ic-select
         label="Preferred Billing Date"
         [control]="cardForm?.get('preferredBillingDateId') | formcontrol"
+        [options]="genericValue?.PREFERREDBILLINGDATE"
+        bindLabelKey="values"
+        bindValueKey="id"
       >
       </ic-select>
     </div>
-    <div fxFlex="24">
+    <div
+      fxFlex="24"
+      *ngIf="basisClass && basisClass.toLowerCase().includes('credit')"
+    >
       <ic-select
         label="Credit Limit"
         [control]="cardForm?.get('creditLimit') | formcontrol"

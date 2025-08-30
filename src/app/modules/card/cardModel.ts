@@ -12,9 +12,9 @@ export interface EmpAndFinInfoModel {
 }
 
 export interface EmpAndFinInfoPayload {
-  id: number | null;
+  cardId: number | null;
   screenCode: number | null;
-  empAndFinInfo: EmpAndFinInfoModel;
+  empAndFin: EmpAndFinInfoModel;
 }
 
 export interface CardServiceModel {
@@ -38,7 +38,7 @@ export interface CardResponse {
 }
 
 export interface SaveCardDetailsPayload {
-  id: number;
+  cardId: number | null;
   screenCode?: number;
   cardService: CardServiceModel;
 }

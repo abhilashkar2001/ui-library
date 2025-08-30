@@ -1,9 +1,9 @@
-<div class="">
-  <div class="title_header">{{ cardData.title }}</div>
+<div class="fees_and_charges_container">
+  <div class="header_xl_black">{{ cardData.title }}</div>
   <div class="description">
     {{ cardData.description }}
   </div>
-  <div class="table">
+  <div class="table" [inViewAnimate]="'fade-down'">
     <app-fees-and-charges-table
       [config]="feeConfig"
       [data]="feesAndChargeData"

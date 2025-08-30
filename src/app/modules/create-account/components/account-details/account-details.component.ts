@@ -92,8 +92,6 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   initializeCreateAccountDetailsArray(data?: any) {
-    console.log(data);
-
     this.createAccountDetailsSummaryArr = [
       {
         header: 'Account Type',

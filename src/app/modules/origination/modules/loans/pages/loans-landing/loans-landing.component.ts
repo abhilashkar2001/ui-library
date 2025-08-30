@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { CommonService } from 'app/shared/services/common-service/common.service';
 import { LoanService } from 'app/shared/services/loan/loan.service';
@@ -18,15 +18,15 @@ export class LoansLandingComponent implements OnInit {
   category: any;
   type: any;
   businessSuiteName!: string;
-
+  @ViewChild('custom_carousel') customCarousel!: ElementRef<HTMLDivElement>;
   constructor(
     private router: Router,
     // private commonService: CommonService,
     private loanService: LoanService,
-    private el: ElementRef,
+    // private el: ElementRef,
     private activatedRoute: ActivatedRoute,
     private sessionStorage: SessionStorageService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
@@ -112,12 +112,8 @@ export class LoansLandingComponent implements OnInit {
   }
 
   customApply() {
-    const targetElement =
-      this.el.nativeElement.querySelector('#custom-carousel');
-    const targetPosition = targetElement.getBoundingClientRect().top;
-    targetPosition > 200 ? targetPosition - 120 : targetPosition;
-    if (targetElement) {
-      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    if (this.customCarousel && this.customCarousel.nativeElement) {
+      this.customCarousel.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 }

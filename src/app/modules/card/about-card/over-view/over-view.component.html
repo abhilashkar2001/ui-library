@@ -1,6 +1,6 @@
-<div class="overview">
+<div class="overview_container">
   <!-- Title -->
-  <div class="title">
+  <div class="header_xl_black">
     {{ title }}
   </div>
   <!-- Description -->
@@ -8,17 +8,16 @@
     {{ description }}
   </div>
   <!-- Card Info-->
-  <div
-    class="cards_info"
-    fxLayout="row wrap"
-    fxLayoutGap="16px"
-    fxLayoutAlign="start stretch"
-  >
-    <div class="card_item" *ngFor="let info of cardInfo" fxLayout="column">
-      <span class="card_title">{{ info?.title }}</span>
-      <span class="card_value">{{ info?.value }}</span>
-      <span class="card_description">{{ info?.description }}</span>
-    </div>
+  <div class="cards_info" fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="start stretch">
+    <ng-container *ngFor="let info of cardInfo">
+      <ng-container *ngIf="info?.title && info?.value">
+        <div class="card_item" fxLayout="column">
+          <span class="card_title" [inViewAnimate]="'fade-left'">{{ info?.title }}</span>
+          <span class="card_value" [inViewAnimate]="'flip-y'">{{ info?.value }}</span>
+          <span class="card_description" [inViewAnimate]="'fade-up'">{{ info?.description }}</span>
+        </div>
+      </ng-container>
+    </ng-container>
   </div>
   <!-- Key Highlights -->
   <div class="key_highlights">

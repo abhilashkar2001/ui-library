@@ -104,7 +104,7 @@ export class StagesComponent implements OnInit {
         if (screenName) {
           componentRef.setInput('screenName', screenName);
         }
-
+        componentRef.setInput('basisClass', this.productDetails?.subClass);
         this.componentCache.set(index, componentRef);
         this.componentRefs.set(index, componentRef);
       }

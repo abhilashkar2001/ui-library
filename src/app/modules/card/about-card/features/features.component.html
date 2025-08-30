@@ -1,6 +1,6 @@
-<div class="features">
+<div class="features_container">
   <!-- Title -->
-  <div class="title">
+  <div class="header_xl_black">
     {{ title }}
   </div>
 
@@ -20,6 +20,7 @@
         *ngFor="let typ of bannerInfo?.types"
         fxLayoutAlign="space-between"
         fxLayout="row"
+        [inViewAnimate]="'fade-left'"
       >
         <div fxFlex="13" fxLayoutAlign="center start" class="banner_star_icon">
           <img src="assets/images/star.svg" alt="star" />
@@ -43,8 +44,8 @@
         *ngFor="let card of cardInfo"
         fxLayout="row"
       >
-        <div fxFlex="8" class="card_star_icon">
-          <img src="assets/images/blue-star.svg" alt="star" />
+        <div fxFlex="8" class="card_star_icon" [inViewAnimate]="'zoom-out'">
+          <img src="assets/images/star-mark.svg" alt="star" />
         </div>
         <div
           fxFlex="88"
