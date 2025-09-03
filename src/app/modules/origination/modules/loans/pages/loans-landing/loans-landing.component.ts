@@ -26,7 +26,7 @@ export class LoansLandingComponent implements OnInit {
     // private el: ElementRef,
     private activatedRoute: ActivatedRoute,
     private sessionStorage: SessionStorageService,
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
@@ -113,7 +113,10 @@ export class LoansLandingComponent implements OnInit {
 
   customApply() {
     if (this.customCarousel && this.customCarousel.nativeElement) {
-      this.customCarousel.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      this.customCarousel.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
   }
 }

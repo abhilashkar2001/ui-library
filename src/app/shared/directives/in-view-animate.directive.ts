@@ -33,7 +33,7 @@ export class InViewAnimateDirective implements AfterViewInit {
               this.renderer.setStyle(
                 this.el.nativeElement,
                 'animation-delay',
-                this.delay
+                this.delay,
               );
             }
 
@@ -41,7 +41,7 @@ export class InViewAnimateDirective implements AfterViewInit {
             this.renderer.addClass(this.el.nativeElement, this.animationClass);
             this.renderer.removeClass(
               this.el.nativeElement,
-              'in-view-animate-init'
+              'in-view-animate-init',
             );
 
             // Animating only once
@@ -49,7 +49,7 @@ export class InViewAnimateDirective implements AfterViewInit {
           }
         });
       },
-      { threshold: 0.15 } // revealing when 15% visible
+      { threshold: 0.15 }, // revealing when 15% visible
     );
 
     observer.observe(this.el.nativeElement);

@@ -1,7 +1,13 @@
-<div class="about_card_container" fxFlex="100" >
+<div class="about_card_container" fxFlex="100">
   <div class="tabs mx-16">
-    <div class="tab" *ngFor="let tab of tabs; let i = index" [class.active]="selectedIndex === i" (click)="selectTab(i)"
-      tabindex="0" (keydown.enter)="selectTab(i)">
+    <div
+      class="tab"
+      *ngFor="let tab of tabs; let i = index"
+      [class.active]="selectedIndex === i"
+      (click)="selectTab(i)"
+      tabindex="0"
+      (keydown.enter)="selectTab(i)"
+    >
       {{ tab }}
     </div>
 
@@ -12,16 +18,28 @@
   <div class="tab-content">
     <ng-container [ngSwitch]="selectedIndex">
       <div *ngSwitchCase="0">
-        <app-over-view [title]="overViewTitle" [description]="overViewDescription" [cardInfo]="overViewCardInfo"
-          [keyHighLights]="overViewKeyHightLights"></app-over-view>
+        <app-over-view
+          [title]="overViewTitle"
+          [description]="overViewDescription"
+          [cardInfo]="overViewCardInfo"
+          [keyHighLights]="overViewKeyHightLights"
+        ></app-over-view>
       </div>
       <div *ngSwitchCase="1">
-        <app-benefits [title]="benefitsTitle" [description]="benefitsDescription"
-          [cardInfo]="benefitsCardInfo"></app-benefits>
+        <app-benefits
+          [title]="benefitsTitle"
+          [description]="benefitsDescription"
+          [cardInfo]="benefitsCardInfo"
+        ></app-benefits>
       </div>
       <div *ngSwitchCase="2">
-        <app-features [title]="featuresTitle" [description]="featuresDescription" [bannerInfo]="featuresBannerInfo"
-          [cardTitle]="featuresCardTitle" [cardInfo]="featuresCardInfo"></app-features>
+        <app-features
+          [title]="featuresTitle"
+          [description]="featuresDescription"
+          [bannerInfo]="featuresBannerInfo"
+          [cardTitle]="featuresCardTitle"
+          [cardInfo]="featuresCardInfo"
+        ></app-features>
       </div>
       <div *ngSwitchCase="3">
         <app-eligibility></app-eligibility>

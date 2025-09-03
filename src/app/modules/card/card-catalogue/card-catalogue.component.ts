@@ -36,13 +36,13 @@ export class CardCatalogueComponent implements OnInit {
   basisId!: number;
   cards:
     | {
-      title: string;
-      image: string;
-      benefits: string;
-      joiningFee: number;
-      annualFee: number;
-      basisId: number;
-    }[]
+        title: string;
+        image: string;
+        benefits: string;
+        joiningFee: number;
+        annualFee: number;
+        basisId: number;
+      }[]
     | undefined;
 
   constructor(
@@ -51,7 +51,7 @@ export class CardCatalogueComponent implements OnInit {
     private dialog: MatDialog,
     private sessionStorageService: SessionStorageService,
     private router: Router,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.activateRoute.queryParamMap.subscribe((params: any) => {
@@ -61,7 +61,7 @@ export class CardCatalogueComponent implements OnInit {
     this.fetchSubClassProducts();
   }
 
-  cardAbout(){
+  cardAbout() {
     this.aboutSectionToggler = !this.aboutSectionToggler;
   }
 
@@ -107,8 +107,7 @@ export class CardCatalogueComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (!result) return;
-      else
-      this.sessionStorageService.setItem('category', this.category);
+      else this.sessionStorageService.setItem('category', this.category);
       this.sessionStorageService.setItem('basisClass', this.basisClass);
       this.sessionStorageService.setItem('basisId', selectedCard.basisId);
       this.goToLogin();

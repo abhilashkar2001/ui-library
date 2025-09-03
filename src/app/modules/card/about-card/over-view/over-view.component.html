@@ -8,13 +8,24 @@
     {{ description }}
   </div>
   <!-- Card Info-->
-  <div class="cards_info" fxLayout="row wrap" fxLayoutGap="16px" fxLayoutAlign="start stretch">
+  <div
+    class="cards_info"
+    fxLayout="row wrap"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start stretch"
+  >
     <ng-container *ngFor="let info of cardInfo">
       <ng-container *ngIf="info?.title && info?.value">
         <div class="card_item" fxLayout="column">
-          <span class="card_title" [inViewAnimate]="'fade-left'">{{ info?.title }}</span>
-          <span class="card_value" [inViewAnimate]="'flip-y'">{{ info?.value }}</span>
-          <span class="card_description" [inViewAnimate]="'fade-up'">{{ info?.description }}</span>
+          <span class="card_title" [inViewAnimate]="'fade-left'">{{
+            info?.title
+          }}</span>
+          <span class="card_value" [inViewAnimate]="'flip-y'">{{
+            info?.value
+          }}</span>
+          <span class="card_description" [inViewAnimate]="'fade-up'">{{
+            info?.description
+          }}</span>
         </div>
       </ng-container>
     </ng-container>

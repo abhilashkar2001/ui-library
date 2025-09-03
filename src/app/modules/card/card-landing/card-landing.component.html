@@ -1,6 +1,9 @@
 <div class="card_landing_container">
   <!-- Card Banner -->
-  <app-card-banner [basisClass]="basisClass" (onApplyClick)="moveToCatalogue()"></app-card-banner>
+  <app-card-banner
+    [basisClass]="basisClass"
+    (onApplyClick)="moveToCatalogue()"
+  ></app-card-banner>
 
   <!-- Card Catalougue -->
   <div class="card_landing_content" #cardLandingContent>

@@ -34,7 +34,11 @@
         width: 90%;
         border-radius: 10px;
         color: #fff;
-        background-color: color-mix(in srgb, var(--ic-clr-tonal-a40) 70%, transparent);
+        background-color: color-mix(
+          in srgb,
+          var(--ic-clr-tonal-a40) 70%,
+          transparent
+        );
         padding: 2rem 1rem;
         display: flex;
         flex-direction: column;

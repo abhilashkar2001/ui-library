@@ -16,10 +16,12 @@
   }
 
   .banner_card {
-    background: linear-gradient(270deg,
-        var(--ic-clr-primary-a10),
-        var(--ic-clr-primary-a30),
-        var(--ic-clr-primary-a10));
+    background: linear-gradient(
+      270deg,
+      var(--ic-clr-primary-a10),
+      var(--ic-clr-primary-a30),
+      var(--ic-clr-primary-a10)
+    );
     background-size: 600% 600%;
     border-radius: 16px;
     padding: 24px;
@@ -69,7 +71,6 @@
       background-position: 0% 50%;
     }
   }
-
 
   .card_info {
     .title {

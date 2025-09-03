@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutGap="16px" class="page-container">
   <ng-container *ngIf="aboutSectionToggler == false; else aboutSection">
     <!-- Sidebar Filters -->
-    <ic-card fxFlex="25" style="animation-delay: 0.2s;">
+    <ic-card fxFlex="25" style="animation-delay: 0.2s">
       <div fxLayoutAlign="space-between center">
         <h3 class="header_gt_md_bold_black">Advanced Filters</h3>
         <a class="theme_md"><u>Clear Filter</u></a>
@@ -9,8 +9,14 @@
       <mat-divider class="divider mt-12"></mat-divider>
       <div class="m-8 mt-12">
         <h4 class="theme_gt_md">Card Type</h4>
-        <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let type of cardTypes" class="pt-12"
-          [inViewAnimate]="'fade-up'" style="animation-delay: 0.1s">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          *ngFor="let type of cardTypes"
+          class="pt-12"
+          [inViewAnimate]="'fade-up'"
+          style="animation-delay: 0.1s"
+        >
           <ic-checkbox></ic-checkbox>
           <span class="header_md">{{ type }}</span>
         </div>
@@ -19,8 +25,14 @@
 
       <div class="m-8 mt-12">
         <h4 class="theme_gt_md">Annual Fee Range</h4>
-        <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let fee of feeRanges" class="pt-12"
-          [inViewAnimate]="'fade-up'" style="animation-delay: 0.1s">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          *ngFor="let fee of feeRanges"
+          class="pt-12"
+          [inViewAnimate]="'fade-up'"
+          style="animation-delay: 0.1s"
+        >
           <ic-checkbox></ic-checkbox>
           <span class="header_md">{{ fee }}</span>
         </div>
@@ -29,8 +41,14 @@
 
       <div class="m-8 mt-12">
         <h4 class="theme_gt_md">Card Variant</h4>
-        <div fxLayout="row" fxLayoutAlign="start center" *ngFor="let variant of variants" class="pt-12"
-          [inViewAnimate]="'fade-up'" style="animation-delay: 0.1s">
+        <div
+          fxLayout="row"
+          fxLayoutAlign="start center"
+          *ngFor="let variant of variants"
+          class="pt-12"
+          [inViewAnimate]="'fade-up'"
+          style="animation-delay: 0.1s"
+        >
           <ic-checkbox></ic-checkbox>
           <span class="header_md">{{ variant }}</span>
         </div>
@@ -44,8 +62,14 @@
         <span class="breadcrum_md">{{ cards?.length }} cards found</span>
       </div>
 
-      <div *ngFor="let card of cards" class="card" fxLayout="row" fxLayoutGap="16px" [inViewAnimate]="'zoom-in'"
-        style="animation-delay: 0.1s">
+      <div
+        *ngFor="let card of cards"
+        class="card"
+        fxLayout="row"
+        fxLayoutGap="16px"
+        [inViewAnimate]="'zoom-in'"
+        style="animation-delay: 0.1s"
+      >
         <!-- Card Image -->
         <div fxFlex="25" class="card-image">
           <img [src]="card.image" alt="Card image" />
@@ -60,12 +84,21 @@
             </li>
           </ul>
           <div class="fees">
-            <span>Joining Fee: <strong>{{ card.joiningFee }}</strong></span>
-            <span>Annual Fee: <strong>{{ card.annualFee }}</strong></span>
+            <span
+              >Joining Fee: <strong>{{ card.joiningFee }}</strong></span
+            >
+            <span
+              >Annual Fee: <strong>{{ card.annualFee }}</strong></span
+            >
           </div>
           <div fxLayoutAlign="start center" fxLayoutGap="12">
-            <ic-button [icButtonType]="'filled'" [label]="'Apply Now'" [type]="'submit'" size="medium"
-              (OnClick)="applyCard(card)">
+            <ic-button
+              [icButtonType]="'filled'"
+              [label]="'Apply Now'"
+              [type]="'submit'"
+              size="medium"
+              (OnClick)="applyCard(card)"
+            >
             </ic-button>
             <span class="theme_md" (click)="cardAbout()">More Details</span>
           </div>

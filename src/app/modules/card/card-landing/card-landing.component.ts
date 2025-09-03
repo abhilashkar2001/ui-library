@@ -46,7 +46,7 @@ export class CardLandingComponent implements OnInit, AfterViewInit, OnDestroy {
   basisClass: any;
   category: any;
 
-  constructor(private activateRoute: ActivatedRoute) { }
+  constructor(private activateRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.activateRoute.queryParamMap.subscribe((params: any) => {
@@ -64,8 +64,11 @@ export class CardLandingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   moveToCatalogue() {
-     if (this.cardLandingContent) {
-      this.cardLandingContent.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (this.cardLandingContent) {
+      this.cardLandingContent.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
   }
 
@@ -76,23 +79,23 @@ export class CardLandingComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-startAutoScroll() {
-  const scrollStep = 1; // smaller step for smoothness
-  const scrollDelay = 16; // ~60fps
-  const wrapper = this.featuresWrapper.nativeElement;
-  const singleSetWidth = wrapper.scrollWidth / 2;
+  startAutoScroll() {
+    const scrollStep = 1; // smaller step for smoothness
+    const scrollDelay = 16; // ~60fps
+    const wrapper = this.featuresWrapper.nativeElement;
+    const singleSetWidth = wrapper.scrollWidth / 2;
 
-  this.autoScrollInterval = setInterval(() => {
-    if (this.isPaused) return;
+    this.autoScrollInterval = setInterval(() => {
+      if (this.isPaused) return;
 
-    if (wrapper.scrollLeft >= singleSetWidth) {
-      // Jump back instantly (no flicker because duplicate exists)
-      wrapper.scrollLeft = 0;
-    } else {
-      wrapper.scrollLeft += scrollStep;
-    }
-  }, scrollDelay);
-}
+      if (wrapper.scrollLeft >= singleSetWidth) {
+        // Jump back instantly (no flicker because duplicate exists)
+        wrapper.scrollLeft = 0;
+      } else {
+        wrapper.scrollLeft += scrollStep;
+      }
+    }, scrollDelay);
+  }
 
   pauseAutoScroll() {
     this.isPaused = true;

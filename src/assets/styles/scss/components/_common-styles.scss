@@ -56,7 +56,8 @@ code {
   overflow: visible;
 }
 
-.mdc-text-field--no-label:not(.mdc-text-field--textarea) .mat-mdc-form-field-input-control.mdc-text-field__input,
+.mdc-text-field--no-label:not(.mdc-text-field--textarea)
+  .mat-mdc-form-field-input-control.mdc-text-field__input,
 .mat-mdc-text-field-wrapper .mat-mdc-form-field-input-control {
   height: 100% !important;
 }
@@ -84,8 +85,12 @@ code {
   background-color: var(--current-theme-background) !important;
 }
 
-.egret-navy .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
-.egret-navy .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
+.egret-navy
+  .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent
+  .mat-ripple-element,
+.egret-navy
+  .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent
+  .mat-ripple-element {
   background: var(--current-theme-background);
 }
 
