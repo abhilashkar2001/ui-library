@@ -15,7 +15,7 @@ export class EmpFinDetailsComponent {
   empFinDetails!: FormGroup;
 
   ngOnInit() {
-    let acc = localStorage.getItem('account-type');
+    const acc = localStorage.getItem('account-type');
     this.detailsForGeneric.accountType = acc !== null ? acc : 'individual';
     this.createAccordian();
   }

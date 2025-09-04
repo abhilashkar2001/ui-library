@@ -28,9 +28,9 @@ import {
 export class PersonalIdentificationComponent implements OnInit {
   @Input() docCustomerDetails: any;
   personalIdentificationForm!: FormGroup;
-  isChecklistDoc: boolean = false;
+  isChecklistDoc = false;
   nationalIdGeneric: any;
-  ocrPass: boolean = false;
+  ocrPass = false;
   fileUrls: any[] = [];
   documentIds = [
     {
@@ -41,10 +41,10 @@ export class PersonalIdentificationComponent implements OnInit {
   documentInfo: any;
   @Output() CustomSubmit: EventEmitter<any> = new EventEmitter();
   customeSelected: string | null = null;
-  panelExpanded: boolean = false;
-  faceExpanded: boolean = false;
-  biometricExpanded: boolean = false;
-  tabIndex: number = 0;
+  panelExpanded = false;
+  faceExpanded = false;
+  biometricExpanded = false;
+  tabIndex = 0;
   ocrData: any[] = [
     {
       label: 'Full Name',
@@ -164,12 +164,12 @@ export class PersonalIdentificationComponent implements OnInit {
         ? this.getApplicantDocuments(applicantIndex)
         : this.otherDocument;
 
-    let fileInfoCtrl =
+    const fileInfoCtrl =
       this.tabIndex == 0
         ? (docArray.get('frontSide')?.get('fileInfo') as FormControl)
         : (docArray.get('backSide')?.get('fileInfo') as FormControl);
 
-    let docIdsCtrl =
+    const docIdsCtrl =
       this.tabIndex == 0
         ? (docArray.get('frontSide')?.get('docIds') as FormControl)
         : (docArray.get('backSide')?.get('docIds') as FormControl);
@@ -628,7 +628,7 @@ export class PersonalIdentificationComponent implements OnInit {
       idx == null
         ? this.otherDocument.get('biometricIds')
         : this.getApplicantDocuments(idx)?.get('biometricIds');
-    let ids = control?.value || [];
+    const ids = control?.value || [];
 
     // Ensure it's always an array and avoid duplicates
     if (!ids.includes(newId)) {

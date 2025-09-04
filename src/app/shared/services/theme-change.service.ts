@@ -138,13 +138,6 @@ export class ThemeChangeService {
       payload,
     );
   }
-
-  fetchCurrentTheme(userId: number) {
-    console.log(userId);
-    return this.http.get(
-      `${environment.microServiceURL}/screen/fetchUserThemeLang?userId=${userId}`,
-    );
-  }
 }
 
 export interface ThemeOption {

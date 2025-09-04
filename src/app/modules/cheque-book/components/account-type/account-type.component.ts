@@ -58,7 +58,8 @@ export class AccountTypeComponent {
     private cd: ChangeDetectorRef,
     private router: Router,
   ) {
-    let state = this.router.getCurrentNavigation()?.extras?.state as RouterInfo;
+    const state = this.router.getCurrentNavigation()?.extras
+      ?.state as RouterInfo;
     if (state) {
       this.routerStateData = state;
     }
@@ -111,7 +112,6 @@ export class AccountTypeComponent {
   }
 
   onClickAction() {
-    console.log('Selected Accounts being sent:', this.selectedAccounts);
     if (this.routerStateData?.url.includes('card')) {
       this.router.navigate(['/apply-card/stages'], {
         state: { accounts: this.selectedAccounts },

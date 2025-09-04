@@ -8,8 +8,8 @@ import { CommonService } from 'app/shared/services/common-service/common.service
   styleUrls: ['./fingerprint-scan.component.scss'],
 })
 export class FingerprintScanComponent {
-  isScanned: boolean = false;
-  isFailed: boolean = false;
+  isScanned = false;
+  isFailed = false;
   fingerprintData: string | undefined;
   templateBase64: any;
 
@@ -36,7 +36,7 @@ export class FingerprintScanComponent {
   }
 
   done() {
-    var data = this.fingerprintData;
+    const data = this.fingerprintData;
     this.dialogRef.close({
       message: 'Confirm',
       image: data,

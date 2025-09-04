@@ -8,12 +8,19 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prepare": "husky install",
-    "lint": "ng lint",
-    "lint:fix": "ng lint --fix",
-    "format": "prettier --write \"src/**/*.{ts,html,css,scss,json,md}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,html,css,scss,json,md}\"",
+    "lint": "eslint --ext .ts,.js,.tsx,.html src/",
+    "lint:fix": "eslint -- --ext .ts,.js,.tsx,.html src/ --fix --quiet",
+    "pretty": "prettier --write \"src/**/*.{ts,js,jsx,mjs,cjs,tsx,json,html,css,scss}\"",
     "install:lib": "npm install @onerumango/icust-element-library@latest @onerumango/utils@latest",
     "tsc": "tsc"
+  },
+  "lint-staged": {
+    "*.{ts,js,jsx,mjs,cjs,tsx}": [
+      "npm run pretty"
+    ],
+    "*.{json,html,css,scss}": [
+      "npm run pretty"
+    ]
   },
   "private": true,
   "dependencies": {
@@ -67,6 +74,7 @@
     "@angular-eslint/template-parser": "16.3.1",
     "@angular/cli": "~16.2.16",
     "@angular/compiler-cli": "^16.2.12",
+    "@commitlint/config-conventional": "^19.8.1",
     "@types/crypto-js": "^4.2.2",
     "@types/file-saver": "^2.0.7",
     "@types/inputmask": "^5.0.7",

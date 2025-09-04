@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { AccountService } from 'app/shared/services/account.service';
 import { GenericValueService } from 'app/shared/services/generic-value.service';
@@ -33,7 +27,7 @@ export class CustomAccountDetailsComponent {
   max: any;
   @Input() isEdit = true;
   @Input() screenCode = '';
-  selectedAccountType: string = '';
+  selectedAccountType = '';
   data: any;
   basisClass!: string | null;
   countryArr: any;
@@ -50,12 +44,6 @@ export class CustomAccountDetailsComponent {
     this.fetchCustomerCategory();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['isEdit']) {
-      console.log('Edit mode ON');
-    }
-  }
-
   // fetch Generic Method
   fetchGenericValues() {
     this.genericValueService
@@ -63,7 +51,6 @@ export class CustomAccountDetailsComponent {
       .subscribe((resp: any) => {
         if (resp?.statusCode === 200) {
           this.genericValue = resp?.data;
-          console.log(this.genericValue);
         }
       });
   }
@@ -73,8 +60,6 @@ export class CustomAccountDetailsComponent {
       this.accountBranchArr = Array.isArray(resp.data)
         ? resp.data
         : Object.values(resp.data);
-
-      console.log(this.accountBranchArr);
     });
   }
 

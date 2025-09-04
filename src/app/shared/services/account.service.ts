@@ -13,6 +13,7 @@ export class AccountService {
   getAccountDetails(originationId: number) {
     return this.http.get<any>(
       `${baseUrl}/account?originationId=${originationId}`,
+      {},
     );
   }
 

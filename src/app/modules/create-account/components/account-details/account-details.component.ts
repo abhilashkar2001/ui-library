@@ -1,16 +1,9 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { LocaleData, selectUser, User } from '@onerumango/utils';
 import { SessionStorageService } from 'app/shared/services/session-storage.service';
-import { catchError, map, Observable, of, Subscription, tap } from 'rxjs';
+import { catchError, map, Observable, of, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AccountService } from 'app/shared/services/account.service';
 @Component({
@@ -18,7 +11,7 @@ import { AccountService } from 'app/shared/services/account.service';
   templateUrl: './account-details.component.html',
   styleUrls: ['./account-details.component.scss'],
 })
-export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
+export class AccountDetailsComponent implements OnInit, OnDestroy {
   accountDetailsForm!: FormGroup;
   createAccountDetailsSummaryArr: any[] = [];
   genericValue: any | undefined;
@@ -40,7 +33,7 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   max: any;
   @Input() isEdit = false;
   @Input() screenCode = '';
-  selectedAccountType: string = '';
+  selectedAccountType = '';
   data: any;
   basisClass!: string | null;
   customerId: any;
@@ -58,8 +51,6 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   ) {
     this.basisClass = sessionStorageService.getItem('basisClass');
     this.category = localStorage.getItem('Category');
-    console.log(this.category);
-
     this.currentDate?.setDate(this.todaysDate.getDate() + 1);
     this.userProfile$ = this.store.select(selectUser);
     this.loadUserProfile();
@@ -75,11 +66,6 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
       this.fetchAccountDetails();
     }
     this.buildLoanDetailsForm('');
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['isEdit']) {
-      console.log('Edit mode ON');
-    }
   }
 
   loadUserProfile() {
@@ -175,12 +161,10 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   accountSummaryEmit(event: any) {
-    console.log(event);
     this.accountSummaryData = event;
   }
 
   handleSubmit() {
-    console.log(this.accountDetailsForm, 'jhgfds');
     const payload: any = {
       ...this.accountDetailsForm?.value,
       // accountType: this.accountSummaryData?.basisClass,
@@ -194,12 +178,8 @@ export class AccountDetailsComponent implements OnInit, OnDestroy, OnChanges {
     // payload.originationDetail.originationId = '2504';
     // delete payload.loanDetails.totalPrincipalAmount;
     // payload.screenCode = 444;
-    console.log(payload);
 
     return this.accountService.saveAccountDetails(payload).pipe(
-      tap((res) => {
-        console.log(res);
-      }),
       map((res) =>
         res?.statusCode == 200 || res?.statusCode == 201
           ? ('success' as const)

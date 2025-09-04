@@ -11,14 +11,14 @@ import * as faceapi from 'face-api.js';
   styleUrls: ['./face-scan.component.scss'],
 })
 export class FaceScanComponent {
-  scanning: boolean = false;
-  multipleWebcamsAvailable: boolean = false;
+  scanning = false;
+  multipleWebcamsAvailable = false;
   webcamImage!: WebcamImage | undefined;
-  sysImage: string = '';
+  sysImage = '';
   private trigger: Subject<void> = new Subject<void>();
   private faceLoginSubscription: Subscription[] = [];
   faceInterval: any;
-  face_scan_error: string = '';
+  face_scan_error = '';
   scanStartTime!: number;
   scanTimeout: any;
   MAX_SCAN_DURATION = 30000; // 30 seconds
@@ -51,8 +51,8 @@ export class FaceScanComponent {
   }
 
   getBlobFromData(image?: any) {
-    let timestamp = new Date();
-    var seconds = timestamp.getSeconds();
+    const timestamp = new Date();
+    const seconds = timestamp.getSeconds();
     fetch(image)
       .then((res) => res.blob())
       .then((blob) => {
@@ -116,7 +116,7 @@ export class FaceScanComponent {
       this.faceIntervalMethod();
     } else {
       this.face_scan_error = '';
-      let form = new FormData();
+      const form = new FormData();
       form.append('file', file);
       this.biometricSvc.faceRegister(form).subscribe((res: any) => {
         if (res?.statusCode == 200 || res?.statusCode == 201) {
@@ -156,7 +156,7 @@ export class FaceScanComponent {
     } else {
       this.face_scan_error = '';
 
-      let form = new FormData();
+      const form = new FormData();
       form.append('file', file);
       const sub = this.biometricSvc
         .faceLogin(form, this.dialogData?.biometricId)

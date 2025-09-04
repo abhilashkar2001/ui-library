@@ -14,7 +14,7 @@ export class InViewAnimateDirective implements AfterViewInit {
   @Input('inViewAnimate') animationClass!: string;
 
   /** Optional delay: e.g. '0.2s', '200ms' */
-  @Input() delay: string = '0s';
+  @Input() delay = '0s';
 
   constructor(
     private el: ElementRef,

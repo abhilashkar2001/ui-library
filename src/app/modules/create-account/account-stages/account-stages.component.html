@@ -2,13 +2,13 @@
   <div class="stepper-header">
     <h3 class="theme_lg">
       {{
-        category == 'CURRENT ACCOUNT' ? 'Current Account' : 'Corporate Account'
+        category === 'CURRENT ACCOUNT' ? 'Current Account' : 'Corporate Account'
       }}
     </h3>
     <span class="header_md"
       >"Get your
       {{
-        category == 'CURRENT ACCOUNT' ? 'Savings account' : 'Corporate account'
+        category === 'CURRENT ACCOUNT' ? 'Savings account' : 'Corporate account'
       }}
       in just {{ componentMapping.size }} steps"</span
     >

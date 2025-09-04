@@ -80,7 +80,7 @@ export class CarouselComponent implements OnInit, OnChanges {
 
     this.dynamicList.forEach((data: any, index: number) => {
       if (data?.documents?.fileUrl) {
-        let url = data.documents.fileUrl.startsWith('http')
+        const url = data.documents.fileUrl.startsWith('http')
           ? data.documents.fileUrl
           : `${this.baseUrl}${data.documents.fileUrl}`;
 

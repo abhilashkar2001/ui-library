@@ -48,8 +48,8 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   vcr!: ViewContainerRef;
   @ViewChild('drawer') drawer!: MatDrawer;
 
-  sidenavWidth: string = '50%';
-  sidenavBgColor: string = '#F5F6FF';
+  sidenavWidth = '50%';
+  sidenavBgColor = '#F5F6FF';
 
   constructor(
     private router: Router,
@@ -118,11 +118,9 @@ export class AdminLayoutComponent implements OnInit, AfterViewInit {
   openSidenavComponent<T>(
     component: Type<T>,
     inputs?: any,
-    disableClose: boolean = false,
+    disableClose = false,
     onCloseCallback?: (data: any) => void,
   ) {
-    console.log('openSidenavComponent: admin', inputs);
-
     this.dynamicContent.clear();
 
     const componentRef: any = this.dynamicContent.createComponent(component);

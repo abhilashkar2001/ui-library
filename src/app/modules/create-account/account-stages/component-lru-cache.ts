@@ -1,7 +1,7 @@
 import { ComponentRef } from '@angular/core';
 
 export class ComponentLRUCache {
-  private maxSize: number = 10;
+  private maxSize = 10;
   private map: Map<number, ComponentRef<any>>;
 
   constructor(maxSize: number) {
