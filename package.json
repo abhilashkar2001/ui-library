@@ -5,13 +5,14 @@
     "ng": "ng",
     "start": "ng serve --ssl true --ssl-cert src/assets/certificates/auth_service.crt --ssl-key src/assets/certificates/auth_service.key --port 4210",
     "build": "ng build --c=stanbic",
+    "build:sit": "ng build --c=sit --base-href /website/",
+    "pack:war": "cd dist && jar -cvf ../website.war .",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prepare": "husky install",
     "lint": "eslint --ext .ts,.js,.tsx,.html src/",
     "lint:fix": "eslint -- --ext .ts,.js,.tsx,.html src/ --fix --quiet",
     "pretty": "prettier --write \"src/**/*.{ts,js,jsx,mjs,cjs,tsx,json,html,css,scss}\"",
-    "install:lib": "npm install @onerumango/icust-element-library@latest @onerumango/utils@latest",
     "tsc": "tsc"
   },
   "lint-staged": {
@@ -74,6 +75,7 @@
     "@angular-eslint/template-parser": "16.3.1",
     "@angular/cli": "~16.2.16",
     "@angular/compiler-cli": "^16.2.12",
+    "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@types/crypto-js": "^4.2.2",
     "@types/file-saver": "^2.0.7",

@@ -5,6 +5,8 @@
 /tmp
 /out-tsc
 /bazel-out
+*.zip
+*.war
 
 # Node
 /node_modules
